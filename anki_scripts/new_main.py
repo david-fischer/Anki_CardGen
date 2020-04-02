@@ -1,4 +1,3 @@
-import argparse
 import os
 import re
 import subprocess
@@ -9,7 +8,6 @@ import wget
 import yad
 from bs4 import BeautifulSoup
 from translate import Translator
-from unidecode import unidecode as remove_accents
 
 # OTHER PYTHON FILES IN SAME DIR
 from anki_scripts.add_card import add_image_card
@@ -22,13 +20,7 @@ TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
 translator = Translator(from_lang=FROM_LANG, to_lang=TO_LANG)
 
-
-def es_to_de(string):
-    return translator.translate(remove_accents(string))
-
-
 yad = yad.YAD()
-bash_script_path = "~/python_scripts/anki_scripts/"
 
 
 def get_soup_object(url):
@@ -40,11 +32,10 @@ def synonyms(word):
     url = "http://www.wordreference.com/sinonimos/%s" % word
     soup = get_soup_object(url)
     try:
-        results = soup.find_all(class_="trans clickable")[0].find_all("li")[0]
-        return results.text
+        return soup.find_all(class_="trans clickable")[0].find_all("li")[0].text
     except:
         print("could not find synonyms :(")
-        return ""
+        return None
 
 
 def html_list(str_list):
@@ -62,7 +53,6 @@ class Query:
     url_dict = attr.ib(default={"audio_base": "http://www.linguee.de/mp3/%s.mp3",
                                 "linguee_api": "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
                                 })
-    response = attr.ib(default=[], repr=False)
     # word properties
     type = attr.ib(default="")  # phrase or word
     word_type = attr.ib(default="")  # verb noun etc
@@ -79,67 +69,46 @@ class Query:
 
     def __attrs_post_init__(self):
         self.search_term = self.search_term.strip().lower()
+        self.type = 'phrase' if ' ' in self.search_term else 'word'
         self.folder = self.search_term.replace(" ", "_")
 
-    def translate(self):
-        translations = [x["translations"] for x in self.response["exact_matches"]]
+    # GETTING DATA
+    def linguee_query(self):
+        qry_str = self.search_term.replace(" ", "+")
+        response = ask(qry_str, self.url_dict["linguee_api"])
+        if self.type == "phrase":
+            self.audio_link, _, _, self.examples = extract_info(response)
+        else:
+            self.audio_link, self.word_type, self.gender, self.examples = extract_info(response)
+        translations = [x["translations"] for x in response["exact_matches"]]
         translations = [[x["text"] for x in y] for y in translations]
         translation_string = "\n".join([", ".join(x) for x in translations])
         self.translated = translation_string
-
-
-    def linguee_query(self):
-        self.word_or_phrase()
-        qry_str = self.search_term.replace(" ", "+")
-        self.response = ask(qry_str, self.url_dict["linguee_api"])
-        if self.type == "phrase":
-            self.audio_link, b, c, self.examples = extract_info(self.response)
-        else:
-            self.audio_link, self.word_type, self.gender, self.examples = extract_info(self.response)
-
-    def word_or_phrase(self):
-        # single word or phrase?
-        if " " in self.search_term:
-            self.type = "phrase"
-
-    def print_all(self):
-        print("-----------------------------------------------")
-        print("Search term: %s" % self.search_term)
-        print("Folder: %s" % self.folder)
-        print("Type : %s" % self.type)
-        print("Synonyms: %s" % self.synonyms)
-        print("Audio Link: %s" % self.audio_link)
-        print("Example:%s" % self.examples)
-        print("-----------------------------------------------")
 
     def download_images(self):
         response = google_images_download.googleimagesdownload()
         arguments = {"keywords": self.search_term,
                      "output_directory": self.search_term,
-                     # "image_directory": "casa",
                      "no_directory": True,
-                     "limit": 20,
+                     "limit": 10,
                      "format": "jpg",
                      "language": LANGUAGE[FROM_LANG],
                      "thumbnail_only": True,
                      "print_urls": True,
-                     # "print_paths":True,
                      "prefix": "img_",
                      "save_source": "source",
                      }
         paths = response.download(arguments)[0][self.search_term]
-        print(len(paths))
-        with open(f"{search_term}/source.txt") as file:
+        with open(f"{self.search_term}/source.txt") as file:
             thumbnails = [line.split("\t")[0] for line in file]
-            for count,thumb in enumerate(thumbnails):
+            for count, thumb in enumerate(thumbnails):
                 try:
-                    os.rename(thumb,f"{self.folder}/thumb_{count}.jpg")
-                except(FileNotFoundError):
+                    os.rename(thumb, f"{self.folder}/thumb_{count}.jpg")
+                except FileNotFoundError:
                     print(str(count) + " not found")
             os.rmdir(f"{self.search_term}/ - thumbnail")
             os.remove(f"{self.folder}/source.txt")
         return paths
-
 
     def set_synonyms(self):
         self.synonyms = synonyms(self.search_term).split(",")
@@ -148,9 +117,30 @@ class Query:
 
     def download_audio(self):
         audio_url = self.url_dict["audio_base"] % self.audio_link
-        print("Downloading audio-file...")
         wget.download(audio_url, f"{self.folder}/{self.folder}.mp3")
 
+    def set_api_url(self, url):
+        self.url_dict["linguee_api"] = url
+
+    def get_all_data(self):
+        os.makedirs(self.folder, exist_ok=True)
+        path_list = self.download_images()
+        self.set_synonyms()
+        print(path_list)
+        # noinspection PyBroadException
+        try:
+            print("trying..." + self.url_dict["linguee_api"])
+            self.linguee_query()
+        except:
+            print("trying instead: " + "http://localhost:8000/api?q=%s&src=es&dst=%s")
+            self.set_api_url("http://localhost:8000/api?q=%s&src=es&dst=%s")
+            self.linguee_query()
+        self.download_audio()
+        self.check_attributes()
+        self.choose_image()
+        self.mark_examples()
+
+    # GETTING USER INPUT
     def check_attributes(self):
         # starts yad to let user check stuff
         field_list = yad_args(path=self.output_path,
@@ -183,6 +173,8 @@ class Query:
         yad.Form(center=1, on_top=1,
                  fields=yad_img_args(path=self.output_path, folder=self.folder, images=["1.jpg", "2.jpg", "3.jpg"]))
 
+    # GENERATE ANKI CARDS FROM DATA
+
     def mark_examples(self):
         for word in self.search_term.split(" "):
             self.examples = [re.sub(r'((?i)%s)' % word, r'<font color=red><b>\1</font></b>', ex) for ex in
@@ -198,59 +190,11 @@ class Query:
                        hint=hint_str,
                        examples=ex_str)
 
-    def get_all_data(self):
-        os.makedirs(self.folder, exist_ok=True)
-        path_list = self.download_images()
-        self.set_synonyms()
-        print(path_list)
-        # noinspection PyBroadException
-        try:
-            print("trying..." + self.url_dict["linguee_api"])
-            self.linguee_query()
-        except:
-            print("trying instead: " + "http://localhost:8000/api?q=%s&src=es&dst=%s")
-            self.set_api_url("http://localhost:8000/api?q=%s&src=es&dst=%s")
-            self.linguee_query()
-        try:
-            self.translate()
-        except:
-            print("Could not find translation.")
-        self.download_audio()
-        self.check_attributes()
-        self.choose_image()
-        self.mark_examples()
+
+    # ADD CARD TO DECK OR DECK TO ANKI-APP
 
     def import_card_to_deck(self):
         print("Importing Card to Deck")
         subprocess.call(["bash -c \" timeout 3 anki -p %s %s/output.apkg \" " % (self.anki_user, self.output_path)],
                         shell=True)
         print("Finished")
-
-    def set_api_url(self, url):
-        self.url_dict["linguee_api"] = url
-
-
-def main(search):
-    query = Query(search)
-    query.get_all_data()
-    # query.print_all()
-    # print(query)
-    # dfg query.generate_card()
-    # dsfg  query.import_card_to_deck()
-
-
-# stuff only to run when not called via 'import' here
-if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser(description="Adds Anki card to test_deck")
-    parser.add_argument('--word', type=str, help="the search word")
-    parser.add_argument('--api', type=str, help="the url of the api")
-    args = parser.parse_args()
-    search_term = args.word if args.word is not None else "casa"
-
-    if args.api is None:
-        api_url = "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
-    else:
-        api_url = args.api
-
-    main(search_term)
