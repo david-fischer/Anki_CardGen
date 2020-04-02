@@ -91,12 +91,8 @@ class Query:
     def linguee_query(self):
         self.word_or_phrase()
         qry_str = self.search_term.replace(" ", "+")
-        # print(qry_str)
         self.response = ask(qry_str, self.url_dict["linguee_api"])
-        # print(extract_info(self.response))
-        # print(ask(qry_str))
         if self.type == "phrase":
-            # print("phrase",qry_str)
             self.audio_link, b, c, self.examples = extract_info(self.response)
         else:
             self.audio_link, self.word_type, self.gender, self.examples = extract_info(self.response)
@@ -108,7 +104,6 @@ class Query:
     def word_or_phrase(self):
         # single word or phrase?
         if " " in self.search_term:
-            # print("SPACE")
             self.type = "phrase"
 
     def print_all(self):
@@ -169,8 +164,6 @@ class Query:
                               gender=self.gender,
                               synonyms=self.synonyms,
                               examples=self.examples)
-        # for x in field_list:
-        #     print(x)
         user_input = yad.Form(center=1, on_top=1, fields=field_list)
 
         if user_input is None or user_input['rc'] != 0:
@@ -184,7 +177,6 @@ class Query:
         sl = len(self.synonyms)
         el = len(self.examples)
         for i in reversed(range(sl)):
-            # print(i+3)
             if user_input[i + 2] == "FALSE":
                 del self.synonyms[i]
         for i in reversed(range(el)):
@@ -214,7 +206,7 @@ class Query:
         os.makedirs(self.folder, exist_ok=True)
         path_list = self.download_images()
         self.set_synonyms()
-        # print(self.url_dict)
+        print(path_list)
         # noinspection PyBroadException
         try:
             print("trying..." + self.url_dict["linguee_api"])
@@ -237,7 +229,6 @@ class Query:
         subprocess.call(["bash -c \" timeout 3 anki -p %s %s/output.apkg \" " % (self.anki_user, self.output_path)],
                         shell=True)
         print("Finished")
-        # print("Download finished.")
 
     def set_api_url(self, url):
         self.url_dict["linguee_api"] = url
