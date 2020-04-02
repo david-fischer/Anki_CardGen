@@ -1,0 +1,10 @@
+#!/bin/bash
+
+folder=$1
+url=$2
+path=.
+
+cd $path
+
+wget $url -O "$folder.mp3"
+

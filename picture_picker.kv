@@ -1,0 +1,33 @@
+#: import exists os.path.exists
+#: import colors  kivymd.color_definitions.colors
+#: import get_color_from_hex kivy.utils.get_color_from_hex
+
+<CheckTile>:
+    on_press: self.checked = not self.checked# print(self.checked,self.opacity)
+    on_checked: self.opacity = self.checked_op if self.checked else self.unchecked_op
+    FloatLayout:
+        size_hint: 1,1
+        FitImage:
+            id: fit_image_id
+            pos_hint: {"center_x": .5, "center_y": .5}
+            source: root.source if exists(root.source) else root.alternative_source
+
+        MDIcon:
+            pos_hint: {"center_x": .5, "center_y": .5}
+            font_size: 400
+            icon:"check-circle-outline"
+            color: get_color_from_hex(colors["LightGreen"]["500"])
+            opacity: root.opacity - 0.6
+
+
+<ImgPick>:
+    GridLayout:
+        id: grid_layout
+        cols: 2
+        row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols
+        row_force_default: True
+        size_hint_y: None
+        height: self.minimum_height
+        padding: dp(4), dp(4)
+        spacing: dp(4)
+

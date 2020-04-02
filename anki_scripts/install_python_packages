@@ -1,0 +1,6 @@
+sudo apt install python3
+
+
+pip3 install sympy numpy scipy matplotlib
+pip3 install jupyter jupyter_contrib_nbextensions nbopen
+pip3 install genanki yad re more_itertools beautifulsoup4 goslate translate unidecode

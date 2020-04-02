@@ -1,0 +1,34 @@
+#!/bin/bash
+
+word=$@
+folder=${word// /_}
+
+path=~/gen_ank/
+
+cd $path
+
+if [ -d "${path}$folder" ]; then
+    # the directory exists
+    if [ "$(ls -A ${path}$folder)" ];then
+        echo "Directory \"${path}$folder\" exists and contains files. Exit."
+        exit 1
+    else
+        echo "Directory \"${path}$folder\" exists, but contains no files. Proceed."
+    fi
+else
+    echo "Directory ${path}$folder does not exist. mkdir and proceed."; mkdir $folder
+    # You could check here if /path/to/dir is a file with [ -f /path/to/dir]
+fi
+
+echo "test"
+
+python3 /usr/local/lib/python3.6/dist-packages/google_images_download/google_images_download.py -k "$word" -l 3 -o $path -f jpg -la Spanish
+
+i=1
+for x in ./"$word"/*
+	do convert "$x" -resize x250 "${folder}/$i.jpg"
+	rm "$x"
+	((++i))
+
+done
+
