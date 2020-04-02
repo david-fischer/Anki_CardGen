@@ -49,7 +49,10 @@ def extract_info(response):
             i += 1
         if i == 3:
             break
-    return audio_id, word_type, gender, examples
+    translations = [x["translations"] for x in response["exact_matches"]]
+    translations = [[x["text"] for x in y] for y in translations]
+    translation_string = "\n".join([", ".join(x) for x in translations])
+    return translation_string, audio_id, word_type, gender, examples
 
 
 def ask(qry_str, linguee_api_url):

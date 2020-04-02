@@ -15,25 +15,29 @@ from anki_scripts.linguee_query import ask, extract_info
 from anki_scripts.yad_args import yad_args, yad_img_args
 from google_images_download import google_images_download
 
+LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
+AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
+SYNONYM_BASE_URL = "http://www.wordreference.com/sinonimos/%s"
 FROM_LANG = "pt"
 TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
+
 translator = Translator(from_lang=FROM_LANG, to_lang=TO_LANG)
 
 yad = yad.YAD()
 
 
-def get_soup_object(url):
-    return BeautifulSoup(requests.get(url).text)
-
-
-# noinspection PyBroadException
-def synonyms(word):
-    url = "http://www.wordreference.com/sinonimos/%s" % word
-    soup = get_soup_object(url)
+def request_synonyms(word):
+    """
+    if possible, uses SYNONYM_BASE_URL to find synonyms and returns as
+    :param word:
+    :return:
+    """
+    url = SYNONYM_BASE_URL % word
+    soup = BeautifulSoup(requests.get(url).text)
     try:
-        return soup.find_all(class_="trans clickable")[0].find_all("li")[0].text
-    except:
+        return soup.find_all(class_="trans clickable")[0].find_all("li")[0].text.split(",")
+    except IndexError:
         print("could not find synonyms :(")
         return None
 
@@ -50,8 +54,9 @@ def html_list(str_list):
 class Query:
     # query properties
     search_term = attr.ib(default="casa")
-    url_dict = attr.ib(default={"audio_base": "http://www.linguee.de/mp3/%s.mp3",
-                                "linguee_api": "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
+    url_dict = attr.ib(default={"audio_base": AUDIO_BASE_URL,
+                                "linguee_api_base": LINGUEE_API_BASE_URL,
+                                "synonym_base": SYNONYM_BASE_URL,
                                 })
     # word properties
     type = attr.ib(default="")  # phrase or word
@@ -62,6 +67,7 @@ class Query:
     synonyms = attr.ib(default=[])
     translated = attr.ib(default="")
     trans_syns = attr.ib(default=[])
+    image_urls = attr.ib(default=[""])
     # other
     anki_user = attr.ib(default="new_user")
     output_path = attr.ib(default=".")
@@ -71,21 +77,24 @@ class Query:
         self.search_term = self.search_term.strip().lower()
         self.type = 'phrase' if ' ' in self.search_term else 'word'
         self.folder = self.search_term.replace(" ", "_")
+        self.synonyms = [syn for syn in request_synonyms(self.search_term) if syn != ""]
+        self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
+        self.image_urls = self.request_img_urls()
+
+
+    def set_api_url(self, url):
+        self.url_dict["linguee_api_base"] = url
 
     # GETTING DATA
     def linguee_query(self):
         qry_str = self.search_term.replace(" ", "+")
         response = ask(qry_str, self.url_dict["linguee_api"])
         if self.type == "phrase":
-            self.audio_link, _, _, self.examples = extract_info(response)
+            self.translated, self.audio_link, _, _, self.examples = extract_info(response)
         else:
-            self.audio_link, self.word_type, self.gender, self.examples = extract_info(response)
-        translations = [x["translations"] for x in response["exact_matches"]]
-        translations = [[x["text"] for x in y] for y in translations]
-        translation_string = "\n".join([", ".join(x) for x in translations])
-        self.translated = translation_string
+            self.translated, self.audio_link, self.word_type, self.gender, self.examples = extract_info(response)
 
-    def download_images(self):
+    def request_img_urls(self):
         response = google_images_download.googleimagesdownload()
         arguments = {"keywords": self.search_term,
                      "output_directory": self.search_term,
@@ -110,31 +119,14 @@ class Query:
             os.remove(f"{self.folder}/source.txt")
         return paths
 
-    def set_synonyms(self):
-        self.synonyms = synonyms(self.search_term).split(",")
-        self.synonyms = [syn for syn in self.synonyms if syn != ""]
-        self.trans_syns = ["" for _ in self.synonyms]
-
     def download_audio(self):
         audio_url = self.url_dict["audio_base"] % self.audio_link
         wget.download(audio_url, f"{self.folder}/{self.folder}.mp3")
 
-    def set_api_url(self, url):
-        self.url_dict["linguee_api"] = url
-
     def get_all_data(self):
         os.makedirs(self.folder, exist_ok=True)
         path_list = self.download_images()
-        self.set_synonyms()
         print(path_list)
-        # noinspection PyBroadException
-        try:
-            print("trying..." + self.url_dict["linguee_api"])
-            self.linguee_query()
-        except:
-            print("trying instead: " + "http://localhost:8000/api?q=%s&src=es&dst=%s")
-            self.set_api_url("http://localhost:8000/api?q=%s&src=es&dst=%s")
-            self.linguee_query()
         self.download_audio()
         self.check_attributes()
         self.choose_image()
@@ -189,7 +181,6 @@ class Query:
                        synonyms=syn_str,
                        hint=hint_str,
                        examples=ex_str)
-
 
     # ADD CARD TO DECK OR DECK TO ANKI-APP
 

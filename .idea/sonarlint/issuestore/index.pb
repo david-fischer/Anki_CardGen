@@ -7,3 +7,7 @@ A
 main.py,f/1/f1bdda93d9a278e358509d498e17d97764c1fb29
 E
 anki_scripts/Query.py,f/b/fb883ee4581f00353f1e676c62c65ac158f4163d
+M
+anki_scripts/linguee_query.py,8/a/8a7494a7027e3e32ad4356fc72ba67ee380ff287
+H
+anki_scripts/new_main.py,5/1/511c7581c5cd65b6a3439bacc0226eb1cf42797c
