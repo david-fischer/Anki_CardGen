@@ -5,14 +5,12 @@ import subprocess
 import attr
 import requests
 import wget
-import yad
 from bs4 import BeautifulSoup
 from translate import Translator
 
 # OTHER PYTHON FILES IN SAME DIR
 from anki_scripts.add_card import add_image_card
 from anki_scripts.linguee_query import ask, extract_info
-from anki_scripts.yad_args import yad_args, yad_img_args
 from google_images_download import google_images_download
 
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
@@ -24,14 +22,13 @@ LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"
 
 translator = Translator(from_lang=FROM_LANG, to_lang=TO_LANG)
 
-yad = yad.YAD()
-
 
 def request_synonyms(word):
     """
-    if possible, uses SYNONYM_BASE_URL to find synonyms and returns as
+    If possible, uses SYNONYM_BASE_URL to find synonyms and returns as list.
+    Returns None, when the response was empty.
     :param word:
-    :return:
+    :return list_of_synonyms:
     """
     url = SYNONYM_BASE_URL % word
     soup = BeautifulSoup(requests.get(url).text)
@@ -43,13 +40,17 @@ def request_synonyms(word):
 
 
 def html_list(str_list):
+    """
+    Returns a string, that is displayed as a list in HTML.
+    :param str_list:
+    :return:
+    """
     start = "<ul>\n"
     end = "</ul>\n"
     middle = ["<li type=\"square\">" + item + "</li>\n" for item in str_list]
     return start + "".join(middle) + end
 
 
-# noinspection PyBroadException
 @attr.s
 class Query:
     # query properties
@@ -62,7 +63,7 @@ class Query:
     type = attr.ib(default="")  # phrase or word
     word_type = attr.ib(default="")  # verb noun etc
     gender = attr.ib(default="")
-    audio_link = attr.ib(default="")
+    audio_url = attr.ib(default="")
     examples = attr.ib(default=[])
     synonyms = attr.ib(default=[])
     translated = attr.ib(default="")
@@ -77,10 +78,13 @@ class Query:
         self.search_term = self.search_term.strip().lower()
         self.type = 'phrase' if ' ' in self.search_term else 'word'
         self.folder = self.search_term.replace(" ", "_")
+        os.makedirs(self.folder, exist_ok=True)
         self.synonyms = [syn for syn in request_synonyms(self.search_term) if syn != ""]
         self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
         self.image_urls = self.request_img_urls()
-
+        self.linguee_query()
+        self.audio_url = self.url_dict["audio_base"] % self.audio_url
+        self.download_audio()
 
     def set_api_url(self, url):
         self.url_dict["linguee_api_base"] = url
@@ -90,11 +94,20 @@ class Query:
         qry_str = self.search_term.replace(" ", "+")
         response = ask(qry_str, self.url_dict["linguee_api"])
         if self.type == "phrase":
-            self.translated, self.audio_link, _, _, self.examples = extract_info(response)
+            self.translated, self.audio_url, _, _, self.examples = extract_info(response)
         else:
-            self.translated, self.audio_link, self.word_type, self.gender, self.examples = extract_info(response)
+            self.translated, self.audio_url, self.word_type, self.gender, self.examples = extract_info(response)
+
+    def download_audio(self):
+        wget.download(self.audio_url, f"{self.folder}/{self.folder}.mp3")
 
     def request_img_urls(self):
+        """
+        Downloads the thumbnails of the first 10 results from a Google Image search.
+        Renames the thumbnails into 1.jpg - 10.jpg.
+        Returns list of the urls of the images corresponding the thumbnails
+        :return:list
+        """
         response = google_images_download.googleimagesdownload()
         arguments = {"keywords": self.search_term,
                      "output_directory": self.search_term,
@@ -119,51 +132,14 @@ class Query:
             os.remove(f"{self.folder}/source.txt")
         return paths
 
-    def download_audio(self):
-        audio_url = self.url_dict["audio_base"] % self.audio_link
-        wget.download(audio_url, f"{self.folder}/{self.folder}.mp3")
-
-    def get_all_data(self):
-        os.makedirs(self.folder, exist_ok=True)
-        path_list = self.download_images()
-        print(path_list)
-        self.download_audio()
-        self.check_attributes()
-        self.choose_image()
-        self.mark_examples()
-
     # GETTING USER INPUT
-    def check_attributes(self):
-        # starts yad to let user check stuff
-        field_list = yad_args(path=self.output_path,
-                              search_term=self.search_term,
-                              translated=self.translated,
-                              folder=self.folder,
-                              gender=self.gender,
-                              synonyms=self.synonyms,
-                              examples=self.examples)
-        user_input = yad.Form(center=1, on_top=1, fields=field_list)
-
-        if user_input is None or user_input['rc'] != 0:
-            print("Abbruch")
-        else:
-            user_input.pop("rc")
-        if user_input[1] != "-":
-            self.search_term = user_input[1] + " " + user_input[2]
-        else:
-            self.search_term = user_input[1]
-        sl = len(self.synonyms)
-        el = len(self.examples)
-        for i in reversed(range(sl)):
-            if user_input[i + 2] == "FALSE":
-                del self.synonyms[i]
-        for i in reversed(range(el)):
-            if user_input[i + 2 + sl] == "FALSE":
-                del self.examples[i]
-
-    def choose_image(self):
-        yad.Form(center=1, on_top=1,
-                 fields=yad_img_args(path=self.output_path, folder=self.folder, images=["1.jpg", "2.jpg", "3.jpg"]))
+    # field_list = yad_args(path=self.output_path,
+    #                       search_term=self.search_term,
+    #                       translated=self.translated,
+    #                       folder=self.folder,
+    #                       gender=self.gender,
+    #                       synonyms=self.synonyms,
+    #                       examples=self.examples)
 
     # GENERATE ANKI CARDS FROM DATA
 
