@@ -1,0 +1,57 @@
+#:import DEVICE_TYPE kivymd.material_resources.DEVICE_TYPE
+
+
+<MDChooseChip>
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: "5dp"
+
+
+<MyChip>
+    size_hint: None,  None
+    height: "26dp"
+    padding: 0, 0, "5dp", 0
+    width:
+        self.minimum_width - (dp(10) if DEVICE_TYPE == "desktop" else dp(20)) \
+        if root.icon != 'checkbox-blank-circle' else self.minimum_width
+    color: self.selected_chip_color if self.selected else self.unselected_chip_color
+    canvas:
+        Color:
+            rgba: root.color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [root.radius]
+
+    BoxLayout:
+        id: box_check
+        size_hint: None, None
+        size: self.minimum_size
+        pos_hint: {'center_y': .5}
+
+    BoxLayout:
+        size_hint_x: None
+        width: self.minimum_width+30
+        padding: dp(10)
+        spacing: dp(5)
+
+        Label:
+            id: label
+            text: root.label
+            size_hint_x: None
+            pos_hint: {"left":0}
+            width: self.texture_size[0]
+
+        MDIcon:
+            id: "icon"
+            icon: root.icon
+            size: 100,100
+            text_size: 100,100
+            texture_size: 100,100
+            color: label.color
+#            canvas:
+#                Color:
+#                    rgba: 0,1,0,0.5
+#                Rectangle:
+#                    pos: self.pos
+#                    size: self.size
