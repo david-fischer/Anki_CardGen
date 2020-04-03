@@ -5,7 +5,7 @@ from kivymd.app import MDApp
 class WordProperties(BoxLayout):
     pass
 
-Builder.load_file("anki_scripts/user_input.kv")
+Builder.load_file("user_input.kv")
 
 class MyApp(MDApp):
     def build(self):
