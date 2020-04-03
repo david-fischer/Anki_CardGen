@@ -85,12 +85,25 @@ class Query:
         self.linguee_query()
         self.audio_url = self.url_dict["audio_base"] % self.audio_url
         self.download_audio()
+        self.mark_examples()
 
     def set_api_url(self, url):
+        """
+        changes the api-url (this might be necessary if to many requests have been made).
+        :param url:
+        """
         self.url_dict["linguee_api_base"] = url
 
     # GETTING DATA
     def linguee_query(self):
+        """
+        Uses ask from linguee_query.py to fill the fields:
+        self.translated
+        self.audio_url
+        self.word_type
+        self.gender
+        self.examples
+        """
         qry_str = self.search_term.replace(" ", "+")
         response = ask(qry_str, self.url_dict["linguee_api"])
         if self.type == "phrase":
@@ -144,11 +157,18 @@ class Query:
     # GENERATE ANKI CARDS FROM DATA
 
     def mark_examples(self):
+        """
+        Highlights the search_word in the example sentences using css.
+        """
         for word in self.search_term.split(" "):
             self.examples = [re.sub(r'((?i)%s)' % word, r'<font color=red><b>\1</font></b>', ex) for ex in
                              self.examples]
 
     def generate_card(self):
+        """
+        Calls add_image_card to generate a card from the obtained data.
+        The card is saved in output.apkg in the working dir.
+        """
         syn_str = ", ".join(self.synonyms)
         ex_str = html_list(self.examples)
         hint_str = self.translated.replace("\n", "<br />")
@@ -161,6 +181,9 @@ class Query:
     # ADD CARD TO DECK OR DECK TO ANKI-APP
 
     def import_card_to_deck(self):
+        """
+        Adds the output.apk file to the user self.anki_user
+        """
         print("Importing Card to Deck")
         subprocess.call(["bash -c \" timeout 3 anki -p %s %s/output.apkg \" " % (self.anki_user, self.output_path)],
                         shell=True)
