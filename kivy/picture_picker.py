@@ -56,8 +56,11 @@ class ImgPick(ScrollView):
     source_list = ListProperty([])
 
     def get_img_list(self):
-        files = [f for f in glob.glob(f"{self.source_folder}/*") if re.match(r'.*(jpg|png)', f)]
-        return files
+        return [
+            f
+            for f in glob.glob(f"{self.source_folder}/*")
+            if re.match(r'.*(jpg|png)', f)
+        ]
 
     def remove_unchecked(self):
         unchecked_children = [child for child in self.ids.grid_layout.children if not child.checked]
