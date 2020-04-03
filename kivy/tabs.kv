@@ -1,0 +1,32 @@
+#:import WordProperties anki_scripts.user_input
+#:import ImagePickerMain main
+<MyTabs>:
+    EditTab:
+        text:"file-document-edit-outline"
+
+    ImageTab:
+        text: "image-search-outline"
+
+    PreviewTab:
+        text: "eye"
+
+#    id: android_tabs
+#        on_tab_switch: app.on_tab_switch(*args)
+
+
+<EditTab@Tab>:
+    WordProperties
+
+<ImageTab@Tab>:
+    ImagePickerMain
+
+<PreviewTab@Tab>:
+
+
+#    MDIconButton:
+#        id: icon
+#        icon: root.icon
+#        user_font_size: "48sp"
+#        pos_hint: {"center_x": .5, "center_y": .5}
+#    Label:
+#        text: root.text

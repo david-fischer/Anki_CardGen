@@ -1,20 +1,16 @@
-import os
-from time import time, sleep
 import glob
 import re
+from time import time
 
 from kivy.effects.opacityscroll import OpacityScrollEffect
-from kivy.effects.scroll import ScrollEffect
-from kivy.uix.scrollview import ScrollView
-from kivy.uix.textinput import TextInput
-from kivymd.app import MDApp
 from kivy.lang import Builder
-from kivy.properties import StringProperty, BooleanProperty, ListProperty, Property, NumericProperty
+from kivy.properties import StringProperty, BooleanProperty, ListProperty, Property
+from kivy.uix.scrollview import ScrollView
+from kivymd.app import MDApp
 from kivymd.uix.imagelist import Tile
-from kivymd.uix.spinner import MDSpinner
 
 
-class call_control:
+class CallControl:
 
     def __init__(self, max_call_interval):
         self._max_call_interval = max_call_interval
@@ -30,17 +26,15 @@ class call_control:
         return wrapped
 
 
-
-
-
 class CheckTile(Tile):
-    source=StringProperty()
-    alternative_source=StringProperty("assets/camera.png")
-    color=ListProperty([0,0,0,0])
-    checked=BooleanProperty(False)
-    checked_op=Property(1)
-    unchecked_op=Property(0.6)
+    source = StringProperty()
+    alternative_source = StringProperty("assets/camera.png")
+    color = ListProperty([0, 0, 0, 0])
+    checked = BooleanProperty(False)
+    checked_op = Property(1)
+    unchecked_op = Property(0.6)
     opacity = Property(0.6)
+
 
 class LoadMoreOnOverscroll(OpacityScrollEffect):
 
@@ -49,35 +43,37 @@ class LoadMoreOnOverscroll(OpacityScrollEffect):
         if self.overscroll > 100:
             self.refresh()
 
-    @call_control(max_call_interval=3)
+    @CallControl(max_call_interval=3)
     def refresh(self):
-        #print("refresh")
-        app= MDApp.get_running_app()
-        app.root.ids.spinner.active=True
+        # print("refresh")
+        app = MDApp.get_running_app()
+        app.root.ids.spinner.active = True
+
 
 class ImgPick(ScrollView):
     effect_cls = LoadMoreOnOverscroll
-    source_folder=StringProperty("assets")
-    source_list=ListProperty([])
+    source_folder = StringProperty("assets")
+    source_list = ListProperty([])
 
     def get_img_list(self):
         files = [f for f in glob.glob(f"{self.source_folder}/*") if re.match(r'.*(jpg|png)', f)]
         return files
 
     def remove_unchecked(self):
-        unchecked_children=[child for child in self.ids.grid_layout.children if not child.checked]
+        unchecked_children = [child for child in self.ids.grid_layout.children if not child.checked]
         for child in unchecked_children:
             self.ids.grid_layout.remove_widget(child)
 
-    def on_source_folder(self,*args):
-        self.source_list=self.get_img_list()
+    def on_source_folder(self, *args):
+        self.source_list = self.get_img_list()
         self.remove_unchecked()
         for image_source in self.source_list:
             self.ids.grid_layout.add_widget(CheckTile(source=image_source))
 
     def get_checked(self):
-        checked_children=[child for child in self.ids.grid_layout.children if child.checked]
+        checked_children = [child for child in self.ids.grid_layout.children if child.checked]
         return [checked_tile.source for checked_tile in checked_children]
+
 
 Builder.load_file("picture_picker.kv")
 
@@ -120,5 +116,6 @@ FloatLayout:
 
     
 """)
+
 
     MainApp().run()

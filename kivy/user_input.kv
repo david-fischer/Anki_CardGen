@@ -1,0 +1,46 @@
+#: import colors  kivymd.color_definitions.colors
+#: import get_color_from_hex kivy.utils.get_color_from_hex
+
+
+<MDTextField>:
+    mode: "rectangle"
+    size: 200, 100
+
+<WordProperties>:
+    orientation: "vertical"
+    padding: 50,50
+    spacing: 10
+
+    MDTextField:
+        hint_text: "Search Term"
+        text: "diese Eingabe wurde schon gemacht."
+
+    MDChooseChip:
+
+        MyChip:
+            #label: 'M'
+            icon: 'gender-male'
+#            color: get_color_from_hex(colors["Pink"]["200"])
+#            selected_chip_color: app.theme_cls.primary_dark
+
+        MyChip:
+            #label: 'F'
+            icon: 'gender-female'
+#            color: get_color_from_hex(colors["Blue"]["200"])
+#            selected_chip_color: get_color_from_hex(colors["Blue"]["400"])
+
+        MyChip:
+            #label: ' - '
+#            color: get_color_from_hex(colors["Gray"]["400"])
+#            selected_chip_color: get_color_from_hex(colors["Gray"]["600"])
+
+    MDTextField:
+        hint_text: "test2"
+        text: "diese Eingabe wurde schon gemacht."
+
+    MDTextField:
+        hint_text: "test3"
+        text: "diese Eingabe wurde schon gemacht."
+
+
+<MyChip@MDChip+HoverBehavior>:
