@@ -3,7 +3,7 @@
 
 
 <MDTextField>:
-    mode: "rectangle"
+#    mode: "rectangle"
     size: 200, 100
 
 <WordProperties>:
@@ -11,36 +11,51 @@
     padding: 50,50
     spacing: 10
 
-    MDTextField:
-        hint_text: "Search Term"
-        text: "diese Eingabe wurde schon gemacht."
 
-    MDChooseChip:
+    MDTextField:
+        id: search_field
+        hint_text: "Search Term"
+        text: root.search_term
+        on_text: root.search_term = self.text
+
+    MyChooseChip:
+        id: gender_chips
 
         MyChip:
-            #label: 'M'
+            label: 'm'
             icon: 'gender-male'
 #            color: get_color_from_hex(colors["Pink"]["200"])
-#            selected_chip_color: app.theme_cls.primary_dark
+            selected_chip_color: app.theme_cls.primary_dark
 
         MyChip:
-            #label: 'F'
+            label: 'f'
             icon: 'gender-female'
 #            color: get_color_from_hex(colors["Blue"]["200"])
-#            selected_chip_color: get_color_from_hex(colors["Blue"]["400"])
+            selected_chip_color: app.theme_cls.primary_dark
 
         MyChip:
-            #label: ' - '
+            label: ''
+            icon: "minus"
 #            color: get_color_from_hex(colors["Gray"]["400"])
-#            selected_chip_color: get_color_from_hex(colors["Gray"]["600"])
+            selected_chip_color: app.theme_cls.primary_dark
+
 
     MDTextField:
-        hint_text: "test2"
-        text: "diese Eingabe wurde schon gemacht."
+        id: translation_field
+        hint_text: "translation Term"
+        text: root.translation
+        on_text: root.translation = self.text
 
     MDTextField:
-        hint_text: "test3"
-        text: "diese Eingabe wurde schon gemacht."
+        id: search_field
+        hint_text: "Search Term"
+        text: root.search_term
+        on_text: root.search_term = self.text
 
 
-<MyChip@MDChip+HoverBehavior>:
+    MDFloatingActionButton:
+        icon: "printer"
+        on_release: print(root.print_all())
+
+
+
