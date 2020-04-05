@@ -2,15 +2,15 @@ import os
 import re
 import subprocess
 from multiprocessing import Process
-from unidecode import unidecode
+
 import attr
 import wget
-
 from translate import Translator
+from unidecode import unidecode
 
 # OTHER PYTHON FILES IN SAME DIR
 from anki_scripts.add_card import add_image_card
-from anki_scripts.dictionary_queries import ask, extract_info, request_synonyms_from_wordref, request_data_from_linguee, \
+from anki_scripts.dictionary_queries import request_data_from_linguee, \
     request_data_from_dicio
 from google_images_download import google_images_download
 
@@ -61,7 +61,7 @@ class Query:
         self.search_term = self.search_term.strip().lower()
         self.folder = self.search_term_utf8().replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        dict_p  = Process(target=self.request_dict_data())
+        dict_p = Process(target=self.request_dict_data())
         img_p = Process(target=self.request_img_urls())
         audio_p = Process(target=self.download_audio())
         dict_p.start()
@@ -84,7 +84,7 @@ class Query:
         self.word_type, \
         self.gender, \
         self.examples \
-            = request_data_from_linguee(self.search_term,FROM_LANG)
+            = request_data_from_linguee(self.search_term, FROM_LANG)
         self.explanations, \
         self.synonyms, \
         self.antonyms, \
@@ -170,7 +170,6 @@ class Query:
         subprocess.call(["bash -c \" timeout 3 anki -p %s %s/output.apkg \" " % (self.anki_user, self.output_path)],
                         shell=True)
         print("Finished")
-
 
 
 if __name__ == "__main__":

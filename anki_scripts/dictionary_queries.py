@@ -22,7 +22,7 @@ linguee_headers = {
 
 
 def get_soup_object(url):
-    return BeautifulSoup(requests.get(url,headers=headers).content, features="lxml")
+    return BeautifulSoup(requests.get(url, headers=headers).content, features="lxml")
 
 
 languages = itertools.cycle(("de", "en", "es", "pt", "it", "fr", "el"))
