@@ -56,8 +56,6 @@ class Query:
         self.search_term = self.search_term.strip().lower()
         self.folder = self.search_term.replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        # self.synonyms = [syn for syn in request_synonyms_from_wordref(self.search_term) if syn != ""]
-        # self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
         self.image_urls = self.request_img_urls()
         self.request_dict_data()
         self.download_audio()
