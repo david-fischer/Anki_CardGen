@@ -12,11 +12,19 @@
     spacing: 10
 
 
-    MDTextField:
-        id: search_field
-        hint_text: "Search Term"
-        text: root.search_term
-        on_text: root.search_term = self.text
+    BoxLayout:
+        orientation: "horizontal"
+        spacing: 10
+        MDTextField:
+            id: search_field
+            hint_text: "Search Term"
+            text: root.search_term
+            on_text: root.search_term = self.text
+            size_hint: 0.,None
+        MDFloatingActionButton:
+            icon: "magnify"
+            on_release: root.post_init();print(root.print_all())
+
 
     MyChooseChip:
         id: gender_chips
@@ -57,6 +65,5 @@
         id: synonym_chips
         choose_one: False
 
-    MDFloatingActionButton:
-        icon: "printer"
-        on_release: root.post_init();print(root.print_all())
+
+    Widget:

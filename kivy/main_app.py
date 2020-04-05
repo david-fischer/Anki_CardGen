@@ -1,8 +1,10 @@
 from kivy.lang import Builder
-from kivy.properties import ListProperty, StringProperty
+from kivy.properties import ListProperty, StringProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabs, MDTabsBase
+
+from anki_scripts.new_main import Query
 
 
 class Tab(FloatLayout, MDTabsBase):
@@ -20,7 +22,11 @@ Builder.load_file("tabs.kv")
 
 
 class TestApp(MDApp):
+    Query = ObjectProperty()
+    search_term = StringProperty()
+
     def build(self):
+        self.Query = Query(search_term=self.search_term)
         self.theme_cls.primary_palette = "Teal"  # "Purple", "Red"
         self.theme_cls.theme_style = "Light"  # "Purple", "Red"
         return Builder.load_string("""
@@ -31,4 +37,4 @@ BoxLayout:
 """)
 
 if __name__ == "__main__":
-    TestApp().run()
+    TestApp(search_term="casa").run()

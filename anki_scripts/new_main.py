@@ -52,16 +52,15 @@ class Query:
     output_path = attr.ib(default=".")
     folder = attr.ib(default="")
 
-    def __attrs_post_init__(self):
+    def get_data(self):
         self.search_term = self.search_term.strip().lower()
         self.folder = self.search_term.replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        self.synonyms = [syn for syn in request_synonyms_from_wordref(self.search_term) if syn != ""]
-        self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
+        # self.synonyms = [syn for syn in request_synonyms_from_wordref(self.search_term) if syn != ""]
+        # self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
         self.image_urls = self.request_img_urls()
-        self.linguee_query()
+        self.request_dict_data()
         self.download_audio()
-        self.mark_examples()
 
     #a def set_api_url(self, url):
     #a     """
@@ -71,7 +70,7 @@ class Query:
     #a     self.url_dict["linguee_api_base"] = url
 
     # GETTING DATA
-    def linguee_query(self):
+    def request_dict_data(self):
         """
         Uses ask from dictionary_queries.py to fill the fields:
         self.translated
@@ -109,7 +108,7 @@ class Query:
                      "no_directory": True,
                      "limit": 10,
                      "format": "jpg",
-                     "language": "Spanish",
+                     "language": LANGUAGE[FROM_LANG],
                      "thumbnail_only": True,
                      "print_urls": True,
                      "prefix": "img_",
