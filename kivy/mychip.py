@@ -6,11 +6,13 @@ from kivy.properties import (
     ObjectProperty,
     BooleanProperty,
     NumericProperty,
-)
+    Property)
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 from kivy.uix.stacklayout import StackLayout
+from kivy.utils import get_color_from_hex
 from kivymd.app import MDApp
+from kivymd.color_definitions import colors
 
 from kivymd.uix.button import MDIconButton
 from kivymd.theming import ThemableBehavior
@@ -82,16 +84,16 @@ BoxLayout:
     MyChooseChip:
         choose_one: True
         MyChip:
-            label: "Test"
+            label: "1"
             icon: "plus"
         MyChip:
-            label: "Test"
+            label: "2"
             icon: "plus"
         MyChip:
-            label: "Test"
+            label: "3"
             icon: "plus"
         MyChip:
-            label: "Test"
+            label: "4"
             icon: "plus"
 
 """)

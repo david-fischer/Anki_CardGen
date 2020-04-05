@@ -31,8 +31,8 @@
 
     BoxLayout:
         size_hint_x: None
-        width: self.minimum_width+30
-        padding: dp(10)
+        width: self.minimum_width+ (0 if (root.icon == "") else 30)
+        padding: dp(15)
         spacing: dp(5)
 
         Label:

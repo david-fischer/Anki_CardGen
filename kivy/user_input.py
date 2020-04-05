@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.chip import MDChip, MDChooseChip
 
-from kivy.mychip import MyChip
+from mychip import MyChip,MyChooseChip
 
 Builder.load_file("user_input.kv")
 
@@ -19,7 +19,7 @@ class WordProperties(BoxLayout):
     def post_init(self,):
         for syn in self.synonyms:
             print(self)
-            self.ids.synonym_chips.add_widget(MyChip(label=syn,icon=' ',check=True))
+            self.ids.synonym_chips.add_widget(MyChip(label=syn,icon='',check=True))
 
     def print_all(self):
         print(f""""

@@ -10,33 +10,16 @@ from translate import Translator
 
 # OTHER PYTHON FILES IN SAME DIR
 from anki_scripts.add_card import add_image_card
-from anki_scripts.linguee_query import ask, extract_info
+from anki_scripts.dictionary_queries import ask, extract_info, request_synonyms_from_wordref
 from google_images_download import google_images_download
 
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
 AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
-SYNONYM_BASE_URL = "http://www.wordreference.com/sinonimos/%s"
 FROM_LANG = "pt"
 TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
 
 translator = Translator(from_lang=FROM_LANG, to_lang=TO_LANG)
-
-
-def request_synonyms(word):
-    """
-    If possible, uses SYNONYM_BASE_URL to find synonyms and returns as list.
-    Returns None, when the response was empty.
-    :param word:
-    :return list_of_synonyms:
-    """
-    url = SYNONYM_BASE_URL % word
-    soup = BeautifulSoup(requests.get(url).text)
-    try:
-        return soup.find_all(class_="trans clickable")[0].find_all("li")[0].text.split(",")
-    except IndexError:
-        print("could not find synonyms :(")
-        return None
 
 
 def html_list(str_list):
@@ -57,7 +40,6 @@ class Query:
     search_term = attr.ib(default="casa")
     url_dict = attr.ib(default={"audio_base": AUDIO_BASE_URL,
                                 "linguee_api_base": LINGUEE_API_BASE_URL,
-                                "synonym_base": SYNONYM_BASE_URL,
                                 })
     # word properties
     type = attr.ib(default="")  # phrase or word
@@ -79,7 +61,7 @@ class Query:
         self.type = 'phrase' if ' ' in self.search_term else 'word'
         self.folder = self.search_term.replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        self.synonyms = [syn for syn in request_synonyms(self.search_term) if syn != ""]
+        self.synonyms = [syn for syn in request_synonyms_from_wordref(self.search_term) if syn != ""]
         self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
         self.image_urls = self.request_img_urls()
         self.linguee_query()
@@ -97,15 +79,14 @@ class Query:
     # GETTING DATA
     def linguee_query(self):
         """
-        Uses ask from linguee_query.py to fill the fields:
+        Uses ask from dictionary_queries.py to fill the fields:
         self.translated
         self.audio_url
         self.word_type
         self.gender
         self.examples
         """
-        qry_str = self.search_term.replace(" ", "+")
-        response = ask(qry_str, self.url_dict["linguee_api"])
+        response = ask(self.search_term, self.url_dict["linguee_api"])
         if self.type == "phrase":
             self.translated, self.audio_url, _, _, self.examples = extract_info(response)
         else:

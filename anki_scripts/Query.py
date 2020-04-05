@@ -13,7 +13,7 @@ from unidecode import unidecode as remove_accents
 
 # OTHER PYTHON FILES IN SAME DIR
 from anki_scripts.add_card import add_image_card
-from anki_scripts.linguee_query import ask, extract_info
+from anki_scripts.dictionary_queries import ask, extract_info
 from anki_scripts.yad_args import yad_args, yad_img_args
 from google_images_download import google_images_download
 

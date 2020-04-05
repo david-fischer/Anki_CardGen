@@ -20,24 +20,25 @@
 
     MyChooseChip:
         id: gender_chips
+        choose_one: True
 
         MyChip:
+            unselected_chip_color: get_color_from_hex(colors["Blue"]["200"])
+            selected_chip_color: get_color_from_hex(colors["Blue"]["800"])
             label: 'm'
             icon: 'gender-male'
-#            color: get_color_from_hex(colors["Pink"]["200"])
-            selected_chip_color: app.theme_cls.primary_dark
 
         MyChip:
+            unselected_chip_color: get_color_from_hex(colors["Pink"]["200"])
+            selected_chip_color: get_color_from_hex(colors["Pink"]["800"])
             label: 'f'
             icon: 'gender-female'
-#            color: get_color_from_hex(colors["Blue"]["200"])
-            selected_chip_color: app.theme_cls.primary_dark
 
         MyChip:
             label: ''
+            unselected_chip_color: get_color_from_hex(colors["Gray"]["400"])
+            selected_chip_color: get_color_from_hex(colors["Gray"]["800"])
             icon: "minus"
-#            color: get_color_from_hex(colors["Gray"]["400"])
-            selected_chip_color: app.theme_cls.primary_dark
 
 
     MDTextField:
@@ -52,9 +53,9 @@
         text: root.search_term
         on_text: root.search_term = self.text
 
-    BoxLayout:
+    MyChooseChip:
         id: synonym_chips
-        orientation: "horizontal"
+        choose_one: False
 
     MDFloatingActionButton:
         icon: "printer"

@@ -1,10 +1,4 @@
 
-A
-picture_picker.kv,b/f/bfac329159e18e03e18ad1ce0b4969ade9230206
-A
-picture_picker.py,1/d/1df7331e2f2309c88203a659931a943948e24dad
-7
-main.py,f/1/f1bdda93d9a278e358509d498e17d97764c1fb29
 E
 anki_scripts/Query.py,f/b/fb883ee4581f00353f1e676c62c65ac158f4163d
 M
@@ -15,7 +9,19 @@ H
 ..idea/inspectionProfiles/profiles_settings.xml,1/e/1e9075f5bf079c01ef2c910709e91a497d262080
 L
 .idea/dictionaries/david.xml,e/f/efcf65f2433a40aa17d9539253a602a7efb1af37
-J
-anki_scripts/user_input.kv,2/5/254861623e9252c07cf595c206de09f72589e84c
-J
-anki_scripts/user_input.py,e/f/ef0f5ab97ecf3805c52fdae98dde32249e6edfc7
+<
+kivy/tabs.kv,f/b/fb3a379a157976f5048cf853035317493a596399
+F
+kivy/picture_picker.kv,e/2/e2c6bf21c6e3165f1fff4842af76e1345b837d4a
+F
+kivy/picture_picker.py,7/5/7574736f2a16b91bd01ed45b0a04b7aaac3eb23c
+@
+kivy/main_app.py,2/3/23e0b59cecee84f6422442bd05a9f285c96586c4
+>
+kivy/mychip.kv,6/8/6853ce11fe2d508aba95ffee1c0e7952c6d3bb4f
+>
+kivy/mychip.py,a/7/a74678776e6882f1e592434fcd9cd5db167cb4c2
+B
+kivy/user_input.py,f/d/fde3978e332faeb455b89a4cc85f32b56bc021f6
+B
+kivy/user_input.kv,2/0/20548f9d1f0374ac479b052c6e5ec0a87524c1e5
