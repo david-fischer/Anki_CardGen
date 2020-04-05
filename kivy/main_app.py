@@ -5,7 +5,7 @@ from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabs, MDTabsBase
 
 from anki_scripts.new_main import Query
-
+from multiprocessing import Process
 
 class Tab(FloatLayout, MDTabsBase):
     '''Class implementing content for a tab.'''
@@ -22,11 +22,11 @@ Builder.load_file("tabs.kv")
 
 
 class TestApp(MDApp):
-    Query = ObjectProperty()
+    word = ObjectProperty()
     search_term = StringProperty()
 
     def build(self):
-        self.Query = Query(search_term=self.search_term)
+        self.word = Query(search_term=self.search_term)
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
         return Builder.load_string("""
@@ -38,7 +38,7 @@ BoxLayout:
 
     def on_search_term(self,*args):
         try:
-            self.Query.search_term = self.search_term
+            self.word.search_term = self.search_term
         except AttributeError:
             print("Query not yet initialized.")
 

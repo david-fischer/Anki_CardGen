@@ -1,6 +1,8 @@
 import os
 import re
 import subprocess
+from multiprocessing import Process
+
 import attr
 import wget
 
@@ -56,9 +58,13 @@ class Query:
         self.search_term = self.search_term.strip().lower()
         self.folder = self.search_term.replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        self.image_urls = self.request_img_urls()
-        self.request_dict_data()
-        self.download_audio()
+        img_p = Process(target=self.request_img_urls())
+        dict_p  = Process(target=self.request_dict_data())
+        audio_p = Process(target=self.download_audio())
+        img_p.start()
+        dict_p.start()
+        dict_p.join()
+        audio_p.start()
 
     # GETTING DATA
     def request_dict_data(self):
@@ -115,7 +121,7 @@ class Query:
                     print(str(count) + " not found")
             os.rmdir(f"{self.search_term}/ - thumbnail")
             os.remove(f"{self.folder}/source.txt")
-        return paths
+        self.image_urls = paths
 
     # GETTING USER INPUT
     # field_list = yad_args(path=self.output_path,

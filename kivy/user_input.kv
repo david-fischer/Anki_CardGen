@@ -10,8 +10,8 @@
     orientation: "vertical"
     padding: 50,50
     spacing: 10
-    synonyms: app.Query.synonyms
-    examples: app.Query.examples
+    synonyms: app.word.synonyms
+    examples: app.word.examples
 
     BoxLayout:
         orientation: "horizontal"
@@ -24,7 +24,7 @@
             size_hint: 0.,None
         MDFloatingActionButton:
             icon: "magnify"
-            on_release: app.search_term = root.search_term;app.Query.get_data();root.refresh_data();root.post_init();print(root.print_all())
+            on_release: app.search_term = root.search_term;app.word.get_data();root.refresh_data();root.post_init();print(root.print_all())
 
 
     MyChooseChip:
