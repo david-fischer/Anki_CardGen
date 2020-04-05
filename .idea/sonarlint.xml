@@ -6,6 +6,7 @@
         <option value="FILE:google_images_download/google_images_download.py" />
         <option value="DIRECTORY:google-images-download" />
         <option value="DIRECTORY:google_images_download" />
+        <option value="FILE:anki_scripts/comecar.html" />
       </list>
     </option>
   </component>

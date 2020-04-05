@@ -21,7 +21,5 @@ B
 kivy/user_input.py,f/d/fde3978e332faeb455b89a4cc85f32b56bc021f6
 B
 kivy/user_input.kv,2/0/20548f9d1f0374ac479b052c6e5ec0a87524c1e5
-I
-anki_scripts/comecar.html,d/4/d431ed3c995a8fe5bbf867055136046e28a96e1b
 R
 "anki_scripts/dictionary_queries.py,2/f/2f97c967ff3f06377075ffe56242d7027719cdbe

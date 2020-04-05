@@ -3,6 +3,7 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/.buildozer/android/platform/python-for-android" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/anki_scripts/anki-interactive" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/google-images-download" vcs="Git" />
   </component>
 </project>
