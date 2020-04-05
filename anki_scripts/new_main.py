@@ -60,13 +60,6 @@ class Query:
         self.request_dict_data()
         self.download_audio()
 
-    #a def set_api_url(self, url):
-    #a     """
-    #a     changes the api-url (this might be necessary if to many requests have been made).
-    #a     :param url:
-    #a     """
-    #a     self.url_dict["linguee_api_base"] = url
-
     # GETTING DATA
     def request_dict_data(self):
         """

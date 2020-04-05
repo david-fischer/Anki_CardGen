@@ -27,14 +27,20 @@ class TestApp(MDApp):
 
     def build(self):
         self.Query = Query(search_term=self.search_term)
-        self.theme_cls.primary_palette = "Teal"  # "Purple", "Red"
-        self.theme_cls.theme_style = "Light"  # "Purple", "Red"
+        self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
+        self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
         return Builder.load_string("""
 BoxLayout:
     orientation: "vertical"
     MyTabs:
         id: my_tabs
 """)
+
+    def on_search_term(self,*args):
+        try:
+            self.Query.search_term = self.search_term
+        except AttributeError:
+            print("Query not yet initialized.")
 
 if __name__ == "__main__":
     TestApp(search_term="casa").run()
