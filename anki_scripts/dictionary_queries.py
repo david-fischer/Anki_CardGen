@@ -1,7 +1,11 @@
 import itertools
 import re
+
 import requests
 from bs4 import BeautifulSoup
+
+LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
+AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
 
 def get_soup_object(url):
@@ -10,23 +14,23 @@ def get_soup_object(url):
 
 languages = itertools.cycle(("de", "en", "es", "pt", "it", "fr", "el"))
 
-def ask_once(qry_str, lang, try_no, linguee_api_url):
-    print("querying ... (Language: %s)" % lang)
-    data = requests.get(linguee_api_url % (qry_str, lang))
-    print(data.status_code)
-    # print(data.json())
+
+def ask_once(qry_str, lang, try_no):
+    # print("querying ... (Language: %s)" % lang)
+    data = requests.get(qry_str % lang)
+    # print(qry_str % lang)
+    print(f"""Query to Linguee (to_lang:{lang}) returned status code {data.status_code}.""")
     if data.status_code == 200:
-        # print(data.json())
         if data.json()["exact_matches"] is None:
             lang = next(languages)
-            return ask_once(qry_str, lang, try_no + 1, linguee_api_url)
+            return ask_once(qry_str, lang, try_no + 1)
         return data.json()
     if data.status_code == 500:
         lang = next(languages)
         if try_no == 20:
             return {"exact_matches": None}
         else:
-            return ask_once(qry_str, lang, try_no + 1, linguee_api_url)
+            return ask_once(qry_str, lang, try_no + 1)
 
 
 def extract_info(response):
@@ -34,7 +38,8 @@ def extract_info(response):
         return None
     examples = []
     match = response["exact_matches"][0]
-    audio_id = match["audio_links"][0]["url_part"]
+    audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
+    audio_id = audio_ids["Brazilian Portuguese"]
     word_type = match["word_type"]["pos"]
     gender = match['word_type']['gender'][0] if word_type == 'noun' else ''
     real_ex = [x["src"] for x in response["real_examples"]]  # .sort(key = lambda s: len(s))
@@ -54,12 +59,17 @@ def extract_info(response):
     translations = [x["translations"] for x in response["exact_matches"]]
     translations = [[x["text"] for x in y] for y in translations]
     translation_string = "\n".join([", ".join(x) for x in translations])
-    return translation_string, audio_id, word_type, gender, examples
+    return translation_string, AUDIO_BASE_URL % audio_id, word_type, gender, examples
 
 
-def ask(qry_str, linguee_api_url):
-    qry_str= qry_str.replace(" ", "+")
-    return ask_once(qry_str, "de", 0, linguee_api_url)
+def ask(phrase, lang):
+    phrase = phrase.replace(" ", "+")
+    qry_str = LINGUEE_API_BASE_URL % (phrase, lang, "%s")
+    return ask_once(qry_str, "de", 0)
+
+
+def request_data_from_linguee(phrase, lang):
+    return extract_info(ask(phrase, lang))
 
 
 def get_element_after_regex(bs_obj, regex):
@@ -101,8 +111,7 @@ def request_synonyms_from_wordref(word):
     :param word:
     :return list_of_synonyms:
     """
-    url = "http://www.wordreference.com/sinonimos/%s" % word
-    soup = BeautifulSoup(requests.get(url).text)
+    soup = get_soup_object("http://www.wordreference.com/sinonimos/%s" % word)
     try:
         return soup.find_all(class_="trans clickable")[0].find_all("li")[0].text.split(",")
     except IndexError:

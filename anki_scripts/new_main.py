@@ -1,20 +1,17 @@
 import os
 import re
 import subprocess
-
 import attr
-import requests
 import wget
-from bs4 import BeautifulSoup
+
 from translate import Translator
 
 # OTHER PYTHON FILES IN SAME DIR
 from anki_scripts.add_card import add_image_card
-from anki_scripts.dictionary_queries import ask, extract_info, request_synonyms_from_wordref
+from anki_scripts.dictionary_queries import ask, extract_info, request_synonyms_from_wordref, request_data_from_linguee, \
+    request_data_from_dicio
 from google_images_download import google_images_download
 
-LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=es&dst=%s"
-AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 FROM_LANG = "pt"
 TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
@@ -38,19 +35,18 @@ def html_list(str_list):
 class Query:
     # query properties
     search_term = attr.ib(default="casa")
-    url_dict = attr.ib(default={"audio_base": AUDIO_BASE_URL,
-                                "linguee_api_base": LINGUEE_API_BASE_URL,
-                                })
     # word properties
-    type = attr.ib(default="")  # phrase or word
     word_type = attr.ib(default="")  # verb noun etc
     gender = attr.ib(default="")
-    audio_url = attr.ib(default="")
     examples = attr.ib(default=[])
+    explanations = attr.ib(default=[])
     synonyms = attr.ib(default=[])
+    antonyms = attr.ib(default=[])
     translated = attr.ib(default="")
     trans_syns = attr.ib(default=[])
     image_urls = attr.ib(default=[""])
+    audio_url = attr.ib(default="")
+    add_info_dict = attr.ib(default={})
     # other
     anki_user = attr.ib(default="new_user")
     output_path = attr.ib(default=".")
@@ -58,23 +54,21 @@ class Query:
 
     def __attrs_post_init__(self):
         self.search_term = self.search_term.strip().lower()
-        self.type = 'phrase' if ' ' in self.search_term else 'word'
         self.folder = self.search_term.replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
         self.synonyms = [syn for syn in request_synonyms_from_wordref(self.search_term) if syn != ""]
         self.trans_syns = [translator.translate(syn) for syn in self.synonyms]
         self.image_urls = self.request_img_urls()
         self.linguee_query()
-        self.audio_url = self.url_dict["audio_base"] % self.audio_url
         self.download_audio()
         self.mark_examples()
 
-    def set_api_url(self, url):
-        """
-        changes the api-url (this might be necessary if to many requests have been made).
-        :param url:
-        """
-        self.url_dict["linguee_api_base"] = url
+    #a def set_api_url(self, url):
+    #a     """
+    #a     changes the api-url (this might be necessary if to many requests have been made).
+    #a     :param url:
+    #a     """
+    #a     self.url_dict["linguee_api_base"] = url
 
     # GETTING DATA
     def linguee_query(self):
@@ -86,11 +80,18 @@ class Query:
         self.gender
         self.examples
         """
-        response = ask(self.search_term, self.url_dict["linguee_api"])
-        if self.type == "phrase":
-            self.translated, self.audio_url, _, _, self.examples = extract_info(response)
-        else:
-            self.translated, self.audio_url, self.word_type, self.gender, self.examples = extract_info(response)
+        self.translated, \
+        self.audio_url, \
+        self.word_type, \
+        self.gender, \
+        self.examples \
+            = request_data_from_linguee(self.search_term,FROM_LANG)
+        self.explanations, \
+        self.synonyms, \
+        self.antonyms, \
+        add_examples, \
+        self.add_info_dict = request_data_from_dicio(self.search_term)
+        self.examples += add_examples
 
     def download_audio(self):
         wget.download(self.audio_url, f"{self.folder}/{self.folder}.mp3")
@@ -169,3 +170,9 @@ class Query:
         subprocess.call(["bash -c \" timeout 3 anki -p %s %s/output.apkg \" " % (self.anki_user, self.output_path)],
                         shell=True)
         print("Finished")
+
+
+
+if __name__ == "__main__":
+    q = Query(search_term="mesa")
+    print(q)
