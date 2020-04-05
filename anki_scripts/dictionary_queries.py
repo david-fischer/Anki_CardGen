@@ -9,7 +9,15 @@ AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
 headers = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
-    'referrer': 'https://google.com',
+    'referrer': 'https://google.de',
+}
+
+linguee_headers = {
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap Chromium/80.0.3987.162 Chrome/80.0.3987.162 Safari/537.36",
+    "Referer": "https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&query=",
+    "Accept": 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    "Accept-Encoding": "gzip, deflate, br",
+    "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
 }
 
 
@@ -21,6 +29,7 @@ languages = itertools.cycle(("de", "en", "es", "pt", "it", "fr", "el"))
 
 
 def ask_once(qry_str, lang, try_no):
+    print("start_query")
     # print("querying ... (Language: %s)" % lang)
     data = requests.get(qry_str % lang)
     # print(qry_str % lang)
@@ -45,7 +54,10 @@ def extract_info(response):
     match = response["exact_matches"][0]
     audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
     audio_id = audio_ids["Brazilian Portuguese"]
-    word_type = match["word_type"]["pos"]
+    try:
+        word_type = match["word_type"]["pos"]
+    except KeyError:
+        word_type = ""
     gender = match['word_type']['gender'][0] if word_type == 'noun' else ''
     real_ex = [x["src"] for x in response["real_examples"]]  # .sort(key = lambda s: len(s))
     for key in match["translations"]:
@@ -100,7 +112,7 @@ def span_not_cl(tag):
 
 def request_data_from_dicio(phrase):
     phrase = phrase.replace(" ", "-")
-    bs = get_soup_object(f"https://www.dicio.com.br/{phrase}/")
+    bs = get_soup_object(f"https://www.dicio.com.br/pesquisa.php?q={phrase}/")
     explanations = [e.text for e in get_element_after_regex(bs, "Significado.*").find_all(span_not_cl)]
     examples = [phrase.text.strip() for phrase in bs.find_all("div", {"class": "frase"})]
     synonyms = [syn.text for syn in get_element_after_regex(bs, ".*sinônimo.*").find_all("a")]

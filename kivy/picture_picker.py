@@ -2,6 +2,7 @@ import glob
 import re
 from time import time
 
+import wget
 from kivy.effects.opacityscroll import OpacityScrollEffect
 from kivy.lang import Builder
 from kivy.properties import StringProperty, BooleanProperty, ListProperty, Property
@@ -25,7 +26,6 @@ class CallControl:
 
         return wrapped
 
-
 class CheckTile(Tile):
     source = StringProperty()
     alternative_source = StringProperty("assets/camera.png")
@@ -35,6 +35,19 @@ class CheckTile(Tile):
     unchecked_op = Property(0.6)
     opacity = Property(0.6)
 
+class ThumbnailTile(CheckTile):
+    url = StringProperty("")
+    has_been_checked = BooleanProperty(False)
+    is_loading = BooleanProperty(False)
+
+    def on_press(self):
+        super(ThumbnailTile, self).on_press()
+        self.has_been_checked = True
+
+    def on_has_been_checked(self):
+        new_source = self.source.replace("thumb","img")
+        wget.download(self.url,new_source)
+        self.source = new_source
 
 class LoadMoreOnOverscroll(OpacityScrollEffect):
 

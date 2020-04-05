@@ -19,6 +19,13 @@
             color: get_color_from_hex(colors["LightGreen"]["500"])
             opacity: root.opacity - 0.6
 
+<ThumbnailTile>:
+    MDSpinner:
+        id: spinner
+        active:root.is_loading
+        size_hint: 0.5,0.5
+        pos_hint:  {"center_x": .5, "center_y": .5}
+
 
 <ImgPick>:
     GridLayout:
@@ -40,11 +47,12 @@
 
     ImgPick:
         id: image_picker
-        source_folder: app.search_term
+        source_folder: app.word.folder
+
     MDFloatingActionButton:
         icon: "reload"
         pos_hint: {"center_x": .9, "center_y": .9}
-        on_release: image_picker.on_source_folder()
+        on_release: image_picker.source_folder = app.word.folder
 
     MDFloatingActionButton:
         icon: "minus"
@@ -58,7 +66,7 @@
 
     TextInput:
         text: "Search Term"
-        size_hint: 0.1,0.1
+        size_hint: 0.2,0.05
         pos_hint:  {"center_x": .5, "center_y": .9}
 
 

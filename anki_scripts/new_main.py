@@ -2,7 +2,7 @@ import os
 import re
 import subprocess
 from multiprocessing import Process
-
+from unidecode import unidecode
 import attr
 import wget
 
@@ -54,15 +54,18 @@ class Query:
     output_path = attr.ib(default=".")
     folder = attr.ib(default="")
 
+    def search_term_utf8(self):
+        return unidecode(self.search_term)
+
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
-        self.folder = self.search_term.replace(" ", "_")
+        self.folder = self.search_term_utf8().replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        img_p = Process(target=self.request_img_urls())
         dict_p  = Process(target=self.request_dict_data())
+        img_p = Process(target=self.request_img_urls())
         audio_p = Process(target=self.download_audio())
-        img_p.start()
         dict_p.start()
+        img_p.start()
         dict_p.join()
         audio_p.start()
 
@@ -99,9 +102,10 @@ class Query:
         Returns list of the urls of the images corresponding the thumbnails
         :return:list
         """
+        print(self.folder)
         response = google_images_download.googleimagesdownload()
-        arguments = {"keywords": self.search_term,
-                     "output_directory": self.search_term,
+        arguments = {"keywords": self.search_term_utf8(),
+                     "output_directory": self.folder,
                      "no_directory": True,
                      "limit": 10,
                      "format": "jpg",
@@ -111,15 +115,15 @@ class Query:
                      "prefix": "img_",
                      "save_source": "source",
                      }
-        paths = response.download(arguments)[0][self.search_term]
-        with open(f"{self.search_term}/source.txt") as file:
+        paths = response.download(arguments)[0][self.search_term_utf8()]
+        with open(f"{self.folder}/source.txt") as file:
             thumbnails = [line.split("\t")[0] for line in file]
             for count, thumb in enumerate(thumbnails):
                 try:
                     os.rename(thumb, f"{self.folder}/thumb_{count}.jpg")
                 except FileNotFoundError:
                     print(str(count) + " not found")
-            os.rmdir(f"{self.search_term}/ - thumbnail")
+            os.rmdir(f"{self.folder}/ - thumbnail")
             os.remove(f"{self.folder}/source.txt")
         self.image_urls = paths
 
