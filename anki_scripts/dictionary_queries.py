@@ -7,9 +7,14 @@ from bs4 import BeautifulSoup
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
 AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
+headers = {
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+    'referrer': 'https://google.com',
+}
+
 
 def get_soup_object(url):
-    return BeautifulSoup(requests.get(url).content, features="lxml")
+    return BeautifulSoup(requests.get(url,headers=headers).content, features="lxml")
 
 
 languages = itertools.cycle(("de", "en", "es", "pt", "it", "fr", "el"))
