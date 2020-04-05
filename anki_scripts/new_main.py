@@ -109,7 +109,7 @@ class Query:
                      "no_directory": True,
                      "limit": 10,
                      "format": "jpg",
-                     "language": LANGUAGE[FROM_LANG],
+                     "language": "Spanish",
                      "thumbnail_only": True,
                      "print_urls": True,
                      "prefix": "img_",

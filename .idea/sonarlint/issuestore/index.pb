@@ -1,8 +1,6 @@
 
 E
 anki_scripts/Query.py,f/b/fb883ee4581f00353f1e676c62c65ac158f4163d
-M
-anki_scripts/linguee_query.py,8/a/8a7494a7027e3e32ad4356fc72ba67ee380ff287
 H
 anki_scripts/new_main.py,5/1/511c7581c5cd65b6a3439bacc0226eb1cf42797c
 ^
@@ -25,3 +23,9 @@ B
 kivy/user_input.py,f/d/fde3978e332faeb455b89a4cc85f32b56bc021f6
 B
 kivy/user_input.kv,2/0/20548f9d1f0374ac479b052c6e5ec0a87524c1e5
+d
+4Pedir - Dicio, Dicionário Online de Português.html,f/0/f07bbdc300d3eb01fe0fe17db5f6eebf78a1b1a7
+I
+anki_scripts/comecar.html,d/4/d431ed3c995a8fe5bbf867055136046e28a96e1b
+R
+"anki_scripts/dictionary_queries.py,2/f/2f97c967ff3f06377075ffe56242d7027719cdbe
