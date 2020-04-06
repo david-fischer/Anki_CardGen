@@ -28,61 +28,37 @@ def get_soup_object(url):
 languages = itertools.cycle(("de", "en", "es", "pt", "it", "fr", "el"))
 
 
-def ask_once(qry_str, lang, try_no):
+def ask_once(qry_str, lang):
     print("start_query")
-    # print("querying ... (Language: %s)" % lang)
     data = requests.get(qry_str % lang)
-    # print(qry_str % lang)
     print(f"""Query to Linguee (to_lang:{lang}) returned status code {data.status_code}.""")
-    if data.status_code == 200:
-        if data.json()["exact_matches"] is None:
-            lang = next(languages)
-            return ask_once(qry_str, lang, try_no + 1)
-        return data.json()
-    if data.status_code == 500:
-        lang = next(languages)
-        if try_no == 20:
-            return {"exact_matches": None}
-        else:
-            return ask_once(qry_str, lang, try_no + 1)
-
+    return data.json() if data.status_code==200 else None
 
 def extract_info(response):
-    if response["exact_matches"] is None:
+    if response is None:
         return None
-    examples = []
+    elif response["exact_matches"] is None:
+        return None
     match = response["exact_matches"][0]
     audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
-    audio_id = audio_ids["Brazilian Portuguese"]
+    audio_url = AUDIO_BASE_URL %  audio_ids["Brazilian Portuguese"]
     try:
         word_type = match["word_type"]["pos"]
     except KeyError:
         word_type = ""
     gender = match['word_type']['gender'][0] if word_type == 'noun' else ''
-    real_ex = [x["src"] for x in response["real_examples"]]  # .sort(key = lambda s: len(s))
-    for key in match["translations"]:
-        try:
-            examples.append(key["examples"][0]["source"])
-        except IndexError:
-            pass
-    examples = list(set(examples))
-    i = len(examples)
-    for x in real_ex:
-        if len(x) < 150:
-            examples.append(x)
-            i += 1
-        if i == 3:
-            break
-    translations = [x["translations"] for x in response["exact_matches"]]
-    translations = [[x["text"] for x in y] for y in translations]
-    translation_string = "\n".join([", ".join(x) for x in translations])
-    return translation_string, AUDIO_BASE_URL % audio_id, word_type, gender, examples
+    # translations = [x["translations"] for x in response["exact_matches"]]
+    # translations = [x["text"] for x in y] for y in translations]
+    translations = [entry["text"] for match in response["exact_matches"] for entry in match["translations"]]
+    # translation_string = "\n".join([", ".join(x) for x in translations])
+    print(translations)
+    return translations, audio_url, word_type, gender
 
 
 def ask(phrase, lang):
     phrase = phrase.replace(" ", "+")
     qry_str = LINGUEE_API_BASE_URL % (phrase, lang, "%s")
-    return ask_once(qry_str, "de", 0)
+    return ask_once(qry_str, "de")
 
 
 def request_data_from_linguee(phrase, lang):

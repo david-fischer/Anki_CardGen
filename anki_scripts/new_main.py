@@ -44,7 +44,7 @@ class Query:
     explanations = attr.ib(default=[])
     synonyms = attr.ib(default=[])
     antonyms = attr.ib(default=[])
-    translated = attr.ib(default="")
+    translations = attr.ib(default=[])
     trans_syns = attr.ib(default=[])
     image_urls = attr.ib(default=[""])
     audio_url = attr.ib(default="")
@@ -69,28 +69,29 @@ class Query:
         dict_p.join()
         audio_p.start()
 
-    # GETTING DATA
     def request_dict_data(self):
         """
         Uses ask from dictionary_queries.py to fill the fields:
-        self.translated
+        self.translations
         self.audio_url
         self.word_type
         self.gender
         self.examples
+        self.explanations
+        self.synonyms
+        self.antonyms
+        self.add_info_dict
         """
-        self.translated, \
+        self.translations, \
         self.audio_url, \
         self.word_type, \
         self.gender, \
-        self.examples \
             = request_data_from_linguee(self.search_term, FROM_LANG)
         self.explanations, \
         self.synonyms, \
         self.antonyms, \
-        add_examples, \
+        self.examples, \
         self.add_info_dict = request_data_from_dicio(self.search_term)
-        self.examples += add_examples
 
     def download_audio(self):
         wget.download(self.audio_url, f"{self.folder}/{self.folder}.mp3")
@@ -153,7 +154,7 @@ class Query:
         """
         syn_str = ", ".join(self.synonyms)
         ex_str = html_list(self.examples)
-        hint_str = self.translated.replace("\n", "<br />")
+        hint_str = self.translations.replace("\n", "<br />")
         add_image_card(word=self.search_term,
                        file=self.folder,
                        synonyms=syn_str,
