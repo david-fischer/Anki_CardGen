@@ -24,12 +24,14 @@
             size_hint: 0.,None
         MDFloatingActionButton:
             icon: "magnify"
-            on_release: app.search_term = root.search_term;app.word.get_data();root.refresh_data();root.post_init();print(root.print_all())
+            on_release: app.search_term = root.search_term;app.word.get_data();root.refresh_data()
 
+    MDSeparator:
 
     MyChooseChip:
         id: gender_chips
         choose_one: True
+        opacity:1
 
         MyChip:
             unselected_chip_color: get_color_from_hex(colors["Blue"]["200"])
@@ -48,35 +50,53 @@
             unselected_chip_color: get_color_from_hex(colors["Gray"]["400"])
             selected_chip_color: get_color_from_hex(colors["Gray"]["800"])
             icon: "minus"
+    MDSeparator:
+
+    MDDropDownItem:
+        id: explanation_dropdown
+        items: ["Explanation"]
+        dropdown_width_mult: 100
+        pos_hint: {"center_x":0.5,"center_y":0.5}
+        #dropdown_bg: [1, 1, 1, 1]
+
+    MDSeparator:
+
+    MyChooseChip:
+        id: translation_chips
+        choose_one: False
+
+        MyChip:
+            label: "Translations"
 
 
-    MDTextField:
-        id: translation_field
-        hint_text: "translation Term"
-        text: root.translation
-        on_text: root.translation = self.text
-
-    MDTextField:
-        id: search_field
-        hint_text: "Search Term"
-        text: root.search_term
-        on_text: root.search_term = self.text
+    MDSeparator:
 
     MyChooseChip:
         id: synonym_chips
         choose_one: False
 
+        MyChip:
+            label: "Synonyms"
+
+    MDSeparator:
+
     MyChooseChip:
         id: antonym_chips
         choose_one: False
+
+        MyChip:
+            label: "Antonyms"
+
+    MDSeparator:
+
 
     MyChooseChip:
         id: example_chips
         choose_one: False
 
-    MyChooseChip:
-        id: explanation_chips
-        choose_one: False
+        MyChip:
+            label: "Examples"
+
 
 
     Widget:
