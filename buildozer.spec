@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Picture Picker!
+title = Anki Helper!
 
 # (str) Package name
-package.name = picture_picker
+package.name = anki_helper
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.picture_picker
+package.domain = com.aaa.ankihelper
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -22,10 +22,11 @@ source.include_exts = py,png,jpg,kv,atlas
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-#source.exclude_dirs = tests, bin
+# source.exclude_dirs = anki_scripts/anki-interactive,google-images-download
 
 # (list) List of exclusions using pattern matching
-#source.exclude_patterns = license,images/*/*.jpg
+#source.exclude_patterns = anki_scripts/anki-interactive/
+#license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
 version = 0.1
@@ -36,7 +37,8 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy,kivymd
+requirements = python3, kivy, kivymd, kivymd==0.104.0, genanki==0.8.0, attrs==19.3.0, selenium==3.141.0, wget==3.2, Unidecode==1.1.1, requests, translate==3.5.0, beautifulsoup4==4.9.0
+
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -85,7 +87,7 @@ fullscreen = 0
 #android.presplash_color = #FFFFFF
 
 # (list) Permissions
-#android.permissions = INTERNET
+android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
 #android.api = 27

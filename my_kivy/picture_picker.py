@@ -1,5 +1,3 @@
-import glob
-import re
 from time import time
 from urllib.error import HTTPError
 
@@ -41,7 +39,7 @@ class CheckTile(Tile):
     def reload_image(self):
         self.ids.float_layout.remove_widget(self.ids.fit_image)
         self.ids.float_layout.add_widget(FitImage(id="fit_image",
-                                                  pos_hint={"center_x":0.5,"center_y":0.5},
+                                                  pos_hint={"center_x": 0.5, "center_y": 0.5},
                                                   source=self.source))
 
 
@@ -54,7 +52,7 @@ class ThumbnailTile(CheckTile):
         super(ThumbnailTile, self).on_press()
         self.has_been_checked = True
 
-    def on_has_been_checked(self,*args):
+    def on_has_been_checked(self, *args):
         self.ids.spinner.active = True
         new_source = self.source.replace("thumb", "img")
         try:
@@ -63,6 +61,7 @@ class ThumbnailTile(CheckTile):
         except HTTPError:
             print(f"Could not find image under {self.url}")
         self.ids.spinner.active = False
+
 
 class LoadMoreOnOverscroll(OpacityScrollEffect):
 
@@ -81,6 +80,7 @@ class LoadMoreOnOverscroll(OpacityScrollEffect):
 class ImgPick(ScrollView):
     effect_cls = LoadMoreOnOverscroll
     source_folder = StringProperty("assets")
+
     # source_list = ListProperty([])
 
     # def get_img_list(self):
@@ -98,10 +98,10 @@ class ImgPick(ScrollView):
     def refresh_view(self):
         word = MDApp.get_running_app().word
         self.remove_unchecked()
-        for i,url in enumerate(word.image_urls):
+        for i, url in enumerate(word.image_urls):
             self.ids.grid_layout.add_widget(ThumbnailTile(
-                url = url,
-                source = f"{self.source_folder}/thumb_{i}.jpg"
+                url=url,
+                source=f"{self.source_folder}/thumb_{i}.jpg"
             ))
 
     # def on_source_folder(self, *args):
@@ -114,8 +114,10 @@ class ImgPick(ScrollView):
         checked_children = [child for child in self.ids.grid_layout.children if child.checked]
         return [checked_tile.source for checked_tile in checked_children]
 
+class ImagePickerMain:
+    pass
 
-Builder.load_file("picture_picker.kv")
+Builder.load_file("my_kivy/picture_picker.kv")
 
 if __name__ == "__main__":
     class MainApp(MDApp):

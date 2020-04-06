@@ -24,6 +24,10 @@ B
 R
 "anki_scripts/dictionary_queries.py,2/f/2f97c967ff3f06377075ffe56242d7027719cdbe
 H
-anki_scripts/yad_args.py,b/0/b0c3f26329af5e2f1810014acf2f14bf9659d8b1
-H
 anki_scripts/add_card.py,b/d/bd5e310b21f302f01515dd4d781e5bb2cf1f5028
+a
+1anki_scripts/anki-interactive/src/cloze-back.html,2/8/280991092d7bf9c8cc1618653f344c24bd39488a
+S
+#anki_scripts/convert_kindle_html.py,d/c/dc8cddfbd8d68e3a3da660dbae8299dba5dd600a
+>
+buildozer.spec,d/6/d6026de0c227fd18a6f7526586c7467703164c7b

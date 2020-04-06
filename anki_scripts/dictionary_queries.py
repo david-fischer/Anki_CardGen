@@ -32,26 +32,23 @@ def ask_once(qry_str, lang):
     print("start_query")
     data = requests.get(qry_str % lang)
     print(f"""Query to Linguee (to_lang:{lang}) returned status code {data.status_code}.""")
-    return data.json() if data.status_code==200 else None
+    return data.json() if data.status_code == 200 else None
+
 
 def extract_info(response):
-    if response is None:
+    try:
+        match = response["exact_matches"][0]
+    except KeyError or IndexError:
+        print("Got no valid response.")
         return None
-    elif response["exact_matches"] is None:
-        return None
-    match = response["exact_matches"][0]
     audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
-    audio_url = AUDIO_BASE_URL %  audio_ids["Brazilian Portuguese"]
+    audio_url = AUDIO_BASE_URL % audio_ids["Brazilian Portuguese"]
     try:
         word_type = match["word_type"]["pos"]
     except KeyError:
         word_type = ""
     gender = match['word_type']['gender'][0] if word_type == 'noun' else ''
-    # translations = [x["translations"] for x in response["exact_matches"]]
-    # translations = [x["text"] for x in y] for y in translations]
     translations = [entry["text"] for match in response["exact_matches"] for entry in match["translations"]]
-    # translation_string = "\n".join([", ".join(x) for x in translations])
-    print(translations)
     return translations, audio_url, word_type, gender
 
 

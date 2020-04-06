@@ -3,9 +3,9 @@ from kivy.properties import StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 
-from mychip import MyChip
+from my_kivy.mychip import MyChip
 
-Builder.load_file("user_input.kv")
+Builder.load_file("my_kivy/user_input.kv")
 
 
 class WordProperties(BoxLayout):
@@ -30,7 +30,7 @@ class WordProperties(BoxLayout):
             self.ids.antonym_chips.add_widget(MyChip(label=ant, icon='', check=True))
         for ex in word.examples[:self.display_limit]:
             self.ids.example_chips.add_widget(MyChip(label=ex, icon='', check=True))
-        self.ids.explanation_dropdown.items=["Explanation"]+word.explanations
+        self.ids.explanation_dropdown.items = ["Explanation"] + word.explanations
 
     def print_all(self):
         print(f""""

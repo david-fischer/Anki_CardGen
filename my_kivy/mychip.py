@@ -1,23 +1,17 @@
-from kivy.animation import Animation
-from kivy.metrics import dp
+from kivy.lang import Builder
 from kivy.properties import (
     StringProperty,
     ListProperty,
     ObjectProperty,
     BooleanProperty,
-    NumericProperty,
-    Property)
+    NumericProperty)
 from kivy.uix.boxlayout import BoxLayout
-from kivy.lang import Builder
 from kivy.uix.stacklayout import StackLayout
-from kivy.utils import get_color_from_hex
 from kivymd.app import MDApp
-from kivymd.color_definitions import colors
-
-from kivymd.uix.button import MDIconButton
 from kivymd.theming import ThemableBehavior
 
-Builder.load_file("mychip.kv")
+Builder.load_file("my_kivy/mychip.kv")
+
 
 class MyChip(BoxLayout, ThemableBehavior):
     label = StringProperty()
@@ -46,7 +40,7 @@ class MyChip(BoxLayout, ThemableBehavior):
         if self.collide_point(*touch.pos):
             if self.parent.choose_one:
                 for chip in self.parent.children:
-                    chip.selected=False
+                    chip.selected = False
                 self.selected = True
 
             else:
@@ -59,10 +53,10 @@ class MyChooseChip(StackLayout):
     choose_one = BooleanProperty("True")
 
     def get_selected(self):
-        return [ chip.label
-            for chip in self.children
-            if chip.selected
-        ]
+        return [chip.label
+                for chip in self.children
+                if chip.selected
+                ]
 
 
 if __name__ == "__main__":
@@ -97,5 +91,6 @@ BoxLayout:
             icon: "plus"
 
 """)
+
 
     TestApp().run()
