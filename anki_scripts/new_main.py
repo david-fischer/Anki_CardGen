@@ -1,6 +1,5 @@
 import os
 import re
-import subprocess
 from multiprocessing import Process
 
 import attr
@@ -8,7 +7,6 @@ import wget
 from translate import Translator
 from unidecode import unidecode
 
-from anki_scripts.add_card import add_image_card
 from anki_scripts.dictionary_queries import request_data_from_linguee, \
     request_data_from_dicio
 from google_images_download import google_images_download
@@ -145,31 +143,6 @@ class Query:
         for word in self.search_term.split(" "):
             self.examples = [re.sub(r'((?i)%s)' % word, r'<font color=red><b>\1</font></b>', ex) for ex in
                              self.examples]
-
-    def generate_card(self):
-        """
-        Calls add_image_card to generate a card from the obtained data.
-        The card is saved in output.apkg in the working dir.
-        """
-        syn_str = ", ".join(self.synonyms)
-        ex_str = html_list(self.examples)
-        hint_str = self.translations.replace("\n", "<br />")
-        add_image_card(word=self.search_term,
-                       file=self.folder,
-                       synonyms=syn_str,
-                       hint=hint_str,
-                       examples=ex_str)
-
-    # ADD CARD TO DECK OR DECK TO ANKI-APP
-
-    def import_card_to_deck(self):
-        """
-        Adds the output.apk file to the user self.anki_user
-        """
-        print("Importing Card to Deck")
-        subprocess.call(["bash -c \" timeout 3 anki -p %s %s/output.apkg \" " % (self.anki_user, self.output_path)],
-                        shell=True)
-        print("Finished")
 
 
 if __name__ == "__main__":
