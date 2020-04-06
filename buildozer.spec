@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Anki Helper!
+title = Anki Helper
 
 # (str) Package name
-package.name = anki_helper
+package.name = ankihelperapp
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = com.aaa.ankihelper
+package.domain = org.ankihelper
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -22,11 +22,10 @@ source.include_exts = py,png,jpg,kv,atlas
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-# source.exclude_dirs = anki_scripts/anki-interactive,google-images-download
+source.exclude_dirs = bin
 
 # (list) List of exclusions using pattern matching
-#source.exclude_patterns = anki_scripts/anki-interactive/
-#license,images/*/*.jpg
+#source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
 version = 0.1
@@ -87,7 +86,7 @@ fullscreen = 0
 #android.presplash_color = #FFFFFF
 
 # (list) Permissions
-android.permissions = INTERNET
+#android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
 #android.api = 27
