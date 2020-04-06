@@ -1,6 +1,7 @@
 import glob
 import re
 from time import time
+from urllib.error import HTTPError
 
 import wget
 from kivy.effects.opacityscroll import OpacityScrollEffect
@@ -9,6 +10,7 @@ from kivy.properties import StringProperty, BooleanProperty, ListProperty, Prope
 from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
 from kivymd.uix.imagelist import Tile
+from kivymd.utils.fitimage import FitImage
 
 
 class CallControl:
@@ -33,8 +35,14 @@ class CheckTile(Tile):
     color = ListProperty([0, 0, 0, 0])
     checked = BooleanProperty(False)
     checked_op = Property(1)
-    unchecked_op = Property(0.6)
-    opacity = Property(0.6)
+    unchecked_op = Property(0.5)
+    opacity = Property(0.5)
+
+    def reload_image(self):
+        self.ids.float_layout.remove_widget(self.ids.fit_image)
+        self.ids.float_layout.add_widget(FitImage(id="fit_image",
+                                                  pos_hint={"center_x":0.5,"center_y":0.5},
+                                                  source=self.source))
 
 
 class ThumbnailTile(CheckTile):
@@ -46,11 +54,15 @@ class ThumbnailTile(CheckTile):
         super(ThumbnailTile, self).on_press()
         self.has_been_checked = True
 
-    def on_has_been_checked(self):
+    def on_has_been_checked(self,*args):
+        self.ids.spinner.active = True
         new_source = self.source.replace("thumb", "img")
-        wget.download(self.url, new_source)
-        self.source = new_source
-
+        try:
+            wget.download(self.url, new_source)
+            self.source = new_source
+        except HTTPError:
+            print(f"Could not find image under {self.url}")
+        self.ids.spinner.active = False
 
 class LoadMoreOnOverscroll(OpacityScrollEffect):
 
@@ -69,25 +81,34 @@ class LoadMoreOnOverscroll(OpacityScrollEffect):
 class ImgPick(ScrollView):
     effect_cls = LoadMoreOnOverscroll
     source_folder = StringProperty("assets")
-    source_list = ListProperty([])
+    # source_list = ListProperty([])
 
-    def get_img_list(self):
-        return [
-            f
-            for f in glob.glob(f"{self.source_folder}/*")
-            if re.match(r'.*(jpg|png)', f)
-        ]
+    # def get_img_list(self):
+    #     return [
+    #         f
+    #         for f in glob.glob(f"{self.source_folder}/*")
+    #         if re.match(r'.*(jpg|png)', f)
+    #     ]
 
     def remove_unchecked(self):
         unchecked_children = [child for child in self.ids.grid_layout.children if not child.checked]
         for child in unchecked_children:
             self.ids.grid_layout.remove_widget(child)
 
-    def on_source_folder(self, *args):
-        self.source_list = self.get_img_list()
+    def refresh_view(self):
+        word = MDApp.get_running_app().word
         self.remove_unchecked()
-        for image_source in self.source_list:
-            self.ids.grid_layout.add_widget(CheckTile(source=image_source))
+        for i,url in enumerate(word.image_urls):
+            self.ids.grid_layout.add_widget(ThumbnailTile(
+                url = url,
+                source = f"{self.source_folder}/thumb_{i}.jpg"
+            ))
+
+    # def on_source_folder(self, *args):
+    #     self.source_list = self.get_img_list()
+    #     self.remove_unchecked()
+    #     for image_source in self.source_list:
+    #         self.ids.grid_layout.add_widget(CheckTile(source=image_source))
 
     def get_checked(self):
         checked_children = [child for child in self.ids.grid_layout.children if child.checked]
@@ -109,7 +130,7 @@ FloatLayout:
         
     ImgPick:
         id: image_picker
-        source_folder: "anki_scripts/casa/casa"
+        source_folder: app.word.folder
     
     MDFloatingActionButton:
         icon: "reload"

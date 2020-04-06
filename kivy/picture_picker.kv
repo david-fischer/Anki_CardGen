@@ -5,26 +5,22 @@
 <CheckTile>:
     on_press: self.checked = not self.checked# print(self.checked,self.opacity)
     on_checked: self.opacity = self.checked_op if self.checked else self.unchecked_op
+    on_source: self.reload_image()#root.source if exists(root.source) else root.alternative_source
+
     FloatLayout:
+        id: float_layout
         size_hint: 1,1
         FitImage:
-            id: fit_image_id
+            id: fit_image
             pos_hint: {"center_x": .5, "center_y": .5}
             source: root.source if exists(root.source) else root.alternative_source
 
-        MDIcon:
-            pos_hint: {"center_x": .5, "center_y": .5}
-            font_size: 400
-            icon:"check-circle-outline"
-            color: get_color_from_hex(colors["LightGreen"]["500"])
-            opacity: root.opacity - 0.6
+        MDSpinner:
+            id: spinner
+            active:root.is_loading
+            size_hint: 0.5,0.5
+            pos_hint:  {"center_x": .5, "center_y": .5}
 
-<ThumbnailTile>:
-    MDSpinner:
-        id: spinner
-        active:root.is_loading
-        size_hint: 0.5,0.5
-        pos_hint:  {"center_x": .5, "center_y": .5}
 
 
 <ImgPick>:
@@ -52,7 +48,7 @@
     MDFloatingActionButton:
         icon: "reload"
         pos_hint: {"center_x": .9, "center_y": .9}
-        on_release: image_picker.source_folder = app.word.folder
+        on_release: image_picker.source_folder = app.word.folder; image_picker.refresh_view()
 
     MDFloatingActionButton:
         icon: "minus"
