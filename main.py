@@ -1,10 +1,14 @@
+import os
+
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabs, MDTabsBase
-
+import certifi
 from anki_scripts.new_main import Query
+
+os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
 class Tab(FloatLayout, MDTabsBase):

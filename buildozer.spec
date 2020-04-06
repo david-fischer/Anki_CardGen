@@ -36,7 +36,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, kivymd, kivymd==0.104.0, genanki==0.8.0, attrs==19.3.0, selenium==3.141.0, wget==3.2, Unidecode==1.1.1, requests, translate==3.5.0, beautifulsoup4==4.9.0, lxml
+requirements = python3, kivy, kivymd, kivymd==0.104.0, genanki==0.8.0, attrs==19.3.0, selenium==3.141.0, wget==3.2, Unidecode==1.1.1, requests, translate==3.5.0, beautifulsoup4==4.9.0, lxml, certifi
 
 
 # (str) Custom source folders for requirements
@@ -86,7 +86,7 @@ fullscreen = 0
 #android.presplash_color = #FFFFFF
 
 # (list) Permissions
-#android.permissions = INTERNET
+android.permissions = INTERNET
 
 # (int) Target Android API, should be as high as possible.
 #android.api = 27

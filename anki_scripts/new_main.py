@@ -43,7 +43,7 @@ class Query:
     antonyms = attr.ib(default=[])
     translations = attr.ib(default=[])
     trans_syns = attr.ib(default=[])
-    image_urls = attr.ib(default=[""])
+    image_urls = attr.ib(default=[])
     audio_url = attr.ib(default="")
     add_info_dict = attr.ib(default={})
     # other
@@ -59,10 +59,13 @@ class Query:
         self.folder = self.search_term_utf8().replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
         dict_p = Process(target=self.request_dict_data())
-        img_p = Process(target=self.request_img_urls())
+        try:
+            self.request_img_urls()
+        except:
+            print("could not download images :(")
         audio_p = Process(target=self.download_audio())
         dict_p.start()
-        img_p.start()
+        # img_p.start()
         dict_p.join()
         audio_p.start()
 
