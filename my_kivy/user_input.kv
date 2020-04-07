@@ -1,5 +1,6 @@
 #: import colors  kivymd.color_definitions.colors
 #: import get_color_from_hex kivy.utils.get_color_from_hex
+#: import pickle pickle
 
 
 <MDTextField>:
@@ -25,6 +26,14 @@
         MDFloatingActionButton:
             icon: "magnify"
             on_release: app.search_term = root.search_term;app.word.get_data();root.refresh_data()
+
+        MDFloatingActionButton:
+            icon: "content-save"
+            on_release: pickle.dump(app.word,open("temp.p","wb")),print(f"pickeled {app.word}.")
+
+        MDFloatingActionButton:
+            icon: "folder-open-outline"
+            on_release: app.word = pickle.load(open("temp.p","rb")); root.refresh_data()
 
     MDSeparator:
 

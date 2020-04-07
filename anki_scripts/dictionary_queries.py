@@ -77,14 +77,8 @@ def get_element_after_regex(bs_obj, regex):
     return match.parent.find_next()
 
 
-def dict_from_bs_text(bs_obj):
-    return_dict = {}
-    if bs_obj is BeautifulSoup(features="lxml"):
-        return return_dict
-    for line in bs_obj.text.strip().splitlines():
-        key, value = line.split(": ")
-        return_dict[key.strip()] = value.strip()
-    return return_dict
+def to_stripped_multiline_str(bs_obj):
+    return "\n".join([line.strip() for line in bs_obj.text.strip().splitlines()])
 
 
 def span_not_cl(tag):
@@ -98,7 +92,7 @@ def request_data_from_dicio(phrase):
     examples = [phrase.text.strip() for phrase in bs.find_all("div", {"class": "frase"})]
     synonyms = [syn.text for syn in get_element_after_regex(bs, ".*sinônimo.*").find_all("a")]
     antonyms = [syn.text for syn in get_element_after_regex(bs, ".*contrário.*").find_all("a")]
-    add_info_dict = dict_from_bs_text(get_element_after_regex(bs, "Definição.*"))
+    add_info_dict = to_stripped_multiline_str(get_element_after_regex(bs, "Definição.*"))
     return explanations, synonyms, antonyms, examples, add_info_dict
 
 
