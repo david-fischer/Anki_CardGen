@@ -1,6 +1,5 @@
 import os
 import re
-from multiprocessing import Process
 
 import attr
 import wget
@@ -8,7 +7,7 @@ from translate import Translator
 from unidecode import unidecode
 
 from anki_scripts.dictionary_queries import request_data_from_linguee, \
-    request_data_from_dicio
+    request_data_from_dicio, request_examples_from_reverso
 from google_images_download import google_images_download
 
 FROM_LANG = "pt"
@@ -92,6 +91,8 @@ class Query:
         self.antonyms, \
         self.examples, \
         self.add_info_dict = request_data_from_dicio(self.search_term)
+        self.examples = [[ex, translator.translate(ex)] for ex in self.examples] + request_examples_from_reverso(
+            self.search_term)
 
     def download_audio(self):
         wget.download(self.audio_url, f"{self.folder}/{self.folder}.mp3")
@@ -127,17 +128,6 @@ class Query:
             os.rmdir(f"{self.folder}/ - thumbnail")
             os.remove(f"{self.folder}/source.txt")
         self.image_urls = paths
-
-    # GETTING USER INPUT
-    # field_list = yad_args(path=self.output_path,
-    #                       search_term=self.search_term,
-    #                       translated=self.translated,
-    #                       folder=self.folder,
-    #                       gender=self.gender,
-    #                       synonyms=self.synonyms,
-    #                       examples=self.examples)
-
-    # GENERATE ANKI CARDS FROM DATA
 
     def mark_examples(self):
         """
