@@ -7,7 +7,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty, BooleanProperty, ListProperty, Property
 from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
-from kivymd.uix.imagelist import Tile
+from kivymd.uix.imagelist import Tile, SmartTile
 from kivymd.utils.fitimage import FitImage
 
 
@@ -99,9 +99,10 @@ class ImgPick(ScrollView):
         word = MDApp.get_running_app().word
         self.remove_unchecked()
         for i, url in enumerate(word.image_urls):
-            self.ids.grid_layout.add_widget(ThumbnailTile(
-                url=url,
-                source=f"{self.source_folder}/thumb_{i}.jpg"
+            self.ids.grid_layout.add_widget(SmartTile(
+                source=url
+                # url=url,
+                # source=f"{self.source_folder}/thumb_{i}.jpg"
             ))
 
     # def on_source_folder(self, *args):
@@ -114,8 +115,10 @@ class ImgPick(ScrollView):
         checked_children = [child for child in self.ids.grid_layout.children if child.checked]
         return [checked_tile.source for checked_tile in checked_children]
 
+
 class ImagePickerMain:
     pass
+
 
 Builder.load_file("my_kivy/picture_picker.kv")
 

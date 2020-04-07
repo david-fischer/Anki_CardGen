@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
 AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
-headers = {
+def_headers = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
     'referrer': 'https://google.de',
 }
@@ -20,8 +20,16 @@ linguee_headers = {
     "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
 }
 
+reverso_header = {
+    "user-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Referer": "https://google.com",
+}
 
-def get_soup_object(url):
+
+def get_soup_object(url, headers=def_headers):
     return BeautifulSoup(requests.get(url, headers=headers).content, features="lxml")
 
 
@@ -109,6 +117,17 @@ def request_synonyms_from_wordref(word):
         return []
 
 
+def request_examples_from_reverso(search_term):
+    bs = get_soup_object(f'https://context.reverso.net/traducao/portugues-ingles/{search_term}',
+                         headers=reverso_header)
+    return [
+        [
+            x.find("div", {"class": "src ltr"}).text.strip(),
+            x.find("div", {"class": "trg ltr"}).text.strip(),
+        ]
+        for x in bs.find_all("div", {"class": "example"})
+    ]
+
+
 if __name__ == "__main__":
     pass
-    # tests here
