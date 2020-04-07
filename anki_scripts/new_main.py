@@ -58,16 +58,16 @@ class Query:
         self.search_term = self.search_term.strip().lower()
         self.folder = self.search_term_utf8().replace(" ", "_")
         os.makedirs(self.folder, exist_ok=True)
-        dict_p = Process(target=self.request_dict_data())
+        self.request_dict_data()
         try:
             self.request_img_urls()
         except:
             print("could not download images :(")
-        audio_p = Process(target=self.download_audio())
-        dict_p.start()
+        self.download_audio()
+        # dict_p.start()
         # img_p.start()
-        dict_p.join()
-        audio_p.start()
+        # dict_p.join()
+        # audio_p.start()
 
     def request_dict_data(self):
         """
