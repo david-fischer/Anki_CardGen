@@ -57,7 +57,7 @@ class Query:
 
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
-        os.makedirs(self.folder(), exist_ok=True)
+        os.makedirs(f"data/{self.folder()}", exist_ok=True)
         self.request_dict_data()
         try:
             self.request_img_urls()
@@ -96,16 +96,15 @@ class Query:
             self.search_term)
 
     def download_audio(self):
-        wget.download(self.audio_url, f"{self.folder()}/{self.folder()}.mp3")
+        wget.download(self.audio_url, f"data/{self.folder()}/{self.folder()}.mp3")
 
     def request_img_urls(self):
         """
         sets self.img_urls from first 20 results of google_images
         """
-        print(self.folder())
         response = google_images_download.googleimagesdownload()
         arguments = {"keywords": self.search_term_utf8(),
-                     "output_directory": self.folder(),
+                     "output_directory": f"data/{self.folder()}",
                      "no_directory": True,
                      "limit": 20,
                      "format": "jpg",

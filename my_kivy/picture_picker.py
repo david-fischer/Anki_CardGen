@@ -72,11 +72,11 @@ class LoadMoreOnOverscroll(OpacityScrollEffect):
 
     @CallControl(max_call_interval=3)
     def refresh(self):
-        # print("refresh")
-        app = MDApp.get_running_app()
-        print(app.root.ids.spinner.active)
-        app.root.ids.image_picker.display_no += 10
-        app.root.ids.image_picker.relaod()
+        print("overscroll")
+        # app = MDApp.get_running_app()
+        # print(app.root.ids.image_picker_main)
+        # app.root.ids.image_picker.display_no += 10
+        # app.root.ids.image_picker.relaod()
         # app.root.ids.spinner.active = False
 
 

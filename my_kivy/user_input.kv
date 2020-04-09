@@ -26,7 +26,7 @@
         MDFloatingActionButton:
             id: search_button
             icon: "magnify"
-            on_release: app.search_term = root.search_term;app.word.get_data();root.refresh_data()
+            on_release: root.search()
 
         MDFloatingActionButton:
             id: save_button
@@ -36,7 +36,7 @@
         MDFloatingActionButton:
             id: load_button
             icon: "folder-open-outline"
-            on_release: app.word.search_term = search_field.text;print(app.word);root.unpickle();root.refresh_data()
+            on_release: app.word.search_term = search_field.text;root.unpickle();root.refresh_data()
 
     MDSeparator:
 

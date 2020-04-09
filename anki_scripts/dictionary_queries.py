@@ -43,12 +43,16 @@ def ask_once(qry_str, lang):
     return data.json() if data.status_code == 200 else None
 
 
+class NoMatchError(Exception):
+    pass
+
+
 def extract_info(response):
     try:
         match = response["exact_matches"][0]
-    except KeyError or IndexError:
+    except TypeError:
         print("Got no valid response.")
-        return None
+        raise NoMatchError
     audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
     audio_url = AUDIO_BASE_URL % audio_ids["Brazilian Portuguese"]
     try:

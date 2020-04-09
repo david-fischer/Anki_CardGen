@@ -6,6 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 import pickle
 
+from anki_scripts.dictionary_queries import NoMatchError
 from my_kivy.mychip import MyChip
 
 Builder.load_file("my_kivy/user_input.kv")
@@ -35,13 +36,19 @@ class WordProperties(BoxLayout):
         #     self.ids.example_chips.add_widget(MyChip(label=ex, icon='', check=True))
         self.ids.explanation_dropdown.items = ["Explanation"] + word.explanations
 
+    def search(self):
+        MDApp.get_running_app().word.search_term = self.search_term;
+        try:
+            MDApp.get_running_app().word.get_data()
+        except NoMatchError:
+            print("No word or phrase found. Maybe some apostrophs are missing or some connection issue?")
+
     def load_or_search(self):
         MDApp.get_running_app().search_term = self.search_term
         if os.path.exists(f"pickles/{MDApp.get_running_app().word.folder()}.p"):
             self.unpickle()
         else:
-            MDApp.get_running_app().word.get_data()
-            self.pickle()
+            self.search()
         self.refresh_data()
 
 
