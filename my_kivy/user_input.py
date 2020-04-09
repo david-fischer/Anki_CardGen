@@ -1,7 +1,10 @@
+import os
+
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
+import pickle
 
 from my_kivy.mychip import MyChip
 
@@ -18,7 +21,6 @@ class WordProperties(BoxLayout):
 
     def refresh_data(self):
         word = MDApp.get_running_app().word
-        print(word.examples)
         self.ids.translation_chips.clear_widgets()
         self.ids.synonym_chips.clear_widgets()
         self.ids.antonym_chips.clear_widgets()
@@ -33,6 +35,16 @@ class WordProperties(BoxLayout):
         #     self.ids.example_chips.add_widget(MyChip(label=ex, icon='', check=True))
         self.ids.explanation_dropdown.items = ["Explanation"] + word.explanations
 
+    def load_or_search(self):
+        MDApp.get_running_app().search_term = self.search_term
+        if os.path.exists(f"pickles/{MDApp.get_running_app().word.folder()}.p"):
+            self.unpickle()
+        else:
+            MDApp.get_running_app().word.get_data()
+            self.pickle()
+        self.refresh_data()
+
+
     def print_all(self):
         print(f""""
 Search Term: {self.search_term}
@@ -42,6 +54,15 @@ Synonyms: {self.synonyms}
 Examples: {self.examples}
 """)
 
+    def unpickle(self):
+        with open(f"pickles/{MDApp.get_running_app().word.folder()}.p","rb") as file:
+            MDApp.get_running_app().word = pickle.load(file)
+        self.refresh_data()
+
+    def pickle(self):
+        word = MDApp.get_running_app().word
+        with open(f"pickles/{word.folder()}.p","wb") as file:
+            pickle.dump(word,file)
 
 class MyApp(MDApp):
     def build(self):

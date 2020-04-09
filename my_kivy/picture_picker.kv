@@ -43,12 +43,12 @@
 
     ImgPick:
         id: image_picker
-        source_folder: app.word.folder
+        source_folder: app.word.folder()
 
     MDFloatingActionButton:
         icon: "reload"
         pos_hint: {"center_x": .9, "center_y": .9}
-        on_release: image_picker.source_folder = app.word.folder; image_picker.refresh_view()
+        on_release: image_picker.source_folder = app.word.folder(); image_picker.refresh_view()
 
     MDFloatingActionButton:
         icon: "minus"

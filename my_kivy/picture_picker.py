@@ -74,21 +74,16 @@ class LoadMoreOnOverscroll(OpacityScrollEffect):
     def refresh(self):
         # print("refresh")
         app = MDApp.get_running_app()
-        app.root.ids.spinner.active = True
+        print(app.root.ids.spinner.active)
+        app.root.ids.image_picker.display_no += 10
+        app.root.ids.image_picker.relaod()
+        # app.root.ids.spinner.active = False
 
 
 class ImgPick(ScrollView):
     effect_cls = LoadMoreOnOverscroll
     source_folder = StringProperty("assets")
-
-    # source_list = ListProperty([])
-
-    # def get_img_list(self):
-    #     return [
-    #         f
-    #         for f in glob.glob(f"{self.source_folder}/*")
-    #         if re.match(r'.*(jpg|png)', f)
-    #     ]
+    display_no = Property(10)
 
     def remove_unchecked(self):
         unchecked_children = [child for child in self.ids.grid_layout.children if not child.checked]
@@ -98,18 +93,10 @@ class ImgPick(ScrollView):
     def refresh_view(self):
         word = MDApp.get_running_app().word
         self.remove_unchecked()
-        for i, url in enumerate(word.image_urls):
+        for i, url in enumerate(word.image_urls[:self.display_no]):
             self.ids.grid_layout.add_widget(SmartTile(
                 source=url
-                # url=url,
-                # source=f"{self.source_folder}/thumb_{i}.jpg"
             ))
-
-    # def on_source_folder(self, *args):
-    #     self.source_list = self.get_img_list()
-    #     self.remove_unchecked()
-    #     for image_source in self.source_list:
-    #         self.ids.grid_layout.add_widget(CheckTile(source=image_source))
 
     def get_checked(self):
         checked_children = [child for child in self.ids.grid_layout.children if child.checked]
@@ -129,7 +116,7 @@ if __name__ == "__main__":
 FloatLayout:
     MDSpinner:
         id: spinner
-        active:False
+        active: False
         size_hint: 0.5,0.5
         pos_hint:  {"center_x": .5, "center_y": .5}
         

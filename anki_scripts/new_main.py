@@ -48,15 +48,16 @@ class Query:
     # other
     anki_user = attr.ib(default="new_user")
     output_path = attr.ib(default=".")
-    folder = attr.ib(default="")
 
     def search_term_utf8(self):
         return unidecode(self.search_term)
 
+    def folder(self):
+        return self.search_term_utf8().replace(" ","_")
+
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
-        self.folder = self.search_term_utf8().replace(" ", "_")
-        os.makedirs(self.folder, exist_ok=True)
+        os.makedirs(self.folder(), exist_ok=True)
         self.request_dict_data()
         try:
             self.request_img_urls()
@@ -95,21 +96,18 @@ class Query:
             self.search_term)
 
     def download_audio(self):
-        wget.download(self.audio_url, f"{self.folder}/{self.folder}.mp3")
+        wget.download(self.audio_url, f"{self.folder()}/{self.folder()}.mp3")
 
     def request_img_urls(self):
         """
-        Downloads the thumbnails of the first 10 results from a Google Image search.
-        Renames the thumbnails into 1.jpg - 10.jpg.
-        Returns list of the urls of the images corresponding the thumbnails
-        :return:list
+        sets self.img_urls from first 20 results of google_images
         """
-        print(self.folder)
+        print(self.folder())
         response = google_images_download.googleimagesdownload()
         arguments = {"keywords": self.search_term_utf8(),
-                     "output_directory": self.folder,
+                     "output_directory": self.folder(),
                      "no_directory": True,
-                     "limit": 10,
+                     "limit": 20,
                      "format": "jpg",
                      "language": LANGUAGE[FROM_LANG],
                      "no_download": True,
