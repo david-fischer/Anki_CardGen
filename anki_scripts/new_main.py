@@ -112,21 +112,12 @@ class Query:
                      "limit": 10,
                      "format": "jpg",
                      "language": LANGUAGE[FROM_LANG],
-                     "thumbnail_only": True,
+                     "no_download": True,
                      "print_urls": True,
                      "prefix": "img_",
                      "save_source": "source",
                      }
         paths = response.download(arguments)[0][self.search_term_utf8()]
-        with open(f"{self.folder}/source.txt") as file:
-            thumbnails = [line.split("\t")[0] for line in file]
-            for count, thumb in enumerate(thumbnails):
-                try:
-                    os.rename(thumb, f"{self.folder}/thumb_{count}.jpg")
-                except FileNotFoundError:
-                    print(str(count) + " not found")
-            os.rmdir(f"{self.folder}/ - thumbnail")
-            os.remove(f"{self.folder}/source.txt")
         self.image_urls = paths
 
     def mark_examples(self):
