@@ -30,3 +30,13 @@ A
 :
 
 my_log.txt,7/c/7cc05a27a8858e1728dce589e5b1517420bbd77d
+A
+my_kivy/mycard.py,8/0/80366d5c58db4b33f94cc24e0efafcacdb05f786
+A
+my_kivy/mycard.kv,4/f/4f81a20f12e2aa4bab28f262115f8c3fb0065b79
+F
+anki_scripts/test.html,6/0/60bbde3e518399d5b130a0c14fc19ebcb6b7e94a
+W
+'anki_scripts/conjugation_table_clean.py,6/2/626dee9dba7b0a43d8383a35fd6c8fcc9a0c3609
+I
+anki_scripts/output1.html,9/a/9a0056e210173ae617e76dd2bb14052d49113dfc
