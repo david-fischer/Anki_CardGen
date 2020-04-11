@@ -4,6 +4,8 @@ import re
 import requests
 from bs4 import BeautifulSoup
 
+from anki_scripts.conjugation_table_clean import conj_htmltable_from_html
+
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
 AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
@@ -97,7 +99,12 @@ def request_data_from_dicio(phrase):
     synonyms = [syn.text for syn in get_element_after_regex(bs, ".*sinônimo.*").find_all("a")]
     antonyms = [syn.text for syn in get_element_after_regex(bs, ".*contrário.*").find_all("a")]
     add_info_dict = to_stripped_multiline_str(get_element_after_regex(bs, "Definição.*"))
-    return explanations, synonyms, antonyms, examples, add_info_dict
+    conj_table = ""
+    try:
+        conj_table = conj_htmltable_from_html(bs)
+    except:
+        print("no conjugation table obtained :(")
+    return explanations, synonyms, antonyms, examples, add_info_dict, conj_table
 
 
 def request_synonyms_from_wordref(word):
