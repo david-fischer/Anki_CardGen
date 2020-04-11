@@ -49,6 +49,7 @@ class WordProperties(BoxLayout):
             self.unpickle()
         else:
             self.search()
+            self.pickle()
         self.refresh_data()
 
 

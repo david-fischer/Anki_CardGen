@@ -46,11 +46,6 @@ def html_table_from_single_modo(modo_dict):
         {n.join([table_row(p, [
         modo_dict[tempo][p] for tempo in modo_dict
     ]) for p in pronom])}
-              <div class="divTableRow">
-                <div class="divTableCell divPerson">eu</div>
-                <div class="divTableCell">começo</div>
-                <div class="divTableCell">comecei</div>
-              </div>
             </div>
           </div>
         """
