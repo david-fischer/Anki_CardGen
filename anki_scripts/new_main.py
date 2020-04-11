@@ -45,6 +45,7 @@ class Query:
     image_urls = attr.ib(default=[])
     audio_url = attr.ib(default="")
     add_info_dict = attr.ib(default={})
+    conj_table_str = attr.ib(default="")
     # other
     anki_user = attr.ib(default="new_user")
     output_path = attr.ib(default=".")
@@ -63,11 +64,6 @@ class Query:
             self.request_img_urls()
         except:
             print("could not download images :(")
-        self.download_audio()
-        # dict_p.start()
-        # img_p.start()
-        # dict_p.join()
-        # audio_p.start()
 
     def request_dict_data(self):
         """
@@ -91,12 +87,10 @@ class Query:
         self.synonyms, \
         self.antonyms, \
         self.examples, \
-        self.add_info_dict = request_data_from_dicio(self.search_term)
+        self.add_info_dict, \
+        self.conj_table_str    = request_data_from_dicio(self.search_term)
         self.examples = [[ex, translator.translate(ex)] for ex in self.examples] + request_examples_from_reverso(
             self.search_term)
-
-    def download_audio(self):
-        wget.download(self.audio_url, f"data/{self.folder()}/{self.folder()}.mp3")
 
     def request_img_urls(self):
         """
