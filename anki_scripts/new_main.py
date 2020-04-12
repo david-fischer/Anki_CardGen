@@ -2,7 +2,7 @@ import os
 import re
 
 import attr
-import wget
+import pandas as pd
 from translate import Translator
 from unidecode import unidecode
 
@@ -45,7 +45,7 @@ class Query:
     image_urls = attr.ib(default=[])
     audio_url = attr.ib(default="")
     add_info_dict = attr.ib(default={})
-    conj_table_str = attr.ib(default="")
+    conj_table_df = attr.ib(default=pd.DataFrame())
     # other
     anki_user = attr.ib(default="new_user")
     output_path = attr.ib(default=".")
@@ -54,7 +54,7 @@ class Query:
         return unidecode(self.search_term)
 
     def folder(self):
-        return self.search_term_utf8().replace(" ","_")
+        return self.search_term_utf8().replace(" ", "_")
 
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
@@ -88,7 +88,7 @@ class Query:
         self.antonyms, \
         self.examples, \
         self.add_info_dict, \
-        self.conj_table_str    = request_data_from_dicio(self.search_term)
+        self.conj_table_df = request_data_from_dicio(self.search_term)
         self.examples = [[ex, translator.translate(ex)] for ex in self.examples] + request_examples_from_reverso(
             self.search_term)
 
@@ -110,6 +110,15 @@ class Query:
                      }
         paths = response.download(arguments)[0][self.search_term_utf8()]
         self.image_urls = paths
+
+    def html_from_conj_df(self):
+        return "\n".join([
+            self.conj_table_df.to_html(columns=[col],
+                                       classes="subj" if "Subjuntivo" in col else "ind",
+                                       index=False
+                                       ).replace("do Subjuntivo", "").replace("do Indicativo", "")
+            for col in self.conj_table_df
+        ])
 
     def mark_examples(self):
         """

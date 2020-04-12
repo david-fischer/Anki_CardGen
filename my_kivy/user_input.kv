@@ -21,12 +21,12 @@
             hint_text: "Search Term"
             text: root.search_term
             on_text: root.search_term = self.text
-            on_text_validate: root.load_or_search()
+            on_text_validate: root.load_or_search(); root.refresh_data()
             size_hint: 0.,None
         MDFloatingActionButton:
             id: search_button
             icon: "magnify"
-            on_release: root.search()
+            on_release: root.search(); root.refresh_data()
 
         MDFloatingActionButton:
             id: save_button

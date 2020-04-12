@@ -1,23 +1,26 @@
 import itertools
 import re
+from collections import defaultdict
 
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-
-from anki_scripts.conjugation_table_clean import conj_htmltable_from_html
 
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
 AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
-def_headers = {
-    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36',
+DEFAULT_HEADERS = {
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) '
+                  'Chrome/56.0.2924.87 Safari/537.36',
     'referrer': 'https://google.de',
 }
 
 linguee_headers = {
-    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap Chromium/80.0.3987.162 Chrome/80.0.3987.162 Safari/537.36",
+    "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap Chromium/80.0.3987.162 "
+                  "Chrome/80.0.3987.162 Safari/537.36",
     "Referer": "https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&query=",
-    "Accept": 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    "Accept": 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,'
+              'application/signed-exchange;v=b3;q=0.9',
     "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
 }
@@ -31,7 +34,7 @@ reverso_header = {
 }
 
 
-def get_soup_object(url, headers=def_headers):
+def get_soup_object(url, headers=DEFAULT_HEADERS):
     return BeautifulSoup(requests.get(url, headers=headers).content, features="lxml")
 
 
@@ -91,6 +94,22 @@ def span_not_cl(tag):
     return tag.get("class") is None and tag.name == "span"
 
 
+def dicio_conj_df(bs_obj):
+    html_string = re.sub(r"(<a[^>]*>)", "", bs_obj.prettify())
+    bs = BeautifulSoup(html_string, "lxml")
+    conjugation_table_dict = defaultdict(dict)
+    # the following [:2] only takes indicativo and subjuntivo
+    temp_cols = [temp_col for modo_table in bs.select("div.modo")[:2] for temp_col in
+                 modo_table.find_next().select("li")]
+    for tempo_col in temp_cols:
+        strings = list(tempo_col.stripped_strings)
+        tempo = strings[0]
+        verb_col = [[word.strip() for word in row.split(" ") if word.strip() != ""] for row in strings[1:]]
+        for row in verb_col:
+            conjugation_table_dict[tempo][row[0]] = row[1]
+    return pd.DataFrame.from_dict(conjugation_table_dict).loc[["eu", "ele", "nós", "eles"]]
+
+
 def request_data_from_dicio(phrase):
     phrase = phrase.replace(" ", "-")
     bs = get_soup_object(f"https://www.dicio.com.br/pesquisa.php?q={phrase}/")
@@ -99,12 +118,12 @@ def request_data_from_dicio(phrase):
     synonyms = [syn.text for syn in get_element_after_regex(bs, ".*sinônimo.*").find_all("a")]
     antonyms = [syn.text for syn in get_element_after_regex(bs, ".*contrário.*").find_all("a")]
     add_info_dict = to_stripped_multiline_str(get_element_after_regex(bs, "Definição.*"))
-    conj_table = ""
+    conj_table_df = pd.DataFrame()
     try:
-        conj_table = conj_htmltable_from_html(bs)
+        conj_table_df = dicio_conj_df(bs)
     except:
         print("no conjugation table obtained :(")
-    return explanations, synonyms, antonyms, examples, add_info_dict, conj_table
+    return explanations, synonyms, antonyms, examples, add_info_dict, conj_table_df
 
 
 def request_synonyms_from_wordref(word):

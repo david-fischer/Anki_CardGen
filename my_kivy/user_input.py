@@ -1,10 +1,10 @@
 import os
+import pickle
 
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ListProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
-import pickle
 
 from anki_scripts.dictionary_queries import NoMatchError
 from my_kivy.mychip import MyChip
@@ -37,7 +37,7 @@ class WordProperties(BoxLayout):
         self.ids.explanation_dropdown.items = ["Explanation"] + word.explanations
 
     def search(self):
-        MDApp.get_running_app().word.search_term = self.search_term;
+        MDApp.get_running_app().word.search_term = self.search_term
         try:
             MDApp.get_running_app().word.get_data()
         except NoMatchError:
@@ -50,7 +50,6 @@ class WordProperties(BoxLayout):
         else:
             self.search()
             self.pickle()
-        self.refresh_data()
 
 
     def print_all(self):
