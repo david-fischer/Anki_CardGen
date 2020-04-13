@@ -40,5 +40,3 @@ O
 test/conjugation_table_clean.py,3/6/3676755d197d00f6ca69b8a8c8d57c99dc91cf29
 C
 test/myrecorder.kvi,3/3/33e9ef21295cdbaf4bd36277cf308263e08e859b
-B
-motion_recorder.py,b/d/bda5f5730494e3e62919711e4d314529e422af5e

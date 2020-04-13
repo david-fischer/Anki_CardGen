@@ -10,12 +10,12 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.behaviors import RectangularRippleBehavior
+from kivymd.uix.behaviors import CircularRippleBehavior
 
-Builder.load_file("my_kivy/mychip.kv")
+Builder.load_file("mychip.kv")
 
 
-class MyChip(RectangularRippleBehavior, ButtonBehavior, BoxLayout, ThemableBehavior):
+class MyChip(CircularRippleBehavior, ButtonBehavior, BoxLayout, ThemableBehavior):
     label = StringProperty()
     icon = StringProperty("")
     color = ListProperty()
@@ -25,6 +25,7 @@ class MyChip(RectangularRippleBehavior, ButtonBehavior, BoxLayout, ThemableBehav
     selected = BooleanProperty(False)
     unselected_chip_color = ListProperty()
     selected_chip_color = ListProperty()
+    text_color = ListProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -38,17 +39,16 @@ class MyChip(RectangularRippleBehavior, ButtonBehavior, BoxLayout, ThemableBehav
             self.icon = "checkbox-blank-circle"
             self.remove_widget(self.ids.icon)
 
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            if self.parent.choose_one:
-                for chip in self.parent.children:
-                    chip.selected = False
-                self.selected = True
+    def on_press(self, *args):
+        if self.parent.choose_one:
+            for chip in self.parent.children:
+                chip.selected = False
+            self.selected = True
 
-            else:
-                self.selected = not self.selected
+        else:
+            self.selected = not self.selected
 
-            print(self.parent.get_selected())
+        print(self.parent.get_selected())
 
 
 class MyChooseChip(StackLayout):

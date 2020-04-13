@@ -33,7 +33,7 @@ class TestApp(MDApp):
     def build(self):
         self.word = Query(search_term=self.search_term)
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
-        self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
+        self.theme_cls.theme_style = "Light"  # "Purple", "Red"
         return Builder.load_string("""
 BoxLayout:
     orientation: "vertical"

@@ -20,10 +20,6 @@ class MyCard(RectangularRippleBehavior, ButtonBehavior, MDCard):
     def on_press(self):
         self.checked = not self.checked
 
-    # def on_touch_down(self, touch):
-    #     if self.collide_point(*touch.pos):
-    #         self.checked = not self.checked
-
     def on_checked(self, *args):
         anim = Animation(bg_color=self.theme_cls.primary_color if self.checked else self.theme_cls.bg_light,
                          text_color=[1, 1, 1, 1] if self.checked else self.theme_cls.text_color,
