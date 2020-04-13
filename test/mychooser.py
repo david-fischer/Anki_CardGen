@@ -16,22 +16,24 @@ Builder.load_file("mychooser.kv")
 
 class CheckElement(ButtonBehavior, ThemableBehavior):
     checked = BooleanProperty(False)
-    text_color = ListProperty()
-    bg_color = ListProperty()
+    text_color = ListProperty([0, 0, 0, 1])
+    bg_color = ListProperty([1, 1, 1, 1])
     text = StringProperty(lorem.paragraph())
-    checked_state = ObjectProperty({
-        "bg_color": [0, 0, 0, 1],
-        "text_color": [1, 1, 1, 1],
-    })
-    unchecked_state = ObjectProperty({
-        "bg_color": [1, 1, 1, 1],
-        "text_color": [0, 0, 0, 1],
-    })
+    checked_state = {}
+    unchecked_state = {}
 
     def __init__(self, **kwargs):
         super(CheckElement, self).__init__(**kwargs)
-        self.text_color = self.theme_cls.text_color
-        self.bg_color = self.theme_cls.bg_light
+        self.checked_state = {
+            "bg_color": self.theme_cls.primary_color,
+            "text_color": [1, 1, 1, 1],
+        }
+        self.unchecked_state = {
+            "bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
+            else self.theme_cls.bg_light,
+            "text_color": self.theme_cls.secondary_text_color,
+        }
+        self.on_checked()
 
     def on_press(self):
         self.parent.conditional_uncheck(self)
@@ -42,11 +44,6 @@ class CheckElement(ButtonBehavior, ThemableBehavior):
             anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
         else:
             anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
-        # anim.animated_properties = {
-        #     "bg_color": self.theme_cls.primary_color if self.checked else self.theme_cls.bg_darkest,
-        #     "text_color": [1, 1, 1, 1] if self.checked else self.theme_cls.secondary_text_color,
-        # }
-        print(anim.animated_properties)
         anim.start(self)
 
 
