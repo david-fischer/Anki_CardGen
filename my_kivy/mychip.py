@@ -12,7 +12,7 @@ from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import CircularRippleBehavior
 
-Builder.load_file("mychip.kv")
+Builder.load_file("my_kivy/mychip.kv")
 
 
 class MyChip(CircularRippleBehavior, ButtonBehavior, BoxLayout, ThemableBehavior):

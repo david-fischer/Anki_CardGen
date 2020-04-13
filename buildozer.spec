@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Anki Helper
+title = Anki CardGen
 
 # (str) Package name
-package.name = ankihelperapp
+package.name = ankicardgen
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.ankihelper
+package.domain = org.ankicardgen
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -47,10 +47,10 @@ requirements = python3, kivy, kivymd==0.104.0, attrs==19.3.0, lorem==0.1.1, sele
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = assets/AnkiHelper.png
+presplash.filename = assets/AnkiCardGen.png
 
 # (str) Icon of the application
-icon.filename = assets/AnkiHelper.png
+icon.filename = assets/AnkiCardGen.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
