@@ -47,10 +47,10 @@ requirements = python3, kivy, kivymd==0.104.0, attrs==19.3.0, lorem==0.1.1, sele
 #garden_requirements =
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
+presplash.filename = assets/AnkiHelper.png
 
 # (str) Icon of the application
-icon.filename = assets/AnkiHelperIcon.png
+icon.filename = assets/AnkiHelper.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
