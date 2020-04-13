@@ -34,7 +34,11 @@ A
 my_kivy/mycard.py,8/0/80366d5c58db4b33f94cc24e0efafcacdb05f786
 A
 my_kivy/mycard.kv,4/f/4f81a20f12e2aa4bab28f262115f8c3fb0065b79
-W
-'anki_scripts/conjugation_table_clean.py,6/2/626dee9dba7b0a43d8383a35fd6c8fcc9a0c3609
-I
-anki_scripts/output1.html,9/a/9a0056e210173ae617e76dd2bb14052d49113dfc
+V
+&test/conjugation_table_of_comecar.html,d/9/d9fbc6796a7e78cb7d16010cbc3565318d9e5f21
+O
+test/conjugation_table_clean.py,3/6/3676755d197d00f6ca69b8a8c8d57c99dc91cf29
+C
+test/myrecorder.kvi,3/3/33e9ef21295cdbaf4bd36277cf308263e08e859b
+B
+motion_recorder.py,b/d/bda5f5730494e3e62919711e4d314529e422af5e

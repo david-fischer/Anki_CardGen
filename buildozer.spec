@@ -50,7 +50,7 @@ requirements = python3, kivy, kivymd==0.104.0, attrs==19.3.0, lorem==0.1.1, sele
 #presplash.filename = %(source.dir)s/data/presplash.png
 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = assets/AnkiHelperIcon.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait

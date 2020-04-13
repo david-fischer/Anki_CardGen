@@ -6,7 +6,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.card import MDCard
 
-Builder.load_file("mycard.kv")
+Builder.load_file("my_kivy/mycard.kv")
 
 
 class MyCard(MDCard):

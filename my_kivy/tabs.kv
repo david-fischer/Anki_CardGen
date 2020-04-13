@@ -14,9 +14,18 @@
 #    id: android_tabs
 #        on_tab_switch: app.on_tab_switch(*args)
 
+<ScrollView>:
+    scroll_timeout: 50
+    scroll_distance: 10
 
 <EditTab@Tab>:
-    WordProperties
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: 1,1
+        WordProperties:
+            size_hint:1,None
+            height: self.minimum_height
 
 <ImageTab@Tab>:
     ImagePickerMain

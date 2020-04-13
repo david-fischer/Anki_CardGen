@@ -16,6 +16,8 @@
     BoxLayout:
         orientation: "horizontal"
         spacing: 10
+        halign: "center"
+        width: self.minimum_width
         MDTextField:
             id: search_field
             hint_text: "Search Term"
@@ -64,15 +66,6 @@
             icon: "minus"
     MDSeparator:
 
-    MDDropDownItem:
-        id: explanation_dropdown
-        items: ["Explanation"]
-        dropdown_width_mult: 100
-        pos_hint: {"center_x":0.5,"center_y":0.5}
-        #dropdown_bg: [1, 1, 1, 1]
-
-    MDSeparator:
-
     MyChooseChip:
         id: translation_chips
         choose_one: False
@@ -102,13 +95,22 @@
     MDSeparator:
 
 
-    MyChooseChip:
-        id: example_chips
-        choose_one: False
+    MyCardChooser:
+        id: explanation_cards
+        choose_one: True
 
-        MyChip:
+        MyCard:
+            label: "Explanation"
+
+    MDSeparator:
+
+
+    MyCardChooser:
+        id: example_cards
+        choose_one: True
+
+        MyCard:
             label: "Examples"
-
 
 
     Widget:
