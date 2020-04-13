@@ -5,15 +5,17 @@ from kivy.properties import (
     ObjectProperty,
     BooleanProperty,
     NumericProperty)
+from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
+from kivymd.uix.behaviors import RectangularRippleBehavior
 
 Builder.load_file("my_kivy/mychip.kv")
 
 
-class MyChip(BoxLayout, ThemableBehavior):
+class MyChip(RectangularRippleBehavior, ButtonBehavior, BoxLayout, ThemableBehavior):
     label = StringProperty()
     icon = StringProperty("")
     color = ListProperty()
@@ -27,9 +29,9 @@ class MyChip(BoxLayout, ThemableBehavior):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if not self.unselected_chip_color:
-            self.unselected_chip_color = self.theme_cls.primary_light
+            self.unselected_chip_color = self.theme_cls.bg_light
         if not self.selected_chip_color:
-            self.selected_chip_color = self.theme_cls.primary_dark
+            self.selected_chip_color = self.theme_cls.primary_color
 
     def on_icon(self, instance, value):
         if value == "":

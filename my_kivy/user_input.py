@@ -77,12 +77,12 @@ Examples: {self.examples}
             pickle.dump(word, file)
 
 
-class MyApp(MDApp):
-    def build(self):
-        return Builder.load_string("""
-WordProperties:
-        """)
-
-
 if __name__ == "__main__":
+    class MyApp(MDApp):
+        def build(self):
+            return Builder.load_string("""
+    WordProperties:
+            """)
+
+
     MyApp().run()

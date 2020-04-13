@@ -1,6 +1,8 @@
 #:import WordProperties my_kivy.user_input.WordProperties
 #:import ImagePickerMain my_kivy.picture_picker.ImagePickerMain
+#:import Window kivy.core.window.Window
 <MyTabs>:
+    on_parent: root.ids.carousel.ignore_perpendicular_swipes = True;root.ids.carousel.min_move = 0.1;
     EditTab:
         text:"file-document-edit-outline"
 
@@ -11,14 +13,9 @@
     PreviewTab:
         text: "eye"
 
-#    id: android_tabs
-#        on_tab_switch: app.on_tab_switch(*args)
 
-<ScrollView>:
-    scroll_timeout: 50
-    scroll_distance: 10
 
-<EditTab@Tab>:
+<EditTab@BoxLayout+MDTabsBase>:
     ScrollView:
         do_scroll_x: False
         do_scroll_y: True
@@ -31,12 +28,3 @@
     ImagePickerMain
 
 <PreviewTab@Tab>:
-
-
-#    MDIconButton:
-#        id: icon
-#        icon: root.icon
-#        user_font_size: "48sp"
-#        pos_hint: {"center_x": .5, "center_y": .5}
-#    Label:
-#        text: root.text

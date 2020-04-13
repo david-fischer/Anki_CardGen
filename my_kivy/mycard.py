@@ -2,22 +2,27 @@ import lorem
 from kivy.animation import Animation
 from kivy.lang import Builder
 from kivy.properties import BooleanProperty, ListProperty, StringProperty
+from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
+from kivymd.uix.behaviors import RectangularRippleBehavior
 from kivymd.uix.card import MDCard
 
 Builder.load_file("my_kivy/mycard.kv")
 
 
-class MyCard(MDCard):
+class MyCard(RectangularRippleBehavior, ButtonBehavior, MDCard):
     checked = BooleanProperty(False)
     text_color = ListProperty()
     bg_color = ListProperty()
     text = StringProperty(lorem.paragraph())
 
-    def on_touch_down(self, touch):
-        if self.collide_point(*touch.pos):
-            self.checked = not self.checked
+    def on_press(self):
+        self.checked = not self.checked
+
+    # def on_touch_down(self, touch):
+    #     if self.collide_point(*touch.pos):
+    #         self.checked = not self.checked
 
     def on_checked(self, *args):
         anim = Animation(bg_color=self.theme_cls.primary_color if self.checked else self.theme_cls.bg_light,
