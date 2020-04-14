@@ -8,10 +8,8 @@
 
 <WordProperties>:
     orientation: "vertical"
-    padding: 50,100
-    spacing: 10
-    synonyms: app.word.synonyms
-    examples: app.word.examples
+    padding: 30,100
+    spacing: 20
 
     BoxLayout:
         orientation: "horizontal"
@@ -40,76 +38,49 @@
             icon: "folder-open-outline"
             on_release: app.word.search_term = search_field.text;root.unpickle();root.refresh_data()
 
-    MDSeparator:
+    MDLabel:
+        text: "Translations"
+        color: self.theme_cls.disabled_hint_text_color
+        pos_hint: {"x":0,"y":0}
 
-#    MyChooseChip:
-#        id: gender_chips
-#        choose_one: True
-#        opacity:1
-#
-#        MyChip:
-#            unselected_chip_color: get_color_from_hex(colors["Blue"]["200"])
-#            selected_chip_color: get_color_from_hex(colors["Blue"]["800"])
-#            label: 'm'
-#            icon: 'gender-male'
-#
-#        MyChip:
-#            unselected_chip_color: get_color_from_hex(colors["Pink"]["200"])
-#            selected_chip_color: get_color_from_hex(colors["Pink"]["800"])
-#            label: 'f'
-#            icon: 'gender-female'
-
-#        MyChip:
-#            label: ''
-#            unselected_chip_color: get_color_from_hex(colors["Gray"]["400"])
-#            selected_chip_color: get_color_from_hex(colors["Gray"]["800"])
-#            icon: "minus"
-#    MDSeparator:
-
-    MyChooseChip:
+    MyCheckChipContainer:
         id: translation_chips
-        choose_one: False
+        check_one: False
 
-        MyChip:
-            label: "Translations"
+    MDLabel:
+        text: "Synonyms"
+        color: self.theme_cls.disabled_hint_text_color
+        pos_hint: {"x":0,"y":0}
 
-
-    MDSeparator:
-
-    MyChooseChip:
+    MyCheckChipContainer:
         id: synonym_chips
-        choose_one: False
+        check_one: False
 
-        MyChip:
-            label: "Synonyms"
+    MDLabel:
+        text: "Antonyms"
+        color: self.theme_cls.disabled_hint_text_color
+        pos_hint: {"x":0,"y":0}
 
-    MDSeparator:
-
-    MyChooseChip:
+    MyCheckChipContainer:
         id: antonym_chips
-        choose_one: False
+        check_one: False
 
-        MyChip:
-            label: "Antonyms"
+    MDLabel:
+        text: "Explanations"
+        color: self.theme_cls.disabled_hint_text_color
+        pos_hint: {"x":0,"y":0}
 
-    MDSeparator:
-
-
-    MyCardChooser:
+    MyCheckCardContainer:
         id: explanation_cards
-        choose_one: True
+        check_one: True
 
-        MyCard:
-            label: "Explanation"
+    MDLabel:
+        text: "Examples"
+        color: self.theme_cls.disabled_hint_text_color
+        pos_hint: {"x":0,"y":0}
 
-    MDSeparator:
-
-
-    MyCardChooser:
+    MyTransCardContainer:
         id: example_cards
-        choose_one: True
-
-        MyCard:
-            label: "Examples"
+        check_one: True
 
     Widget:

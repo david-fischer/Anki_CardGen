@@ -13,7 +13,10 @@ from kivymd.uix.behaviors import RectangularRippleBehavior, CircularRippleBehavi
 from kivymd.uix.card import MDCard
 from kivymd.uix.imagelist import SmartTile
 
-Builder.load_file("mychooser.kv")
+try:
+    Builder.load_file("my_kivy/mychooser.kv")
+except FileNotFoundError:
+    Builder.load_file("mychooser.kv")
 
 
 class CheckBehavior(object):
@@ -56,7 +59,7 @@ class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
 
 class CheckContainer(Widget):
     check_one = BooleanProperty(False)
-    string_list = ListProperty([])
+    element_dicts = ListProperty([])
     CheckElementObject = ObjectProperty(CheckElement)
 
     def conditional_uncheck(self, instance, value):
@@ -67,10 +70,10 @@ class CheckContainer(Widget):
     def get_checked(self):
         return [element.text for element in self.children[::-1] if element.checked]
 
-    def on_string_list(self, *args):
+    def on_element_dicts(self, *args):
         self.clear_widgets()
-        for string in self.string_list:
-            new_check_element = self.CheckElementObject(text=string)
+        for dict in self.element_dicts:
+            new_check_element = self.CheckElementObject(**dict)
             new_check_element.bind(checked=self.conditional_uncheck)
             self.add_widget(new_check_element)
         if self.check_one:
@@ -81,27 +84,39 @@ class MyCheckCard(RectangularRippleBehavior, CheckElement, MDCard):
     pass
 
 
+class MyTransCard(MyCheckCard):
+    text = StringProperty()
+    text_orig = StringProperty()
+    text_trans = StringProperty()
+
+    def on_checked(self, *args):
+        super(MyTransCard, self).on_checked(*args)
+        self.text = self.text_orig if self.checked else self.text_trans
+
+
 class MyCheckChip(CircularRippleBehavior, CheckElement, BoxLayout):
-    icon = StringProperty("magnify")
+    icon = StringProperty("")
 
     def on_press(self):
         super(MyCheckChip, self).on_press()
         print(self.parent.get_checked())
 
 
-class MyCheckCardContainer(CheckContainer, BoxLayout):
+class MyCheckCardContainer(CheckContainer, ThemableBehavior, BoxLayout):
     CheckElementObject = MyCheckCard
 
 
-class MyCheckChipContainer(CheckContainer, StackLayout, ThemableBehavior):
+class MyTransCardContainer(MyCheckCardContainer):
+    CheckElementObject = MyTransCard
+
+
+class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
     CheckElementObject = MyCheckChip
 
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
     checked_state = {"opacity": 1, "border_width": 3}
     unchecked_state = {"opacity": 0.8, "border_width": 0.01}
-    text = StringProperty()
-    source = text
     border_width = NumericProperty(0.01)
 
     def on_press(self):
@@ -134,11 +149,11 @@ FloatLayout:
             padding: dp(4), dp(4)
             spacing: dp(4)
             check_one: True
-            string_list: ["../assets/guitar.png" for i in range(10)]
+            element_dicts: [{"source":"../assets/guitar.png"} for i in range(10)]
             
     MDFloatingActionButton:
         pos_hint: {"center_x":0.5,"center_y":0.5}
-        on_press: image_grid.string_list = ["../assets/Latte.jpg" for i in range(10)]
+        on_press: image_grid.element_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
 
 
 """)

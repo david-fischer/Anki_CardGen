@@ -1,6 +1,6 @@
 #:import lorem lorem
 <MyCheckChip>:
-    icon: "magnify"
+    icon: ""
     size_hint: None,  None
     height: "26dp"
     padding: 0, 0, "5dp", 0
@@ -13,11 +13,11 @@
             size: self.size
             radius: [12,12,12,12]
 
-    BoxLayout:
-        id: box_check
-        size_hint: None, None
-        size: self.minimum_size
-        pos_hint: {'center_y': .5}
+#    BoxLayout:
+#        id: box_check
+#        size_hint: None, None
+#        size: self.minimum_size
+#        pos_hint: {'center_y': .5}
 
     BoxLayout:
         size_hint_x: None
@@ -68,18 +68,26 @@
     spacing: 5
     size_hint: 1,None
     height: self.minimum_height
+    canvas:
+        Color:
+            rgba: self.theme_cls.divider_color
+        Line:
+            width: 1
+            rectangle: self.x, self.y, self.width, self.height
+
+
 
 <MyCheckChipContainer>:
     orientation: "lr-tb"
     padding: 20,20
     spacing: 10,10
-    height: self.minimum_height-10
     size_hint:1, None
+    height: self.minimum_height
     canvas:
         Color:
-            rgba: self.theme_cls.primary_color
+            rgba: self.theme_cls.divider_color
         Line:
-            width: 2
+            width: 1
             rectangle: self.x, self.y, self.width, self.height
 
 <MyCheckImageTile>:

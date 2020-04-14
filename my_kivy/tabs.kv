@@ -25,6 +25,25 @@
             height: self.minimum_height
 
 <ImageTab@Tab>:
-    ImagePickerMain
+    FloatLayout:
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            size_hint: 1,1
+            MyCheckImageGrid:
+                cols: 2
+                id: image_grid
+                row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
+                row_force_default: True
+                size_hint_y: None
+                height: self.minimum_height
+                padding: dp(4), dp(4)
+                spacing: dp(4)
+                check_one: True
+
+        MDFloatingActionButton:
+            pos_hint: {"center_x":0.5,"center_y":0.5}
+            on_press: image_grid.element_dicts = [{"source":url} for url in app.word.image_urls]
+
 
 <PreviewTab@Tab>:

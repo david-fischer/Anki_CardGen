@@ -1,14 +1,8 @@
 import os
 import pickle
 
-from kivy.lang import Builder
-from kivy.properties import StringProperty, ListProperty
-from kivy.uix.boxlayout import BoxLayout
-from kivymd.app import MDApp
-
 from anki_scripts.dictionary_queries import NoMatchError
-from my_kivy.mycard import MyCard
-from my_kivy.mychip import MyChip
+from my_kivy.mychooser import *
 
 Builder.load_file("my_kivy/user_input.kv")
 
@@ -23,21 +17,12 @@ class WordProperties(BoxLayout):
 
     def refresh_data(self):
         word = MDApp.get_running_app().word
-        self.ids.translation_chips.clear_widgets()
-        self.ids.synonym_chips.clear_widgets()
-        self.ids.antonym_chips.clear_widgets()
-        self.ids.example_cards.clear_widgets()
-        self.ids.explanation_cards.clear_widgets()
-        for trans in word.translations[:self.display_limit]:
-            self.ids.translation_chips.add_widget(MyChip(label=trans, icon='', check=True))
-        for syn in word.synonyms[:self.display_limit]:
-            self.ids.synonym_chips.add_widget(MyChip(label=syn, icon='', check=True))
-        for ant in word.antonyms[:self.display_limit]:
-            self.ids.antonym_chips.add_widget(MyChip(label=ant, icon='', check=True))
-        for explanation in word.explanations[:self.display_limit]:
-            self.ids.explanation_cards.add_widget(MyCard(text=explanation))
-        for ex in word.examples[:self.display_limit]:
-            self.ids.example_cards.add_widget(MyCard(text=ex[0] + "\n" + ex[1]))
+        self.ids.translation_chips.element_dicts = [{"text": string} for string in word.translations]
+        self.ids.synonym_chips.element_dicts = [{"text": string} for string in word.synonyms]
+        self.ids.antonym_chips.element_dicts = [{"text": string} for string in word.antonyms]
+        self.ids.example_cards.element_dicts = [{"text": ex[1], "text_orig": ex[0], "text_trans": ex[1]} for ex in
+                                                word.examples]
+        self.ids.explanation_cards.element_dicts = [{"text": string} for string in word.explanations]
 
     def search(self):
         MDApp.get_running_app().word.search_term = self.search_term
