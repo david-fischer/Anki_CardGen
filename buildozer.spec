@@ -4,7 +4,7 @@
 title = Anki CardGen
 
 # (str) Package name
-package.name = ankicardgen
+package.name = ankicardgenapp
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.ankicardgen
@@ -28,7 +28,7 @@ source.exclude_dirs = bin, test, .buildozer
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.1
+version = 0.1.1
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]

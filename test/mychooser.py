@@ -1,7 +1,7 @@
 import lorem
 from kivy.animation import Animation
 from kivy.lang import Builder
-from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty
+from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty, Property
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.stacklayout import StackLayout
@@ -14,13 +14,46 @@ from kivymd.uix.card import MDCard
 Builder.load_file("mychooser.kv")
 
 
+class CheckBehavior(object):
+    class CheckElement(ButtonBehavior, ThemableBehavior):
+        checked = BooleanProperty(False)
+        text_color = ListProperty([0, 0, 0, 1])
+        bg_color = ListProperty([1, 1, 1, 1])
+        text = StringProperty(lorem.paragraph())
+        checked_state = Property({})
+        unchecked_state = Property({})
+
+        def __init__(self, **kwargs):
+            super(CheckElement, self).__init__(**kwargs)
+            self.checked_state = {
+                "bg_color": self.theme_cls.primary_color,
+                "text_color": [1, 1, 1, 1],
+            }
+            self.unchecked_state = {
+                "bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
+                else self.theme_cls.bg_light,
+                "text_color": self.theme_cls.secondary_text_color,
+            }
+            self.on_checked()
+
+        def on_press(self):
+            self.checked = not self.checked
+
+        def on_checked(self, *args):
+            if self.checked:
+                anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
+            else:
+                anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
+            anim.start(self)
+
+
 class CheckElement(ButtonBehavior, ThemableBehavior):
     checked = BooleanProperty(False)
     text_color = ListProperty([0, 0, 0, 1])
     bg_color = ListProperty([1, 1, 1, 1])
     text = StringProperty(lorem.paragraph())
-    checked_state = {}
-    unchecked_state = {}
+    checked_state = Property({})
+    unchecked_state = Property({})
 
     def __init__(self, **kwargs):
         super(CheckElement, self).__init__(**kwargs)
@@ -36,7 +69,6 @@ class CheckElement(ButtonBehavior, ThemableBehavior):
         self.on_checked()
 
     def on_press(self):
-        self.parent.conditional_uncheck(self)
         self.checked = not self.checked
 
     def on_checked(self, *args):
@@ -52,9 +84,9 @@ class CheckContainer(Widget):
     string_list = ListProperty([])
     CheckElementObject = ObjectProperty(CheckElement)
 
-    def conditional_uncheck(self, pressed_element):
+    def conditional_uncheck(self, instance, value):
         if self.check_one:
-            for check_element in self.children:
+            for check_element in [others for others in self.children if others != instance and value]:
                 check_element.checked = False
 
     def get_checked(self):
@@ -63,7 +95,9 @@ class CheckContainer(Widget):
     def on_string_list(self, *args):
         self.clear_widgets()
         for string in self.string_list:
-            self.add_widget(self.CheckElementObject(text=string))
+            new_check_element = self.CheckElementObject(text=string)
+            new_check_element.bind(checked=self.conditional_uncheck)
+            self.add_widget(new_check_element)
         if self.check_one:
             self.children[-1].checked = True
 
@@ -86,6 +120,13 @@ class MyCheckCardContainer(CheckContainer, BoxLayout):
 
 class MyCheckChipContainer(CheckContainer, StackLayout, ThemableBehavior):
     CheckElementObject = MyCheckChip
+
+
+# class MyCheckImageTile(CheckElement,SmartTile):
+#     pass
+#
+# class MyCheckImageTileContainer(CheckContainer,ThemableBehavior,GridLayout):
+#     CheckContainer = MyCheckImageTile
 
 
 if __name__ == "__main__":
