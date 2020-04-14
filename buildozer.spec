@@ -1,13 +1,13 @@
 [app]
 
 # (str) Title of your application
-title = Anki Helper
+title = Anki CardGen
 
 # (str) Package name
-package.name = ankihelperapp
+package.name = ankicardgenapp
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.ankihelper
+package.domain = org.ankicardgen
 
 # (str) Source code where the main.py live
 source.dir = .

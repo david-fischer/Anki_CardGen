@@ -1,59 +1,41 @@
 import lorem
 from kivy.animation import Animation
 from kivy.lang import Builder
-from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty, Property
+from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty, NumericProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.widget import Widget
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import RectangularRippleBehavior, CircularRippleBehavior
 from kivymd.uix.card import MDCard
+from kivymd.uix.imagelist import SmartTile
 
 Builder.load_file("mychooser.kv")
 
 
 class CheckBehavior(object):
-    class CheckElement(ButtonBehavior, ThemableBehavior):
-        checked = BooleanProperty(False)
-        text_color = ListProperty([0, 0, 0, 1])
-        bg_color = ListProperty([1, 1, 1, 1])
-        text = StringProperty(lorem.paragraph())
-        checked_state = Property({})
-        unchecked_state = Property({})
-
-        def __init__(self, **kwargs):
-            super(CheckElement, self).__init__(**kwargs)
-            self.checked_state = {
-                "bg_color": self.theme_cls.primary_color,
-                "text_color": [1, 1, 1, 1],
-            }
-            self.unchecked_state = {
-                "bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
-                else self.theme_cls.bg_light,
-                "text_color": self.theme_cls.secondary_text_color,
-            }
-            self.on_checked()
-
-        def on_press(self):
-            self.checked = not self.checked
-
-        def on_checked(self, *args):
-            if self.checked:
-                anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
-            else:
-                anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
-            anim.start(self)
-
-
-class CheckElement(ButtonBehavior, ThemableBehavior):
     checked = BooleanProperty(False)
+    checked_state = {}
+    unchecked_state = {}
+
+    def on_checked(self, *args):
+        if self.checked:
+            anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
+        else:
+            anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
+        anim.start(self)
+
+    def on_parent(self, *args):
+        self.on_checked()
+
+
+class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
     text_color = ListProperty([0, 0, 0, 1])
     bg_color = ListProperty([1, 1, 1, 1])
     text = StringProperty(lorem.paragraph())
-    checked_state = Property({})
-    unchecked_state = Property({})
 
     def __init__(self, **kwargs):
         super(CheckElement, self).__init__(**kwargs)
@@ -70,13 +52,6 @@ class CheckElement(ButtonBehavior, ThemableBehavior):
 
     def on_press(self):
         self.checked = not self.checked
-
-    def on_checked(self, *args):
-        if self.checked:
-            anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
-        else:
-            anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
-        anim.start(self)
 
 
 class CheckContainer(Widget):
@@ -122,11 +97,19 @@ class MyCheckChipContainer(CheckContainer, StackLayout, ThemableBehavior):
     CheckElementObject = MyCheckChip
 
 
-# class MyCheckImageTile(CheckElement,SmartTile):
-#     pass
-#
-# class MyCheckImageTileContainer(CheckContainer,ThemableBehavior,GridLayout):
-#     CheckContainer = MyCheckImageTile
+class MyCheckImageTile(CheckBehavior, SmartTile):
+    checked_state = {"opacity": 1, "border_width": 3}
+    unchecked_state = {"opacity": 0.8, "border_width": 0.01}
+    text = StringProperty()
+    source = text
+    border_width = NumericProperty(0.01)
+
+    def on_press(self):
+        self.checked = not self.checked
+
+
+class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
+    CheckElementObject = MyCheckImageTile
 
 
 if __name__ == "__main__":
@@ -136,14 +119,28 @@ if __name__ == "__main__":
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
             return Builder.load_string("""
 #:import lorem lorem
-ScrollView:
-    do_scroll_x: False
-    do_scroll_y: True
-    size_hint: 1,1
-    MyCheckChipContainer:
-        id: container
-        check_one: True
-        string_list: ["test_"+str(i) for i in range(10)]
+FloatLayout:
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: 1,1
+        MyCheckImageGrid:
+            cols: 2
+            id: image_grid
+            row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
+            row_force_default: True
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(4), dp(4)
+            spacing: dp(4)
+            check_one: True
+            string_list: ["../assets/guitar.png" for i in range(10)]
+            
+    MDFloatingActionButton:
+        pos_hint: {"center_x":0.5,"center_y":0.5}
+        on_press: image_grid.string_list = ["../assets/Latte.jpg" for i in range(10)]
+
+
 """)
 
 

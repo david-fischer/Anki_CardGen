@@ -81,3 +81,13 @@
         Line:
             width: 2
             rectangle: self.x, self.y, self.width, self.height
+
+<MyCheckImageTile>:
+    box_color: 0,0,0,0
+    canvas:
+        Color:
+            rgba: self.theme_cls.primary_color
+        Line:
+            id: border_line
+            width: self.border_width
+            rectangle: self.x, self.y, self.width, self.height
