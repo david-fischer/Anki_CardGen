@@ -9,12 +9,6 @@ R
 "anki_scripts/dictionary_queries.py,2/f/2f97c967ff3f06377075ffe56242d7027719cdbe
 >
 buildozer.spec,d/6/d6026de0c227fd18a6f7526586c7467703164c7b
-A
-my_kivy/mychip.kv,f/e/fe389bc0cf7af7fbb7d1c598dc8365b336209dcf
-I
-my_kivy/picture_picker.kv,d/7/d7759d879e7070b0d9aaa7fb4e24c670b1c0d706
-I
-my_kivy/picture_picker.py,d/d/dde45fc48c900cdd69dcf2c129fbe6322cf95e34
 ?
 my_kivy/tabs.kv,9/b/9b84e6a66771102707a80a385a3bbaf9f5f5ebbf
 E
@@ -25,18 +19,18 @@ E
 main.py,f/1/f1bdda93d9a278e358509d498e17d97764c1fb29
 @
 requirements.txt,1/9/19359a61ae2446b51b549167b014da2fcf265768
-A
-my_kivy/mychip.py,e/0/e02d7ef1f4f41771e484d9a9fee5b31407012911
 :
 
 my_log.txt,7/c/7cc05a27a8858e1728dce589e5b1517420bbd77d
-A
-my_kivy/mycard.py,8/0/80366d5c58db4b33f94cc24e0efafcacdb05f786
-A
-my_kivy/mycard.kv,4/f/4f81a20f12e2aa4bab28f262115f8c3fb0065b79
 V
 &test/conjugation_table_of_comecar.html,d/9/d9fbc6796a7e78cb7d16010cbc3565318d9e5f21
 O
 test/conjugation_table_clean.py,3/6/3676755d197d00f6ca69b8a8c8d57c99dc91cf29
 C
 test/myrecorder.kvi,3/3/33e9ef21295cdbaf4bd36277cf308263e08e859b
+D
+test/main_testing.py,9/7/97790231adedf8d516a91c6fc3912e32f2ee346e
+D
+my_kivy/mychooser.kv,a/2/a2537fed9166b1ffa9039ae8d99d5c07659062b2
+D
+my_kivy/mychooser.py,a/8/a8727cf80d883c59caa8b7d94f6e9eb6ae99fe4c

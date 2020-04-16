@@ -1,7 +1,7 @@
 import os
 import pickle
 
-from anki_scripts.dictionary_queries import NoMatchError
+from anki_scripts.dictionary_queries import NoMatchError, linguee_did_you_mean
 from my_kivy.mychooser import *
 
 Builder.load_file("my_kivy/user_input.kv")
@@ -29,7 +29,7 @@ class WordProperties(BoxLayout):
         try:
             MDApp.get_running_app().word.get_data()
         except NoMatchError:
-            print("No word or phrase found. Maybe some apostrophs are missing or some connection issue?")
+            print(f"No word or phrase found. Maybe one of these: {linguee_did_you_mean(self.search_term())}")
 
     def load_or_search(self):
         MDApp.get_running_app().search_term = self.search_term

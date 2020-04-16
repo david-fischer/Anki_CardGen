@@ -153,5 +153,12 @@ def request_examples_from_reverso(search_term):
     ]
 
 
+def linguee_did_you_mean(search_term):
+    bs = get_soup_object(
+        f'https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&query={search_term}',
+        headers=linguee_headers)
+    return [element.text for element in bs.select("span.corrected")]
+
+
 if __name__ == "__main__":
-    pass
+    print(linguee_did_you_mean("comecar"))

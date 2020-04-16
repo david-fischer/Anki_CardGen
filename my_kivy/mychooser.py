@@ -76,8 +76,8 @@ class CheckContainer(Widget):
             new_check_element = self.CheckElementObject(**dict)
             new_check_element.bind(checked=self.conditional_uncheck)
             self.add_widget(new_check_element)
-        if self.check_one:
-            self.children[-1].checked = True
+        # if self.check_one:
+        #     self.children[-1].checked = True
 
 
 class MyCheckCard(RectangularRippleBehavior, CheckElement, MDCard):
