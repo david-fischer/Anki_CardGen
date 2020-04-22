@@ -5,7 +5,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
-from kivymd.uix.tab import MDTabs, MDTabsBase
+from kivymd.uix.tab import MDTabsBase
 
 from anki_scripts.new_main import Query
 
@@ -19,12 +19,6 @@ class Tab(FloatLayout, MDTabsBase):
     icon = StringProperty("")
 
 
-class MyTabs(MDTabs):
-    pass
-
-
-Builder.load_file("my_kivy/tabs.kv")
-
 
 class TestApp(MDApp):
     word = ObjectProperty()
@@ -34,18 +28,16 @@ class TestApp(MDApp):
         self.word = Query(search_term=self.search_term)
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
-        return Builder.load_string("""
-BoxLayout:
-    orientation: "vertical"
-    MyTabs:
-        id: my_tabs
-""")
+        return Builder.load_file("my_kivy/tabs.kv")
 
     def on_search_term(self, *args):
         try:
             self.word.search_term = self.search_term
         except AttributeError:
             print("Query not yet initialized.")
+
+    def get_data(self):
+        pass
 
 
 if __name__ == "__main__":
