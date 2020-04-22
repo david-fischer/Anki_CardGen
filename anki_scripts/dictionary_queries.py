@@ -113,6 +113,9 @@ def dicio_conj_df(bs_obj):
 def request_data_from_dicio(phrase):
     phrase = phrase.replace(" ", "-")
     bs = get_soup_object(f"https://www.dicio.com.br/pesquisa.php?q={phrase}/")
+    suggestion = bs.select("a._sugg")
+    if suggestion:
+        bs = get_soup_object(f'https://www.dicio.com.br{suggestion[0]["href"]}')
     explanations = [e.text for e in get_element_after_regex(bs, "Significado.*").find_all(span_not_cl)]
     examples = [phrase.text.strip() for phrase in bs.find_all("div", {"class": "frase"})]
     synonyms = [syn.text for syn in get_element_after_regex(bs, ".*sinônimo.*").find_all("a")]

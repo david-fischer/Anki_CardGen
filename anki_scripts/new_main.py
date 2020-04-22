@@ -1,5 +1,6 @@
 import os
 import re
+from multiprocessing.context import Process
 
 import attr
 import pandas as pd
@@ -59,38 +60,34 @@ class Query:
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
         os.makedirs(f"data/{self.folder()}", exist_ok=True)
-        self.request_dict_data()
-        try:
-            self.request_img_urls()
-        except:
-            print("could not download images :(")
+        ling_p = Process(target=self.linguee_req)
+        dicio_p = Process(target=self.dicio_req)
+        reverso_p = Process(target=self.reverso_req)
+        im_p = Process(target=self.request_img_urls)
+        for p in ling_p, dicio_p, reverso_p, im_p:
+            p.start()
+            print(f"started {p}")
+        for p in ling_p, dicio_p, reverso_p, im_p:
+            p.join()
 
-    def request_dict_data(self):
-        """
-        Uses ask from dictionary_queries.py to fill the fields:
-        self.translations
-        self.audio_url
-        self.word_type
-        self.gender
-        self.examples
-        self.explanations
-        self.synonyms
-        self.antonyms
-        self.add_info_dict
-        """
+    def reverso_req(self):
+        self.examples += request_examples_from_reverso(self.search_term)
+
+    def linguee_req(self):
         self.translations, \
         self.audio_url, \
         self.word_type, \
         self.gender, \
             = request_data_from_linguee(self.search_term, FROM_LANG)
+
+    def dicio_req(self):
         self.explanations, \
         self.synonyms, \
         self.antonyms, \
-        self.examples, \
+        examples, \
         self.add_info_dict, \
         self.conj_table_df = request_data_from_dicio(self.search_term)
-        self.examples = [[ex, translator.translate(ex)] for ex in self.examples] + request_examples_from_reverso(
-            self.search_term)
+        self.examples += [[ex, translator.translate(ex)] for ex in examples]
 
     def request_img_urls(self):
         """
