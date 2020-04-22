@@ -66,7 +66,6 @@ class Query:
         im_p = Process(target=self.request_img_urls)
         for p in ling_p, dicio_p, reverso_p, im_p:
             p.start()
-            print(f"started {p}")
         for p in ling_p, dicio_p, reverso_p, im_p:
             p.join()
 
