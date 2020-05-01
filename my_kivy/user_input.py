@@ -28,8 +28,8 @@ class WordProperties(BoxLayout):
         MDApp.get_running_app().word.search_term = self.search_term
         try:
             MDApp.get_running_app().word.get_data()
-        except NoMatchError:
-            print(f"No word or phrase found. Maybe one of these: {linguee_did_you_mean(self.search_term())}")
+        except NoMatchError as e:
+            print(f"Not found on {e.site}. Maybe one of these: {linguee_did_you_mean(self.search_term)}?")
 
     def load_or_search(self):
         MDApp.get_running_app().search_term = self.search_term

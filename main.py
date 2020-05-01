@@ -5,6 +5,7 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
+from kivymd.uix.banner import MDBanner
 from kivymd.uix.tab import MDTabsBase
 
 from anki_scripts.new_main import Query
@@ -18,6 +19,11 @@ class Tab(FloatLayout, MDTabsBase):
     text = StringProperty("")
     icon = StringProperty("")
 
+
+class SuggestionBanner(MDBanner):
+
+    def on_text(self, asker, question):
+        self.show()
 
 
 class TestApp(MDApp):
@@ -35,9 +41,6 @@ class TestApp(MDApp):
             self.word.search_term = self.search_term
         except AttributeError:
             print("Query not yet initialized.")
-
-    def get_data(self):
-        pass
 
 
 if __name__ == "__main__":

@@ -1,6 +1,7 @@
 import os
 import re
-from multiprocessing.context import Process
+from multiprocessing import Pipe
+from multiprocessing import Process
 
 import attr
 import pandas as pd
@@ -8,7 +9,7 @@ from translate import Translator
 from unidecode import unidecode
 
 from anki_scripts.dictionary_queries import request_data_from_linguee, \
-    request_data_from_dicio, request_examples_from_reverso
+    request_data_from_dicio, request_examples_from_reverso, NoMatchError
 from google_images_download import google_images_download
 
 FROM_LANG = "pt"
@@ -60,35 +61,49 @@ class Query:
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
         os.makedirs(f"data/{self.folder()}", exist_ok=True)
-        ling_p = Process(target=self.linguee_req)
-        dicio_p = Process(target=self.dicio_req)
-        reverso_p = Process(target=self.reverso_req)
-        im_p = Process(target=self.request_img_urls)
+        l_rec, l_send = Pipe(duplex=False)
+        d_rec, d_send = Pipe(duplex=False)
+        r_rec, r_send = Pipe(duplex=False)
+        i_rec, i_send = Pipe(duplex=False)
+        ling_p = Process(target=self.linguee_req, args=[l_send])
+        dicio_p = Process(target=self.dicio_req, args=[d_send])
+        reverso_p = Process(target=self.reverso_req, args=[r_send])
+        im_p = Process(target=self.request_img_urls, args=[i_send])
         for p in ling_p, dicio_p, reverso_p, im_p:
             p.start()
         for p in ling_p, dicio_p, reverso_p, im_p:
             p.join()
-
-    def reverso_req(self):
-        self.examples += request_examples_from_reverso(self.search_term)
-
-    def linguee_req(self):
+        l_resp = l_rec.recv()
+        if l_resp is NoMatchError:
+            raise NoMatchError(site="linguee")
         self.translations, \
         self.audio_url, \
         self.word_type, \
         self.gender, \
-            = request_data_from_linguee(self.search_term, FROM_LANG)
-
-    def dicio_req(self):
+            = l_resp
         self.explanations, \
         self.synonyms, \
         self.antonyms, \
         examples, \
         self.add_info_dict, \
-        self.conj_table_df = request_data_from_dicio(self.search_term)
-        self.examples += [[ex, translator.translate(ex)] for ex in examples]
+        self.conj_table_df = d_rec.recv()
+        self.examples = [[ex, translator.translate(ex)] for ex in examples]
+        self.examples += r_rec.recv()
+        self.image_urls = i_rec.recv()
 
-    def request_img_urls(self):
+    def reverso_req(self, conn):
+        conn.send(request_examples_from_reverso(self.search_term))
+
+    def linguee_req(self, conn):
+        try:
+            conn.send(request_data_from_linguee(self.search_term, FROM_LANG))
+        except NoMatchError:
+            conn.send(NoMatchError)
+
+    def dicio_req(self, conn):
+        conn.send(request_data_from_dicio(self.search_term))
+
+    def request_img_urls(self, conn):
         """
         sets self.img_urls from first 20 results of google_images
         """
@@ -105,7 +120,7 @@ class Query:
                      "save_source": "source",
                      }
         paths = response.download(arguments)[0][self.search_term_utf8()]
-        self.image_urls = paths
+        conn.send(paths)
 
     def html_from_conj_df(self):
         return "\n".join([

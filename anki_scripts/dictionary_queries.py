@@ -49,8 +49,9 @@ def ask_once(qry_str, lang):
 
 
 class NoMatchError(Exception):
-    pass
-
+    def __init__(self, site=""):
+        super(NoMatchError, self).__init__()
+        self.site = site
 
 def extract_info(response):
     try:

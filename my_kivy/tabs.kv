@@ -2,13 +2,6 @@
 
 <EditTab@BoxLayout+MDTabsBase>:
     orientation: "vertical"
-    MDBanner:
-        id: word_banner
-        on_parent: self.show()
-        text: ["One line string text example without actions.","test"]
-        left_action: ["CANCEL", lambda x: None]
-        right_action: ["CLOSE", lambda x: self.hide()]
-        over_widget: word_scroll
 
     ScrollView:
         id: word_scroll
@@ -46,9 +39,22 @@
 BoxLayout:
     orientation: "vertical"
 
+    SuggestionBanner:
+        id: suggestion_banner
+        on_parent: self.show()
+        vertical_pad: 0
+        text: ["No results found."]
+        left_action: ["OK", lambda x: None]
+        right_action: ["CLOSE", lambda x: self.hide()]
+        over_widget: edit_tab
+
+
     MDTabs:
+        id: main_tabs
+        pos_hint: {"top":1.0}
         on_parent: self.ids.carousel.ignore_perpendicular_swipes = True;self.ids.carousel.min_move = 0.07;
         EditTab:
+            id: edit_tab
             text:"file-document-edit-outline"
 
         ImageTab:
