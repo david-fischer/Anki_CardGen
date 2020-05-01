@@ -99,7 +99,15 @@ class MyCheckChip(CircularRippleBehavior, CheckElement, BoxLayout):
 
     def on_press(self):
         super(MyCheckChip, self).on_press()
-        print(self.parent.get_checked())
+
+
+class MyTransChip(MyCheckChip):
+    text_orig = StringProperty()
+    text_trans = StringProperty()
+
+    def on_press(self):
+        super(MyTransChip, self).on_press()
+        self.text = self.text_orig if self.checked else self.text_trans
 
 
 class MyCheckCardContainer(CheckContainer, ThemableBehavior, BoxLayout):
@@ -112,6 +120,10 @@ class MyTransCardContainer(MyCheckCardContainer):
 
 class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
     CheckElementObject = MyCheckChip
+
+
+class MyTransChipContainer(CheckContainer, ThemableBehavior, StackLayout):
+    CheckElementObject = MyTransChip
 
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
