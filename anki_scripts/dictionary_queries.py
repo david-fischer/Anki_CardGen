@@ -146,7 +146,7 @@ def request_synonyms_from_wordref(word):
 
 
 def request_examples_from_reverso(search_term):
-    bs = get_soup_object(f'https://context.reverso.net/traducao/portugues-ingles/{search_term}',
+    bs = get_soup_object(f'https://context.reverso.net/traducao/portugues-alemao/{search_term}',
                          headers=reverso_header)
     return [
         [

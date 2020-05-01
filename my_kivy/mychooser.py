@@ -90,8 +90,8 @@ class MyTransCard(MyCheckCard):
     text_trans = StringProperty()
 
     def on_checked(self, *args):
-        super(MyTransCard, self).on_checked(*args)
         self.text = self.text_orig if self.checked else self.text_trans
+        super(MyTransCard, self).on_checked(*args)
 
 
 class MyCheckChip(CircularRippleBehavior, CheckElement, BoxLayout):
@@ -105,8 +105,8 @@ class MyTransChip(MyCheckChip):
     text_orig = StringProperty()
     text_trans = StringProperty()
 
-    def on_press(self):
-        super(MyTransChip, self).on_press()
+    def on_checked(self, *args):
+        super(MyTransChip, self).on_checked(*args)
         self.text = self.text_orig if self.checked else self.text_trans
 
 

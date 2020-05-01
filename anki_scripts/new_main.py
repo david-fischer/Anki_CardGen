@@ -90,6 +90,8 @@ class Query:
         self.examples = [[ex, translator.translate(ex)] for ex in examples]
         self.examples += r_rec.recv()
         self.image_urls = i_rec.recv()
+        self.synonyms = [[syn, translator.translate(syn)] for syn in self.synonyms]
+        self.antonyms = [[ant, translator.translate(ant)] for ant in self.antonyms]
 
     def reverso_req(self, conn):
         conn.send(request_examples_from_reverso(self.search_term))

@@ -18,10 +18,24 @@ class WordProperties(BoxLayout):
     def refresh_data(self):
         word = MDApp.get_running_app().word
         self.ids.translation_chips.element_dicts = [{"text": string} for string in word.translations]
-        self.ids.synonym_chips.element_dicts = [{"text": string} for string in word.synonyms]
-        self.ids.antonym_chips.element_dicts = [{"text": string} for string in word.antonyms]
-        self.ids.example_cards.element_dicts = [{"text": ex[1], "text_orig": ex[0], "text_trans": ex[1]} for ex in
-                                                word.examples]
+        # self.ids.synonym_chips.element_dicts = [{"text": string} for string in word.synonyms]
+        # self.ids.antonym_chips.element_dicts = [{"text": string} for string in word.antonyms]
+        self.ids.antonym_chips.element_dicts = [{"text": ant[1],
+                                                 "text_orig": ant[0],
+                                                 "text_trans": ant[1]
+                                                 }
+                                                for ant in word.antonyms]
+        self.ids.synonym_chips.element_dicts = [{"text": syn[1],
+                                                 "text_orig": syn[0],
+                                                 "text_trans": syn[1]
+                                                 }
+                                                for syn in word.synonyms]
+
+        self.ids.example_cards.element_dicts = [{"text": ex[1],
+                                                 "text_orig": ex[0],
+                                                 "text_trans": ex[1]
+                                                 }
+                                                for ex in word.examples]
         self.ids.explanation_cards.element_dicts = [{"text": string} for string in word.explanations]
 
     def search(self):
