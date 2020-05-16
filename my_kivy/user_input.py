@@ -13,13 +13,15 @@ class WordProperties(BoxLayout):
     translations = ListProperty([])
     synonyms = ListProperty([])
     examples = ListProperty([])
+    suggestion = StringProperty("")
     display_limit = 5
+
+    def __init__(self, **kwargs):
+        super(WordProperties, self).__init__(**kwargs)
 
     def refresh_data(self):
         word = MDApp.get_running_app().word
         self.ids.translation_chips.element_dicts = [{"text": string} for string in word.translations]
-        # self.ids.synonym_chips.element_dicts = [{"text": string} for string in word.synonyms]
-        # self.ids.antonym_chips.element_dicts = [{"text": string} for string in word.antonyms]
         self.ids.antonym_chips.element_dicts = [{"text": ant[1],
                                                  "text_orig": ant[0],
                                                  "text_trans": ant[1]
@@ -42,16 +44,33 @@ class WordProperties(BoxLayout):
         MDApp.get_running_app().word.search_term = self.search_term
         try:
             MDApp.get_running_app().word.get_data()
+            return True
         except NoMatchError as e:
-            print(f"Not found on {e.site}. Maybe one of these: {linguee_did_you_mean(self.search_term)}?")
+            suggestions = linguee_did_you_mean(self.search_term)
+            message = f"Not found on {e.site}."
+            if suggestions:
+                message += f" Search for [b]{suggestions[0]}[b]?"
+                self.suggestion = suggestions[0]
+            else:
+                self.suggestion = None
+            MDApp.get_running_app().root.ids.suggestion_banner.bind(on_ok=self.accept_suggestion)
+            MDApp.get_running_app().root.ids.suggestion_banner.message = message
+            MDApp.get_running_app().root.ids.suggestion_banner.show()
+
+    def accept_suggestion(self, *args):
+        print("YEY")
+        if self.suggestion is not None:
+            self.search_term = self.suggestion
+            self.load_or_search()
+            self.refresh_data()
 
     def load_or_search(self):
         MDApp.get_running_app().search_term = self.search_term
         if os.path.exists(f"pickles/{MDApp.get_running_app().word.folder()}.p"):
             self.unpickle()
         else:
-            self.search()
-            self.pickle()
+            if self.search():
+                self.pickle()
 
     def print_all(self):
         print(f""""

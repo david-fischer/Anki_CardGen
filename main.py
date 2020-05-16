@@ -2,7 +2,7 @@ import os
 
 import certifi
 from kivy.lang import Builder
-from kivy.properties import StringProperty, ObjectProperty
+from kivy.properties import StringProperty, ObjectProperty, Property
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from kivymd.uix.banner import MDBanner
@@ -21,9 +21,22 @@ class Tab(FloatLayout, MDTabsBase):
 
 
 class SuggestionBanner(MDBanner):
+    message = StringProperty()
+    respond_to = Property(None)
 
-    def on_text(self, asker, question):
+    def __init__(self, **kwargs):
+        super(SuggestionBanner, self).__init__(**kwargs)
+        self.register_event_type("on_ok")
+
+    def on_message(self, asker, question):
+        self.text = [self.message]
         self.show()
+
+    def on_ok(self, *args):
+        self.hide()
+
+    def hide(self, *args):
+        super(SuggestionBanner, self).hide()
 
 
 class TestApp(MDApp):

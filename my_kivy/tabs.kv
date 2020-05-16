@@ -41,11 +41,10 @@ BoxLayout:
 
     SuggestionBanner:
         id: suggestion_banner
-        on_parent: self.show()
         vertical_pad: 0
-        text: ["No results found."]
-        left_action: ["OK", lambda x: None]
-        right_action: ["CLOSE", lambda x: self.hide()]
+        text: [self.message]
+        left_action: ["OK", lambda x : self.dispatch("on_ok")]
+        right_action: ["CLOSE", self.hide]
         over_widget: edit_tab
 
 
