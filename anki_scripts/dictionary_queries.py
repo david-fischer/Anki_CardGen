@@ -56,7 +56,7 @@ class NoMatchError(Exception):
 def extract_info(response):
     try:
         match = response["exact_matches"][0]
-    except TypeError:
+    except (TypeError, IndexError, KeyError):
         print("Got no valid response.")
         raise NoMatchError
     audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
@@ -77,8 +77,10 @@ def ask(phrase, lang):
 
 
 def request_data_from_linguee(phrase, lang):
-    return extract_info(ask(phrase, lang))
-
+    try:
+        return extract_info(ask(phrase, lang))
+    except KeyError:
+        raise NoMatchError(site="linguee")
 
 def get_element_after_regex(bs_obj, regex):
     match = bs_obj.body.find(text=re.compile(regex))
