@@ -65,10 +65,10 @@ class Query:
         d_rec, d_send = Pipe(duplex=False)
         r_rec, r_send = Pipe(duplex=False)
         i_rec, i_send = Pipe(duplex=False)
-        ling_p = Process(target=self.linguee_req, args=[l_send])
-        dicio_p = Process(target=self.dicio_req, args=[d_send])
-        reverso_p = Process(target=self.reverso_req, args=[r_send])
-        im_p = Process(target=self.request_img_urls, args=[i_send])
+        ling_p = Process(target=self.linguee_req, kwargs={"conn": l_send})
+        dicio_p = Process(target=self.dicio_req, kwargs={"conn": d_send})
+        reverso_p = Process(target=self.reverso_req, kwargs={"conn": r_send})
+        im_p = Process(target=self.request_img_urls, kwargs={"conn": i_send})
         for p in ling_p, dicio_p, reverso_p, im_p:
             p.start()
         for p in ling_p, dicio_p, reverso_p, im_p:
@@ -93,24 +93,38 @@ class Query:
         self.synonyms = [[syn, translator.translate(syn)] for syn in self.synonyms]
         self.antonyms = [[ant, translator.translate(ant)] for ant in self.antonyms]
 
-    def reverso_req(self, conn):
-        conn.send(request_examples_from_reverso(self.search_term))
+    def reverso_req(self, conn=None):
+        if conn is None:
+            return request_examples_from_reverso(self.search_term)
+        else:
+            conn.send(request_examples_from_reverso(self.search_term))
 
-    def linguee_req(self, conn):
+    def linguee_req(self, conn=None):
         try:
-            conn.send(request_data_from_linguee(self.search_term, FROM_LANG))
+            data = request_data_from_linguee(self.search_term, FROM_LANG)
+            if conn is None:
+                return data
+            else:
+                conn.send(data)
         except NoMatchError:
-            conn.send(NoMatchError)
+            if conn is None:
+                raise NoMatchError(site="linguee")
+            else:
+                conn.send(NoMatchError)
 
-    def dicio_req(self, conn):
-        conn.send(request_data_from_dicio(self.search_term))
+    def dicio_req(self, conn=None):
+        if conn is None:
+            return request_data_from_dicio(self.search_term)
+        else:
+            conn.send(request_data_from_dicio(self.search_term))
 
-    def request_img_urls(self, conn):
+    def request_img_urls(self, conn=None, keywords=None):
         """
         sets self.img_urls from first 20 results of google_images
         """
+        keywords = self.search_term_utf8() if keywords is None else keywords
         response = google_images_download.googleimagesdownload()
-        arguments = {"keywords": self.search_term_utf8(),
+        arguments = {"keywords": keywords,
                      "output_directory": f"data/{self.folder()}",
                      "no_directory": True,
                      "limit": 20,
@@ -121,8 +135,11 @@ class Query:
                      "prefix": "img_",
                      "save_source": "source",
                      }
-        paths = response.download(arguments)[0][self.search_term_utf8()]
-        conn.send(paths)
+        paths = response.download(arguments)[0][keywords]
+        if conn is None:
+            return paths
+        else:
+            conn.send(paths)
 
     def html_from_conj_df(self):
         return "\n".join([

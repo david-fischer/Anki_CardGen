@@ -58,7 +58,6 @@ class WordProperties(BoxLayout):
             MDApp.get_running_app().root.ids.suggestion_banner.show()
 
     def accept_suggestion(self, *args):
-        print("YEY")
         if self.suggestion is not None:
             self.search_term = self.suggestion
             self.load_or_search()

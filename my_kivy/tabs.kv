@@ -1,4 +1,5 @@
 #:import WordProperties my_kivy.user_input.WordProperties
+#:import make_card main.make_card
 
 <EditTab@BoxLayout+MDTabsBase>:
     orientation: "vertical"
@@ -13,12 +14,19 @@
             height: self.minimum_height
 
 <ImageTab@Tab>:
-    FloatLayout:
+    StackLayout:
+        MDTextField:
+            id: img_search_field
+            hint_text: "Image Search"
+            text: "test"
+            on_text_validate: image_grid.get_images(self.text)
+            #pos_hint: {"center_x":0.5,"center_y":0}
+
         ScrollView:
             do_scroll_x: False
             do_scroll_y: True
             size_hint: 1,1
-            MyCheckImageGrid:
+            ImageSearchResultGrid:
                 cols: 2
                 id: image_grid
                 row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
@@ -47,19 +55,23 @@ BoxLayout:
         right_action: ["CLOSE", self.hide]
         over_widget: edit_tab
 
+    FloatLayout:
+        MDTabs:
+            id: main_tabs
+            pos_hint: {"top":1.0}
+            on_parent: self.ids.carousel.ignore_perpendicular_swipes = True;self.ids.carousel.min_move = 0.07;
+            EditTab:
+                id: edit_tab
+                text:"file-document-edit-outline"
 
-    MDTabs:
-        id: main_tabs
-        pos_hint: {"top":1.0}
-        on_parent: self.ids.carousel.ignore_perpendicular_swipes = True;self.ids.carousel.min_move = 0.07;
-        EditTab:
-            id: edit_tab
-            text:"file-document-edit-outline"
+            ImageTab:
+                id: image_picker_main
+                text: "image-search-outline"
 
-        ImageTab:
-            id: image_picker_main
-            text: "image-search-outline"
+            PreviewTab:
+                text: "eye"
 
-        PreviewTab:
-            text: "eye"
-
+        MDFloatingActionButton:
+            icon: "check-bold"
+            pos_hint: {"center_x":0.9, "center_y":0.1}
+            on_press: make_card()

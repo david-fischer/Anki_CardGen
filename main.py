@@ -9,8 +9,12 @@ from kivymd.uix.banner import MDBanner
 from kivymd.uix.tab import MDTabsBase
 
 from anki_scripts.new_main import Query
+from my_kivy.mychooser import MyCheckImageGrid
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
+
+
+def make_card():
 
 
 class Tab(FloatLayout, MDTabsBase):
@@ -18,6 +22,13 @@ class Tab(FloatLayout, MDTabsBase):
     id = StringProperty("")
     text = StringProperty("")
     icon = StringProperty("")
+
+
+class ImageSearchResultGrid(MyCheckImageGrid):
+    def get_images(self, keywords=None):
+        word = MDApp.get_running_app().word
+        paths = word.image_urls if keywords is None else word.request_img_urls(keywords=keywords)
+        self.element_dicts = [{"source": url} for url in paths]
 
 
 class SuggestionBanner(MDBanner):
