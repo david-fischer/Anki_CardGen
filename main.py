@@ -54,7 +54,7 @@ def make_card():
 
 
 class Tab(FloatLayout, MDTabsBase):
-    """Class implementing content for a tab."""
+    """Class implementing content for a tab. """
     id = StringProperty("")
     text = StringProperty("")
     icon = StringProperty("")
