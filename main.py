@@ -2,7 +2,8 @@ import os
 
 import certifi
 from kivy.lang import Builder
-from kivy.properties import StringProperty, ObjectProperty, Property
+from kivy.network.urlrequest import UrlRequest
+from kivy.properties import StringProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from kivymd.uix.banner import MDBanner
@@ -14,11 +15,46 @@ from my_kivy.mychooser import MyCheckImageGrid
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
+def widget_by_id(string):
+    """
+    :arg string: "/edit_tab/word_prop/translation_chips
+    :returns widget root.ids.edit_tab.ids.word_prop ... usw
+    """
+    ids = string.split("/")
+    ids = [id for id in ids if id != ""]
+    obj = MDApp.get_running_app().root
+    for id in ids:
+        obj = getattr(obj.ids, id)
+    return obj
+
+
+def selection_helper(base, id=None, props="text"):
+    base_obj = getattr(base.ids, id) if id is not None else base
+    objects = base_obj.get_checked()
+    return [[getattr(obj, property) for property in props] for obj in objects]
+
+
 def make_card():
+    word = MDApp.get_running_app().word
+    word_prop = widget_by_id("/edit_tab/word_prop")
+    img_url = widget_by_id("/image_tab/image_grid/").get_checked(property="source")
+    audio_url = word.audio_url
+    UrlRequest(img_url, file_path=f"data/{word.folder()}/image.jgp", on_success=lambda *args: print("DONE IMG!"))
+    UrlRequest(audio_url, file_path=f"data/{word.folder()}/audio.mp3", on_success=lambda *args: print("DONE AUDIO!"))
+    selections = {
+        "translation_chips": ["text"],
+        "synonym_chips": ["text_orig", "text_trans"],
+        "antonym_chips": ["text_orig", "text_trans"],
+        "explanation_cards": ["text"],
+        "example_cards": ["text_orig", "text_trans"],
+    }
+    for key, props in selections.items():
+        print(key, props)
+        selections[key] = selection_helper(word_prop, id=key, props=props)
 
 
 class Tab(FloatLayout, MDTabsBase):
-    '''Class implementing content for a tab.'''
+    """Class implementing content for a tab."""
     id = StringProperty("")
     text = StringProperty("")
     icon = StringProperty("")
@@ -33,7 +69,6 @@ class ImageSearchResultGrid(MyCheckImageGrid):
 
 class SuggestionBanner(MDBanner):
     message = StringProperty()
-    respond_to = Property(None)
 
     def __init__(self, **kwargs):
         super(SuggestionBanner, self).__init__(**kwargs)
