@@ -10,6 +10,7 @@
         do_scroll_y: True
         size_hint: 1,1
         WordProperties:
+            id: word_prop
             size_hint:1,None
             height: self.minimum_height
 
@@ -65,7 +66,7 @@ BoxLayout:
                 text:"file-document-edit-outline"
 
             ImageTab:
-                id: image_picker_main
+                id: image_tab
                 text: "image-search-outline"
 
             PreviewTab:
