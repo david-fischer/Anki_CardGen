@@ -67,8 +67,12 @@ class CheckContainer(Widget):
             for check_element in [others for others in self.children if others != instance and value]:
                 check_element.checked = False
 
-    def get_checked(self):
-        return [element.text for element in self.children[::-1] if element.checked]
+    def get_checked(self, property=None):
+        checked_elements = [element for element in self.children[::-1] if element.checked]
+        if property is None:
+            return checked_elements
+        else:
+            return [getattr(element, property) for element in checked_elements]
 
     def on_element_dicts(self, *args):
         self.clear_widgets()
