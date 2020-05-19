@@ -127,7 +127,7 @@ class Query:
         arguments = {"keywords": keywords,
                      "output_directory": f"data/{self.folder()}",
                      "no_directory": True,
-                     "limit": 10,
+                     "limit": 20,
                      "format": "jpg",
                      "language": LANGUAGE[FROM_LANG],
                      "no_download": True,

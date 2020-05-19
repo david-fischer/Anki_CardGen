@@ -7,7 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
-AUDIO_BASE_URL = "https://www.linguee.de/mp3/%s.mp3"
+AUDIO_BASE_URL = "http://www.linguee.de/mp3/%s.mp3"
 
 DEFAULT_HEADERS = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) '

@@ -2,6 +2,7 @@ import os
 import pickle
 
 from anki_scripts.dictionary_queries import NoMatchError, linguee_did_you_mean
+from main import widget_by_id
 from my_kivy.mychooser import *
 
 Builder.load_file("my_kivy/user_input.kv")
@@ -53,9 +54,9 @@ class WordProperties(BoxLayout):
                 self.suggestion = suggestions[0]
             else:
                 self.suggestion = None
-            MDApp.get_running_app().root.ids.suggestion_banner.bind(on_ok=self.accept_suggestion)
-            MDApp.get_running_app().root.ids.suggestion_banner.message = message
-            MDApp.get_running_app().root.ids.suggestion_banner.show()
+            widget_by_id("suggestion_banner").bind(on_ok=self.accept_suggestion)
+            widget_by_id("suggestion_banner").message = message
+            widget_by_id("suggestion_banner").show()
 
     def accept_suggestion(self, *args):
         if self.suggestion is not None:
@@ -70,6 +71,8 @@ class WordProperties(BoxLayout):
         else:
             if self.search():
                 self.pickle()
+        widget_by_id("/image_tab/img_search_field").text = MDApp.get_running_app().word.search_term
+        widget_by_id("/image_tab/image_grid").get_images()
 
     def print_all(self):
         print(f""""
