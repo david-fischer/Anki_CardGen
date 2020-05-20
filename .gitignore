@@ -1,4 +1,6 @@
-/test/
-/bin/
-/data/
-/.buildozer/
+test/
+bin/
+data/
+.buildozer/
+pickles/
+.idea/
