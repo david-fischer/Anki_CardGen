@@ -34,5 +34,8 @@ D
 my_kivy/mychooser.kv,a/2/a2537fed9166b1ffa9039ae8d99d5c07659062b2
 D
 my_kivy/mychooser.py,a/8/a8727cf80d883c59caa8b7d94f6e9eb6ae99fe4c
-E
-assets/pt_br_50k.json,1/0/103f012eac1c15886cba2b5c15b441b3e029c5e5
+`
+0google_images_download/google_images_download.py,7/7/77831499466e92182305a126b69480738ef673cc
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
