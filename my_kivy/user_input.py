@@ -1,9 +1,9 @@
 import os
 import pickle
 
-from anki_scripts.dictionary_queries import NoMatchError, linguee_did_you_mean
 from main import widget_by_id
 from my_kivy.mychooser import *
+from word_requests.dictionary_queries import linguee_did_you_mean, NoMatchError
 
 Builder.load_file("my_kivy/user_input.kv")
 

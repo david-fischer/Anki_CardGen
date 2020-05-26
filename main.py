@@ -11,8 +11,8 @@ from kivymd.app import MDApp
 from kivymd.uix.banner import MDBanner
 from kivymd.uix.tab import MDTabsBase
 
-from anki_scripts.new_main import Query
 from my_kivy.mychooser import MyCheckImageGrid
+from word_requests.word import Word
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
@@ -100,7 +100,7 @@ class TestApp(MDApp):
     search_term = StringProperty()
 
     def build(self):
-        self.word = Query(search_term=self.search_term)
+        self.word = Word(search_term=self.search_term)
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
         return Builder.load_file("my_kivy/tabs.kv")

@@ -1,16 +1,15 @@
 import os
 import re
-from multiprocessing import Pipe
-from multiprocessing import Process
+from multiprocessing import Pipe, Process
 
 import attr
 import pandas as pd
 from translate import Translator
 from unidecode import unidecode
 
-from anki_scripts.dictionary_queries import request_data_from_linguee, \
-    request_data_from_dicio, request_examples_from_reverso, NoMatchError
 from google_images_download import google_images_download
+from word_requests.dictionary_queries import NoMatchError, request_data_from_dicio, request_data_from_linguee, \
+    request_examples_from_reverso
 
 FROM_LANG = "pt"
 TO_LANG = "de"
@@ -32,7 +31,7 @@ def html_list(str_list):
 
 
 @attr.s
-class Query:
+class Word:
     # query properties
     search_term = attr.ib(default="casa")
     # word properties
@@ -160,5 +159,5 @@ class Query:
 
 
 if __name__ == "__main__":
-    q = Query(search_term="mesa")
+    q = Word(search_term="mesa")
     print(q)
