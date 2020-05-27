@@ -13,4 +13,5 @@ beautifulsoup4==4.9.0
 lxml
 soupsieve
 genanki
+spacy
 
