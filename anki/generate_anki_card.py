@@ -4,8 +4,6 @@ import attr
 import bs4
 import genanki
 
-path = "/home/david/gen_ank/"
-
 
 @attr.s
 class HtmlLoader:
@@ -66,7 +64,7 @@ class AnkiObject:
     model_name = attr.ib(default="pt-word")
     templates = attr.ib(default=["meaning-pt", "pt-meaning"])
     deck_name = attr.ib(default="Portuguese::Vocab")
-    css_path = attr.ib(default="pt.css")
+    css_path = attr.ib(default="css/pt.css")
     id = attr.ib(default=12345)
 
     def __attrs_post_init__(self):
@@ -88,6 +86,7 @@ class AnkiObject:
             field: (kwargs[field] if field in kwargs else "")
             for field in self.fields
         }
+        fields = [fields[key] for key in  sorted(fields,reverse=True)]
         new_note = genanki.Note(
             model=self.model,
             fields=fields,
