@@ -1,8 +1,11 @@
+import os
 import re
 
 import attr
 import bs4
 import genanki
+
+from utils import CD
 
 
 @attr.s
@@ -79,9 +82,9 @@ class AnkiObject:
             for _, field in field_dict.items()
         ]
 
-    def add_note(self, media_file_dict=None, **kwargs):
-        if media_file_dict is None:
-            media_file_dict = {}
+    def add_note(self, media_files=None, **kwargs):
+        if media_files is None:
+            media_files = []
         fields = {
             field: (kwargs[field] if field in kwargs else "")
             for field in self.fields
@@ -90,8 +93,9 @@ class AnkiObject:
         new_note = genanki.Note(
             model=self.model,
             fields=fields,
+            sort_field="Word"
         )
-        for field, file in media_file_dict:
+        for file in media_files:
             self.package.media_files.append(file)
         self.deck.add_note(new_note)
 
@@ -101,5 +105,10 @@ class AnkiObject:
 
 if __name__ == "__main__":
     ankiobject = AnkiObject()
-    ankiobject.add_note(Word="test")
-    ankiobject.write_apkg("output.apkg")
+    with CD("../data/casa"):
+        print(os.listdir())
+        ankiobject.add_note(Word="casa",
+                            Audio="[sound:casa.mp3]",
+                            Image='<img src="casa.jpg">',
+                            media_files=["casa.mp3","casa.jpg"])
+        ankiobject.write_apkg("output.apkg")
