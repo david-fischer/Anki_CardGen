@@ -86,7 +86,7 @@ class AnkiObject:
             field: (kwargs[field] if field in kwargs else "")
             for field in self.fields
         }
-        fields = [fields[key] for key in  sorted(fields,reverse=True)]
+        fields = [fields[key] for key in sorted(fields, reverse=True)]
         new_note = genanki.Note(
             model=self.model,
             fields=fields,
