@@ -39,10 +39,11 @@ def selection_helper(base, id=None, props=["text"]):
 def make_card():
     word = MDApp.get_running_app().word
     word_prop = widget_by_id("/edit_tab/word_prop")
+    # TODO: Change names of audio.mp3 and image.jpg
     try:
         img_url = widget_by_id("/image_tab/image_grid/").get_checked(property="source")[0].replace("http", "https")
         print(img_url)
-        UrlRequest(img_url, file_path=f"data/{word.folder()}/image.jgp", on_success=lambda *args: print("DONE IMG!"),
+        UrlRequest(img_url, file_path=f"data/{word.folder()}/image.jpg", on_success=lambda *args: print("DONE IMG!"),
                    on_error=lambda obj, error: print(error, "Try different image."))
     except IndexError:
         # TODO: change to a popup
