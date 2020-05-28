@@ -45,18 +45,12 @@
 
 <PreviewTab@Tab>:
 
+
 BoxLayout:
     orientation: "vertical"
 
-    SuggestionBanner:
-        id: suggestion_banner
-        vertical_pad: 0
-        text: [self.message]
-        left_action: ["OK", lambda x : self.dispatch("on_ok")]
-        right_action: ["CLOSE", self.hide]
-        over_widget: edit_tab
-
     FloatLayout:
+
         MDTabs:
             id: main_tabs
             pos_hint: {"top":1.0}
@@ -76,3 +70,12 @@ BoxLayout:
             icon: "check-bold"
             pos_hint: {"center_x":0.9, "center_y":0.1}
             on_press: make_card()
+
+        SuggestionBanner:
+            id: suggestion_banner
+            vertical_pad: 0
+            text: [self.message]
+            left_action: ["OK", lambda x : self.dispatch("on_ok")]
+            right_action: ["CLOSE", self.hide]
+            over_widget: edit_tab
+
