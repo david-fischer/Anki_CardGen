@@ -1,5 +1,3 @@
-import functools
-import operator
 import os
 
 import certifi
@@ -12,44 +10,27 @@ from kivymd.uix.banner import MDBanner
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
+from utils import selection_helper, widget_by_id
 from word_requests.word import Word
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
-def widget_by_id(string):
-    """
-    :arg string: "/edit_tab/word_prop/translation_chips
-    :returns widget root.ids.edit_tab.ids.word_prop ... usw
-    """
-    ids = string.split("/")
-    ids = [id for id in ids if id != ""]
-    obj = MDApp.get_running_app().root
-    for id in ids:
-        obj = getattr(obj.ids, id)
-    return obj
-
-
-def selection_helper(base, id=None, props=["text"]):
-    base_obj = getattr(base.ids, id) if id is not None else base
-    out = [base_obj.get_checked(property=prop) for prop in props]
-    return functools.reduce(operator.iconcat, out, [])
-
-
 def make_card():
     word = MDApp.get_running_app().word
     word_prop = widget_by_id("/edit_tab/word_prop")
-    # TODO: Change names of audio.mp3 and image.jpg
     try:
-        img_url = widget_by_id("/image_tab/image_grid/").get_checked(property="source")[0].replace("http", "https")
+        img_url = widget_by_id("/image_tab/image_grid/").get_checked(property="source")[0].replace("http:", "https:")
         print(img_url)
-        UrlRequest(img_url, file_path=f"data/{word.folder()}/image.jpg", on_success=lambda *args: print("DONE IMG!"),
-                   on_error=lambda obj, error: print(error, "Try different image."))
+        UrlRequest(img_url, file_path=f"data/{word.folder()}/{word.folder()}.jpg",
+                   debug=True, timeout=5,
+                   on_success=lambda *args: print("Finished downloading image."))
     except IndexError:
         # TODO: change to a popup
         print("Error with image download. Try different Image instead.")
     audio_url = word.audio_url
-    UrlRequest(audio_url, file_path=f"data/{word.folder()}/audio.mp3", on_success=lambda *args: print("DONE AUDIO!"))
+    UrlRequest(audio_url, file_path=f"data/{word.folder()}/{word.folder()}.mp3",
+               on_success=lambda *args: print("Finished downloading audio."))
     selections = {
         "translation_chips": ["text"],
         "synonym_chips":     ["text_orig", "text_trans"],
@@ -61,7 +42,19 @@ def make_card():
     for key, props in selections.items():
         new_key = key.split("_")[0]
         out[new_key] = selection_helper(word_prop, id=key, props=props)
-    return out
+    return {
+        'Word':               word.search_term,
+        'Translation':        ", ".join(selections["translation"]),
+        'Synonym':            selections["synonym"],
+        'Image':              "",
+        'Explanation':        "",
+        'ExampleTranslation': "",
+        'Example':            "",
+        'ConjugationTable':   "",
+        'Audio':              "",
+        'Antonym':            "",
+        'AdditionalInfo':     ","
+    }
 
 
 class Tab(FloatLayout, MDTabsBase):
@@ -114,4 +107,4 @@ class TestApp(MDApp):
 
 
 if __name__ == "__main__":
-    TestApp(search_term="casa").run()
+    TestApp(search_term="").run()
