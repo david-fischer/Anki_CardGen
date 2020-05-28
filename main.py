@@ -1,95 +1,84 @@
 import os
 
-import certifi
 from kivy.lang import Builder
-from kivy.network.urlrequest import UrlRequest
-from kivy.properties import ObjectProperty, StringProperty
-from kivy.uix.floatlayout import FloatLayout
+from kivy.properties import ListProperty, ObjectProperty, StringProperty
+from kivy.uix.screenmanager import Screen
+from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
-from kivymd.uix.banner import MDBanner
-from kivymd.uix.tab import MDTabsBase
+from kivymd.theming import ThemableBehavior
+from kivymd.uix.list import MDList, OneLineIconListItem
+from kivymd.uix.toolbar import MDToolbar
 
-from my_kivy.mychooser import MyCheckImageGrid
-from utils import selection_helper, widget_by_id
+from my_kivy.mychooser import CheckBehavior, CheckContainer
+from utils import widget_by_id
 from word_requests.word import Word
 
-os.environ['SSL_CERT_FILE'] = certifi.where()
+
+def set_screen(screen_name):
+    widget_by_id("screen_man").current = screen_name
 
 
-def make_card():
-    word = MDApp.get_running_app().word
-    word_prop = widget_by_id("/edit_tab/word_prop")
-    try:
-        img_url = widget_by_id("/image_tab/image_grid/").get_checked(property="source")[0].replace("http:", "https:")
-        print(img_url)
-        UrlRequest(img_url, file_path=f"data/{word.folder()}/{word.folder()}.jpg",
-                   debug=True, timeout=5,
-                   on_success=lambda *args: print("Finished downloading image."))
-    except IndexError:
-        # TODO: change to a popup
-        print("Error with image download. Try different Image instead.")
-    audio_url = word.audio_url
-    UrlRequest(audio_url, file_path=f"data/{word.folder()}/{word.folder()}.mp3",
-               on_success=lambda *args: print("Finished downloading audio."))
-    selections = {
-        "translation_chips": ["text"],
-        "synonym_chips":     ["text_orig", "text_trans"],
-        "antonym_chips":     ["text_orig", "text_trans"],
-        "explanation_cards": ["text"],
-        "example_cards":     ["text_orig", "text_trans"],
-    }
-    out = {}
-    for key, props in selections.items():
-        new_key = key.split("_")[0]
-        out[new_key] = selection_helper(word_prop, id=key, props=props)
-    return {
-        'Word':               word.search_term,
-        'Translation':        ", ".join(selections["translation"]),
-        'Synonym':            selections["synonym"],
-        'Image':              "",
-        'Explanation':        "",
-        'ExampleTranslation': "",
-        'Example':            "",
-        'ConjugationTable':   "",
-        'Audio':              "",
-        'Antonym':            "",
-        'AdditionalInfo':     ","
-    }
+Builder.load_file("my_kivy/screens.kv")
 
 
-class Tab(FloatLayout, MDTabsBase):
-    """Class implementing content for a tab. """
-    id = StringProperty("")
-    text = StringProperty("")
-    icon = StringProperty("")
-
-
-class ImageSearchResultGrid(MyCheckImageGrid):
-    def get_images(self, keywords=None):
-        word = MDApp.get_running_app().word
-        paths = word.image_urls if keywords is None else word.request_img_urls(keywords=keywords)
-        self.element_dicts = [{"source": url} for url in paths]
-
-
-class SuggestionBanner(MDBanner):
-    message = StringProperty()
+class DrawerItem(CheckBehavior, OneLineIconListItem):
+    icon = StringProperty()
+    screen_name = StringProperty("test")
 
     def __init__(self, **kwargs):
-        super(SuggestionBanner, self).__init__(**kwargs)
-        self.register_event_type("on_ok")
+        super(DrawerItem, self).__init__()
+        self.checked_state = {"text_color": self.theme_cls.primary_color}
+        self.unchecked_state = {"text_color": self.theme_cls.text_color}
+        super(DrawerItem, self).__init__(**kwargs)
 
-    def on_message(self, asker, question):
-        self.text = [self.message]
-        self.show()
-
-    def on_ok(self, *args):
-        self.hide()
-
-    def hide(self, *args):
-        super(SuggestionBanner, self).hide()
+    def on_release(self):
+        self.checked = True
+        widget_by_id("nav_drawer").set_state("close")
 
 
-class TestApp(MDApp):
+class DrawerList(ThemableBehavior, CheckContainer, MDList):
+    check_one = True
+    CheckElementObject = DrawerItem
+    current = StringProperty("")
+
+    def conditional_uncheck(self, instance, value):
+        super(DrawerList, self).conditional_uncheck(instance, value)
+        self.current = instance.screen_name
+
+    def click_screen_name(self, screen_name):
+        for item in self.children:
+            if item.screen_name == screen_name:
+                item.on_release()
+
+
+class MainMenu(StackLayout):
+    screen_dicts = ListProperty(
+        [{"icon": "script-text-outline", "text": "Import from Kindle Notes", "screen_name": "screen_import"},
+         {"icon": "textbox", "text": "Single Word", "screen_name": "screen_single_word"},
+         {"icon": "cogs", "text": "Settings", "screen_name": "screen_settings"},
+         # {"icon": "folder", "text": "My files", "screen_name": "my_files"},
+         ]
+    )
+
+    def set_screen(self, screen_name):
+        self.ids.screen_man.current = screen_name
+
+    def on_parent(self, *args):
+        for screen_dict in self.screen_dicts:
+            name = screen_dict["screen_name"]
+            path = f"my_kivy/{name}.kv"
+            screen = Screen(name=name)
+            if not os.path.exists(path):
+                with open(path, "w") as file:
+                    file.write(f'MDLabel:\n\ttext:"{name}"')
+            screen.add_widget(Builder.load_file(path))
+            self.ids.screen_man.add_widget(screen)
+        self.ids.drawer_list.element_dicts = self.screen_dicts
+        self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
+        self.ids.drawer_list.children[-1].on_release()
+
+
+class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
     search_term = StringProperty()
 
@@ -97,7 +86,7 @@ class TestApp(MDApp):
         self.word = Word(search_term=self.search_term)
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
-        return Builder.load_file("my_kivy/tabs.kv")
+        return Builder.load_string("MainMenu:")
 
     def on_search_term(self, *args):
         try:
@@ -107,4 +96,4 @@ class TestApp(MDApp):
 
 
 if __name__ == "__main__":
-    TestApp(search_term="").run()
+    AnkiCardGenApp(search_term="").run()
