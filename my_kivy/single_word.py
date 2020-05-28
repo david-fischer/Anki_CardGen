@@ -69,6 +69,8 @@ class ImageSearchResultGrid(MyCheckImageGrid):
         self.element_dicts = [{"source": url} for url in paths]
 
 
+# TODO: Fix Position of Banner in kv-file.
+# currently, Banner glitches under the Tabs-bar
 class SuggestionBanner(MDBanner):
     message = StringProperty()
 
