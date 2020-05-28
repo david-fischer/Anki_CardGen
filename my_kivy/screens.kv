@@ -1,8 +1,8 @@
+#:import set_screen screens.set_screen
+#:import SwapTransition kivy.uix.screenmanager.NoTransition
 
-
-<ItemDrawer>:
+<DrawerItem>:
     theme_text_color: "Custom"
-    on_release: self.parent.set_color_item(self)
 
     IconLeftWidget:
         id: icon
@@ -52,6 +52,7 @@ StackLayout:
         title: "Navigation Drawer"
         elevation: 10
         left_action_items: [['menu', lambda x: nav_drawer.set_state("toggle")]]
+        right_action_items: [['settings', lambda x: set_screen("settings")]]
 
 
     NavigationLayout:
@@ -62,6 +63,7 @@ StackLayout:
             pos_hint: {"bottom":.1}
             size_hint: 1,None
             height: root.height - main_toolbar.height
+            transition: SwapTransition()
 
             #canvas.after:
             #    Color:
