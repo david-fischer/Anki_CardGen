@@ -1,7 +1,6 @@
-import lorem
 from kivy.animation import Animation
 from kivy.lang import Builder
-from kivy.properties import BooleanProperty, ListProperty, StringProperty, ObjectProperty, NumericProperty
+from kivy.properties import BooleanProperty, ListProperty, NumericProperty, ObjectProperty, StringProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -9,7 +8,7 @@ from kivy.uix.stacklayout import StackLayout
 from kivy.uix.widget import Widget
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.behaviors import RectangularRippleBehavior, CircularRippleBehavior
+from kivymd.uix.behaviors import CircularRippleBehavior, RectangularRippleBehavior
 from kivymd.uix.card import MDCard
 from kivymd.uix.imagelist import SmartTile
 
@@ -24,6 +23,10 @@ class CheckBehavior(object):
     checked_state = {}
     unchecked_state = {}
 
+    def __init__(self, **kwargs):
+        state = self.checked_state if self.checked else self.unchecked_state
+        super(CheckBehavior, self).__init__(**kwargs, **state)
+
     def on_checked(self, *args):
         if self.checked:
             anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
@@ -31,24 +34,21 @@ class CheckBehavior(object):
             anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
         anim.start(self)
 
-    def on_parent(self, *args):
-        self.on_checked()
-
 
 class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
     text_color = ListProperty([0, 0, 0, 1])
     bg_color = ListProperty([1, 1, 1, 1])
-    text = StringProperty(lorem.paragraph())
+    text = StringProperty("test " * 15)
 
     def __init__(self, **kwargs):
         super(CheckElement, self).__init__(**kwargs)
         self.checked_state = {
-            "bg_color": self.theme_cls.primary_color,
+            "bg_color":   self.theme_cls.primary_color,
             "text_color": [1, 1, 1, 1],
         }
         self.unchecked_state = {
-            "bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
-            else self.theme_cls.bg_light,
+            "bg_color":   self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
+                          else self.theme_cls.bg_light,
             "text_color": self.theme_cls.secondary_text_color,
         }
         self.on_checked()
