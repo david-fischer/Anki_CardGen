@@ -1,7 +1,7 @@
 import os
 import pickle
 
-from main import widget_by_id
+from utils import widget_by_id
 from my_kivy.mychooser import *
 from word_requests.dictionary_queries import linguee_did_you_mean, NoMatchError
 
