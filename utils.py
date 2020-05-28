@@ -47,7 +47,10 @@ def widget_by_id(string):
     ids = [id for id in ids if id != ""]
     obj = MDApp.get_running_app().root
     for id in ids:
-        obj = getattr(obj.ids, id)
+        try:
+            obj = getattr(obj.ids, id)
+        except:
+            obj = obj.ids.screen_man.get_screen(id).children[0]
     return obj
 
 

@@ -7,7 +7,6 @@ from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
-from kivymd.uix.toolbar import MDToolbar
 
 from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import widget_by_id
@@ -67,7 +66,7 @@ class MainMenu(StackLayout):
         for screen_dict in self.screen_dicts:
             name = screen_dict["screen_name"]
             path = f"my_kivy/{name}.kv"
-            screen = Screen(name=name)
+            screen = Screen(name=name,id=name)
             if not os.path.exists(path):
                 with open(path, "w") as file:
                     file.write(f'MDLabel:\n\ttext:"{name}"')

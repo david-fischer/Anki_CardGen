@@ -15,9 +15,10 @@ os.environ['SSL_CERT_FILE'] = certifi.where()
 
 def make_card():
     word = MDApp.get_running_app().word
-    word_prop = widget_by_id("/edit_tab/word_prop")
+    word_prop = widget_by_id("/screen_single_word/edit_tab/word_prop")
     try:
-        img_url = widget_by_id("/image_tab/image_grid/").get_checked(property="source")[0].replace("http:", "https:")
+        img_url = widget_by_id("/screen_single_word/image_tab/image_grid/").get_checked(property="source")[
+            0].replace("http:", "https:")
         print(img_url)
         # UrlRequest(img_url, file_path=f"data/{word.folder()}/{word.folder()}.jpg",
         #           debug=True, timeout=5,

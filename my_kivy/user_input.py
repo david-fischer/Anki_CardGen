@@ -1,14 +1,15 @@
 import os
 import pickle
 
-from utils import widget_by_id
 from my_kivy.mychooser import *
+from utils import widget_by_id
 from word_requests.dictionary_queries import linguee_did_you_mean, NoMatchError
 
 try:
     Builder.load_file("my_kivy/user_input.kv")
 except FileNotFoundError:
     Builder.load_file("user_input.kv")
+
 
 class WordProperties(BoxLayout):
     search_term = StringProperty("")
@@ -25,22 +26,25 @@ class WordProperties(BoxLayout):
     def refresh_data(self):
         word = MDApp.get_running_app().word
         self.ids.translation_chips.element_dicts = [{"text": string} for string in word.translations]
-        self.ids.antonym_chips.element_dicts = [{"text": ant[1],
-                                                 "text_orig": ant[0],
-                                                 "text_trans": ant[1]
-                                                 }
-                                                for ant in word.antonyms]
-        self.ids.synonym_chips.element_dicts = [{"text": syn[1],
-                                                 "text_orig": syn[0],
-                                                 "text_trans": syn[1]
-                                                 }
-                                                for syn in word.synonyms]
+        self.ids.antonym_chips.element_dicts = [{
+            "text":       ant[1],
+            "text_orig":  ant[0],
+            "text_trans": ant[1]
+        }
+            for ant in word.antonyms]
+        self.ids.synonym_chips.element_dicts = [{
+            "text":       syn[1],
+            "text_orig":  syn[0],
+            "text_trans": syn[1]
+        }
+            for syn in word.synonyms]
 
-        self.ids.example_cards.element_dicts = [{"text": ex[1],
-                                                 "text_orig": ex[0],
-                                                 "text_trans": ex[1]
-                                                 }
-                                                for ex in word.examples]
+        self.ids.example_cards.element_dicts = [{
+            "text":       ex[1],
+            "text_orig":  ex[0],
+            "text_trans": ex[1]
+        }
+            for ex in word.examples]
         self.ids.explanation_cards.element_dicts = [{"text": string} for string in word.explanations]
 
     def search(self):
@@ -56,9 +60,10 @@ class WordProperties(BoxLayout):
                 self.suggestion = suggestions[0]
             else:
                 self.suggestion = None
-            widget_by_id("suggestion_banner").bind(on_ok=self.accept_suggestion)
-            widget_by_id("suggestion_banner").message = message
-            widget_by_id("suggestion_banner").show()
+            sg_banner = widget_by_id("/screen_single_word/suggestion_banner")
+            sg_banner.bind(on_ok=self.accept_suggestion)
+            sg_banner.message = message
+            sg_banner.show()
 
     def accept_suggestion(self, *args):
         if self.suggestion is not None:
@@ -73,8 +78,9 @@ class WordProperties(BoxLayout):
         else:
             if self.search():
                 self.pickle()
-        widget_by_id("/image_tab/img_search_field").text = MDApp.get_running_app().word.search_term
-        widget_by_id("/image_tab/image_grid").get_images()
+        widget_by_id(
+            "/screen_single_word/image_tab/img_search_field").text = self.search_term
+        widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
 
     def print_all(self):
         print(f""""
