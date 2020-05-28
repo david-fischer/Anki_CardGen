@@ -1,14 +1,13 @@
 import os
 import pickle
 
-from my_kivy.mychooser import *
+from kivy.lang import Builder
+from kivy.properties import ListProperty, StringProperty
+from kivy.uix.boxlayout import BoxLayout
+from kivymd.app import MDApp
+
 from utils import widget_by_id
 from word_requests.dictionary_queries import linguee_did_you_mean, NoMatchError
-
-try:
-    Builder.load_file("my_kivy/user_input.kv")
-except FileNotFoundError:
-    Builder.load_file("user_input.kv")
 
 
 class WordProperties(BoxLayout):
@@ -60,7 +59,7 @@ class WordProperties(BoxLayout):
                 self.suggestion = suggestions[0]
             else:
                 self.suggestion = None
-            sg_banner = widget_by_id("/screen_single_word/suggestion_banner")
+            sg_banner = widget_by_id("/screen_single_word/edit_tab/suggestion_banner")
             sg_banner.bind(on_ok=self.accept_suggestion)
             sg_banner.message = message
             sg_banner.show()
@@ -108,9 +107,5 @@ Examples: {self.examples}
 if __name__ == "__main__":
     class MyApp(MDApp):
         def build(self):
-            return Builder.load_string("""
-    WordProperties:
-            """)
-
-
+            return Builder.load_string("WordProperties:")
     MyApp().run()
