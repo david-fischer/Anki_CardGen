@@ -5,8 +5,10 @@ from utils import widget_by_id
 from my_kivy.mychooser import *
 from word_requests.dictionary_queries import linguee_did_you_mean, NoMatchError
 
-Builder.load_file("my_kivy/user_input.kv")
-
+try:
+    Builder.load_file("my_kivy/user_input.kv")
+except FileNotFoundError:
+    Builder.load_file("user_input.kv")
 
 class WordProperties(BoxLayout):
     search_term = StringProperty("")
