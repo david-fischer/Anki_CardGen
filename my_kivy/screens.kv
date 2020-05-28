@@ -1,5 +1,4 @@
-#:import set_screen screens.set_screen
-#:import SwapTransition kivy.uix.screenmanager.NoTransition
+#:import NoTransition kivy.uix.screenmanager.NoTransition
 
 <DrawerItem>:
     theme_text_color: "Custom"
@@ -11,7 +10,7 @@
         text_color: root.text_color
 
 
-<ContentNavigationDrawer>:
+<DrawerContent@BoxLayout>:
     orientation: "vertical"
     padding: "8dp"
     spacing: "8dp"
@@ -25,34 +24,33 @@
             id: avatar
             size_hint: None, None
             size: "112dp", "112dp"
-            source: "../assets/AnkiCardGen.png"
+            source: "assets/AnkiCardGen.png"
 
     MDLabel:
         text: "Anki CardGen"
         font_style: "Button"
+        theme_text_color: "Primary"
         size_hint_y: None
         height: self.texture_size[1]
 
     MDLabel:
         text: "david.fischer.git@posteo.de"
         font_style: "Caption"
+        theme_text_color: "Secondary"
         size_hint_y: None
         height: self.texture_size[1]
 
-    ScrollView:
-
-        DrawerList:
-            id: md_list
 
 
-StackLayout:
+<MainMenu>:
     orientation:"tb-lr"
     MDToolbar:
         id: main_toolbar
-        title: "Navigation Drawer"
+        title: "Anki CardGen"
         elevation: 10
+        icon_color: self.theme_cls.text_color
         left_action_items: [['menu', lambda x: nav_drawer.set_state("toggle")]]
-        right_action_items: [['settings', lambda x: set_screen("settings")]]
+        right_action_items: [['settings', lambda x: drawer_list.click_screen_name("screen_settings")]]
 
 
     NavigationLayout:
@@ -63,20 +61,17 @@ StackLayout:
             pos_hint: {"bottom":.1}
             size_hint: 1,None
             height: root.height - main_toolbar.height
-            transition: SwapTransition()
-
-            #canvas.after:
-            #    Color:
-            #        rgba: 0,0,0,0.5
-            #    Rectangle:
-            #        size: self.size
-            #        pos: self.pos
-
+            transition: NoTransition()
 
 
         MDNavigationDrawer:
             id: nav_drawer
             screen_manager: screen_man
+            close_on_click: True
 
-            ContentNavigationDrawer:
-                id: content_drawer
+            DrawerContent:
+                id: drawer_content
+
+                ScrollView:
+                    DrawerList:
+                        id: drawer_list
