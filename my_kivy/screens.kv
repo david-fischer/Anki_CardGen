@@ -1,0 +1,80 @@
+
+
+<ItemDrawer>:
+    theme_text_color: "Custom"
+    on_release: self.parent.set_color_item(self)
+
+    IconLeftWidget:
+        id: icon
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: root.text_color
+
+
+<ContentNavigationDrawer>:
+    orientation: "vertical"
+    padding: "8dp"
+    spacing: "8dp"
+
+    AnchorLayout:
+        anchor_x: "left"
+        size_hint_y: None
+        height: avatar.height
+
+        Image:
+            id: avatar
+            size_hint: None, None
+            size: "112dp", "112dp"
+            source: "../assets/AnkiCardGen.png"
+
+    MDLabel:
+        text: "Anki CardGen"
+        font_style: "Button"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    MDLabel:
+        text: "david.fischer.git@posteo.de"
+        font_style: "Caption"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    ScrollView:
+
+        DrawerList:
+            id: md_list
+
+
+StackLayout:
+    orientation:"tb-lr"
+    MDToolbar:
+        id: main_toolbar
+        title: "Navigation Drawer"
+        elevation: 10
+        left_action_items: [['menu', lambda x: nav_drawer.set_state("toggle")]]
+
+
+    NavigationLayout:
+        size_hint: 1, 1
+
+        ScreenManager:
+            id: screen_man
+            pos_hint: {"bottom":.1}
+            size_hint: 1,None
+            height: root.height - main_toolbar.height
+
+            #canvas.after:
+            #    Color:
+            #        rgba: 0,0,0,0.5
+            #    Rectangle:
+            #        size: self.size
+            #        pos: self.pos
+
+
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            screen_manager: screen_man
+
+            ContentNavigationDrawer:
+                id: content_drawer
