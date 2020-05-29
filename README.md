@@ -1,4 +1,6 @@
-![GitHub Logo](assets/AnkiCardGen.png)
+
+
+![GitHub Logo](assets/AnkiCardGen_small.png)
 
 <h3 align="center">AnkiCardGen</h3>
 
