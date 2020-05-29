@@ -35,21 +35,21 @@ This allows quick generation of high-quality, personalized cards.
 ## Current State
 
 * [x] Importing a list of words from exported kindle-notes (html)
-    -[x] Extracting the words
-    -[x] Removal of punctuation
-    -[x] Get dictionary form of word
-    -[ ] User interface to load notes
--[x] Fetching necessary data to build card
--[x] Provide user interface to select content of card
--[ ] Process the user input
--[ ] Downloading image and audio files
--[x] Building the Anki card from 
+    * [x] Extracting the words
+    * [x] Removal of punctuation
+    * [x] Get dictionary form of word
+    * [ ] User interface to load notes
+* [x] Fetching necessary data to build card
+* [x] Provide user interface to select content of card
+* [ ] Process the user input
+* [ ] Downloading image and audio files
+* [x] Building the Anki card from 
 
 ## 🏁 Getting Started 
 
 ### App
 <!-- TODO: Add apk file-->
--[ ] A compiled .apk file for Android is provided in the apk folder
+* [ ] A compiled .apk file for Android is provided in the apk folder
 
 ### Prerequisites
 
@@ -103,4 +103,4 @@ See also the list of [contributors](https://github.com/kylelobo/The-Documentatio
 
 ## 🎉 Acknowledgements 
 
--[ ] List info here
+* [ ] List info here
