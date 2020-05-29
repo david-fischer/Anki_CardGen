@@ -26,15 +26,13 @@ Currently supported languages:
 * Brazilian Portuguese
 
 
-## 🧐 About 
+## ❓ About 
 Anki is a powerful tool for reviewing flash cards, in particular for language learning.
-While having flash cards with multiple cues (image, audio, example, ...) is beneficial, one does not want to spend a
-large amount of time in the creation. This project aims to provide the solution to this process
-by offering the user a choice of options for a given word, that is automatically downloaded and processed.
-
+While having flash cards with multiple cues (image, audio, example, ...) is beneficial, one does not want to spend a large amount of time in the creation. This project aims to provide the solution to this process
+by automatically downloading and processing data for a given word in the target language. Then it offers the user a choice of various options for the content of the card.
 This allows quick generation of high-quality, personalized cards.
 
-## Current State
+## 🏗 Current State
 
 * [x] Importing a list of words from exported kindle-notes (html)
     * [x] Extracting the words
@@ -47,7 +45,7 @@ This allows quick generation of high-quality, personalized cards.
 * [ ] Downloading image and audio files
 * [x] Building the Anki card from 
 
-## 🏁 Getting Started 
+## 🔧 Installing 
 
 ### App
 <!-- TODO: Add apk file-->
@@ -60,9 +58,7 @@ Install requirements
 pip install -r requirements.txt
 ```
 
-
-
-### 🔧 Building the Android App
+### Building the Android App
 The apk is built using [Buildozer](https://buildozer.readthedocs.io/en/latest/)
 ```
 buildozer android debug deploy
@@ -74,23 +70,8 @@ buildozer android debug deploy
 buildozer android debug deploy
 ```
 
-
-### Break down into end to end tests
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-Explain what these tests test and why
-
-```
-Give an example
-```
-
 ## 🎈 Usage 
-Add notes about how to use the system.
+(add info)
 
 ## 🚀 Contribute
 So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
