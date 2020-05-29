@@ -9,6 +9,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 
 from my_kivy.mychooser import CheckBehavior, CheckContainer
+from my_kivy.file_manager import FileManager
 from utils import widget_by_id
 from word_requests.word import Word
 
@@ -77,11 +78,14 @@ class MainMenu(StackLayout):
         self.ids.drawer_list.children[-1].on_release()
 
 
+
 class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
     search_term = StringProperty()
+    file_manager = ObjectProperty()
 
     def build(self):
+        self.file_manager = FileManager()
         self.word = Word(search_term=self.search_term)
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
