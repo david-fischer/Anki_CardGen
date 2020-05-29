@@ -1,2 +1,11 @@
-MDLabel:
-	text:"screen_import"
+BoxLayout:
+    orientation: "vertical"
+
+    MDLabel:
+        text:"ASKLDJALKsjdÖLAKSDJLAKJsd"
+
+    MDFloatingActionButton:
+        text: "Open manager"
+        icon: "folder"
+        pos_hint: {'center_x': .5, 'center_y': .6}
+        on_release: file_manager_open()

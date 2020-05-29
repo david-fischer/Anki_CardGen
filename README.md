@@ -1,10 +1,8 @@
-<p align="center">
-  <a href="" rel="noopener">
- <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
-</p>
+![GitHub Logo](assets/AnkiCardGen.png)
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">AnkiCardGen</h3>
 
+<!--
 <div align="center">
 
   [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
@@ -13,56 +11,67 @@
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
 </div>
-
+-->
 ---
+[Kivy](https://kivy.org/) App (mobile/dektop) for quick generation of personalized flash cards for [Anki](https://apps.ankiweb.net/) with:
+* Image
+* Audio
+* Example
+* Synonym - Antonym
+* Definition
+ 
+Currently supported languages:
+* Brazilian Portuguese
 
-<p align="center"> Few lines describing your project.
-    <br> 
-</p>
 
-## 📝 Table of Contents
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Deployment](#deployment)
-- [Usage](#usage)
-- [Built Using](#built_using)
-- [TODO](../TODO.md)
-- [Contributing](../CONTRIBUTING.md)
-- [Authors](#authors)
-- [Acknowledgments](#acknowledgement)
+## 🧐 About 
+Anki is a powerful tool for reviewing flash cards, in particular for language learning.
+While having flash cards with multiple cues (image, audio, example, ...) is beneficial, one does not want to spend a
+large amount of time in the creation. This project aims to provide the solution to this process
+by offering the user a choice of options for a given word, that is automatically downloaded and processed.
 
-## 🧐 About <a name = "about"></a>
-Write about 1-2 paragraphs describing the purpose of your project.
+This allows quick generation of high-quality, personalized cards.
 
-## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+## Current State
+
+-[x] Importing a list of words from exported kindle-notes (html)
+    -[x] Extracting the words
+    -[x] Removal of punctuation
+    -[x] Get dictionary form of word
+    -[ ] User interface to load notes
+-[x] Fetching necessary data to build card
+-[x] Provide user interface to select content of card
+-[ ] Process the user input
+-[ ] Downloading image and audio files
+-[x] Building the Anki card from 
+
+## 🏁 Getting Started 
+
+### App
+<!-- TODO: Add apk file-->
+-[ ] A compiled .apk file for Android is provided in the apk folder
 
 ### Prerequisites
-What things you need to install the software and how to install them.
 
+Install requirements
 ```
-Give examples
-```
-
-### Installing
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
-
-```
-Give the example
+pip install -r requirements.txt
 ```
 
-And repeat
 
+
+### 🔧 Building the Android App
+The apk is built using [Buildozer](https://buildozer.readthedocs.io/en/latest/)
 ```
-until finished
+buildozer android debug deploy
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
+### Building the iOS App
+(not yet tested)
+```
+buildozer android debug deploy
+```
 
-## 🔧 Running the tests <a name = "tests"></a>
-Explain how to run the automated tests for this system.
 
 ### Break down into end to end tests
 Explain what these tests test and why
@@ -81,21 +90,17 @@ Give an example
 ## 🎈 Usage <a name="usage"></a>
 Add notes about how to use the system.
 
-## 🚀 Deployment <a name = "deployment"></a>
-Add additional notes about how to deploy this on a live system.
+## 🚀 Contribute
+So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
+Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
 
-## ⛏️ Built Using <a name = "built_using"></a>
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+## ✍️ Authors 
+- [David Fischer](https://github.com/david-fischer) - Author
 
-## ✍️ Authors <a name = "authors"></a>
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
-
+<!--
 See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+-->
 
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
-- Hat tip to anyone whose code was used
-- Inspiration
-- References
+## 🎉 Acknowledgements 
+
+-[ ] List info here
