@@ -34,7 +34,7 @@ This allows quick generation of high-quality, personalized cards.
 
 ## Current State
 
--[x] Importing a list of words from exported kindle-notes (html)
+* [x] Importing a list of words from exported kindle-notes (html)
     -[x] Extracting the words
     -[x] Removal of punctuation
     -[x] Get dictionary form of word
@@ -87,7 +87,7 @@ Explain what these tests test and why
 Give an example
 ```
 
-## 🎈 Usage <a name="usage"></a>
+## 🎈 Usage 
 Add notes about how to use the system.
 
 ## 🚀 Contribute
