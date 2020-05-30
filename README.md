@@ -42,7 +42,7 @@ This allows quick generation of high-quality, personalized cards.
 * [x] Fetching necessary data to build card
 * [x] Provide user interface to select content of card
 * [ ] Process the user input
-* [ ] Downloading image and audio files
+* [x] Downloading image and audio files
 * [x] Building the Anki card from 
 
 ## 🔧 Installing 
