@@ -16,7 +16,6 @@ class WordProperties(BoxLayout):
     translations = ListProperty([])
     synonyms = ListProperty([])
     examples = ListProperty([])
-    suggestion = StringProperty("")
     display_limit = 5
 
     def __init__(self, **kwargs):
@@ -53,25 +52,16 @@ class WordProperties(BoxLayout):
             return True
         except NoMatchError as e:
             suggestions = linguee_did_you_mean(self.search_term)
-            message = f"Not found on {e.site}."
-            if suggestions:
-                message += f" Search for [b]{suggestions[0]}[b]?"
-                self.suggestion = suggestions[0]
-            else:
-                self.suggestion = None
-            sg_banner = widget_by_id("/screen_single_word/edit_tab/suggestion_banner")
-            sg_banner.bind(on_ok=self.accept_suggestion)
-            sg_banner.message = message
-            sg_banner.show()
+            message = f"{self.search_term} not found on {e.site}." +  ( " Did you mean... ?" if suggestions else "")
+            MDApp.get_running_app().show_dialog(message, suggestions, self.accept_suggestion)
 
-    def accept_suggestion(self, *args):
-        if self.suggestion is not None:
-            self.search_term = self.suggestion
-            self.load_or_search()
-            self.refresh_data()
+    def accept_suggestion(self, suggestion):
+        self.search_term = suggestion
+        self.load_or_search()
+        self.refresh_data()
 
     def load_or_search(self):
-        MDApp.get_running_app().search_term = self.search_term
+        MDApp.get_running_app().word.search_term = self.search_term
         if os.path.exists(f"pickles/{MDApp.get_running_app().word.folder()}.p"):
             self.unpickle()
         else:
@@ -108,4 +98,6 @@ if __name__ == "__main__":
     class MyApp(MDApp):
         def build(self):
             return Builder.load_string("WordProperties:")
+
+
     MyApp().run()
