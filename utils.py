@@ -2,7 +2,6 @@ import functools
 import operator
 import os
 
-import spacy
 from bs4 import BeautifulSoup
 from kivymd.app import MDApp
 
@@ -14,10 +13,11 @@ COLOR2MEANING = {
 }
 MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
 
-try:
-    nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
-except OSError:
-    nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
+
+# try:
+#    nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
+# except OSError:
+#    nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
 
 
 # GENERAL
