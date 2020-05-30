@@ -1,11 +1,8 @@
-import os
 import re
 
 import attr
 import bs4
 import genanki
-
-from utils import CD
 
 
 @attr.s
@@ -105,10 +102,8 @@ class AnkiObject:
 
 if __name__ == "__main__":
     ankiobject = AnkiObject()
-    with CD("../data/casa"):
-        print(os.listdir())
-        ankiobject.add_note(Word="casa",
-                            Audio="[sound:casa.mp3]",
-                            Image='<img src="casa.jpg">',
-                            media_files=["casa.mp3","casa.jpg"])
-        ankiobject.write_apkg("output.apkg")
+    ankiobject.add_note(Word="casa",
+                        Audio="[sound:casa.mp3]",
+                        Image='<img src="casa.jpg">',
+                        media_files=["../data/casa/casa.mp3", "../data/casa/casa.jpg"])
+    ankiobject.write_apkg("output.apkg")
