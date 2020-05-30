@@ -1,6 +1,7 @@
 import os
 
 import certifi
+from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
@@ -20,15 +21,14 @@ def make_card():
         img_url = widget_by_id("/screen_single_word/image_tab/image_grid/").get_checked(property="source")[
             0].replace("http:", "https:")
         print(img_url)
-        # UrlRequest(img_url, file_path=f"data/{word.folder()}/{word.folder()}.jpg",
-        #           debug=True, timeout=5,
-        #           on_success=lambda *args: print("Finished downloading image."))
+        UrlRequest(img_url, file_path=f"data/{word.folder()}/{word.folder()}.jpg",
+                   on_success=lambda *args: print("Finished downloading image."))
     except IndexError:
         # TODO: change to a popup
         print("Error with image download. Try different Image instead.")
-    #audio_url = word.audio_url
-    # UrlRequest(audio_url, file_path=f"data/{word.folder()}/{word.folder()}.mp3",
-    #           on_success=lambda *args: print("Finished downloading audio."))
+    audio_url = word.audio_url
+    UrlRequest(audio_url, file_path=f"data/{word.folder()}/{word.folder()}.mp3",
+               on_success=lambda *args: print("Finished downloading audio."))
     selections = {
         "translation_chips": ["text"],
         "synonym_chips":     ["text_orig", "text_trans"],
