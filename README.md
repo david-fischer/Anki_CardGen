@@ -70,6 +70,10 @@ buildozer android debug deploy
 buildozer android debug deploy
 ```
 
+## Troubleshooting
+
+* python3.8 not working -> change to 3.7
+
 ## 🎈 Usage 
 (add info)
 
