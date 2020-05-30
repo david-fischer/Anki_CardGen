@@ -6,10 +6,12 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.list import MDList, OneLineIconListItem
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.filemanager import MDFileManager
+from kivymd.uix.list import MDList, OneLineAvatarListItem, OneLineIconListItem
 
 from my_kivy.mychooser import CheckBehavior, CheckContainer
-from my_kivy.file_manager import FileManager
 from utils import widget_by_id
 from word_requests.word import Word
 
@@ -67,7 +69,7 @@ class MainMenu(StackLayout):
         for screen_dict in self.screen_dicts:
             name = screen_dict["screen_name"]
             path = f"my_kivy/{name}.kv"
-            screen = Screen(name=name,id=name)
+            screen = Screen(name=name, id=name)
             if not os.path.exists(path):
                 with open(path, "w") as file:
                     file.write(f'MDLabel:\n\ttext:"{name}"')
@@ -78,25 +80,60 @@ class MainMenu(StackLayout):
         self.ids.drawer_list.children[-1].on_release()
 
 
-
 class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
-    search_term = StringProperty()
     file_manager = ObjectProperty()
+    dialog = ObjectProperty()
+
+    def show_dialog(self, message, options, function):
+        def button_function(obj):
+            function(obj.text)
+            self.dialog.dismiss()
+
+        items = [OneLineAvatarListItem(text=option, on_press=button_function) for  option in options]
+        self.dialog = MDDialog(
+            title=message,
+            type="simple",
+            items=items,
+            buttons=[
+                MDFlatButton(
+                    text="CANCEL", text_color=self.theme_cls.primary_color, on_press=lambda x: self.dialog.dismiss()
+                ),
+            ],
+            auto_dismiss=False,
+        )
+        self.dialog.ids.title.color = self.theme_cls.text_color
+        self.dialog.open()
 
     def build(self):
-        self.file_manager = FileManager()
-        self.word = Word(search_term=self.search_term)
+        self.file_manager = MDFileManager(
+            exit_manager=self.exit_manager,
+            select_path=self.select_path,
+            previous=True,
+        )
+        self.word = Word()
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
         return Builder.load_string("MainMenu:")
 
-    def on_search_term(self, *args):
-        try:
-            self.word.search_term = self.search_term
-        except AttributeError:
-            print("Query not yet initialized.")
+    def file_manager_open(self):
+        self.file_manager.show('/')  # output manager to the screen
+        self.manager_open = True
+
+    def select_path(self, path, callback):
+        '''It will be called when you click on the file name
+        or the catalog selection button.
+
+        :type path: str;
+        :param path: path to the selected directory or file;
+        '''
+        self.exit_manager()
+        callback(path)
+
+    def exit_manager(self, *args):
+        self.manager_open = False
+        self.file_manager.close()
 
 
 if __name__ == "__main__":
-    AnkiCardGenApp(search_term="").run()
+    AnkiCardGenApp().run()
