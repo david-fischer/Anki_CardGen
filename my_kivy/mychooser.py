@@ -8,7 +8,7 @@ from kivy.uix.stacklayout import StackLayout
 from kivy.uix.widget import Widget
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.behaviors import CircularRippleBehavior, RectangularRippleBehavior
+from kivymd.uix.behaviors import CircularRippleBehavior
 from kivymd.uix.card import MDCard
 from kivymd.uix.imagelist import SmartTile
 
@@ -18,6 +18,7 @@ except FileNotFoundError:
     Builder.load_file("mychooser.kv")
 
 
+# TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE
 class CheckBehavior(object):
     checked = BooleanProperty(False)
     checked_state = {}
@@ -41,7 +42,7 @@ class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
     text = StringProperty("test " * 15)
 
     def __init__(self, **kwargs):
-        super(CheckElement, self).__init__(**kwargs)
+        self.theme_cls = ThemableBehavior().theme_cls
         self.checked_state = {
             "bg_color":   self.theme_cls.primary_color,
             "text_color": [1, 1, 1, 1],
@@ -51,7 +52,8 @@ class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
                           else self.theme_cls.bg_light,
             "text_color": self.theme_cls.secondary_text_color,
         }
-        self.on_checked()
+
+        super(CheckElement, self).__init__(**kwargs)
 
     def on_press(self):
         self.checked = not self.checked
@@ -84,14 +86,39 @@ class CheckContainer(Widget):
         #     self.children[-1].checked = True
 
 
-class MyCheckCard(RectangularRippleBehavior, CheckElement, MDCard):
-    pass
+class MyCheckCard(CheckBehavior, MDCard):
+    text_color = ListProperty([0, 0, 0, 1])
+    bg_color = ListProperty([1, 1, 1, 1])
+    text = StringProperty("test " * 15)
+
+    def __init__(self, **kwargs):
+        self.theme_cls = ThemableBehavior().theme_cls
+        self.checked_state = {
+            "bg_color":   self.theme_cls.primary_color,
+            "text_color": [1, 1, 1, 1],
+        }
+        self.unchecked_state = {
+            "bg_color":   self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
+                          else self.theme_cls.bg_light,
+            "text_color": self.theme_cls.secondary_text_color,
+        }
+        super(MyCheckCard, self).__init__(**kwargs)
+
+    def on_press(self):
+        self.checked = not self.checked
 
 
 class MyTransCard(MyCheckCard):
-    text = StringProperty()
     text_orig = StringProperty()
     text_trans = StringProperty()
+
+    def __init__(self, **kwargs):
+        if "checked" in kwargs:
+            self.checked = kwargs["checked"]
+        text = kwargs["text_orig"] if self.checked else kwargs["text_trans"]
+        if "text" not in kwargs:
+            kwargs["text"] = text
+        super(MyTransCard, self).__init__(**kwargs)
 
     def on_checked(self, *args):
         self.text = self.text_orig if self.checked else self.text_trans
@@ -108,6 +135,14 @@ class MyCheckChip(CircularRippleBehavior, CheckElement, BoxLayout):
 class MyTransChip(MyCheckChip):
     text_orig = StringProperty()
     text_trans = StringProperty()
+
+    def __init__(self, **kwargs):
+        if "checked" in kwargs:
+            self.checked = kwargs["checked"]
+        text = kwargs["text_orig"] if self.checked else kwargs["text_trans"]
+        if "text" not in kwargs:
+            kwargs["text"] = text
+        super(MyTransChip, self).__init__(**kwargs)
 
     def on_checked(self, *args):
         super(MyTransChip, self).on_checked(*args)
@@ -144,11 +179,7 @@ class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
 
 
 if __name__ == "__main__":
-    class TestApp(MDApp):
-        def build(self):
-            self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
-            self.theme_cls.theme_style = "Light"  # "Purple", "Red"
-            return Builder.load_string("""
+    img_string = """
 #:import lorem lorem
 FloatLayout:
     ScrollView:
@@ -171,8 +202,31 @@ FloatLayout:
         pos_hint: {"center_x":0.5,"center_y":0.5}
         on_press: image_grid.element_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
 
+"""
+    trans_card_string = """
+BoxLayout:
+    MyTransCardContainer:
+        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str(i))*10} for i in range(10)]    
+"""
 
-""")
+    check_card_string = """
+BoxLayout:
+    MyCheckCardContainer:
+        element_dicts: [{"text":("text_orig_"+str(i))*10, "checked":True} for i in range(10)]    
+    """
+
+    trans_chip_string = """
+BoxLayout:
+    MyTransChipContainer:
+        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str(i))*10} for i in range(10)]
+"""
+
+
+    class TestApp(MDApp):
+        def build(self):
+            self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
+            self.theme_cls.theme_style = "Light"  # "Purple", "Red"
+            return Builder.load_string(trans_chip_string)
 
 
     TestApp().run()
