@@ -11,6 +11,7 @@ from kivymd.uix.dialog import MDDialog
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.list import MDList, OneLineAvatarListItem, OneLineIconListItem
 
+from anki.generate_anki_card import AnkiObject
 from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import widget_by_id
 from word_requests.word import Word
@@ -84,6 +85,7 @@ class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
     file_manager = ObjectProperty()
     dialog = ObjectProperty()
+    anki = ObjectProperty()
 
     def show_dialog(self, message, options, function):
         def button_function(obj):
@@ -111,6 +113,7 @@ class AnkiCardGenApp(MDApp):
             select_path=self.select_path,
             previous=True,
         )
+        self.anki = AnkiObject()
         self.word = Word()
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
