@@ -36,7 +36,7 @@ version = 0.2.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, kivymd==0.104.0, attrs==19.3.0, lorem==0.1.1, selenium==3.141.0, wget==3.2, Unidecode==1.1.1, requests, translate==3.5.0, beautifulsoup4==4.9.0, lxml, soupsieve , certifi, pandas==1.0.3, genanki, spacy
+requirements = python3, kivy, kivymd==0.104.1, attrs==19.3.0, selenium==3.141.0, Unidecode==1.1.1, requests, translate==3.5.0, beautifulsoup4==4.9.0, lxml, soupsieve , certifi, pandas, genanki, spacy
 
 
 # (str) Custom source folders for requirements
