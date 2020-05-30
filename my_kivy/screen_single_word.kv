@@ -68,13 +68,6 @@
 
 <EditTab@BoxLayout+MDTabsBase>:
     orientation: "vertical"
-    SuggestionBanner:
-        id: suggestion_banner
-        text: [self.message]
-        left_action: ["OK", lambda x : self.dispatch("on_ok")]
-        right_action: ["CLOSE", self.hide]
-        over_widget: word_scroll
-
 
     ScrollView:
         id: word_scroll
@@ -116,7 +109,6 @@
 
 
 <PreviewTab@Tab>:
-
 
 BoxLayout:
     orientation: "vertical"
