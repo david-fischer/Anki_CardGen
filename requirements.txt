@@ -1,11 +1,10 @@
+python==3.7.6
 attrs==19.3.0
-lorem==0.1.1
 requests
 certifi
 selenium==3.141.0
-kivymd==0.104.0
-wget==3.2
-pandas==1.0.3
+kivymd==0.104.1
+pandas
 translate==3.5.0
 kivy==1.11.1
 Unidecode==1.1.1
