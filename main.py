@@ -113,7 +113,7 @@ class AnkiCardGenApp(MDApp):
             select_path=self.select_path,
             previous=True,
         )
-        self.anki = AnkiObject()
+        self.anki = AnkiObject(root_dir="anki")
         self.word = Word()
         self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
         self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
