@@ -14,20 +14,21 @@ from utils import selection_helper, widget_by_id
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
 
-def make_card():
+def get_selection_dict():
     word = MDApp.get_running_app().word
     word_prop = widget_by_id("/screen_single_word/edit_tab/word_prop")
+    base_path = f"data/{word.folder()}/{word.folder()}"
     try:
         img_url = widget_by_id("/screen_single_word/image_tab/image_grid/").get_checked(property="source")[
             0].replace("http:", "https:")
         print(img_url)
-        UrlRequest(img_url, file_path=f"data/{word.folder()}/{word.folder()}.jpg",
+        UrlRequest(img_url, file_path=f"{base_path}.jpg",
                    on_success=lambda *args: print("Finished downloading image."))
     except IndexError:
         # TODO: change to a popup
         print("Error with image download. Try different Image instead.")
     audio_url = word.audio_url
-    UrlRequest(audio_url, file_path=f"data/{word.folder()}/{word.folder()}.mp3",
+    UrlRequest(audio_url, file_path=f"{base_path}.mp3",
                on_success=lambda *args: print("Finished downloading audio."))
     selections = {
         "translation_chips": ["text"],
@@ -40,19 +41,23 @@ def make_card():
     for key, props in selections.items():
         new_key = key.split("_")[0]
         out[new_key] = selection_helper(word_prop, id=key, props=props)
-    # return {
-    #     'Word':               word.search_term,
-    #     'Translation':        ", ".join(selections["translation"]),
-    #     'Synonym':            selections["synonym"],
-    #     'Image':              "",
-    #     'Explanation':        "",
-    #     'ExampleTranslation': "",
-    #     'Example':            "",
-    #     'ConjugationTable':   "",
-    #     'Audio':              "",
-    #     'Antonym':            "",
-    #     'AdditionalInfo':     ","
-    # }
+    print(out)
+# TODO: Deal with the case that either audio or image is not downloaded
+    return {
+        'Word':               word.search_term,
+        'Translation':        ", ".join(out["translation"]),
+        'Synonym':            out["synonym"][0],
+        'Image':              f'<img src="{base_path}.jpg">',
+        'Explanation':        out["explanation"],
+        'ExampleTranslation': out["example"][1],
+        'Example':            out["example"][0],
+        'ConjugationTable':   "",
+        'Audio':              f'[sound:{base_path}.mp3]',
+        'Antonym':            out["antonym"],
+        'AdditionalInfo':     str(word.add_info_dict),
+        'media_files':        [f"{base_path}.{ext}" for ext in ["jpg","mp3"]],
+    }
+
 
 
 class Tab(FloatLayout, MDTabsBase):
