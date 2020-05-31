@@ -4,6 +4,8 @@ import attr
 import bs4
 import genanki
 
+from utils import CD
+
 
 @attr.s
 class HtmlLoader:
@@ -65,21 +67,23 @@ class AnkiObject:
     templates = attr.ib(default=["meaning-pt", "pt-meaning"])
     deck_name = attr.ib(default="Portuguese::Vocab")
     css_path = attr.ib(default="css/pt.css")
+    root_dir = attr.ib(default=".")
     id = attr.ib(default=12345)
 
     def __attrs_post_init__(self):
-        self.model = model_from_html(self.model_name,
-                                     self.templates,
-                                     css_path=self.css_path,
-                                     id=self.id)
-        self.deck = genanki.Deck(self.id, name=self.deck_name)
-        self.package = genanki.Package(self.deck)
-        self.fields = [
-            field for field_dict in self.model.fields
-            for _, field in field_dict.items()
-        ]
+        with CD(self.root_dir):
+            self.model = model_from_html(self.model_name,
+                                         self.templates,
+                                         css_path=self.css_path,
+                                         id=self.id)
+            self.deck = genanki.Deck(self.id, name=self.deck_name)
+            self.package = genanki.Package(self.deck)
+            self.fields = [
+                field for field_dict in self.model.fields
+                for _, field in field_dict.items()
+            ]
 
-    def add_note(self, media_files=None, **kwargs):
+    def add_card(self, media_files=None, **kwargs):
         if media_files is None:
             media_files = []
         fields = {
@@ -102,7 +106,7 @@ class AnkiObject:
 
 if __name__ == "__main__":
     ankiobject = AnkiObject()
-    ankiobject.add_note(Word="casa",
+    ankiobject.add_card(Word="casa",
                         Audio="[sound:casa.mp3]",
                         Image='<img src="casa.jpg">',
                         media_files=["../data/casa/casa.mp3", "../data/casa/casa.jpg"])
