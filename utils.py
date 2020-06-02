@@ -2,6 +2,7 @@ import functools
 import operator
 import os
 
+import spacy
 from bs4 import BeautifulSoup
 from kivymd.app import MDApp
 
@@ -13,12 +14,7 @@ COLOR2MEANING = {
 }
 MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
 
-
-# try:
-#    nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
-# except OSError:
-#    nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
-
+nlp = None
 
 # GENERAL
 
@@ -80,23 +76,25 @@ def dict_from_kindle_export(file_path):
 
 
 def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
+    global nlp
+    if nlp is None and lemmatize:
+        print("loading nlp")
+        try:
+            nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
+        except OSError:
+            nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
     if remove_punct:
         words = [word.strip(",.;:-–—!?¿¡\"\'") for word in words]
     if lower_case:
         words = [word.lower() for word in words]
     if lemmatize:
-        lemmas = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
-    for word, lemma in zip(words, lemmas):
-        if word != lemma:
-            print(word, lemma)
+        words = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
     return words
 
 
 def word_list_from_kindle(path):
     color = MEANING2COLOR["words"]
-    word_list = dict_from_kindle_export(path)[color]
-    word_list = clean_up(word_list)
-    return word_list
+    return dict_from_kindle_export(path)[color]
 
 
 if __name__ == "__main__":

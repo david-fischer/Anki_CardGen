@@ -1,6 +1,6 @@
 from kivy.animation import Animation
 from kivy.lang import Builder
-from kivy.properties import BooleanProperty, ListProperty, NumericProperty, ObjectProperty, StringProperty
+from kivy.properties import BooleanProperty, DictProperty, ListProperty, NumericProperty, ObjectProperty, StringProperty
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -21,8 +21,8 @@ except FileNotFoundError:
 # TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE
 class CheckBehavior(object):
     checked = BooleanProperty(False)
-    checked_state = {}
-    unchecked_state = {}
+    checked_state = DictProperty()
+    unchecked_state = DictProperty()
 
     def __init__(self, **kwargs):
         state = self.checked_state if self.checked else self.unchecked_state

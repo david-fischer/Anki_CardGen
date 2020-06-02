@@ -4,3 +4,4 @@ data/
 .buildozer/
 pickles/
 .idea/
+*/__pycache__/
