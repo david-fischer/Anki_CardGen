@@ -1,15 +1,17 @@
 import os
+import pickle
 import re
 from multiprocessing import Pipe, Process
 
 import attr
 import pandas as pd
+from kivy.network.urlrequest import UrlRequest
 from translate import Translator
 from unidecode import unidecode
 
 from google_images_download import google_images_download
-from word_requests.dictionary_queries import NoMatchError, request_data_from_dicio, request_data_from_linguee, \
-    request_examples_from_reverso
+from word_requests.parser import NoMatchError, parse_dicio_resp, request_data_from_linguee, linguee_api_url, \
+    reverso_url, dicio_url
 
 FROM_LANG = "pt"
 TO_LANG = "de"
@@ -34,6 +36,7 @@ def html_list(str_list):
 class Word:
     # query properties
     search_term = attr.ib(default="casa")
+    data_dir = attr.ib(default="data")
     # word properties
     word_type = attr.ib(default="")  # verb noun etc
     gender = attr.ib(default="")
@@ -47,19 +50,23 @@ class Word:
     audio_url = attr.ib(default="")
     add_info_dict = attr.ib(default={})
     conj_table_df = attr.ib(default=pd.DataFrame())
-    # other
-    anki_user = attr.ib(default="new_user")
-    output_path = attr.ib(default=".")
 
     def search_term_utf8(self):
-        return unidecode(self.search_term)
+        return unidecode(self.search_term).lower()
 
     def folder(self):
         return self.search_term_utf8().replace(" ", "_")
 
+    def kivy_request(self):
+        self.search_term = self.search_term.strip().lower()
+        linguee_api_url = linguee_api_url(self.search_term, FROM_LANG, TO_LANG)
+        dicio_url = dicio_url(self.search_term)
+        reverso_url = reverso_url(self.search_term,FROM_LANG,TO_LANG)
+        req = UrlRequest(linguee_api_url,on_success=)
+
+
     def get_data(self):
         self.search_term = self.search_term.strip().lower()
-        os.makedirs(f"data/{self.folder()}", exist_ok=True)
         l_rec, l_send = Pipe(duplex=False)
         d_rec, d_send = Pipe(duplex=False)
         r_rec, r_send = Pipe(duplex=False)
@@ -113,9 +120,9 @@ class Word:
 
     def dicio_req(self, conn=None):
         if conn is None:
-            return request_data_from_dicio(self.search_term)
+            return parse_dicio_resp(self.search_term)
         else:
-            conn.send(request_data_from_dicio(self.search_term))
+            conn.send(parse_dicio_resp(self.search_term))
 
     def request_img_urls(self, conn=None, keywords=None):
         """
@@ -123,17 +130,18 @@ class Word:
         """
         keywords = self.search_term_utf8() if keywords is None else keywords
         response = google_images_download.googleimagesdownload()
-        arguments = {"keywords": keywords,
-                     "output_directory": f"data/{self.folder()}",
-                     "no_directory": True,
-                     "limit": 10,
-                     "format": "jpg",
-                     "language": LANGUAGE[FROM_LANG],
-                     "no_download": True,
-                     "print_urls": True,
-                     "prefix": "img_",
-                     "save_source": "source",
-                     }
+        arguments = {
+            "keywords":         keywords,
+            "output_directory": f"data/{self.folder()}",
+            "no_directory":     True,
+            "limit":            10,
+            "format":           "jpg",
+            "language":         LANGUAGE[FROM_LANG],
+            "no_download":      True,
+            "print_urls":       True,
+            "prefix":           "img_",
+            "save_source":      "source",
+        }
         paths = response.download(arguments)[0][keywords]
         if conn is None:
             return paths
@@ -156,6 +164,30 @@ class Word:
         for word in self.search_term.split(" "):
             self.examples = [re.sub(r'((?i)%s)' % word, r'<font color=red><b>\1</font></b>', ex) for ex in
                              self.examples]
+
+    @classmethod
+    def from_pickle(cls, path):
+        with open(path, "rb") as file:
+            return pickle.load(file)
+
+    def pickle(self):
+        if not os.path.exists(f"data/{self.folder()}"):
+            os.makedirs(f"data/{self.folder()}")
+        with open(f"data/{self.folder()}/{self.folder()}.p", "wb") as file:
+            pickle.dump(self, file)
+
+    def search(self, new_search_term):
+        self.search_term = new_search_term
+        path = f"{self.data_dir}/{self.folder()}/{self.folder()}.p"
+        print(path)
+        if os.path.exists(path):
+            try:
+                self.__init__(**vars(self.from_pickle(path)))
+                return True
+            except TypeError:
+                pass
+        self.get_data()
+        self.pickle()
 
 
 if __name__ == "__main__":

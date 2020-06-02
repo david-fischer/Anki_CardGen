@@ -5,16 +5,16 @@ from kivy.properties import ListProperty, ObjectProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
-from kivymd.theming import ThemableBehavior
+from kivymd.theming import ThemableBehavior, ThemeManager
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.list import MDList, OneLineAvatarListItem, OneLineIconListItem
+from kivymd.uix.picker import MDThemePicker
 
 from anki.generate_anki_card import AnkiObject
 from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import widget_by_id
-from word_requests.word import Word
+from word_requests.pt_word import Word
 
 
 def set_screen(screen_name):
@@ -83,16 +83,16 @@ class MainMenu(StackLayout):
 
 class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
-    file_manager = ObjectProperty()
     dialog = ObjectProperty()
     anki = ObjectProperty()
+    theme_dialog = ObjectProperty()
 
-    def show_dialog(self, message, options, function):
+    def show_dialog(self, message, options, callback):
         def button_function(obj):
-            function(obj.text)
+            callback(obj.text)
             self.dialog.dismiss()
 
-        items = [OneLineAvatarListItem(text=option, on_press=button_function) for  option in options]
+        items = [OneLineAvatarListItem(text=option, on_press=button_function) for option in options]
         self.dialog = MDDialog(
             title=message,
             type="simple",
@@ -107,36 +107,34 @@ class AnkiCardGenApp(MDApp):
         self.dialog.ids.title.color = self.theme_cls.text_color
         self.dialog.open()
 
+    def on_config_change(self, config, section, key, value):
+        if config is self.config:
+            token = (section, key)
+            if token == ('Layout', 'Color'):
+                print('Color has been changed to', value)
+            elif token == ('Layout', 'Style'):
+                print('Style has been changed to', value)
+
+    def build_config(self, config):
+        config.setdefaults('Theme', {
+            'primary_palette': 'Red',
+            'accent_palette':  'Yellow',
+            'theme_style':     'Dark'
+        })
+
     def build(self):
-        self.file_manager = MDFileManager(
-            exit_manager=self.exit_manager,
-            select_path=self.select_path,
-            previous=True,
-        )
+        config = self.config
         self.anki = AnkiObject(root_dir="anki")
         self.word = Word()
-        self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
-        self.theme_cls.theme_style = "Dark"  # "Purple", "Red"
+        self.theme_cls = ThemeManager(**config["Theme"])
+        self.theme_dialog = MDThemePicker()
+        self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
         return Builder.load_string("MainMenu:")
 
-    def file_manager_open(self):
-        self.file_manager.show('/')  # output manager to the screen
-        self.manager_open = True
-
-    def select_path(self, path, callback):
-        '''It will be called when you click on the file name
-        or the catalog selection button.
-
-        :type path: str;
-        :param path: path to the selected directory or file;
-        '''
-        self.exit_manager()
-        callback(path)
-
-    def exit_manager(self, *args):
-        self.manager_open = False
-        self.file_manager.close()
-
+    def save_theme(self, *args):
+        for key in self.config["Theme"]:
+            self.config["Theme"][key] = getattr(self.theme_cls, key)
+        self.config.write()
 
 if __name__ == "__main__":
     AnkiCardGenApp().run()
