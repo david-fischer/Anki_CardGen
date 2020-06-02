@@ -1,11 +1,17 @@
-BoxLayout:
-    orientation: "vertical"
+#:import EditKindleImport my_kivy.kindle_import.EditKindleImport
+#:import MDDataTable kivymd.uix.datatables.MDDataTable
 
-    MDLabel:
-        text:"ASKLDJALKsjdÖLAKSDJLAKJsd"
+<EditKindleImport>:
+    id: edit_kindle_import
+    orientation: "tb-lr"
 
     MDFloatingActionButton:
-        text: "Open manager"
+        id: file_man_button
         icon: "folder"
-        pos_hint: {'center_x': .5, 'center_y': .6}
-        on_release: app.file_manager_open()
+        on_press: root.file_manager_open();
+
+
+
+EditKindleImport:
+
+

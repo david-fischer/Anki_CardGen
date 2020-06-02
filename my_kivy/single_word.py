@@ -5,7 +5,6 @@ from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
-from kivymd.uix.banner import MDBanner
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
@@ -42,7 +41,7 @@ def get_selection_dict():
         new_key = key.split("_")[0]
         out[new_key] = selection_helper(word_prop, id=key, props=props)
     print(out)
-# TODO: Deal with the case that either audio or image is not downloaded
+    # TODO: Deal with the case that either audio or image is not downloaded
     return {
         'Word':               word.search_term,
         'Translation':        ", ".join(out["translation"]),
@@ -55,9 +54,8 @@ def get_selection_dict():
         'Audio':              f'[sound:{base_path}.mp3]',
         'Antonym':            out["antonym"],
         'AdditionalInfo':     str(word.add_info_dict),
-        'media_files':        [f"{base_path}.{ext}" for ext in ["jpg","mp3"]],
+        'media_files':        [f"{base_path}.{ext}" for ext in ["jpg", "mp3"]],
     }
-
 
 
 class Tab(FloatLayout, MDTabsBase):
@@ -72,4 +70,3 @@ class ImageSearchResultGrid(MyCheckImageGrid):
         word = MDApp.get_running_app().word
         paths = word.image_urls if keywords is None else word.request_img_urls(keywords=keywords)
         self.element_dicts = [{"source": url} for url in paths]
-
