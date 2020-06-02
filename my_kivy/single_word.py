@@ -73,22 +73,3 @@ class ImageSearchResultGrid(MyCheckImageGrid):
         paths = word.image_urls if keywords is None else word.request_img_urls(keywords=keywords)
         self.element_dicts = [{"source": url} for url in paths]
 
-
-# TODO: Fix Position of Banner in kv-file.
-# currently, Banner glitches under the Tabs-bar
-class SuggestionBanner(MDBanner):
-    message = StringProperty()
-
-    def __init__(self, **kwargs):
-        super(SuggestionBanner, self).__init__(**kwargs)
-        self.register_event_type("on_ok")
-
-    def on_message(self, asker, question):
-        self.text = [self.message]
-        self.show()
-
-    def on_ok(self, *args):
-        self.hide()
-
-    def hide(self, *args):
-        super(SuggestionBanner, self).hide()
