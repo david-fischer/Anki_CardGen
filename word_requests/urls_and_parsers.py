@@ -1,9 +1,12 @@
 import re
 from collections import defaultdict
+from urllib.parse import quote
+from zlib import decompress
 
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from unidecode import unidecode
 
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
 AUDIO_BASE_URL = "https://www.linguee.de/mp3/%s.mp3"
@@ -14,22 +17,22 @@ DEFAULT_HEADERS = {
     'referrer':   'https://google.de',
 }
 
-linguee_headers = {
+LINGUEE_HEADERS = {
     "user-agent":      "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap "
                        "Chromium/80.0.3987.162 "
                        "Chrome/80.0.3987.162 Safari/537.36",
     "Referer":         "https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&query=",
     "Accept":          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,'
                        'application/signed-exchange;v=b3;q=0.9',
-    "Accept-Encoding": "gzip, deflate, br",
+    # "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
 }
 
-reverso_header = {
+REVERSO_HEADERS = {
     "user-agent":      "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0",
     "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "de,en-US;q=0.7,en;q=0.3",
-    "Accept-Encoding": "gzip, deflate, br",
+    # "Accept-Encoding": "gzip, deflate, br",
     "Referer":         "https://google.com",
 }
 
@@ -69,17 +72,20 @@ def get_soup_object(url, headers=None):
 
 def linguee_api_url(phrase, from_lang, to_lang):
     phrase = phrase.replace(" ", "+")
+    phrase = quote(phrase)
     return LINGUEE_API_BASE_URL % (phrase, from_lang, to_lang)
 
 
 def dicio_url(phrase):
     phrase = phrase.replace(" ", "-")
+    phrase = quote(phrase)
     return f"https://www.dicio.com.br/pesquisa.php?q={phrase}/"
 
 
-def reverso_url(search_term, from_lang, to_lang):
+def reverso_url(phrase, from_lang, to_lang):
     reverso_dict = {"pt": {"de": "traducao/portugues-alemao"}}
-    return f'https://context.reverso.net/{reverso_dict[from_lang][to_lang]}/{search_term}'
+    phrase = quote(phrase)
+    return f'https://context.reverso.net/{reverso_dict[from_lang][to_lang]}/{phrase}'
 
 
 def request_data_from_linguee(phrase, from_lang, to_lang):
@@ -128,16 +134,15 @@ def dicio_conj_df(bs_obj):
     return pd.DataFrame.from_dict(conjugation_table_dict).loc[["eu", "ele", "nós", "eles"]]
 
 
-# TODO: Change other functions such that they plug in a response
 def parse_dicio_resp(response):
-    bs = BeautifulSoup(response,"lxml")
+    bs = BeautifulSoup(unidecode(response), "lxml")
     suggestion = bs.select("a._sugg")
     if suggestion:
         bs = get_soup_object(f'https://www.dicio.com.br{suggestion[0]["href"]}')
-    explanations = [e.text for e in get_element_after_regex(bs, "Significado.*").find_all(span_not_cl)]
-    examples = [phrase.text.strip() for phrase in bs.find_all("div", {"class": "frase"})]
-    synonyms = [syn.text for syn in get_element_after_regex(bs, ".*sinônimo.*").find_all("a")]
-    antonyms = [syn.text for syn in get_element_after_regex(bs, ".*contrário.*").find_all("a")]
+    explanations = [e.text for e in bs.select(".significado > span:not(.cl)")]
+    examples = [[phrase.text.strip()] for phrase in bs.find_all("div", {"class": "frase"})]
+    synonyms = [[element.text] for element in bs.select('p:contains("sin").sinonimos a')]
+    antonyms = [[element.text] for element in bs.select('p:contains("contr").sinonimos a')]
     add_info_dict = to_stripped_multiline_str(get_element_after_regex(bs, "Definição.*"))
     conj_table_df = pd.DataFrame()
     try:
@@ -159,10 +164,10 @@ def parse_reverso_resp(response):
     return {
         "examples": [
             [
-                x.find("div", {"class": "src ltr"}).text.strip(),
-                x.find("div", {"class": "trg ltr"}).text.strip(),
+                x.select_one("div.src").text.strip(),
+                x.select_one("div.trg").text.strip(),
             ]
-            for x in bs.find_all("div", {"class": "example"})
+            for x in bs.select("div.example")
         ]
     }
 
@@ -170,7 +175,7 @@ def parse_reverso_resp(response):
 def linguee_did_you_mean(search_term):
     bs = get_soup_object(
         f'https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&query={search_term}',
-        headers=linguee_headers)
+        headers=LINGUEE_HEADERS)
     return [element.text for element in bs.select("span.corrected")]
 
 
