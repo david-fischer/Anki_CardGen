@@ -4,7 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 
 from utils import widget_by_id
-from word_requests.parser import linguee_did_you_mean, NoMatchError
+from word_requests.urls_and_parsers import linguee_did_you_mean, NoMatchError
 
 
 class WordProperties(BoxLayout):

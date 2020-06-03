@@ -7705,7 +7705,7 @@ Compiling '/home/david/coding/python/Anki_CardGen/.buildozer/android/platform/bu
 # Create directory /home/david/coding/python/Anki_CardGen/.buildozer/android/app/data/casa
 # Copy /home/david/coding/python/Anki_CardGen/data/casa/casa.jpg
 # Create directory /home/david/coding/python/Anki_CardGen/.buildozer/android/app/word_requests
-# Copy /home/david/coding/python/Anki_CardGen/word_requests/parser.py
+# Copy /home/david/coding/python/Anki_CardGen/word_requests/urls_and_parsers.py
 # Copy /home/david/coding/python/Anki_CardGen/word_requests/pt_word.py
 # Create directory /home/david/coding/python/Anki_CardGen/.buildozer/android/app/assets
 # Copy /home/david/coding/python/Anki_CardGen/assets/AnkiCardGen.png
