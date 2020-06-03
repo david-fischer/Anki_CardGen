@@ -59,19 +59,14 @@ class Word:
 
     def get_data(self):
         self.__init__(search_term=self.search_term.strip().lower())
-        print(linguee_api_url(self.search_term, FROM_LANG, TO_LANG),
-              reverso_url(self.search_term, FROM_LANG, TO_LANG),
-              dicio_url(self.search_term))
         resp_reverso = self.reverso_request(reverso_url(self.search_term, FROM_LANG, TO_LANG))
         resp_linguee = UrlRequest(linguee_api_url(self.search_term, FROM_LANG, TO_LANG),
                                   on_success=lambda req, res: self.update_from_dict(
                                       parse_linguee_api_resp(res, from_lang=FROM_LANG)),
-                                  on_failure=print,
-                                  on_error=print)
+                                  )
         resp_dicio = self.dicio_request(dicio_url(self.search_term))
         for r in [resp_dicio, resp_linguee, resp_reverso]:
             r.wait()
-        print(self)
 
     def redirect_url(self, req):
         return "/".join(req.url.split("/")[:3]) + req.resp_headers["Location"]
