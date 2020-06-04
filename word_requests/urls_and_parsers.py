@@ -5,7 +5,6 @@ from urllib.parse import quote
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-from unidecode import unidecode
 
 LINGUEE_API_BASE_URL = "https://linguee-api.herokuapp.com/api?q=%s&src=%s&dst=%s"
 AUDIO_BASE_URL = "https://www.linguee.de/mp3/%s.mp3"
@@ -94,8 +93,12 @@ def parse_linguee_api_resp(response, from_lang):
     except (TypeError, IndexError, KeyError):
         print("Got no valid response.")
         raise NoMatchError
-    audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
-    audio_url = AUDIO_BASE_URL % audio_ids[lang_dict[from_lang]]
+    audio_ids = [
+        link["url_part"] for mat in response["exact_matches"] for link in mat["audio_links"]
+        if link["lang"] == lang_dict[from_lang]
+    ]
+    # audio_ids = {link["lang"]: link["url_part"] for link in match["audio_links"]}
+    audio_url = AUDIO_BASE_URL % audio_ids[0] if audio_ids else ""
     word_type = match["word_type"]["pos"] if match["word_type"] else ""
     gender = match['word_type']['gender'][0] if word_type == 'noun' else ''
     translations = [entry["text"] for match in response["exact_matches"] for entry in match["translations"]]
@@ -121,6 +124,7 @@ def dicio_conj_df(bs_obj):
         for row in verb_col:
             conjugation_table_dict[tempo][row[0]] = row[1]
     return pd.DataFrame.from_dict(conjugation_table_dict).loc[["eu", "ele", "nós", "eles"]]
+
 
 # TODO: Check if unidecode was unnecessary
 def parse_dicio_resp(response):
