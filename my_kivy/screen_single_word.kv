@@ -1,5 +1,5 @@
 #:import WordProperties my_kivy.user_input.WordProperties
-#:import get_selection_dict my_kivy.single_word.get_selection_dict
+#:import confirm_choice my_kivy.single_word.confirm_choice
 
 <MDTextField>:
     size: 200, 100
@@ -132,7 +132,7 @@ BoxLayout:
         MDFloatingActionButton:
             icon: "check-bold"
             pos_hint: {"center_x":0.9, "center_y":0.1}
-            on_press: app.anki.add_card(**get_selection_dict())
+            on_press: confirm_choice()
 
 
 
