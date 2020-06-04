@@ -87,25 +87,26 @@ class AnkiCardGenApp(MDApp):
     anki = ObjectProperty()
     theme_dialog = ObjectProperty()
 
-    def show_dialog(self, message, options, callback, button_function=None):
-        if button_function is None:
-            def button_function(obj):
+    def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
+        dialog = None
+        if item_function is None:
+            def item_function(obj):
+                dialog.dismiss()
                 callback(obj.text)
-                self.dialog.dismiss()
-
-        items = [OneLineAvatarListItem(text=option, on_press=button_function) for option in options]
-        self.dialog = MDDialog(
+        if buttons is None:
+            buttons = [MDFlatButton(text="CANCEL", text_color=self.theme_cls.primary_color,
+                                    on_press=lambda x: dialog.dismiss()
+                                    )],
+        items = [OneLineIconListItem(text=option, on_press=item_function) for option in options]
+        dialog = MDDialog(
             title=message,
             type="simple",
             items=items,
-            buttons=[
-                MDFlatButton(
-                    text="CANCEL", text_color=self.theme_cls.primary_color, on_press=lambda x: self.dialog.dismiss()
-                ),
-            ],
             auto_dismiss=False,
+            buttons=buttons,
         )
-        self.dialog.ids.title.color = self.theme_cls.text_color
+        dialog.ids.title.color = dialog.theme_cls.text_color
+        self.dialog = dialog
         self.dialog.open()
 
     def on_config_change(self, config, section, key, value):
@@ -136,6 +137,7 @@ class AnkiCardGenApp(MDApp):
         for key in self.config["Theme"]:
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
+
 
 if __name__ == "__main__":
     AnkiCardGenApp().run()
