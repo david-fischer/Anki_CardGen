@@ -1,3 +1,4 @@
+import csv
 import functools
 import operator
 import os
@@ -16,6 +17,7 @@ MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
 
 nlp = None
 
+
 # GENERAL
 
 class CD:
@@ -30,6 +32,20 @@ class CD:
 
     def __exit__(self, etype, value, traceback):
         os.chdir(self.saved_path)
+
+
+def save_dict_to_csv(dict, out_path):
+    is_first_entry = not os.path.exists(out_path)
+    with open(out_path, "a") as file:
+        writer = csv.DictWriter(file, fieldnames=dict.keys())
+        if is_first_entry:
+            writer.writeheader()
+        writer.writerow(dict)
+
+
+def load_dict_from_csv(path):
+    with open(path, 'r') as read_obj:
+        return list(csv.DictReader(read_obj))
 
 
 # KIVY
