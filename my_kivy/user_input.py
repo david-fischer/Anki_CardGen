@@ -1,5 +1,4 @@
 from kivy.lang import Builder
-from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 
@@ -39,13 +38,13 @@ class WordProperties(BoxLayout):
     def load_or_search(self, search_term):
         try:
             MDApp.get_running_app().word.search(search_term)
+            widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
+            widget_by_id(
+                "/screen_single_word/image_tab/img_search_field").text = search_term
         except NoMatchError as e:
             suggestions = linguee_did_you_mean(search_term)
             message = f"{search_term} not found on {e.site}." + (" Did you mean... ?" if suggestions else "")
             MDApp.get_running_app().show_dialog(message, suggestions, self.accept_suggestion)
-        widget_by_id(
-            "/screen_single_word/image_tab/img_search_field").text = search_term
-        widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
 
 
 if __name__ == "__main__":
