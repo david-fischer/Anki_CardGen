@@ -87,10 +87,11 @@ class AnkiCardGenApp(MDApp):
     anki = ObjectProperty()
     theme_dialog = ObjectProperty()
 
-    def show_dialog(self, message, options, callback):
-        def button_function(obj):
-            callback(obj.text)
-            self.dialog.dismiss()
+    def show_dialog(self, message, options, callback, button_function=None):
+        if button_function is None:
+            def button_function(obj):
+                callback(obj.text)
+                self.dialog.dismiss()
 
         items = [OneLineAvatarListItem(text=option, on_press=button_function) for option in options]
         self.dialog = MDDialog(
