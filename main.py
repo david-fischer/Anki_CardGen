@@ -8,18 +8,13 @@ from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior, ThemeManager
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
-from kivymd.uix.list import MDList, OneLineAvatarListItem, OneLineIconListItem
+from kivymd.uix.list import MDList, OneLineIconListItem
 from kivymd.uix.picker import MDThemePicker
 
 from anki.generate_anki_card import AnkiObject
 from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import widget_by_id
 from word_requests.pt_word import Word
-
-
-def set_screen(screen_name):
-    widget_by_id("screen_man").current = screen_name
-
 
 Builder.load_file("my_kivy/screens.kv")
 
