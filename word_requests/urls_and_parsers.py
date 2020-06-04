@@ -1,7 +1,6 @@
 import re
 from collections import defaultdict
 from urllib.parse import quote
-from zlib import decompress
 
 import pandas as pd
 import requests
@@ -88,16 +87,6 @@ def reverso_url(phrase, from_lang, to_lang):
     return f'https://context.reverso.net/{reverso_dict[from_lang][to_lang]}/{phrase}'
 
 
-def request_data_from_linguee(phrase, from_lang, to_lang):
-    print("start_query")
-    data = requests.get(linguee_api_url(phrase, from_lang, to_lang))
-    print(f"""Query to Linguee returned status code {data.status_code}.""")
-    try:
-        return parse_linguee_api_resp(data.json(), from_lang)
-    except KeyError:
-        raise NoMatchError(site="linguee")
-
-
 def parse_linguee_api_resp(response, from_lang):
     lang_dict = {"pt": "Brazilian Portuguese"}
     try:
@@ -140,7 +129,7 @@ def parse_dicio_resp(response):
     if suggestion:
         bs = get_soup_object(f'https://www.dicio.com.br{suggestion[0]["href"]}')
     explanations = [e.text for e in bs.select(".significado > span:not(.cl)")]
-    examples = [[phrase.text.strip()] for phrase in bs.find_all("div", {"class": "frase"})]
+    examples = [[phrase.text.strip()] for phrase in bs.select(".tit-frases ~ .frases div.frase")]
     synonyms = [[element.text] for element in bs.select('p:contains("sin").sinonimos a')]
     antonyms = [[element.text] for element in bs.select('p:contains("contr").sinonimos a')]
     add_info_dict = to_stripped_multiline_str(get_element_after_regex(bs, "Definição.*"))
