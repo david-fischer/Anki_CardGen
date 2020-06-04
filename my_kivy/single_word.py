@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 
 import certifi
 from kivy.network.urlrequest import UrlRequest
@@ -10,13 +9,9 @@ from kivymd.toast import toast
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
-from utils import save_dict_to_csv, selection_helper, widget_by_id
+from utils import now_string, save_dict_to_csv, selection_helper, widget_by_id
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
-
-
-def now_string():
-    return str(datetime.now()).split(".")[0].replace(" ", "_")
 
 
 def get_selection_dict():

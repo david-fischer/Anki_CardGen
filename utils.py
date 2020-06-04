@@ -2,6 +2,7 @@ import csv
 import functools
 import operator
 import os
+from datetime import datetime
 
 import spacy
 from bs4 import BeautifulSoup
@@ -46,6 +47,9 @@ def save_dict_to_csv(dict, out_path):
 def load_dict_from_csv(path):
     with open(path, 'r') as read_obj:
         return list(csv.DictReader(read_obj))
+
+def now_string():
+    return str(datetime.now()).split(".")[0].replace(" ", "_")
 
 
 # KIVY
