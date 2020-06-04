@@ -32,6 +32,7 @@ class WordProperties(BoxLayout):
         self.ids.explanation_cards.element_dicts = [{"text": string} for string in word.explanations]
 
     def accept_suggestion(self, suggestion):
+        self.ids.search_field.text = suggestion
         self.load_or_search(suggestion)
         self.refresh_data()
 
