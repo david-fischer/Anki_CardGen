@@ -57,7 +57,7 @@ class Word:
     def folder(self):
         return self.search_term_utf8().replace(" ", "_")
 
-    def get_data(self):
+    def request_data(self):
         self.__init__(search_term=self.search_term.strip().lower())
         resp_reverso = self.reverso_request(reverso_url(self.search_term, FROM_LANG, TO_LANG))
         resp_linguee = UrlRequest(linguee_api_url(self.search_term, FROM_LANG, TO_LANG),
@@ -65,8 +65,7 @@ class Word:
                                       parse_linguee_api_resp(res, from_lang=FROM_LANG)),
                                   )
         resp_dicio = self.dicio_request(dicio_url(self.search_term))
-        for r in [resp_dicio, resp_linguee, resp_reverso]:
-            r.wait()
+        return [resp_dicio, resp_linguee, resp_reverso]
 
     def redirect_url(self, req):
         return "/".join(req.url.split("/")[:3]) + req.resp_headers["Location"]
@@ -92,64 +91,15 @@ class Word:
                 value = old_val + value
             setattr(self, key, value)
 
-    # def get_data(self):
-    #     self.search_term = self.search_term.strip().lower()
-    #     l_rec, l_send = Pipe(duplex=False)
-    #     d_rec, d_send = Pipe(duplex=False)
-    #     r_rec, r_send = Pipe(duplex=False)
-    #     i_rec, i_send = Pipe(duplex=False)
-    #     ling_p = Process(target=self.linguee_req, kwargs={"conn": l_send})
-    #     dicio_p = Process(target=self.dicio_req, kwargs={"conn": d_send})
-    #     reverso_p = Process(target=self.reverso_req, kwargs={"conn": r_send})
-    #     im_p = Process(target=self.request_img_urls, kwargs={"conn": i_send})
-    #     for p in ling_p, dicio_p, reverso_p, im_p:
-    #         p.start()
-    #     for p in ling_p, dicio_p, reverso_p, im_p:
-    #         p.join()
-    #     l_resp = l_rec.recv()
-    #     if l_resp is NoMatchError:
-    #         raise NoMatchError(site="linguee")
-    #     self.translations, \
-    #     self.audio_url, \
-    #     self.word_type, \
-    #     self.gender, \
-    #         = l_resp
-    #     self.explanations, \
-    #     self.synonyms, \
-    #     self.antonyms, \
-    #     examples, \
-    #     self.add_info_dict, \
-    #     self.conj_table_df = d_rec.recv()
-    #     self.examples = [[ex, translator.translate(ex)] for ex in examples]
-    #     self.examples += r_rec.recv()
-    #     self.image_urls = i_rec.recv()
-    #     self.synonyms = [[syn, translator.translate(syn)] for syn in self.synonyms]
-    #     self.antonyms = [[ant, translator.translate(ant)] for ant in self.antonyms]
-
-    # def reverso_req(self, conn=None):
-    #     if conn is None:
-    #         return request_examples_from_reverso(self.search_term)
-    #     else:
-    #         conn.send(request_examples_from_reverso(self.search_term))
-    #
-    # def linguee_req(self, conn=None):
-    #     try:
-    #         data = request_data_from_linguee(self.search_term, FROM_LANG)
-    #         if conn is None:
-    #             return data
-    #         else:
-    #             conn.send(data)
-    #     except NoMatchError:
-    #         if conn is None:
-    #             raise NoMatchError(site="linguee")
-    #         else:
-    #             conn.send(NoMatchError)
-    #
-    # def dicio_req(self, conn=None):
-    #     if conn is None:
-    #         return parse_dicio_resp(self.search_term)
-    #     else:
-    #         conn.send(parse_dicio_resp(self.search_term))
+    def add_translations(self):
+        for key in ["examples", "synonyms", "antonyms"]:
+            values = getattr(self, key)
+            for i, val in enumerate(values):
+                if type(val) is str:
+                    values[i] = [val, translator.translate(val)]
+                elif type(val) is list and len(val) == 1:
+                    values[i] = [val[0], translator.translate(val[0])]
+            setattr(self, key, values)
 
     def request_img_urls(self, conn=None, keywords=None):
         """
@@ -171,6 +121,7 @@ class Word:
             "save_source":      "source",
         }
         paths = response.download(arguments)[0][keywords]
+        self.image_urls = paths
         if conn is None:
             return paths
         else:
@@ -207,14 +158,17 @@ class Word:
     def search(self, new_search_term):
         self.search_term = new_search_term
         path = f"{self.data_dir}/{self.folder()}/{self.folder()}.p"
-        # TODO: REMOVE AFTER TESTING
-        if False:#os.path.exists(path):
+        if os.path.exists(path):
             try:
                 self.__init__(**vars(self.from_pickle(path)))
                 return True
             except TypeError:
                 pass
-        self.get_data()
+        requests = self.request_data()
+        self.request_img_urls()
+        for r in requests:
+            r.wait()
+        self.add_translations()
         self.pickle()
 
 
