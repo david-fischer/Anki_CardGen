@@ -54,6 +54,10 @@ def now_string():
 
 # KIVY
 
+def set_screen(screen_name):
+    widget_by_id("screen_man").current = screen_name
+
+
 def widget_by_id(string):
     """
     :arg string: "/edit_tab/word_prop/translation_chips
