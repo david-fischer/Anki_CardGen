@@ -122,9 +122,9 @@ def dicio_conj_df(bs_obj):
             conjugation_table_dict[tempo][row[0]] = row[1]
     return pd.DataFrame.from_dict(conjugation_table_dict).loc[["eu", "ele", "nós", "eles"]]
 
-
+# TODO: Check if unidecode was unnecessary
 def parse_dicio_resp(response):
-    bs = BeautifulSoup(unidecode(response), "lxml")
+    bs = BeautifulSoup(response, "lxml")
     suggestion = bs.select("a._sugg")
     if suggestion:
         bs = get_soup_object(f'https://www.dicio.com.br{suggestion[0]["href"]}')
