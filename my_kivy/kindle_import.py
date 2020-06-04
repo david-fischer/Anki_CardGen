@@ -1,9 +1,13 @@
-from kivy.properties import BooleanProperty, ListProperty, ObjectProperty
+from functools import partial
+
+from kivy.clock import Clock
 from kivy.properties import BooleanProperty, ListProperty, ObjectProperty
 from kivy.uix.stacklayout import StackLayout
+from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 
-from utils import clean_up, widget_by_id, word_list_from_kindle
+from utils import clean_up, word_list_from_kindle
+from word_requests.urls_and_parsers import NoMatchError
 
 
 class EditKindleImport(StackLayout):
@@ -23,24 +27,31 @@ class EditKindleImport(StackLayout):
         self.exit_manager()
         words = clean_up(word_list_from_kindle(path),lemmatize=False)
         lemmas = clean_up(words)
-        # data_table = MDDataTable(
-        #     size_hint=(0.8,None),
-        #     width=200,
-        #     column_data=[
-        #         ("Originally", dp(30)),
-        #         ("Corrected", dp(30)),
-        #     ],
-        #     check=True,
-        #     row_data=zip(["1","2","3","4"],["1","2","3","4"]),
-        #     rows_num=len([1,2,3,4]),
-        # )
-        # print(data_table.row_data)
-        # self.add_widget(data_table)
         suggested_replacements = [f"{old} -> {new}" for old, new in zip(words, lemmas) if old != new]
         unchanged_words = [word for word,lemma in zip(words,lemmas) if word==lemma]
-        for word in unchanged_words:
-            widget_by_id("/screen_single_word/edit_tab/word_prop").search_term = word
-            widget_by_id("/screen_single_word/edit_tab/word_prop").load_or_search()
+        error_words = []
+        event = Clock.schedule_once(partial(self.batch_request_words, words=unchanged_words, error_words=error_words))
+        event2 = Clock.schedule_once(partial(self.choose_replacements, replacements=suggested_replacements))
+
+    def batch_request_words(self,dt,words,error_words,*args):
+        for word in words:
+            try:
+                MDApp.get_running_app().word.search(word)
+            except NoMatchError:
+                error_words.append(word)
+        print(error_words)
+
+    # def choose_replacements(self,dt,replacements,*args):
+    #     words = []
+    #     def button_function(obj):
+    #         words.append(obj.text.split(" ")[-1])
+    #     MDApp.get_running_app().show_dialog(
+    #         message="Some words are not in their dictionary form. The following replacements are suggested:",
+    #         options=replacements,
+    #         callback=print,
+    #         button_function=lambda x: x.parent.remove_widget(x)
+    #     )
+
 
     def file_manager_open(self):
         self.file_manager.show('./test/test_data/')  # output manager to the screen
