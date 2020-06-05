@@ -5,7 +5,7 @@ from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.toast import toast
-from kivymd.uix.tab import MDTabsBase
+from kivymd.uix.tab import MDTabs, MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
 from utils import now_string, save_dict_to_csv, selection_helper
@@ -129,4 +129,11 @@ def confirm_choice():
     save_dict_to_csv(result_dict, "out.csv")
     MDApp.get_running_app().anki.add_card(**result_dict)
     MDApp.get_running_app().anki.write_apkg(now_string() + ".apkg")
-    # widget_by_id("/screen_single_word/")
+    widget_by_id("/screen_single_word/tabs/carousel").index = 0
+    widget_by_id("/screen_single_word/edit_tab/word_prop/search_field").text = ""
+    widget_by_id("/screen_single_word/edit_tab/word_prop/search_field").focus = True
+    MDApp.get_running_app().word.__init__()
+    widget_by_id("/screen_single_word/edit_tab/word_prop").refresh_data()
+
+
+
