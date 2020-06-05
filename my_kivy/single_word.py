@@ -4,14 +4,61 @@ import certifi
 from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
-from kivymd.app import MDApp
 from kivymd.toast import toast
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
-from utils import now_string, save_dict_to_csv, selection_helper, widget_by_id
+from utils import now_string, save_dict_to_csv, selection_helper
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
+
+from kivy.uix.boxlayout import BoxLayout
+from kivymd.app import MDApp
+
+from utils import widget_by_id
+from word_requests.urls_and_parsers import linguee_did_you_mean, NoMatchError
+
+
+class WordProperties(BoxLayout):
+
+    def __init__(self, **kwargs):
+        super(WordProperties, self).__init__(**kwargs)
+
+    def refresh_data(self):
+        word = MDApp.get_running_app().word
+        self.ids.translation_chips.element_dicts = [{"text": string} for string in word.translations]
+        self.ids.antonym_chips.element_dicts = [{
+            "text_orig":  ant[0],
+            "text_trans": ant[1]
+        }
+            for ant in word.antonyms]
+        self.ids.synonym_chips.element_dicts = [{
+            "text_orig":  syn[0],
+            "text_trans": syn[1]
+        }
+            for syn in word.synonyms]
+        self.ids.example_cards.element_dicts = [{
+            "text_orig":  ex[0],
+            "text_trans": ex[1]
+        }
+            for ex in word.examples]
+        self.ids.explanation_cards.element_dicts = [{"text": string} for string in word.explanations]
+
+    def accept_suggestion(self, suggestion):
+        self.ids.search_field.text = suggestion
+        self.load_or_search(suggestion)
+        self.refresh_data()
+
+    def load_or_search(self, search_term):
+        try:
+            MDApp.get_running_app().word.search(search_term)
+            widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
+            widget_by_id(
+                "/screen_single_word/image_tab/img_search_field").text = search_term
+        except NoMatchError as e:
+            suggestions = linguee_did_you_mean(search_term)
+            message = f"{search_term} not found on {e.site}." + (" Did you mean... ?" if suggestions else "")
+            MDApp.get_running_app().show_dialog(message, suggestions, self.accept_suggestion)
 
 
 def get_selection_dict():
@@ -49,12 +96,12 @@ def get_selection_dict():
         'Word':               word.search_term,
         'Translation':        ", ".join(out["translation"]),
         'Synonym':            out["synonym"][0] if out["synonym"] else "",
-        'Image':              f'<img src="{base_path}.jpg">',
+        'Image':              f'<img src="{word.search_term}.jpg">',
         'Explanation':        out["explanation"][0],
         'ExampleTranslation': out["example"][1],
         'Example':            out["example"][0],
         'ConjugationTable':   "",
-        'Audio':              f'[sound:{base_path}.mp3]',
+        'Audio':              f'[sound:{word.search_term}.mp3]',
         'Antonym':            out["antonym"][0] if out["antonym"] else "",
         'AdditionalInfo':     str(word.add_info_dict),
         'media_files':        [f"{base_path}.{ext}" for ext in ["jpg", "mp3"]],
@@ -81,5 +128,5 @@ def confirm_choice():
     toast(f'Added card for "{result_dict["Word"]}" to Deck.', duration=3)
     save_dict_to_csv(result_dict, "out.csv")
     MDApp.get_running_app().anki.add_card(**result_dict)
-    MDApp.get_running_app().anki.write_apkg(now_string() + ".apgk")
-    widget_by_id("/single_word_screen//")
+    MDApp.get_running_app().anki.write_apkg(now_string() + ".apkg")
+    # widget_by_id("/screen_single_word/")
