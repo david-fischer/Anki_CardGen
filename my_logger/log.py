@@ -1,12 +1,14 @@
-import yaml
 from logging import config
 
-with open("config.yaml", 'rt') as f:
+import yaml
+
+with open("my_logger/config.yaml", 'rt') as f:
     config_data = yaml.safe_load(f.read())
     config.dictConfig(config_data)
 
 from functools import wraps, partial
 import logging
+
 
 def attach_wrapper(obj, func=None):  # Helper function that attaches function as attribute of an object
     if func is None:
@@ -14,7 +16,8 @@ def attach_wrapper(obj, func=None):  # Helper function that attaches function as
     setattr(obj, func.__name__, func)
     return func
 
-def log(level, message):  # Actual decorator
+
+def log(level=logging.DEBUG, message="message"):  # Actual decorator
     def decorate(func):
         logger = logging.getLogger(func.__module__)  # Setup logger
         formatter = logging.Formatter(
@@ -40,6 +43,7 @@ def log(level, message):  # Actual decorator
             log_message = f"{func.__name__} - {new_message}"
 
         return wrapper
+
     return decorate
 
 # @timeit_wrapper
