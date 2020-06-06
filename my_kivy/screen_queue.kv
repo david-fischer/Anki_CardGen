@@ -1,0 +1,40 @@
+#:import ScrollList my_kivy.scroll_list.ScrollList
+#:import options_dict my_kivy.screen_queue.options_dict
+#:import import_from my_kivy.screen_queue.import_from
+#:import click_on_queue_item my_kivy.screen_queue.click_on_queue_item
+#:import click_on_error_item my_kivy.screen_queue.click_on_error_item
+#:import click_on_done_item my_kivy.screen_queue.click_on_done_item
+FloatLayout:
+
+    MDTabs:
+        id: queue_tabs
+        pos_hint: {"top":1.0}
+        on_parent: self.ids.carousel.ignore_perpendicular_swipes = True;self.ids.carousel.min_move = 0.07;
+        Tab:
+            id: queue_tab
+            text:"format-list-checkbox"
+            ScrollList:
+                callback: click_on_queue_item
+                item_dicts: [{"text": word} for word in app.queue_words]
+
+        Tab:
+            id: done_tab
+            text: "checkbox-marked-circle"
+            ScrollList:
+                callback: click_on_done_item
+                item_dicts: [{"text": word} for word in app.done_words]
+
+
+        Tab:
+            id: error_tab
+            text: "close-circle"
+            ScrollList:
+                callback: click_on_error_item
+                item_dicts: [{"text": word} for word in app.error_words]
+
+
+
+    MDFloatingActionButtonSpeedDial:
+        id: speed_dial
+        data: options_dict
+        callback: import_from
