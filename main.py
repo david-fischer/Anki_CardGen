@@ -8,6 +8,7 @@ from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior, ThemeManager
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.list import MDList, OneLineIconListItem
 from kivymd.uix.picker import MDThemePicker
 
@@ -81,6 +82,7 @@ class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
     dialog = ObjectProperty()
     anki = ObjectProperty()
+    file_manager = ObjectProperty()
     theme_dialog = ObjectProperty()
     error_words = ListProperty()
     queue_words = ListProperty()
@@ -124,21 +126,31 @@ class AnkiCardGenApp(MDApp):
         })
 
     def build(self):
+        # Config and Theme
         config = self.config
-        self.anki = AnkiObject(root_dir="anki")
-        self.word = Word()
-        self.queue_words = ["q1", "q2", "q3"]
-        self.error_words = ["e1", "e2", "e3"]
-        self.done_words = ["d1", "d2", "d3"]
         self.theme_cls = ThemeManager(**config["Theme"])
         self.theme_dialog = MDThemePicker()
         self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
+        # Non Kivy Objects
+        self.anki = AnkiObject(root_dir="anki")
+        self.word = Word()
+        # Kivy Objects
+        self.file_manager = MDFileManager()
+        self.queue_words = ["q1", "q2", "q3"]
+        self.error_words = ["e1", "e2", "e3"]
+        self.done_words = ["d1", "d2", "d3"]
         return Builder.load_string("MainMenu:")
 
     def save_theme(self, *args):
         for key in self.config["Theme"]:
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
+
+    def open_file_manager(self,path="./test/test_data/",select_path=print,ext=[".html"]):
+        self.file_manager.ext = ext
+        self.file_manager.select_path = select_path
+        self.file_manager.show(path)
+
 
 
 if __name__ == "__main__":
