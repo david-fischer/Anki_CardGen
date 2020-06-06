@@ -51,11 +51,12 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
 
 class MainMenu(StackLayout):
     screen_dicts = ListProperty(
-        [{"icon": "script-text-outline", "text": "Import from Kindle Notes", "screen_name": "screen_import"},
-         {"icon": "textbox", "text": "Single Word", "screen_name": "screen_single_word"},
-         {"icon": "cogs", "text": "Settings", "screen_name": "screen_settings"},
-         # {"icon": "folder", "text": "My files", "screen_name": "my_files"},
-         ]
+        [  # {"icon": "script-text-outline", "text": "Import from Kindle Notes", "screen_name": "screen_import"},
+            {"icon": "textbox", "text": "Manual Input", "screen_name": "screen_single_word"},
+            {"icon": "format-list-checkbox", "text": "Queue", "screen_name": "screen_queue"},
+            {"icon": "cogs", "text": "Settings", "screen_name": "screen_settings"},
+            # {"icon": "folder", "text": "My files", "screen_name": "my_files"},
+        ]
     )
 
     def set_screen(self, screen_name):
@@ -81,6 +82,9 @@ class AnkiCardGenApp(MDApp):
     dialog = ObjectProperty()
     anki = ObjectProperty()
     theme_dialog = ObjectProperty()
+    error_words = ListProperty()
+    queue_words = ListProperty()
+    done_words = ListProperty()
 
     def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
         dialog = None
@@ -123,6 +127,9 @@ class AnkiCardGenApp(MDApp):
         config = self.config
         self.anki = AnkiObject(root_dir="anki")
         self.word = Word()
+        self.queue_words = ["q1", "q2", "q3"]
+        self.error_words = ["e1", "e2", "e3"]
+        self.done_words = ["d1", "d2", "d3"]
         self.theme_cls = ThemeManager(**config["Theme"])
         self.theme_dialog = MDThemePicker()
         self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
