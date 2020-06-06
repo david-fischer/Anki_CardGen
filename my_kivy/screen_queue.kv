@@ -1,4 +1,5 @@
 #:import ScrollList my_kivy.scroll_list.ScrollList
+#:import LeftStatusIndicatorListItem my_kivy.scroll_list.LeftStatusIndicatorListItem
 #:import options_dict my_kivy.screen_queue.options_dict
 #:import import_from my_kivy.screen_queue.import_from
 #:import click_on_queue_item my_kivy.screen_queue.click_on_queue_item
@@ -14,6 +15,7 @@ FloatLayout:
             id: queue_tab
             text:"format-list-checkbox"
             ScrollList:
+                item_type: LeftStatusIndicatorListItem
                 callback: click_on_queue_item
                 item_dicts: [{"text": word} for word in app.queue_words]
 
@@ -21,11 +23,13 @@ FloatLayout:
             id: done_tab
             text: "checkbox-marked-circle"
             ScrollList:
+                item_type: LeftStatusIndicatorListItem
                 callback: click_on_done_item
                 item_dicts: [{"text": word} for word in app.done_words]
 
 
         Tab:
+            item_type: LeftStatusIndicatorListItem
             id: error_tab
             text: "close-circle"
             ScrollList:
