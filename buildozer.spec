@@ -28,7 +28,7 @@ source.exclude_dirs = bin, test, .buildozer
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.2.0
+version = 0.3.0
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -36,7 +36,7 @@ version = 0.2.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3, kivy, kivymd==0.104.1, attrs==19.3.0, selenium==3.141.0, Unidecode==1.1.1, requests, translate==3.5.0, beautifulsoup4==4.9.0, lxml, soupsieve , certifi, pandas, genanki, spacy
+requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,spacy,googletrans,pillow,cached_property,pystache,pyyaml,soupsieve,thinc,catalogue,srsly,importlib_metadata,zipp
 
 
 # (str) Custom source folders for requirements
@@ -66,10 +66,10 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3
+osx.python_version = 3.7.6
 
 # Kivy version to use
-osx.kivy_version = 1.9.1
+osx.kivy_version = 1.11.1
 
 #
 # Android specific
@@ -236,7 +236,7 @@ android.arch = armeabi-v7a
 #p4a.source_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-#p4a.local_recipes =
+p4a.local_recipes = ./src/python-for-android/recipes/
 
 # (str) Filename to the hook for p4a
 #p4a.hook =
