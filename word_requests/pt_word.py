@@ -5,7 +5,7 @@ import re
 import attr
 import pandas as pd
 from kivy.network.urlrequest import UrlRequest
-from translate import Translator
+from googletrans import Translator
 from unidecode import unidecode
 
 from google_images_download import google_images_download
@@ -17,7 +17,10 @@ FROM_LANG = "pt"
 TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
 
-translator = Translator(from_lang=FROM_LANG, to_lang=TO_LANG)
+translator = Translator()
+
+def translate(string):
+    return translator.translate(string,dest=TO_LANG,src=FROM_LANG).text
 
 
 def html_list(str_list):
@@ -96,9 +99,9 @@ class Word:
             values = getattr(self, key)
             for i, val in enumerate(values):
                 if type(val) is str:
-                    values[i] = [val, translator.translate(val)]
+                    values[i] = [val, translate(val)]
                 elif type(val) is list and len(val) == 1:
-                    values[i] = [val[0], translator.translate(val[0])]
+                    values[i] = [val[0], translate(val[0])]
             setattr(self, key, values)
 
     def request_img_urls(self, conn=None, keywords=None):
