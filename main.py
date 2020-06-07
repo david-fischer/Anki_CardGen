@@ -1,7 +1,8 @@
 import os
+import queue
 
 from kivy.lang import Builder
-from kivy.properties import ListProperty, ObjectProperty, StringProperty
+from kivy.properties import DictProperty, ListProperty, ObjectProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
@@ -82,14 +83,15 @@ class AnkiCardGenApp(MDApp):
     word = ObjectProperty()
     dialog = ObjectProperty()
     anki = ObjectProperty()
+    q = ObjectProperty()
     file_manager = ObjectProperty()
     theme_dialog = ObjectProperty()
     error_words = ListProperty()
     queue_words = ListProperty()
+    loading_state_dict = DictProperty()
     done_words = ListProperty()
 
     def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
-        dialog = None
         if item_function is None:
             def item_function(obj):
                 dialog.dismiss()
@@ -134,11 +136,12 @@ class AnkiCardGenApp(MDApp):
         # Non Kivy Objects
         self.anki = AnkiObject(root_dir="anki")
         self.word = Word()
+        self.q = queue.Queue()
         # Kivy Objects
         self.file_manager = MDFileManager()
-        self.queue_words = ["q1", "q2", "q3"]
-        self.error_words = ["e1", "e2", "e3"]
-        self.done_words = ["d1", "d2", "d3"]
+        # self.queue_words = ["q1", "q2", "q3"]
+        # self.error_words = ["e1", "e2", "e3"]
+        # self.done_words = ["d1", "d2", "d3"]
         return Builder.load_string("MainMenu:")
 
     def save_theme(self, *args):
@@ -146,11 +149,12 @@ class AnkiCardGenApp(MDApp):
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
 
-    def open_file_manager(self,path="./test/test_data/",select_path=print,ext=[".html"]):
+    def open_file_manager(self, path="./test/test_data/", select_path=print, ext=None):
+        if ext is None:
+            ext = [".html"]
         self.file_manager.ext = ext
         self.file_manager.select_path = select_path
         self.file_manager.show(path)
-
 
 
 if __name__ == "__main__":
