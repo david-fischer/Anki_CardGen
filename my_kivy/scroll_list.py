@@ -1,4 +1,4 @@
-from kivy.clock import Clock
+from kivy.clock import Clock, mainthread
 from kivy.lang import Builder
 from kivy.properties import ListProperty, ObjectProperty, OptionProperty
 from kivy.uix.anchorlayout import AnchorLayout
@@ -57,6 +57,7 @@ class ScrollList(ScrollView):
         super(ScrollList, self).__init__(**kwargs)
         self.on_item_dicts()
 
+    @mainthread
     def on_item_dicts(self, *args):
         items = [self.item_type(**item_dict, on_press=self.callback) for item_dict in self.item_dicts]
         self.list.clear_widgets()
@@ -73,6 +74,7 @@ class LeftStatusIndicator(ILeftBody, AnchorLayout):
 class LeftStatusIndicatorListItem(OneLineAvatarListItem):
     loading_state = OptionProperty("queued", options=["loading", "queued", "ready"])
     spinner = ObjectProperty()
+
 
 
 def schedule(object):
