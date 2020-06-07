@@ -5,7 +5,7 @@ from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.toast import toast
-from kivymd.uix.tab import MDTabs, MDTabsBase
+from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
 from utils import now_string, save_dict_to_csv, selection_helper
@@ -54,7 +54,8 @@ class WordProperties(BoxLayout):
             MDApp.get_running_app().word.search(search_term)
             widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
             widget_by_id(
-                "/screen_single_word/image_tab/img_search_field").text = search_term            self.refresh_data()
+                "/screen_single_word/image_tab/img_search_field").text = search_term
+            self.refresh_data()
         except NoMatchError as e:
             suggestions = linguee_did_you_mean(search_term)
             message = f"{search_term} not found on {e.site}." + (" Did you mean... ?" if suggestions else "")
