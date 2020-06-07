@@ -94,22 +94,21 @@ class AnkiCardGenApp(MDApp):
     def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
         if item_function is None:
             def item_function(obj):
-                dialog.dismiss()
+                self.dialog.dismiss()
                 callback(obj.text)
         if buttons is None:
             buttons = [MDFlatButton(text="CANCEL", text_color=self.theme_cls.primary_color,
-                                    on_press=lambda x: dialog.dismiss()
-                                    )],
+                                    on_press=lambda x: self.dialog.dismiss(),
+                                    )]
         items = [OneLineIconListItem(text=option, on_press=item_function) for option in options]
-        dialog = MDDialog(
+        self.dialog = MDDialog(
             title=message,
             type="simple",
             items=items,
             auto_dismiss=False,
             buttons=buttons,
         )
-        dialog.ids.title.color = dialog.theme_cls.text_color
-        self.dialog = dialog
+        self.dialog.ids.title.color = self.dialog.theme_cls.text_color
         self.dialog.open()
 
     def on_config_change(self, config, section, key, value):
