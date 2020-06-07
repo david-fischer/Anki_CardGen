@@ -54,11 +54,11 @@ class WordProperties(BoxLayout):
             MDApp.get_running_app().word.search(search_term)
             widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
             widget_by_id(
-                "/screen_single_word/image_tab/img_search_field").text = search_term
+                "/screen_single_word/image_tab/img_search_field").text = search_term            self.refresh_data()
         except NoMatchError as e:
             suggestions = linguee_did_you_mean(search_term)
             message = f"{search_term} not found on {e.site}." + (" Did you mean... ?" if suggestions else "")
-            MDApp.get_running_app().show_dialog(message, suggestions, self.accept_suggestion)
+            MDApp.get_running_app().show_dialog(message, options=suggestions, callback=self.accept_suggestion)
 
 
 def get_selection_dict():

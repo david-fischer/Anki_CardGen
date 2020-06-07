@@ -13,7 +13,7 @@
         id: search_field
         hint_text: "Search Term"
         text: ""
-        on_text_validate: root.load_or_search(self.text); root.refresh_data()
+        on_text_validate: root.load_or_search(self.text)
         size_hint: 0.,None
         on_parent: self.focus = True
         pos_hint: {"center_x":0.5,"center_y":0}
