@@ -17,7 +17,7 @@ FloatLayout:
             ScrollList:
                 item_type: LeftStatusIndicatorListItem
                 callback: click_on_queue_item
-                item_dicts: [{"text": word} for word in app.queue_words]
+                item_dicts: [{"text": word, "loading_state": app.loading_state_dict[word]} for word in app.queue_words]
 
         Tab:
             id: done_tab
@@ -35,7 +35,6 @@ FloatLayout:
             ScrollList:
                 callback: click_on_error_item
                 item_dicts: [{"text": word} for word in app.error_words]
-
 
 
     MDFloatingActionButtonSpeedDial:
