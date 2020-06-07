@@ -4,8 +4,8 @@ import re
 
 import attr
 import pandas as pd
-from kivy.network.urlrequest import UrlRequest
 from googletrans import Translator
+from kivy.network.urlrequest import UrlRequest
 from unidecode import unidecode
 
 from google_images_download import google_images_download
@@ -178,5 +178,5 @@ class Word:
 if __name__ == "__main__":
     q = Word(search_term="mesa")
     print(q)
-    q.get_data()
+    q.search("casa")
     print(q)
