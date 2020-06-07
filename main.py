@@ -1,6 +1,7 @@
 import os
 import queue
 
+from kivy.clock import mainthread
 from kivy.lang import Builder
 from kivy.properties import DictProperty, ListProperty, ObjectProperty, StringProperty
 from kivy.uix.screenmanager import Screen
@@ -91,6 +92,7 @@ class AnkiCardGenApp(MDApp):
     loading_state_dict = DictProperty()
     done_words = ListProperty()
 
+    @mainthread
     def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
         if item_function is None:
             def item_function(obj):
