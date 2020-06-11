@@ -4,7 +4,15 @@ import operator
 import os
 from datetime import datetime
 
-import spacy
+try:
+    import spacy
+
+    SPACY_IS_AVAILABLE = True
+except ModuleNotFoundError:
+    print("Spacy is not available, fall back to limited version. "
+          "This means, words will not be lemmatized in the clean-up")
+    SPACY_IS_AVAILABLE = False
+
 from bs4 import BeautifulSoup
 from kivymd.app import MDApp
 
@@ -74,7 +82,9 @@ def widget_by_id(string):
     return obj
 
 
-def selection_helper(base, id=None, props=["text"]):
+def selection_helper(base, id=None, props=None):
+    if props is None:
+        props = ["text"]
     base_obj = getattr(base.ids, id) if id is not None else base
     out = [base_obj.get_checked(property=prop) for prop in props]
     return functools.reduce(operator.iconcat, out, [])
@@ -100,19 +110,23 @@ def dict_from_kindle_export(file_path):
 
 
 def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
-    global nlp
-    if nlp is None and lemmatize:
-        print("loading nlp")
-        try:
-            nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
-        except OSError:
-            nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
     if remove_punct:
         words = [word.strip(",.;:-–—!?¿¡\"\'") for word in words]
     if lower_case:
         words = [word.lower() for word in words]
+    if SPACY_IS_AVAILABLE:
+        global nlp
+        if nlp is None and lemmatize:
+            print("loading nlp")
+            try:
+                nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
+            except OSError:
+                nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
     if lemmatize:
-        words = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
+        if SPACY_IS_AVAILABLE:
+            words = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
+        else:
+            print("Lemmatization skipped. Spacy modul is not installed.")
     return words
 
 
