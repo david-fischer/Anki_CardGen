@@ -1,6 +1,7 @@
 import os
 
 import certifi
+from kivy.lang import Builder
 from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
@@ -17,7 +18,6 @@ from kivymd.app import MDApp
 
 from utils import widget_by_id
 from word_requests.urls_and_parsers import linguee_did_you_mean, NoMatchError
-
 
 class WordProperties(BoxLayout):
 
@@ -126,7 +126,7 @@ class ImageSearchResultGrid(MyCheckImageGrid):
 def confirm_choice():
     result_dict = get_selection_dict()
     print(result_dict)
-    toast(f'Added card for "{result_dict["Word"]}" to Deck.', duration=3)
+    toast(f'Added card for "{result_dict["Word"]}" to Deck.', 5)
     save_dict_to_csv(result_dict, "out.csv")
     MDApp.get_running_app().anki.add_card(**result_dict)
     MDApp.get_running_app().anki.write_apkg(now_string() + ".apkg")
@@ -137,4 +137,10 @@ def confirm_choice():
     widget_by_id("/screen_single_word/edit_tab/word_prop").refresh_data()
 
 
+if __name__ == "__main__":
+    class TestApp(MDApp):
+        def build(self):
+            return Builder.load_file("screen_single_word.kv")
 
+
+    TestApp().run()
