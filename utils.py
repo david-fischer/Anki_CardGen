@@ -2,6 +2,7 @@ import csv
 import functools
 import operator
 import os
+from collections import defaultdict
 from datetime import datetime
 
 try:
@@ -19,7 +20,7 @@ from kivymd.app import MDApp
 COLOR2MEANING = {
     "highlight_yellow": "words",
     "highlight_blue":   "phrases",
-    "highlight_purple": "sentences",
+    "highlight_pink":   "sentences",
     "highlight_orange": "",
 }
 MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
@@ -55,6 +56,7 @@ def save_dict_to_csv(dict, out_path):
 def load_dict_from_csv(path):
     with open(path, 'r') as read_obj:
         return list(csv.DictReader(read_obj))
+
 
 def now_string():
     return str(datetime.now()).split(".")[0].replace(" ", "_")
@@ -95,18 +97,11 @@ def selection_helper(base, id=None, props=None):
 def dict_from_kindle_export(file_path):
     with open(file_path, "r") as file:
         soup = BeautifulSoup(file, "lxml")
-    headings = soup.select("div.noteHeading span")
-    temp_dict = {
-        # key = word : value = color_of_highlighting
-        heading.find_next().text: heading["class"][0]
-        for heading in headings
-    }
-    dict = {val: [] for val in temp_dict.values()}
-    for key, val in temp_dict.items():
-        key = key.strip()
-        dict[val].append(key)
-    # print(dict.keys())
-    return dict
+    heading_tags = soup.select("div.noteHeading span")
+    highlight_dict = defaultdict(list)
+    for tag in heading_tags:
+        highlight_dict[tag["class"][0]].append(tag.find_next().text.strip())
+    return highlight_dict
 
 
 def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
@@ -114,16 +109,11 @@ def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
         words = [word.strip(",.;:-–—!?¿¡\"\'") for word in words]
     if lower_case:
         words = [word.lower() for word in words]
-    if SPACY_IS_AVAILABLE:
-        global nlp
-        if nlp is None and lemmatize:
-            print("loading nlp")
-            try:
-                nlp = spacy.load("pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
-            except OSError:
-                nlp = spacy.load("../pt_core_news_sm-2.2.5/pt_core_news_sm/pt_core_news_sm-2.2.5")
     if lemmatize:
         if SPACY_IS_AVAILABLE:
+            global nlp
+            if nlp is None:
+                nlp = spacy.load("pt_core_news_sm")
             words = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
         else:
             print("Lemmatization skipped. Spacy modul is not installed.")
