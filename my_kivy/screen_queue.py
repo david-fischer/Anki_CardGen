@@ -50,12 +50,22 @@ def queue_word(word):
     If no worker is present starts a worker in a different thread.
     :param word:
     """
-    MDApp.get_running_app().loading_state_dict[word] = "queued"
-    MDApp.get_running_app().queue_words.append(word)
-    MDApp.get_running_app().q.put(word)
-    if "worker" not in [thread.name for thread in threading.enumerate()]:
-        start_workers(worker_single_word, 1)
+    if not is_duplicate(word):
+        MDApp.get_running_app().loading_state_dict[word] = "queued"
+        MDApp.get_running_app().queue_words.append(word)
+        MDApp.get_running_app().q.put(word)
+        if "worker" not in [thread.name for thread in threading.enumerate()]:
+            start_workers(worker_single_word, 1)
 
+
+def is_duplicate(word):
+    app = MDApp.get_running_app()
+    list_names = ["queue_words", "error_words", "done_words"]
+    for name in list_names:
+        if word in getattr(app, name):
+            print(f"\"{word}\" is already in {name}. Skipping.")
+            return True
+    return False
 
 def import_from(button):
     button.parent.close_stack()
