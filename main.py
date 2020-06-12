@@ -1,3 +1,4 @@
+import json
 import os
 import queue
 
@@ -87,10 +88,11 @@ class AnkiCardGenApp(MDApp):
     q = ObjectProperty()
     file_manager = ObjectProperty()
     theme_dialog = ObjectProperty()
-    error_words = ListProperty()
-    queue_words = ListProperty()
-    loading_state_dict = DictProperty()
-    done_words = ListProperty()
+    error_words = ListProperty([])
+    queue_words = ListProperty([])
+    loading_state_dict = DictProperty({})
+    done_words = ListProperty([])
+    keys_to_save = ListProperty(["queue_words", "done_words", "error_words", "loading_state_dict"])
 
     @mainthread
     def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
@@ -113,14 +115,6 @@ class AnkiCardGenApp(MDApp):
         self.dialog.ids.title.color = self.dialog.theme_cls.text_color
         self.dialog.open()
 
-    def on_config_change(self, config, section, key, value):
-        if config is self.config:
-            token = (section, key)
-            if token == ('Layout', 'Color'):
-                print('Color has been changed to', value)
-            elif token == ('Layout', 'Style'):
-                print('Style has been changed to', value)
-
     def build_config(self, config):
         config.setdefaults('Theme', {
             'primary_palette': 'Red',
@@ -135,14 +129,14 @@ class AnkiCardGenApp(MDApp):
         self.theme_dialog = MDThemePicker()
         self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
         # Non Kivy Objects
+        self.load_word_lists()
+        for key in self.keys_to_save:
+            self.bind(**{key: self.save_word_lists})
         self.anki = AnkiObject(root_dir="anki")
         self.word = Word()
         self.q = queue.Queue()
         # Kivy Objects
         self.file_manager = MDFileManager()
-        # self.queue_words = ["q1", "q2", "q3"]
-        # self.error_words = ["e1", "e2", "e3"]
-        # self.done_words = ["d1", "d2", "d3"]
         return Builder.load_string("MainMenu:")
 
     def save_theme(self, *args):
@@ -150,12 +144,27 @@ class AnkiCardGenApp(MDApp):
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
 
-    def open_file_manager(self, path="./test/test_data/", select_path=print, ext=None):
+    def open_file_manager(self, path="/", select_path=print, ext=None):
+        print("opening file manager...")
         if ext is None:
             ext = [".html"]
         self.file_manager.ext = ext
         self.file_manager.select_path = select_path
         self.file_manager.show(path)
+
+    def save_word_lists(self, *args):
+        with open("word_lists.json", "w") as file:
+            json.dump(
+                {
+                    key: getattr(self, key) for key in self.keys_to_save
+                },
+                file,
+            )
+
+    def load_word_lists(self):
+        with open("word_lists.json") as file:
+            for key, val in json.load(file).items():
+                setattr(self, key, val)
 
 
 if __name__ == "__main__":

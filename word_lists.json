@@ -1,0 +1,42 @@
+{
+  "queue_words": [
+    "convite",
+    "prata",
+    "milho",
+    "gado",
+    "bruscamente",
+    "silvestre",
+    "jabuti",
+    "preconceito",
+    "roteiro",
+    "nuvem",
+    "aguentar",
+    "pastar",
+    "desviar",
+    "fazendeiro",
+    "prezar",
+    "atropelado",
+    "susto"
+  ],
+  "done_words": [],
+  "error_words": [],
+  "loading_state_dict": {
+    "convite": "ready",
+    "prata": "ready",
+    "milho": "ready",
+    "gado": "ready",
+    "bruscamente": "ready",
+    "silvestre": "ready",
+    "jabuti": "ready",
+    "preconceito": "ready",
+    "roteiro": "ready",
+    "nuvem": "ready",
+    "aguentar": "ready",
+    "pastar": "ready",
+    "desviar": "ready",
+    "fazendeiro": "ready",
+    "prezar": "ready",
+    "atropelado": "ready",
+    "susto": "ready"
+  }
+}
