@@ -80,7 +80,7 @@ class AnkiObject:
             self.package = genanki.Package(self.deck)
             self.fields = [
                 field for field_dict in self.model.fields
-                for _, field in field_dict.items()
+                for field in field_dict.values()
             ]
 
     def add_card(self, media_files=None, **kwargs):
