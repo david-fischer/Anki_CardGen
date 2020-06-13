@@ -56,16 +56,26 @@ This allows quick generation of high-quality, personalized cards.
 
 ### App
 <!-- TODO: Add apk file-->
+
 * [ ] A compiled .apk file for Android is provided in the apk folder
 
 ### Prerequisites
 
-Install requirements
+Install requirements:
 ```
 pip install -r requirements.txt
 ```
 
+Install [spacy](https://github.com/explosion/spaCy) module. 
+
+```
+pythn -m spacy download pt_core_news_sm
+```
+
+**NOTE:** This modul is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version.
+
 ### Building the Android App
+
 The apk is built using [Buildozer](https://buildozer.readthedocs.io/en/latest/)
 ```
 buildozer android debug deploy
@@ -80,6 +90,7 @@ buildozer ios debug deploy
 ## :microscope: Troubleshooting
 
 * python3.8 not working -> change to 3.7
+* I could not manage to 
 
 ## 🎈 Usage 
 (add info)
