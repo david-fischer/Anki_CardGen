@@ -1,7 +1,9 @@
 import csv
 import functools
+import json
 import operator
 import os
+import pickle
 from collections import defaultdict
 from datetime import datetime
 
@@ -53,9 +55,33 @@ def save_dict_to_csv(dict, out_path):
         writer.writerow(dict)
 
 
-def load_dict_from_csv(path):
+def load_dicts_from_csv(path):
     with open(path, 'r') as read_obj:
         return list(csv.DictReader(read_obj))
+
+
+def smart_loader(path):
+    ext = path.split(".")[-1]
+    if ext == "p":
+        with open(path, "rb") as file:
+            return pickle.load(file)
+    with open(path, "r") as file:
+        if ext == "json":
+            return json.load(file)
+        if ext == "csv":
+            return load_dicts_from_csv(path)
+
+
+def smart_saver(obj, path):
+    ext = path.split(".")[-1]
+    if ext == "p":
+        with open(path, "wb") as file:
+            pickle.dump(obj, file)
+    if ext == "json":
+        with open(path, "w") as file:
+            json.dump(obj, file)
+    if ext == "csv":
+        save_dict_to_csv(obj, path)
 
 
 def now_string():
