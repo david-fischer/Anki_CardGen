@@ -5,11 +5,10 @@ from kivy.lang import Builder
 from kivy.network.urlrequest import UrlRequest
 from kivy.properties import StringProperty
 from kivy.uix.floatlayout import FloatLayout
-from kivymd.toast import toast
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
-from utils import now_string, save_dict_to_csv, selection_helper
+from utils import selection_helper
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
@@ -125,11 +124,7 @@ class ImageSearchResultGrid(MyCheckImageGrid):
 
 def confirm_choice():
     result_dict = get_selection_dict()
-    print(result_dict)
-    toast(f'Added card for "{result_dict["Word"]}" to Deck.', 5)
-    save_dict_to_csv(result_dict, "out.csv")
-    MDApp.get_running_app().anki.add_card(**result_dict)
-    MDApp.get_running_app().anki.write_apkg(now_string() + ".apkg")
+    MDApp.get_running_app().add_anki_card(result_dict)
     widget_by_id("/screen_single_word/tabs/carousel").index = 0
     widget_by_id("/screen_single_word/edit_tab/word_prop/search_field").text = ""
     widget_by_id("/screen_single_word/edit_tab/word_prop/search_field").focus = True
