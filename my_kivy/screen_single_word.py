@@ -8,7 +8,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
-from utils import selection_helper
+from utils import selection_helper, tag_word
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
@@ -97,10 +97,10 @@ def get_selection_dict():
         'Translation':        ", ".join(out["translation"]),
         'Synonym':            out["synonym"][0] if out["synonym"] else "",
         'Image':              f'<img src="{word.search_term}.jpg">',
-        'Explanation':        out["explanation"][0],
-        'ExampleTranslation': out["example"][1],
-        'Example':            out["example"][0],
-        'ConjugationTable':   "",
+        'Explanation':        tag_word(out["explanation"][0], word.search_term) if out["explanation"] else "",
+        'ExampleTranslation': out["example"][1] if out["example"] else "",
+        'Example':            tag_word(out["example"][0], word.search_term) if out["example"] else "",
+        'ConjugationTable':   word.html_from_conj_df(),
         'Audio':              f'[sound:{word.search_term}.mp3]',
         'Antonym':            out["antonym"][0] if out["antonym"] else "",
         'AdditionalInfo':     str(word.add_info_dict),
