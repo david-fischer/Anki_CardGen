@@ -4,6 +4,7 @@ import json
 import operator
 import os
 import pickle
+import re
 from collections import defaultdict
 from datetime import datetime
 
@@ -151,5 +152,28 @@ def word_list_from_kindle(path):
     return dict_from_kindle_export(path)[color]
 
 
+def tag_word(sentence, tag_word):
+    words = sentence.split()
+    words = clean_up(words, lemmatize=False)
+    print(words)
+    lemmas = clean_up(words)
+    print(lemmas)
+    tag_lemma = clean_up([tag_word])[0]
+    words_found = [
+        word for word, lemma in zip(words, lemmas) if lemma == tag_lemma or word == tag_word
+    ]
+    print(set(words_found))
+    for word in set(words_found):
+        sentence = re.sub(f"([^>])({word})([^<])", r'\1<span class="word">\2</span>\3', sentence, flags=re.IGNORECASE)
+    return sentence
+
+
 if __name__ == "__main__":
-    out = word_list_from_kindle("test/test_data/Portuguese Short Stories for Beginners 20 Captiva - Notizbuch.html")
+    # out = word_list_from_kindle("test/test_data/Portuguese Short Stories for Beginners 20 Captiva - Notizbuch.html")
+
+    example = ("Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,"
+               "normalmente térrea ou com dois andares. - Voltaire")
+    expl = ("Os homens que procuram a felicidade são como os embriagados que não conseguem encontrar a própria casa, "
+            "apesar de saberem que a têm. Test Casas, casa, casa.")
+
+    print(tag_word(expl, "casa"))
