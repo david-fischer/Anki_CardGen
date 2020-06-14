@@ -86,7 +86,7 @@ class AnkiCardGenApp(MDApp):
     theme_dialog = ObjectProperty()
     # Other Objects
     word = ObjectProperty()
-    anki = ObjectProperty(AnkiObject(root_dir="anki"))
+    anki = ObjectProperty(rebind=True)
     q = ObjectProperty()
     # Data
     error_words = ListProperty([])
@@ -129,11 +129,13 @@ class AnkiCardGenApp(MDApp):
         self.theme_dialog = MDThemePicker()
         self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
         # Non Kivy Objects
+        # The following condition is a workaround:
+        # If we set self.anki = AnkiObject(...) and load from the pickled file
+        # afterwards, the object is not loaded correctly and we start with an empty deck...
+        if not os.path.exists(self.config["Paths"]["anki"]):
+            self.anki = AnkiObject(root_dir="anki")
         self.load_app_state()
-        # for key in self.keys_to_save:
         self.bind(**{key: partial(self.save_by_config_key, key, obj=None) for key in self.keys_to_save})  # partial(
-        # self.save_by_config_key,
-        # key)})
         self.word = Word()
         self.q = queue.Queue()
         # Kivy Objects
