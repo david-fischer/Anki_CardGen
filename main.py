@@ -1,5 +1,6 @@
 import os
 import queue
+from functools import partial
 
 from kivy.clock import mainthread
 from kivy.lang import Builder
@@ -129,8 +130,10 @@ class AnkiCardGenApp(MDApp):
         self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
         # Non Kivy Objects
         self.load_app_state()
-        for key in self.keys_to_save:
-            self.bind(**{key: lambda *args: self.save_by_config_key(key)})
+        # for key in self.keys_to_save:
+        self.bind(**{key: partial(self.save_by_config_key, key, obj=None) for key in self.keys_to_save})  # partial(
+        # self.save_by_config_key,
+        # key)})
         self.word = Word()
         self.q = queue.Queue()
         # Kivy Objects
@@ -152,9 +155,9 @@ class AnkiCardGenApp(MDApp):
 
     def load_by_config_key(self, key):
         path = self.config["Paths"][key]
-        return smart_loader(path)
+        setattr(self, key, smart_loader(path))
 
-    def save_by_config_key(self, key, obj=None):
+    def save_by_config_key(self, key, *args, obj=None):
         if obj is None:
             obj = getattr(self, key)
         path = self.config["Paths"][key]
@@ -170,7 +173,7 @@ class AnkiCardGenApp(MDApp):
 
     def add_anki_card(self, result_dict):
         toast(f'Added card for "{result_dict["Word"]}" to Deck.', 10)
-        self.save_by_config_key("generated", result_dict)
+        self.save_by_config_key("generated", obj=result_dict)
         self.anki.add_card(**result_dict)
         apkg_path = self.config["Paths"]["apkg"]
         apkg_bkp_path = f"{apkg_path[:-5]}_{now_string()}.apkg"
