@@ -8,3 +8,6 @@ pickles/
 __pycache__/
 app_state
 apkgs
+*.p
+*/*.p
+credentials/
