@@ -8,6 +8,8 @@ import re
 from collections import defaultdict
 from datetime import datetime
 
+from PIL import Image
+
 try:
     import spacy
 
@@ -168,12 +170,23 @@ def tag_word(sentence, tag_word):
     return sentence
 
 
+# Image resizing
+
+def compress_img(path):
+    img = Image.open(path)
+    if img.size[0] > 720:
+        resize = (720, 720 * img.size[1] // img.size[0])
+        img = img.resize(resize, Image.ANTIALIAS)
+    img.save(path, optimize=True)
+
+
 if __name__ == "__main__":
     # out = word_list_from_kindle("test/test_data/Portuguese Short Stories for Beginners 20 Captiva - Notizbuch.html")
 
-    example = ("Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,"
-               "normalmente térrea ou com dois andares. - Voltaire")
-    expl = ("Os homens que procuram a felicidade são como os embriagados que não conseguem encontrar a própria casa, "
-            "apesar de saberem que a têm. Test Casas, casa, casa.")
-
-    print(tag_word(expl, "casa"))
+    # example = ("Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,"
+    #            "normalmente térrea ou com dois andares. - Voltaire")
+    # expl = ("Os homens que procuram a felicidade são como os embriagados que não conseguem encontrar a própria casa, "
+    #         "apesar de saberem que a têm. Test Casas, casa, casa.")
+    #
+    # print(tag_word(expl, "casa"))
+    compress_img("data/casa/casa.jpg")
