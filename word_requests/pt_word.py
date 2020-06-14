@@ -19,8 +19,9 @@ LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"
 
 translator = Translator()
 
+
 def translate(string):
-    return translator.translate(string,dest=TO_LANG,src=FROM_LANG).text
+    return translator.translate(string, dest=TO_LANG, src=FROM_LANG).text
 
 
 def html_list(str_list):
@@ -108,8 +109,8 @@ class Word:
         """
         sets self.img_urls from first 20 results of google_images
         """
-        keywords = self.search_term if keywords is None else keywords
-        keywords = unidecode(keywords).lower()
+        keywords = self.search_term_utf8() if keywords is None else keywords
+        # keywords = unidecode(keywords).lower()
         response = google_images_download.googleimagesdownload()
         arguments = {
             "keywords":         keywords,
@@ -167,12 +168,16 @@ class Word:
                 return True
             except TypeError:
                 pass
-        requests = self.request_data()
+        r_dicio, r_linguee, r_rev = self.request_data()
         self.request_img_urls()
-        for r in requests:
-            r.wait()
+        r_linguee.wait()
+        r_audio = UrlRequest(self.audio_url, file_path=f"data/{self.folder()}/{self.folder()}.mp3",
+                             on_success=lambda *args: print("Finished downloading audio."))
+        r_dicio.wait()
+        r_rev.wait()
         self.add_translations()
         self.pickle()
+        r_audio.wait()
 
 
 if __name__ == "__main__":

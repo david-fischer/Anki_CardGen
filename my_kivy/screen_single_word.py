@@ -8,7 +8,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
-from utils import selection_helper, tag_word
+from utils import compress_img, selection_helper, tag_word
 
 os.environ['SSL_CERT_FILE'] = certifi.where()
 
@@ -70,13 +70,10 @@ def get_selection_dict():
             0].replace("http:", "https:")
         print(img_url)
         r_i = UrlRequest(img_url, file_path=f"{base_path}.jpg",
-                         on_success=lambda *args: print("Finished downloading image."))
+                         on_success=lambda *args: compress_img(f"{base_path}.jpg"))
     except IndexError:
         # TODO: change to a popup
         print("Error with image download. Try different Image instead.")
-    audio_url = word.audio_url
-    r_a = UrlRequest(audio_url, file_path=f"{base_path}.mp3",
-                     on_success=lambda *args: print("Finished downloading audio."))
     selections = {
         "translation_chips": ["text"],
         "synonym_chips":     ["text_orig", "text_trans"],
@@ -91,7 +88,7 @@ def get_selection_dict():
     # print(out)
     # TODO: Deal with the case that either audio or image is not downloaded
     r_i.wait()
-    r_a.wait()
+    print("Finished downloading image.")
     return {
         'Word':               word.search_term,
         'Translation':        ", ".join(out["translation"]),
