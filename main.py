@@ -21,8 +21,7 @@ from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import now_string, smart_loader, smart_saver, widget_by_id
 from word_requests.pt_word import Word
 
-Builder.load_file("my_kivy/screens.kv")
-
+Builder.load_file(f"{os.path.dirname(__file__)}/my_kivy/screens.kv")
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
     icon = StringProperty()

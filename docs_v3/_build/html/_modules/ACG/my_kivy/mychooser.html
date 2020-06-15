@@ -1,0 +1,350 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ACG.my_kivy.mychooser &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <link href="../../../_static/alabaster.css" rel="stylesheet" type="text/css" />
+    <link href="../../../_static/pygments.css" rel="stylesheet" type="text/css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link href="../../../genindex.html" rel="index" title="Index" />
+    <link href="../../../search.html" rel="search" title="Search" />
+   
+  <link href="../../../_static/custom.css" rel="stylesheet" type="text/css" />
+  
+  
+  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ACG.my_kivy.mychooser</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">kivy.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
+<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">BooleanProperty</span><span class="p">,</span>
+    <span class="n">DictProperty</span><span class="p">,</span>
+    <span class="n">ListProperty</span><span class="p">,</span>
+    <span class="n">NumericProperty</span><span class="p">,</span>
+    <span class="n">ObjectProperty</span><span class="p">,</span>
+    <span class="n">StringProperty</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">ButtonBehavior</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.stacklayout</span> <span class="kn">import</span> <span class="n">StackLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
+<span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
+<span class="kn">from</span> <span class="nn">kivymd.theming</span> <span class="kn">import</span> <span class="n">ThemableBehavior</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.behaviors</span> <span class="kn">import</span> <span class="n">CircularRippleBehavior</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.card</span> <span class="kn">import</span> <span class="n">MDCard</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.imagelist</span> <span class="kn">import</span> <span class="n">SmartTile</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;my_kivy/mychooser.kv&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+    <span class="n">this_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
+    <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_directory</span><span class="p">,</span> <span class="s2">&quot;mychooser.kv&quot;</span><span class="p">))</span>
+
+
+<span class="c1"># TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE</span>
+<div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">:</span>
+    <span class="n">checked</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">checked_state</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
+    <span class="n">unchecked_state</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_state</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">unchecked_state</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="n">state</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CheckBehavior.on_checked"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior.on_checked">[docs]</a>    <span class="k">def</span> <span class="nf">on_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span><span class="p">:</span>
+            <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">checked_state</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s2">&quot;out_circ&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">unchecked_state</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s2">&quot;out_circ&quot;</span><span class="p">)</span>
+        <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">CheckElement</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">):</span>
+    <span class="n">text_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">bg_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;test &quot;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span> <span class="o">=</span> <span class="n">ThemableBehavior</span><span class="p">()</span><span class="o">.</span><span class="n">theme_cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked_state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bg_color&quot;</span><span class="p">:</span>   <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_color</span><span class="p">,</span>
+            <span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unchecked_state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bg_color&quot;</span><span class="p">:</span>   <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_darkest</span>
+                          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">theme_style</span> <span class="o">==</span> <span class="s2">&quot;Light&quot;</span>
+                          <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_light</span><span class="p">,</span>
+            <span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">secondary_text_color</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">CheckElement</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span>
+
+
+<div class="viewcode-block" id="CheckContainer"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer">[docs]</a><span class="k">class</span> <span class="nc">CheckContainer</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+    <span class="n">check_one</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">element_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
+    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">CheckElement</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CheckContainer.conditional_uncheck"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_one</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">check_element</span> <span class="ow">in</span> <span class="p">[</span>
+                <span class="n">others</span> <span class="k">for</span> <span class="n">others</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">others</span> <span class="o">!=</span> <span class="n">instance</span> <span class="ow">and</span> <span class="n">value</span>
+            <span class="p">]:</span>
+                <span class="n">check_element</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="CheckContainer.get_checked"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">checked_elements</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">element</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">checked</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">property_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">checked_elements</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">property_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">checked_elements</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="CheckContainer.on_element_dicts"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.on_element_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_element_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">elem_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_dicts</span><span class="p">:</span>
+            <span class="n">new_check_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CheckElementObject</span><span class="p">(</span><span class="o">**</span><span class="n">elem_dict</span><span class="p">)</span>
+            <span class="n">new_check_element</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">checked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">new_check_element</span><span class="p">)</span></div></div>
+        <span class="c1"># if self.check_one:</span>
+        <span class="c1">#     self.children[-1].checked = True</span>
+
+
+<span class="k">class</span> <span class="nc">MyCheckCard</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">):</span>
+    <span class="n">text_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">bg_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;test &quot;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span> <span class="o">=</span> <span class="n">ThemableBehavior</span><span class="p">()</span><span class="o">.</span><span class="n">theme_cls</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked_state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bg_color&quot;</span><span class="p">:</span>   <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_color</span><span class="p">,</span>
+            <span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unchecked_state</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;bg_color&quot;</span><span class="p">:</span>   <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_darkest</span>
+                          <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">theme_style</span> <span class="o">==</span> <span class="s2">&quot;Light&quot;</span>
+                          <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_light</span><span class="p">,</span>
+            <span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">secondary_text_color</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyCheckCard</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span>
+
+
+<span class="k">class</span> <span class="nc">MyTransCard</span><span class="p">(</span><span class="n">MyCheckCard</span><span class="p">):</span>
+    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
+    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;checked&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;checked&quot;</span><span class="p">]</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;text_orig&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="k">else</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;text_trans&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;text&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyTransCard</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_orig</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_trans</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyTransCard</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_checked</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyCheckChip</span><span class="p">(</span><span class="n">CircularRippleBehavior</span><span class="p">,</span> <span class="n">CheckElement</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
+    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">MyTransChip</span><span class="p">(</span><span class="n">MyCheckChip</span><span class="p">):</span>
+    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
+    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s2">&quot;checked&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;checked&quot;</span><span class="p">]</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;text_orig&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="k">else</span> <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;text_trans&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;text&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">text</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyTransChip</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyTransChip</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_checked</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_orig</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_trans</span>
+
+
+<span class="k">class</span> <span class="nc">MyCheckCardContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
+    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyCheckCard</span>
+
+
+<span class="k">class</span> <span class="nc">MyTransCardContainer</span><span class="p">(</span><span class="n">MyCheckCardContainer</span><span class="p">):</span>
+    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyTransCard</span>
+
+
+<span class="k">class</span> <span class="nc">MyCheckChipContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">StackLayout</span><span class="p">):</span>
+    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyCheckChip</span>
+
+
+<span class="k">class</span> <span class="nc">MyTransChipContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">StackLayout</span><span class="p">):</span>
+    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyTransChip</span>
+
+
+<span class="k">class</span> <span class="nc">MyCheckImageTile</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">SmartTile</span><span class="p">):</span>
+    <span class="n">checked_state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;border_width&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+    <span class="n">unchecked_state</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;opacity&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span> <span class="s2">&quot;border_width&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">}</span>
+    <span class="n">border_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span>
+
+
+<span class="k">class</span> <span class="nc">MyCheckImageGrid</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">GridLayout</span><span class="p">):</span>
+    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyCheckImageTile</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">IMG_STRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">#:import lorem lorem</span>
+<span class="s2">FloatLayout:</span>
+<span class="s2">    ScrollView:</span>
+<span class="s2">        do_scroll_x: False</span>
+<span class="s2">        do_scroll_y: True</span>
+<span class="s2">        size_hint: 1,1</span>
+<span class="s2">        MyCheckImageGrid:</span>
+<span class="s2">            cols: 2</span>
+<span class="s2">            id: image_grid</span>
+<span class="s2">            row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4</span>
+<span class="s2">            row_force_default: True</span>
+<span class="s2">            size_hint_y: None</span>
+<span class="s2">            height: self.minimum_height</span>
+<span class="s2">            padding: dp(4), dp(4)</span>
+<span class="s2">            spacing: dp(4)</span>
+<span class="s2">            check_one: True</span>
+<span class="s2">            element_dicts: [{&quot;source&quot;:&quot;../assets/guitar.png&quot;} for i in range(10)]</span>
+<span class="s2">            </span>
+<span class="s2">    MDFloatingActionButton:</span>
+<span class="s2">        pos_hint: {&quot;center_x&quot;:0.5,&quot;center_y&quot;:0.5}</span>
+<span class="s2">        on_press: image_grid.element_dicts = [{&quot;source&quot;:&quot;../assets/Latte.jpg&quot;} for i in range(10)]</span>
+
+<span class="s2">&quot;&quot;&quot;</span>
+    <span class="n">TRANS_CARD_STRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">BoxLayout:</span>
+<span class="s2">    MyTransCardContainer:</span>
+<span class="s2">        element_dicts: [{&quot;text_orig&quot;:(&quot;text_orig_&quot;+str(i))*10,&quot;text_trans&quot;: (&quot;text_trans_&quot;+str(i))*10} for i in </span>
+<span class="s2">        range(10)]    </span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+    <span class="n">CHECK_CARD_STRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">BoxLayout:</span>
+<span class="s2">    MyCheckCardContainer:</span>
+<span class="s2">        element_dicts: [{&quot;text&quot;:(&quot;text_orig_&quot;+str(i))*10, &quot;checked&quot;:True} for i in range(10)]    </span>
+<span class="s2">    &quot;&quot;&quot;</span>
+
+    <span class="n">TRANS_CHIP_STRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">BoxLayout:</span>
+<span class="s2">    MyTransChipContainer:</span>
+<span class="s2">        element_dicts: [{&quot;text_orig&quot;:(&quot;text_orig_&quot;+str(i))*10,&quot;text_trans&quot;: (&quot;text_trans_&quot;+str(i))*10} for i in </span>
+<span class="s2">        range(10)]</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+
+    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_palette</span> <span class="o">=</span> <span class="s2">&quot;Red&quot;</span>  <span class="c1"># &quot;Purple&quot;, &quot;Red&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">theme_style</span> <span class="o">=</span> <span class="s2">&quot;Light&quot;</span>  <span class="c1"># &quot;Purple&quot;, &quot;Red&quot;</span>
+            <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">TRANS_CARD_STRING</span><span class="p">)</span>
+
+
+    <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Anki_CardGen</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.utils.html">ACG.utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form action="../../../search.html" class="search" method="get">
+      <input aria-labelledby="searchlabel" name="q" type="text" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, David Fischer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
