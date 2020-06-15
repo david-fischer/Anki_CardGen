@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ACG.anki &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <link href="_static/alabaster.css" rel="stylesheet" type="text/css" />
+    <link href="_static/pygments.css" rel="stylesheet" type="text/css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <link href="genindex.html" rel="index" title="Index" />
+    <link href="search.html" rel="search" title="Search" />
+    <link href="ACG.my_kivy.html" rel="next" title="ACG.my_kivy" />
+    <link href="index.html" rel="prev" title="Welcome to ACG’s documentation!" />
+   
+  <link href="_static/custom.css" rel="stylesheet" type="text/css" />
+  
+  
+  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="acg-anki">
+<h1>ACG.anki<a class="headerlink" href="#acg-anki" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-ACG.anki.generate_anki_card">
+<span id="acg-anki-generate-anki-card"></span><h2>ACG.anki.generate_anki_card<a class="headerlink" href="#module-ACG.anki.generate_anki_card" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="ACG.anki.generate_anki_card.HtmlLoader">
+<em class="property">class </em><code class="sig-prename descclassname">ACG.anki.generate_anki_card.</code><code class="sig-name descname">HtmlLoader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#HtmlLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.HtmlLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt id="ACG.anki.generate_anki_card.HtmlLoader.set_of_fields">
+<code class="sig-name descname">set_of_fields</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#HtmlLoader.set_of_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.HtmlLoader.set_of_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ACG.anki.generate_anki_card.HtmlLoader.replace_includes_with_content">
+<code class="sig-name descname">replace_includes_with_content</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#HtmlLoader.replace_includes_with_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.HtmlLoader.replace_includes_with_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="ACG.anki.generate_anki_card.model_from_html">
+<code class="sig-prename descclassname">ACG.anki.generate_anki_card.</code><code class="sig-name descname">model_from_html</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">template_names</span></em>, <em class="sig-param"><span class="n">id</span></em>, <em class="sig-param"><span class="n">css_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#model_from_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.model_from_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="ACG.anki.generate_anki_card.AnkiObject">
+<em class="property">class </em><code class="sig-prename descclassname">ACG.anki.generate_anki_card.</code><code class="sig-name descname">AnkiObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model_name</span><span class="o">=</span><span class="default_value">'pt-word'</span></em>, <em class="sig-param"><span class="n">templates</span><span class="o">=</span><span class="default_value">['meaning-pt', 'pt-meaning']</span></em>, <em class="sig-param"><span class="n">deck_name</span><span class="o">=</span><span class="default_value">'Portuguese::Vocab'</span></em>, <em class="sig-param"><span class="n">css_path</span><span class="o">=</span><span class="default_value">'css/pt.css'</span></em>, <em class="sig-param"><span class="n">root_dir</span><span class="o">=</span><span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">id</span><span class="o">=</span><span class="default_value">12345</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#AnkiObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.AnkiObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt id="ACG.anki.generate_anki_card.AnkiObject.add_card">
+<code class="sig-name descname">add_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">media_files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#AnkiObject.add_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.AnkiObject.add_card" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="ACG.anki.generate_anki_card.AnkiObject.write_apkg">
+<code class="sig-name descname">write_apkg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/anki/generate_anki_card.html#AnkiObject.write_apkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.anki.generate_anki_card.AnkiObject.write_apkg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Anki_CardGen</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ACG.anki</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-ACG.anki.generate_anki_card">ACG.anki.generate_anki_card</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Welcome to ACG’s documentation!</a></li>
+      <li>Next: <a href="ACG.my_kivy.html" title="next chapter">ACG.my_kivy</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form action="search.html" class="search" method="get">
+      <input aria-labelledby="searchlabel" name="q" type="text" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, David Fischer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/ACG.anki.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

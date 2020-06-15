@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ACG.word_requests.urls_and_parsers &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <link href="../../../_static/alabaster.css" rel="stylesheet" type="text/css" />
+    <link href="../../../_static/pygments.css" rel="stylesheet" type="text/css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link href="../../../genindex.html" rel="index" title="Index" />
+    <link href="../../../search.html" rel="search" title="Search" />
+   
+  <link href="../../../_static/custom.css" rel="stylesheet" type="text/css" />
+  
+  
+  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ACG.word_requests.urls_and_parsers</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">quote</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+
+<span class="n">LINGUEE_API_BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://linguee-api.herokuapp.com/api?q=</span><span class="si">%s</span><span class="s2">&amp;src=</span><span class="si">%s</span><span class="s2">&amp;dst=</span><span class="si">%s</span><span class="s2">&quot;</span>
+<span class="n">AUDIO_BASE_URL</span> <span class="o">=</span> <span class="s2">&quot;https://www.linguee.de/mp3/</span><span class="si">%s</span><span class="s2">.mp3&quot;</span>
+
+<span class="n">DEFAULT_HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;user-agent&quot;</span><span class="p">:</span> <span class="s2">&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) &quot;</span>
+                  <span class="s2">&quot;Chrome/56.0.2924.87 Safari/537.36&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;referrer&quot;</span><span class="p">:</span>   <span class="s2">&quot;https://google.de&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">LINGUEE_HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;user-agent&quot;</span><span class="p">:</span>      <span class="s2">&quot;Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) snap &quot;</span>
+                       <span class="s2">&quot;Chromium/80.0.3987.162 &quot;</span>
+                       <span class="s2">&quot;Chrome/80.0.3987.162 Safari/537.36&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Referer&quot;</span><span class="p">:</span>         <span class="s2">&quot;https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&amp;query=&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Accept&quot;</span><span class="p">:</span>          <span class="s2">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,&quot;</span>
+                       <span class="s2">&quot;application/signed-exchange;v=b3;q=0.9&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;Accept-Encoding&quot;: &quot;gzip, deflate, br&quot;,</span>
+    <span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="s2">&quot;de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="n">REVERSO_HEADERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;user-agent&quot;</span><span class="p">:</span>      <span class="s2">&quot;Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Accept&quot;</span><span class="p">:</span>          <span class="s2">&quot;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="s2">&quot;de,en-US;q=0.7,en;q=0.3&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;Accept-Encoding&quot;: &quot;gzip, deflate, br&quot;,</span>
+    <span class="s2">&quot;Referer&quot;</span><span class="p">:</span>         <span class="s2">&quot;https://google.com&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+
+<span class="c1"># BS4 Helper Functions</span>
+
+
+<div class="viewcode-block" id="get_element_after_regex"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.get_element_after_regex">[docs]</a><span class="k">def</span> <span class="nf">get_element_after_regex</span><span class="p">(</span><span class="n">bs_obj</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">bs_obj</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">regex</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="to_stripped_multiline_str"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.to_stripped_multiline_str">[docs]</a><span class="k">def</span> <span class="nf">to_stripped_multiline_str</span><span class="p">(</span><span class="n">bs_obj</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bs_obj</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()])</span></div>
+
+
+<div class="viewcode-block" id="span_not_cl"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.span_not_cl">[docs]</a><span class="k">def</span> <span class="nf">span_not_cl</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">tag</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">tag</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;span&quot;</span></div>
+
+
+<span class="c1"># Error</span>
+
+
+<div class="viewcode-block" id="NoMatchError"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.NoMatchError">[docs]</a><span class="k">class</span> <span class="nc">NoMatchError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NoMatchError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">site</span> <span class="o">=</span> <span class="n">site</span></div>
+
+
+<div class="viewcode-block" id="get_soup_object"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.get_soup_object">[docs]</a><span class="k">def</span> <span class="nf">get_soup_object</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">headers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="n">DEFAULT_HEADERS</span>
+    <span class="k">return</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span></div>
+
+
+<span class="c1"># URLS</span>
+
+
+<div class="viewcode-block" id="linguee_api_url"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.linguee_api_url">[docs]</a><span class="k">def</span> <span class="nf">linguee_api_url</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="n">from_lang</span><span class="p">,</span> <span class="n">to_lang</span><span class="p">):</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">)</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">LINGUEE_API_BASE_URL</span> <span class="o">%</span> <span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="n">from_lang</span><span class="p">,</span> <span class="n">to_lang</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dicio_url"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.dicio_url">[docs]</a><span class="k">def</span> <span class="nf">dicio_url</span><span class="p">(</span><span class="n">phrase</span><span class="p">):</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">)</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;https://www.dicio.com.br/pesquisa.php?q=</span><span class="si">{</span><span class="n">phrase</span><span class="si">}</span><span class="s2">/&quot;</span></div>
+
+
+<div class="viewcode-block" id="reverso_url"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.reverso_url">[docs]</a><span class="k">def</span> <span class="nf">reverso_url</span><span class="p">(</span><span class="n">phrase</span><span class="p">,</span> <span class="n">from_lang</span><span class="p">,</span> <span class="n">to_lang</span><span class="p">):</span>
+    <span class="n">reverso_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;traducao/portugues-alemao&quot;</span><span class="p">}}</span>
+    <span class="n">phrase</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;https://context.reverso.net/</span><span class="si">{</span><span class="n">reverso_dict</span><span class="p">[</span><span class="n">from_lang</span><span class="p">][</span><span class="n">to_lang</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">phrase</span><span class="si">}</span><span class="s2">&quot;</span></div>
+
+
+<div class="viewcode-block" id="parse_linguee_api_resp"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.parse_linguee_api_resp">[docs]</a><span class="k">def</span> <span class="nf">parse_linguee_api_resp</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">from_lang</span><span class="p">):</span>
+    <span class="n">lang_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="s2">&quot;Brazilian Portuguese&quot;</span><span class="p">}</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;exact_matches&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Got no valid response.&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">NoMatchError</span>
+    <span class="n">audio_ids</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">link</span><span class="p">[</span><span class="s2">&quot;url_part&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;exact_matches&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">mat</span><span class="p">[</span><span class="s2">&quot;audio_links&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">lang_dict</span><span class="p">[</span><span class="n">from_lang</span><span class="p">]</span>
+    <span class="p">]</span>
+    <span class="c1"># audio_ids = {link[&quot;lang&quot;]: link[&quot;url_part&quot;] for link in match[&quot;audio_links&quot;]}</span>
+    <span class="n">audio_url</span> <span class="o">=</span> <span class="n">AUDIO_BASE_URL</span> <span class="o">%</span> <span class="n">audio_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">audio_ids</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">word_type</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;word_type&quot;</span><span class="p">][</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;word_type&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">gender</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;word_type&quot;</span><span class="p">][</span><span class="s2">&quot;gender&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">word_type</span> <span class="o">==</span> <span class="s2">&quot;noun&quot;</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">translations</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">entry</span><span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;exact_matches&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;translations&quot;</span><span class="p">]</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;translations&quot;</span><span class="p">:</span> <span class="n">translations</span><span class="p">,</span>
+        <span class="s2">&quot;word_type&quot;</span><span class="p">:</span>    <span class="n">word_type</span><span class="p">,</span>
+        <span class="s2">&quot;gender&quot;</span><span class="p">:</span>       <span class="n">gender</span><span class="p">,</span>
+        <span class="s2">&quot;audio_url&quot;</span><span class="p">:</span>    <span class="n">audio_url</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="dicio_conj_df"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.dicio_conj_df">[docs]</a><span class="k">def</span> <span class="nf">dicio_conj_df</span><span class="p">(</span><span class="n">bs_obj</span><span class="p">):</span>
+    <span class="n">html_string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(&lt;a[^&gt;]*&gt;)&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">bs_obj</span><span class="o">.</span><span class="n">prettify</span><span class="p">())</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html_string</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+    <span class="n">conjugation_table_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="c1"># the following [:2] only takes indicativo and subjuntivo</span>
+    <span class="n">temp_cols</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">temp_col</span>
+        <span class="k">for</span> <span class="n">modo_table</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.modo&quot;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">temp_col</span> <span class="ow">in</span> <span class="n">modo_table</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;li&quot;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">tempo_col</span> <span class="ow">in</span> <span class="n">temp_cols</span><span class="p">:</span>
+        <span class="n">strings</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">tempo_col</span><span class="o">.</span><span class="n">stripped_strings</span><span class="p">)</span>
+        <span class="n">tempo</span> <span class="o">=</span> <span class="n">strings</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">verb_col</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">strings</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">verb_col</span><span class="p">:</span>
+            <span class="n">conjugation_table_dict</span><span class="p">[</span><span class="n">tempo</span><span class="p">][</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">conjugation_table_dict</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span>
+        <span class="p">[</span><span class="s2">&quot;eu&quot;</span><span class="p">,</span> <span class="s2">&quot;ele&quot;</span><span class="p">,</span> <span class="s2">&quot;nós&quot;</span><span class="p">,</span> <span class="s2">&quot;eles&quot;</span><span class="p">]</span>
+    <span class="p">]</span></div>
+
+
+<span class="c1"># TODO: Check if unidecode was unnecessary</span>
+<div class="viewcode-block" id="parse_dicio_resp"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.parse_dicio_resp">[docs]</a><span class="k">def</span> <span class="nf">parse_dicio_resp</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+    <span class="n">suggestion</span> <span class="o">=</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;a._sugg&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">suggestion</span><span class="p">:</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">get_soup_object</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;https://www.dicio.com.br</span><span class="si">{</span><span class="n">suggestion</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;href&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">explanations</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;.significado &gt; span:not(.cl)&quot;</span><span class="p">)]</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="n">phrase</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span> <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;.tit-frases ~ .frases div.frase&quot;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">synonyms</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;sin&quot;).sinonimos a&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">antonyms</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;contr&quot;).sinonimos a&#39;</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="n">add_info_dict</span> <span class="o">=</span> <span class="n">to_stripped_multiline_str</span><span class="p">(</span>
+        <span class="n">get_element_after_regex</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="s2">&quot;Definição.*&quot;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">conj_table_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conj_table_df</span> <span class="o">=</span> <span class="n">dicio_conj_df</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no conjugation table obtained :(&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;explanations&quot;</span><span class="p">:</span>  <span class="n">explanations</span><span class="p">,</span>
+        <span class="s2">&quot;synonyms&quot;</span><span class="p">:</span>      <span class="n">synonyms</span><span class="p">,</span>
+        <span class="s2">&quot;antonyms&quot;</span><span class="p">:</span>      <span class="n">antonyms</span><span class="p">,</span>
+        <span class="s2">&quot;examples&quot;</span><span class="p">:</span>      <span class="n">examples</span><span class="p">,</span>
+        <span class="s2">&quot;add_info_dict&quot;</span><span class="p">:</span> <span class="n">add_info_dict</span><span class="p">,</span>
+        <span class="s2">&quot;conj_table_df&quot;</span><span class="p">:</span> <span class="n">conj_table_df</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="parse_reverso_resp"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.parse_reverso_resp">[docs]</a><span class="k">def</span> <span class="nf">parse_reverso_resp</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">[</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+                <span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.trg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+            <span class="p">]</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.example&quot;</span><span class="p">)</span>
+        <span class="p">]</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="linguee_did_you_mean"><a class="viewcode-back" href="../../../ACG.word_requests.html#ACG.word_requests.urls_and_parsers.linguee_did_you_mean">[docs]</a><span class="k">def</span> <span class="nf">linguee_did_you_mean</span><span class="p">(</span><span class="n">search_term</span><span class="p">):</span>
+    <span class="n">bs</span> <span class="o">=</span> <span class="n">get_soup_object</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&amp;query=</span><span class="si">{</span><span class="n">search_term</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="n">LINGUEE_HEADERS</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;span.corrected&quot;</span><span class="p">)]</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">linguee_did_you_mean</span><span class="p">(</span><span class="s2">&quot;comecar&quot;</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Anki_CardGen</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.utils.html">ACG.utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form action="../../../search.html" class="search" method="get">
+      <input aria-labelledby="searchlabel" name="q" type="text" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, David Fischer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
