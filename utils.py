@@ -15,8 +15,10 @@ try:
 
     SPACY_IS_AVAILABLE = True
 except ModuleNotFoundError:
-    print("Spacy is not available, fall back to limited version. "
-          "This means, words will not be lemmatized in the clean-up")
+    print(
+        "Spacy is not available, fall back to limited version. "
+        "This means, words will not be lemmatized in the clean-up"
+    )
     SPACY_IS_AVAILABLE = False
 
 from bs4 import BeautifulSoup
@@ -35,11 +37,13 @@ nlp = None
 
 # GENERAL
 
+
 class CD:
     """Context manager for changing the current working directory"""
 
     def __init__(self, new_path):
         self.new_path = os.path.expanduser(new_path)
+        self.saved_path = None
 
     def __enter__(self):
         self.saved_path = os.getcwd()
@@ -49,17 +53,17 @@ class CD:
         os.chdir(self.saved_path)
 
 
-def save_dict_to_csv(dict, out_path):
+def save_dict_to_csv(some_dict, out_path):
     is_first_entry = not os.path.exists(out_path)
     with open(out_path, "a") as file:
-        writer = csv.DictWriter(file, fieldnames=dict.keys())
+        writer = csv.DictWriter(file, fieldnames=some_dict.keys())
         if is_first_entry:
             writer.writeheader()
-        writer.writerow(dict)
+        writer.writerow(some_dict)
 
 
 def load_dicts_from_csv(path):
-    with open(path, 'r') as read_obj:
+    with open(path, "r") as read_obj:
         return list(csv.DictReader(read_obj))
 
 
@@ -73,6 +77,7 @@ def smart_loader(path):
             return json.load(file)
         if ext == "csv":
             return load_dicts_from_csv(path)
+    raise Exception
 
 
 def smart_saver(obj, path):
@@ -92,6 +97,7 @@ def now_string():
 
 
 # KIVY
+
 
 def set_screen(screen_name):
     widget_by_id("screen_man").current = screen_name
@@ -123,6 +129,7 @@ def selection_helper(base, id=None, props=None):
 
 # KINDLE EXPORT PARSING
 
+
 def dict_from_kindle_export(file_path):
     with open(file_path, "r") as file:
         soup = BeautifulSoup(file, "lxml")
@@ -135,7 +142,7 @@ def dict_from_kindle_export(file_path):
 
 def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
     if remove_punct:
-        words = [word.strip(",.;:-–—!?¿¡\"\'") for word in words]
+        words = [word.strip(",.;:-–—!?¿¡\"'") for word in words]
     if lower_case:
         words = [word.lower() for word in words]
     if lemmatize:
@@ -154,7 +161,7 @@ def word_list_from_kindle(path):
     return dict_from_kindle_export(path)[color]
 
 
-def tag_word(sentence, tag_word):
+def tag_word_in_sentence(sentence, tag_word):
     words = sentence.split()
     words = clean_up(words, lemmatize=False)
     print(words)
@@ -162,15 +169,23 @@ def tag_word(sentence, tag_word):
     print(lemmas)
     tag_lemma = clean_up([tag_word])[0]
     words_found = [
-        word for word, lemma in zip(words, lemmas) if lemma == tag_lemma or word == tag_word
+        word
+        for word, lemma in zip(words, lemmas)
+        if lemma == tag_lemma or word == tag_word
     ]
     print(set(words_found))
     for word in set(words_found):
-        sentence = re.sub(f"([^>])({word})([^<])", r'\1<span class="word">\2</span>\3', sentence, flags=re.IGNORECASE)
+        sentence = re.sub(
+            f"([^>])({word})([^<])",
+            r'\1<span class="word">\2</span>\3',
+            sentence,
+            flags=re.IGNORECASE,
+        )
     return sentence
 
 
 # Image resizing
+
 
 def compress_img(path):
     img = Image.open(path)
