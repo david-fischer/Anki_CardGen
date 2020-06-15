@@ -31,11 +31,11 @@ class HtmlLoader:
 
 def model_from_html(name, template_names, id, css_path):
     templates_html = {
-        template_name:
-            {
-                "front": HtmlLoader(f"{template_name}_front.html"),
-                "back":  HtmlLoader(f"{template_name}_back.html")
-            } for template_name in template_names
+        template_name: {
+            "front": HtmlLoader(f"{template_name}_front.html"),
+            "back":  HtmlLoader(f"{template_name}_back.html"),
+        }
+        for template_name in template_names
     }
     fields = set()
     for _, temp_dict in templates_html.items():
@@ -43,21 +43,20 @@ def model_from_html(name, template_names, id, css_path):
             fields |= side.set_of_fields()
     fields = [{"name": field} for field in sorted(fields, reverse=True)]
 
-    templates = [{
-        "name": temp_name,
-        "qfmt": templates_html[temp_name]["front"].replace_includes_with_content(),
-        "afmt": templates_html[temp_name]["back"].replace_includes_with_content(),
-    } for temp_name in templates_html]
+    templates = [
+        {
+            "name": temp_name,
+            "qfmt": templates_html[temp_name]["front"].replace_includes_with_content(),
+            "afmt": templates_html[temp_name]["back"].replace_includes_with_content(),
+        }
+        for temp_name in templates_html
+    ]
 
     with open(css_path, "r") as file:
         css = file.read()
 
     return genanki.Model(
-        model_id=id,
-        name=name,
-        fields=fields,
-        templates=templates,
-        css=css,
+        model_id=id, name=name, fields=fields, templates=templates, css=css,
     )
 
 
@@ -72,14 +71,14 @@ class AnkiObject:
 
     def __attrs_post_init__(self):
         with CD(self.root_dir):
-            self.model = model_from_html(self.model_name,
-                                         self.templates,
-                                         css_path=self.css_path,
-                                         id=self.id)
+            self.model = model_from_html(
+                self.model_name, self.templates, css_path=self.css_path, id=self.id
+            )
             self.deck = genanki.Deck(self.id, name=self.deck_name)
             self.package = genanki.Package(self.deck)
             self.fields = [
-                field for field_dict in self.model.fields
+                field
+                for field_dict in self.model.fields
                 for field in field_dict.values()
             ]
 
@@ -87,15 +86,10 @@ class AnkiObject:
         if media_files is None:
             media_files = []
         fields = {
-            field: (kwargs[field] if field in kwargs else "")
-            for field in self.fields
+            field: (kwargs[field] if field in kwargs else "") for field in self.fields
         }
         fields = [fields[key] for key in sorted(fields, reverse=True)]
-        new_note = genanki.Note(
-            model=self.model,
-            fields=fields,
-            sort_field="Word"
-        )
+        new_note = genanki.Note(model=self.model, fields=fields, sort_field="Word")
         for file in media_files:
             self.package.media_files.append(file)
         self.deck.add_note(new_note)
@@ -106,8 +100,10 @@ class AnkiObject:
 
 if __name__ == "__main__":
     ankiobject = AnkiObject()
-    ankiobject.add_card(Word="casa",
-                        Audio="[sound:casa.mp3]",
-                        Image='<img src="casa.jpg">',
-                        media_files=["../data/casa/casa.mp3", "../data/casa/casa.jpg"])
+    ankiobject.add_card(
+        Word="casa",
+        Audio="[sound:casa.mp3]",
+        Image='<img src="casa.jpg">',
+        media_files=["../data/casa/casa.mp3", "../data/casa/casa.jpg"],
+    )
     ankiobject.write_apkg("output.apkg")

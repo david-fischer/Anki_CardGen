@@ -1,6 +1,13 @@
 from kivy.animation import Animation
 from kivy.lang import Builder
-from kivy.properties import BooleanProperty, DictProperty, ListProperty, NumericProperty, ObjectProperty, StringProperty
+from kivy.properties import (
+    BooleanProperty,
+    DictProperty,
+    ListProperty,
+    NumericProperty,
+    ObjectProperty,
+    StringProperty,
+)
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
@@ -19,7 +26,7 @@ except FileNotFoundError:
 
 
 # TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE
-class CheckBehavior(object):
+class CheckBehavior:
     checked = BooleanProperty(False)
     checked_state = DictProperty()
     unchecked_state = DictProperty()
@@ -28,7 +35,7 @@ class CheckBehavior(object):
         state = self.checked_state if self.checked else self.unchecked_state
         super(CheckBehavior, self).__init__(**kwargs, **state)
 
-    def on_checked(self, *args):
+    def on_checked(self, *_):
         if self.checked:
             anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
         else:
@@ -48,7 +55,8 @@ class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
             "text_color": [1, 1, 1, 1],
         }
         self.unchecked_state = {
-            "bg_color":   self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
+            "bg_color":   self.theme_cls.bg_darkest
+                          if self.theme_cls.theme_style == "Light"
                           else self.theme_cls.bg_light,
             "text_color": self.theme_cls.secondary_text_color,
         }
@@ -66,20 +74,23 @@ class CheckContainer(Widget):
 
     def conditional_uncheck(self, instance, value):
         if self.check_one:
-            for check_element in [others for others in self.children if others != instance and value]:
+            for check_element in [
+                others for others in self.children if others != instance and value
+            ]:
                 check_element.checked = False
 
-    def get_checked(self, property=None):
-        checked_elements = [element for element in self.children[::-1] if element.checked]
-        if property is None:
+    def get_checked(self, property_name=None):
+        checked_elements = [
+            element for element in self.children[::-1] if element.checked
+        ]
+        if property_name is None:
             return checked_elements
-        else:
-            return [getattr(element, property) for element in checked_elements]
+        return [getattr(element, property_name) for element in checked_elements]
 
-    def on_element_dicts(self, *args):
+    def on_element_dicts(self, *_):
         self.clear_widgets()
-        for dict in self.element_dicts:
-            new_check_element = self.CheckElementObject(**dict)
+        for elem_dict in self.element_dicts:
+            new_check_element = self.CheckElementObject(**elem_dict)
             new_check_element.bind(checked=self.conditional_uncheck)
             self.add_widget(new_check_element)
         # if self.check_one:
@@ -98,7 +109,8 @@ class MyCheckCard(CheckBehavior, MDCard):
             "text_color": [1, 1, 1, 1],
         }
         self.unchecked_state = {
-            "bg_color":   self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light"
+            "bg_color":   self.theme_cls.bg_darkest
+                          if self.theme_cls.theme_style == "Light"
                           else self.theme_cls.bg_light,
             "text_color": self.theme_cls.secondary_text_color,
         }
@@ -127,9 +139,6 @@ class MyTransCard(MyCheckCard):
 
 class MyCheckChip(CircularRippleBehavior, CheckElement, BoxLayout):
     icon = StringProperty("")
-
-    def on_press(self):
-        super(MyCheckChip, self).on_press()
 
 
 class MyTransChip(MyCheckChip):
@@ -179,7 +188,7 @@ class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
 
 
 if __name__ == "__main__":
-    img_string = """
+    IMG_STRING = """
 #:import lorem lorem
 FloatLayout:
     ScrollView:
@@ -203,22 +212,24 @@ FloatLayout:
         on_press: image_grid.element_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
 
 """
-    trans_card_string = """
+    TRANS_CARD_STRING = """
 BoxLayout:
     MyTransCardContainer:
-        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str(i))*10} for i in range(10)]    
+        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str(i))*10} for i in 
+        range(10)]    
 """
 
-    check_card_string = """
+    CHECK_CARD_STRING = """
 BoxLayout:
     MyCheckCardContainer:
         element_dicts: [{"text":("text_orig_"+str(i))*10, "checked":True} for i in range(10)]    
     """
 
-    trans_chip_string = """
+    TRANS_CHIP_STRING = """
 BoxLayout:
     MyTransChipContainer:
-        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str(i))*10} for i in range(10)]
+        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str(i))*10} for i in 
+        range(10)]
 """
 
 
@@ -226,7 +237,7 @@ BoxLayout:
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
-            return Builder.load_string(trans_chip_string)
+            return Builder.load_string(TRANS_CARD_STRING)
 
 
     TestApp().run()

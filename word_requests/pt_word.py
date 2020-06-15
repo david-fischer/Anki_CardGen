@@ -9,9 +9,16 @@ from kivy.network.urlrequest import UrlRequest
 from unidecode import unidecode
 
 from google_images_download import google_images_download
-from word_requests.urls_and_parsers import DEFAULT_HEADERS, dicio_url, linguee_api_url, parse_dicio_resp, \
-    parse_linguee_api_resp, \
-    parse_reverso_resp, REVERSO_HEADERS, reverso_url
+from word_requests.urls_and_parsers import (
+    DEFAULT_HEADERS,
+    dicio_url,
+    linguee_api_url,
+    parse_dicio_resp,
+    parse_linguee_api_resp,
+    parse_reverso_resp,
+    REVERSO_HEADERS,
+    reverso_url,
+)
 
 FROM_LANG = "pt"
 TO_LANG = "de"
@@ -32,7 +39,7 @@ def html_list(str_list):
     """
     start = "<ul>\n"
     end = "</ul>\n"
-    middle = ["<li type=\"square\">" + item + "</li>\n" for item in str_list]
+    middle = ['<li type="square">' + item + "</li>\n" for item in str_list]
     return start + "".join(middle) + end
 
 
@@ -63,11 +70,15 @@ class Word:
 
     def request_data(self):
         self.__init__(search_term=self.search_term.strip().lower())
-        resp_reverso = self.reverso_request(reverso_url(self.search_term, FROM_LANG, TO_LANG))
-        resp_linguee = UrlRequest(linguee_api_url(self.search_term, FROM_LANG, TO_LANG),
-                                  on_success=lambda req, res: self.update_from_dict(
-                                      parse_linguee_api_resp(res, from_lang=FROM_LANG)),
-                                  )
+        resp_reverso = self.reverso_request(
+            reverso_url(self.search_term, FROM_LANG, TO_LANG)
+        )
+        resp_linguee = UrlRequest(
+            linguee_api_url(self.search_term, FROM_LANG, TO_LANG),
+            on_success=lambda req, res: self.update_from_dict(
+                parse_linguee_api_resp(res, from_lang=FROM_LANG)
+            ),
+        )
         resp_dicio = self.dicio_request(dicio_url(self.search_term))
         return [resp_dicio, resp_linguee, resp_reverso]
 
@@ -75,21 +86,29 @@ class Word:
         return "/".join(req.url.split("/")[:3]) + req.resp_headers["Location"]
 
     def reverso_request(self, url):
-        return UrlRequest(url,
-                          req_headers=REVERSO_HEADERS,
-                          on_success=lambda req, res: self.update_from_dict(parse_reverso_resp(res)),
-                          on_redirect=lambda req, res: self.reverso_request(self.redirect_url(req)).wait(),
-                          on_error=print)
+        return UrlRequest(
+            url,
+            req_headers=REVERSO_HEADERS,
+            on_success=lambda req, res: self.update_from_dict(parse_reverso_resp(res)),
+            on_redirect=lambda req, res: self.reverso_request(
+                self.redirect_url(req)
+            ).wait(),
+            on_error=print,
+        )
 
     def dicio_request(self, url):
-        return UrlRequest(url,
-                          req_headers=DEFAULT_HEADERS,
-                          on_success=lambda req, res: self.update_from_dict(parse_dicio_resp(res)),
-                          on_redirect=lambda req, res: self.dicio_request(self.redirect_url(req)).wait(),
-                          on_error=print)
+        return UrlRequest(
+            url,
+            req_headers=DEFAULT_HEADERS,
+            on_success=lambda req, res: self.update_from_dict(parse_dicio_resp(res)),
+            on_redirect=lambda req, res: self.dicio_request(
+                self.redirect_url(req)
+            ).wait(),
+            on_error=print,
+        )
 
-    def update_from_dict(self, dict):
-        for key, value in dict.items():
+    def update_from_dict(self, attr_dict):
+        for key, value in attr_dict.items():
             old_val = getattr(self, key)
             if type(old_val) is list:
                 value = old_val + value
@@ -132,21 +151,28 @@ class Word:
             conn.send(paths)
 
     def html_from_conj_df(self):
-        return "\n".join([
-            self.conj_table_df.to_html(columns=[col],
-                                       classes="subj" if "Subjuntivo" in col else "ind",
-                                       index=False
-                                       ).replace("do Subjuntivo", "").replace("do Indicativo", "")
-            for col in self.conj_table_df
-        ])
+        return "\n".join(
+            [
+                self.conj_table_df.to_html(
+                    columns=[col],
+                    classes="subj" if "Subjuntivo" in col else "ind",
+                    index=False,
+                )
+                    .replace("do Subjuntivo", "")
+                    .replace("do Indicativo", "")
+                for col in self.conj_table_df
+            ]
+        )
 
     def mark_examples(self):
         """
         Highlights the search_word in the example sentences using css.
         """
         for word in self.search_term.split(" "):
-            self.examples = [re.sub(r'((?i)%s)' % word, r'<font color=red><b>\1</font></b>', ex) for ex in
-                             self.examples]
+            self.examples = [
+                re.sub(r"((?i)%s)" % word, r"<font color=red><b>\1</font></b>", ex)
+                for ex in self.examples
+            ]
 
     @classmethod
     def from_pickle(cls, path):
@@ -171,8 +197,11 @@ class Word:
         r_dicio, r_linguee, r_rev = self.request_data()
         self.request_img_urls()
         r_linguee.wait()
-        r_audio = UrlRequest(self.audio_url, file_path=f"data/{self.folder()}/{self.folder()}.mp3",
-                             on_success=lambda *args: print("Finished downloading audio."))
+        r_audio = UrlRequest(
+            self.audio_url,
+            file_path=f"data/{self.folder()}/{self.folder()}.mp3",
+            on_success=lambda *args: print("Finished downloading audio."),
+        )
         r_dicio.wait()
         r_rev.wait()
         self.add_translations()

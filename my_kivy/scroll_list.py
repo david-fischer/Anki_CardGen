@@ -58,8 +58,11 @@ class ScrollList(ScrollView):
         self.on_item_dicts()
 
     @mainthread
-    def on_item_dicts(self, *args):
-        items = [self.item_type(**item_dict, on_press=self.callback) for item_dict in self.item_dicts]
+    def on_item_dicts(self, *_):
+        items = [
+            self.item_type(**item_dict, on_press=self.callback)
+            for item_dict in self.item_dicts
+        ]
         self.list.clear_widgets()
         for item in items:
             item.root = self
@@ -76,11 +79,10 @@ class LeftStatusIndicatorListItem(OneLineAvatarListItem):
     spinner = ObjectProperty()
 
 
-
-def schedule(object):
-    if object.loading_state == "queued":
-        object.loading_state = "loading"
-        Clock.schedule_once(lambda dt: setattr(object, "loading_state", "ready"), 5)
+def schedule(obj):
+    if obj.loading_state == "queued":
+        obj.loading_state = "loading"
+        Clock.schedule_once(lambda dt: setattr(obj, "loading_state", "ready"), 5)
 
 
 if __name__ == "__main__":
@@ -91,6 +93,5 @@ if __name__ == "__main__":
                 item_dicts=[{"text": "test"}] * 25,
                 callback=schedule,
             )
-
 
     TestApp().run()
