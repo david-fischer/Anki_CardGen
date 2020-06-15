@@ -10,7 +10,7 @@ from word_requests.urls_and_parsers import NoMatchError
 
 options_dict = {
     "script-text-outline": "Import from Kindle",
-    "note-text":           "Import from Text File"
+    "note-text":           "Import from Text File",
 }
 
 
@@ -63,9 +63,10 @@ def is_duplicate(word):
     list_names = ["queue_words", "error_words", "done_words"]
     for name in list_names:
         if word in getattr(app, name):
-            print(f"\"{word}\" is already in {name}. Skipping.")
+            print(f'"{word}" is already in {name}. Skipping.')
             return True
     return False
+
 
 def import_from(button):
     button.parent.close_stack()
@@ -74,7 +75,9 @@ def import_from(button):
         MDApp.get_running_app().open_file_manager(
             ext=[".html"],
             path="./test/test_data/",
-            select_path=lambda path: threading.Thread(target=partial(import_from_kindle, path)).start()
+            select_path=lambda path: threading.Thread(
+                target=partial(import_from_kindle, path)
+            ).start(),
         )
     elif text == "Import from Text File":
         print("Importing from text-file...")
@@ -99,12 +102,13 @@ def import_from_kindle(path):
     MDApp.get_running_app().file_manager.close()
     words = clean_up(word_list_from_kindle(path), lemmatize=False)
     lemmas = clean_up(words)
-    suggested_replacements = [f"{old} -> {new}" for old, new in zip(words, lemmas) if old != new]
+    suggested_replacements = [
+        f"{old} -> {new}" for old, new in zip(words, lemmas) if old != new
+    ]
     unchanged_words = [word for word, lemma in zip(words, lemmas) if word == lemma]
     for word in unchanged_words:
         queue_word(word)
-    choose_replacements_dialog(
-        replacements=suggested_replacements)
+    choose_replacements_dialog(replacements=suggested_replacements)
 
 
 def choose_replacements_dialog(replacements):
@@ -113,7 +117,7 @@ def choose_replacements_dialog(replacements):
         queue_word(word)
         obj.parent.remove_widget(obj)
 
-    def button_function(obj):
+    def button_function(_):
         for item in MDApp.get_running_app().dialog.ids.box_items.children:
             word = item.text.split(" -> ")[0]
             queue_word(word)
@@ -122,12 +126,12 @@ def choose_replacements_dialog(replacements):
     ok_button = MDFlatButton(
         text="OK",
         text_color=MDApp.get_running_app().theme_cls.primary_color,
-        on_press=button_function
+        on_press=button_function,
     )
     MDApp.get_running_app().show_dialog(
         message="Some words are not in their dictionary form. The following replacements are suggested:",
         options=replacements,
         callback=print,
         item_function=item_function,
-        buttons=[ok_button]
+        buttons=[ok_button],
     )

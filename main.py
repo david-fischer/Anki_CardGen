@@ -56,15 +56,23 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
 
 class MainMenu(StackLayout):
     screen_dicts = ListProperty(
-        [  # {"icon": "script-text-outline", "text": "Import from Kindle Notes", "screen_name": "screen_import"},
-            {"icon": "textbox", "text": "Manual Input", "screen_name": "screen_single_word"},
-            {"icon": "format-list-checkbox", "text": "Queue", "screen_name": "screen_queue"},
+        [
+            {
+                "icon":        "textbox",
+                "text":        "Manual Input",
+                "screen_name": "screen_single_word",
+            },
+            {
+                "icon":        "format-list-checkbox",
+                "text":        "Queue",
+                "screen_name": "screen_queue",
+            },
             {"icon": "cogs", "text": "Settings", "screen_name": "screen_settings"},
             # {"icon": "folder", "text": "My files", "screen_name": "my_files"},
         ]
     )
 
-    def on_parent(self, *args):
+    def on_parent(self, *_):
         for screen_dict in self.screen_dicts:
             name = screen_dict["screen_name"]
             path = f"my_kivy/{name}.kv"
@@ -93,19 +101,31 @@ class AnkiCardGenApp(MDApp):
     queue_words = ListProperty([])
     loading_state_dict = DictProperty({})
     done_words = ListProperty([])
-    keys_to_save = ListProperty(["queue_words", "done_words", "error_words", "loading_state_dict", "anki"])
+    keys_to_save = ListProperty(
+        ["queue_words", "done_words", "error_words", "loading_state_dict", "anki"]
+    )
 
     @mainthread
-    def show_dialog(self, message, options=None, callback=print, item_function=None, buttons=None):
+    def show_dialog(
+            self, message, options=None, callback=print, item_function=None, buttons=None
+    ):
         if item_function is None:
             def item_function(obj):
                 self.dialog.dismiss()
                 callback(obj.text)
+
         if buttons is None:
-            buttons = [MDFlatButton(text="CANCEL", text_color=self.theme_cls.primary_color,
-                                    on_press=lambda x: self.dialog.dismiss(),
-                                    )]
-        items = [OneLineIconListItem(text=option, on_press=item_function) for option in options]
+            buttons = [
+                MDFlatButton(
+                    text="CANCEL",
+                    text_color=self.theme_cls.primary_color,
+                    on_press=lambda x: self.dialog.dismiss(),
+                )
+            ]
+        items = [
+            OneLineIconListItem(text=option, on_press=item_function)
+            for option in options
+        ]
         self.dialog = MDDialog(
             title=message,
             type="simple",
@@ -117,11 +137,14 @@ class AnkiCardGenApp(MDApp):
         self.dialog.open()
 
     def build_config(self, config):
-        config.setdefaults('Theme', {
-            'primary_palette': 'Red',
-            'accent_palette':  'Yellow',
-            'theme_style':     'Dark'
-        })
+        config.setdefaults(
+            "Theme",
+            {
+                "primary_palette": "Red",
+                "accent_palette":  "Yellow",
+                "theme_style":     "Dark",
+            },
+        )
 
     def build(self):
         # Config and Theme
@@ -135,14 +158,19 @@ class AnkiCardGenApp(MDApp):
         if not os.path.exists(self.config["Paths"]["anki"]):
             self.anki = AnkiObject(root_dir="anki")
         self.load_app_state()
-        self.bind(**{key: partial(self.save_by_config_key, key, obj=None) for key in self.keys_to_save})  # partial(
+        self.bind(
+            **{
+                key: partial(self.save_by_config_key, key, obj=None)
+                for key in self.keys_to_save
+            }
+        )  # partial(
         self.word = Word()
         self.q = queue.Queue()
         # Kivy Objects
         self.file_manager = MDFileManager()
         return Builder.load_string("MainMenu:")
 
-    def save_theme(self, *args):
+    def save_theme(self, *_):
         for key in self.config["Theme"]:
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
@@ -159,7 +187,7 @@ class AnkiCardGenApp(MDApp):
         path = self.config["Paths"][key]
         setattr(self, key, smart_loader(path))
 
-    def save_by_config_key(self, key, *args, obj=None):
+    def save_by_config_key(self, key, *_, obj=None):
         if obj is None:
             obj = getattr(self, key)
         path = self.config["Paths"][key]
