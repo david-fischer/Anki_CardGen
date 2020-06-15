@@ -1,0 +1,435 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>kivy.uix.boxlayout &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <link href="../../../_static/alabaster.css" rel="stylesheet" type="text/css" />
+    <link href="../../../_static/pygments.css" rel="stylesheet" type="text/css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <link href="../../../genindex.html" rel="index" title="Index" />
+    <link href="../../../search.html" rel="search" title="Search" />
+   
+  <link href="../../../_static/custom.css" rel="stylesheet" type="text/css" />
+  
+  
+  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for kivy.uix.boxlayout</h1><div class="highlight"><pre>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">Box Layout</span>
+<span class="sd">==========</span>
+
+<span class="sd">.. only:: html</span>
+
+<span class="sd">    .. image:: images/boxlayout.gif</span>
+<span class="sd">        :align: right</span>
+
+<span class="sd">.. only:: latex</span>
+
+<span class="sd">    .. image:: images/boxlayout.png</span>
+<span class="sd">        :align: right</span>
+
+<span class="sd">:class:`BoxLayout` arranges children in a vertical or horizontal box.</span>
+
+<span class="sd">To position widgets above/below each other, use a vertical BoxLayout::</span>
+
+<span class="sd">    layout = BoxLayout(orientation=&#39;vertical&#39;)</span>
+<span class="sd">    btn1 = Button(text=&#39;Hello&#39;)</span>
+<span class="sd">    btn2 = Button(text=&#39;World&#39;)</span>
+<span class="sd">    layout.add_widget(btn1)</span>
+<span class="sd">    layout.add_widget(btn2)</span>
+
+<span class="sd">To position widgets next to each other, use a horizontal BoxLayout. In this</span>
+<span class="sd">example, we use 10 pixel spacing between children; the first button covers</span>
+<span class="sd">70% of the horizontal space, the second covers 30%::</span>
+
+<span class="sd">    layout = BoxLayout(spacing=10)</span>
+<span class="sd">    btn1 = Button(text=&#39;Hello&#39;, size_hint=(.7, 1))</span>
+<span class="sd">    btn2 = Button(text=&#39;World&#39;, size_hint=(.3, 1))</span>
+<span class="sd">    layout.add_widget(btn1)</span>
+<span class="sd">    layout.add_widget(btn2)</span>
+
+<span class="sd">Position hints are partially working, depending on the orientation:</span>
+
+<span class="sd">* If the orientation is `vertical`: `x`, `right` and `center_x` will be used.</span>
+<span class="sd">* If the orientation is `horizontal`: `y`, `top` and `center_y` will be used.</span>
+
+<span class="sd">Kv Example::</span>
+
+<span class="sd">    BoxLayout:</span>
+<span class="sd">        orientation: &#39;vertical&#39;</span>
+<span class="sd">        Label:</span>
+<span class="sd">            text: &#39;this on top&#39;</span>
+<span class="sd">        Label:</span>
+<span class="sd">            text: &#39;this right aligned&#39;</span>
+<span class="sd">            size_hint_x: None</span>
+<span class="sd">            size: self.texture_size</span>
+<span class="sd">            pos_hint: {&#39;right&#39;: 1}</span>
+<span class="sd">        Label:</span>
+<span class="sd">            text: &#39;this on bottom&#39;</span>
+
+<span class="sd">You can check the `examples/widgets/boxlayout_poshint.py` for a live example.</span>
+
+<span class="sd">.. note::</span>
+
+<span class="sd">    The `size_hint` uses the available space after subtracting all the</span>
+<span class="sd">    fixed-size widgets. For example, if you have a layout that is 800px</span>
+<span class="sd">    wide, and add three buttons like this::</span>
+
+<span class="sd">        btn1 = Button(text=&#39;Hello&#39;, size=(200, 100), size_hint=(None, None))</span>
+<span class="sd">        btn2 = Button(text=&#39;Kivy&#39;, size_hint=(.5, 1))</span>
+<span class="sd">        btn3 = Button(text=&#39;World&#39;, size_hint=(.5, 1))</span>
+
+<span class="sd">    The first button will be 200px wide as specified, the second and third</span>
+<span class="sd">    will be 300px each, e.g. (800-200) * 0.5</span>
+
+
+<span class="sd">.. versionchanged:: 1.4.1</span>
+<span class="sd">    Added support for `pos_hint`.</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;BoxLayout&#39;</span><span class="p">,</span> <span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">kivy.uix.layout</span> <span class="kn">import</span> <span class="n">Layout</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span><span class="n">NumericProperty</span><span class="p">,</span> <span class="n">OptionProperty</span><span class="p">,</span>
+                             <span class="n">VariableListProperty</span><span class="p">,</span> <span class="n">ReferenceListProperty</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">BoxLayout</span><span class="p">(</span><span class="n">Layout</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Box layout class. See module documentation for more information.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">spacing</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Spacing between children, in pixels.</span>
+
+<span class="sd">    :attr:`spacing` is a :class:`~kivy.properties.NumericProperty` and defaults</span>
+<span class="sd">    to 0.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">padding</span> <span class="o">=</span> <span class="n">VariableListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="sd">&#39;&#39;&#39;Padding between layout box and children: [padding_left, padding_top,</span>
+<span class="sd">    padding_right, padding_bottom].</span>
+
+<span class="sd">    padding also accepts a two argument form [padding_horizontal,</span>
+<span class="sd">    padding_vertical] and a one argument form [padding].</span>
+
+<span class="sd">    .. versionchanged:: 1.7.0</span>
+<span class="sd">        Replaced NumericProperty with VariableListProperty.</span>
+
+<span class="sd">    :attr:`padding` is a :class:`~kivy.properties.VariableListProperty` and</span>
+<span class="sd">    defaults to [0, 0, 0, 0].</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">orientation</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">(</span>
+        <span class="s1">&#39;horizontal&#39;</span><span class="p">,</span> <span class="s1">&#39;vertical&#39;</span><span class="p">))</span>
+    <span class="sd">&#39;&#39;&#39;Orientation of the layout.</span>
+
+<span class="sd">    :attr:`orientation` is an :class:`~kivy.properties.OptionProperty` and</span>
+<span class="sd">    defaults to &#39;horizontal&#39;. Can be &#39;vertical&#39; or &#39;horizontal&#39;.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">minimum_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Automatically computed minimum width needed to contain all children.</span>
+
+<span class="sd">    .. versionadded:: 1.10.0</span>
+
+<span class="sd">    :attr:`minimum_width` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    defaults to 0. It is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">minimum_height</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Automatically computed minimum height needed to contain all children.</span>
+
+<span class="sd">    .. versionadded:: 1.10.0</span>
+
+<span class="sd">    :attr:`minimum_height` is a :class:`~kivy.properties.NumericProperty` and</span>
+<span class="sd">    defaults to 0. It is read only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="n">minimum_size</span> <span class="o">=</span> <span class="n">ReferenceListProperty</span><span class="p">(</span><span class="n">minimum_width</span><span class="p">,</span> <span class="n">minimum_height</span><span class="p">)</span>
+    <span class="sd">&#39;&#39;&#39;Automatically computed minimum size needed to contain all children.</span>
+
+<span class="sd">    .. versionadded:: 1.10.0</span>
+
+<span class="sd">    :attr:`minimum_size` is a</span>
+<span class="sd">    :class:`~kivy.properties.ReferenceListProperty` of</span>
+<span class="sd">    (:attr:`minimum_width`, :attr:`minimum_height`) properties. It is read</span>
+<span class="sd">    only.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">update</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span>
+        <span class="n">fbind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fbind</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;spacing&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;padding&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;children&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;orientation&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+        <span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_iterate_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sizes</span><span class="p">):</span>
+        <span class="c1"># optimize layout by preventing looking at the same attribute in a loop</span>
+        <span class="n">len_children</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span>
+        <span class="n">padding_left</span><span class="p">,</span> <span class="n">padding_top</span><span class="p">,</span> <span class="n">padding_right</span><span class="p">,</span> <span class="n">padding_bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+        <span class="n">spacing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spacing</span>
+        <span class="n">orientation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">orientation</span>
+        <span class="n">padding_x</span> <span class="o">=</span> <span class="n">padding_left</span> <span class="o">+</span> <span class="n">padding_right</span>
+        <span class="n">padding_y</span> <span class="o">=</span> <span class="n">padding_top</span> <span class="o">+</span> <span class="n">padding_bottom</span>
+
+        <span class="c1"># calculate maximum space used by size_hint</span>
+        <span class="n">stretch_sum</span> <span class="o">=</span> <span class="mf">0.</span>
+        <span class="n">has_bound</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">hint</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">len_children</span>
+        <span class="c1"># min size from all the None hint, and from those with sh_min</span>
+        <span class="n">minimum_size_bounded</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">:</span>
+            <span class="n">minimum_size_y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">minimum_size_none</span> <span class="o">=</span> <span class="n">padding_x</span> <span class="o">+</span> <span class="n">spacing</span> <span class="o">*</span> <span class="p">(</span><span class="n">len_children</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="n">shw</span><span class="p">,</span> <span class="n">shh</span><span class="p">),</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">shw_min</span><span class="p">,</span> <span class="n">shh_min</span><span class="p">),</span>
+                    <span class="p">(</span><span class="n">shw_max</span><span class="p">,</span> <span class="n">_</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sizes</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">shw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">minimum_size_none</span> <span class="o">+=</span> <span class="n">w</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">hint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shw</span>
+                    <span class="k">if</span> <span class="n">shw_min</span><span class="p">:</span>
+                        <span class="n">has_bound</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">minimum_size_bounded</span> <span class="o">+=</span> <span class="n">shw_min</span>
+                    <span class="k">elif</span> <span class="n">shw_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">has_bound</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">stretch_sum</span> <span class="o">+=</span> <span class="n">shw</span>
+
+                <span class="k">if</span> <span class="n">shh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">minimum_size_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">minimum_size_y</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">shh_min</span><span class="p">:</span>
+                    <span class="n">minimum_size_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">minimum_size_y</span><span class="p">,</span> <span class="n">shh_min</span><span class="p">)</span>
+
+            <span class="n">minimum_size_x</span> <span class="o">=</span> <span class="n">minimum_size_bounded</span> <span class="o">+</span> <span class="n">minimum_size_none</span>
+            <span class="n">minimum_size_y</span> <span class="o">+=</span> <span class="n">padding_y</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">minimum_size_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">minimum_size_none</span> <span class="o">=</span> <span class="n">padding_y</span> <span class="o">+</span> <span class="n">spacing</span> <span class="o">*</span> <span class="p">(</span><span class="n">len_children</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="n">shw</span><span class="p">,</span> <span class="n">shh</span><span class="p">),</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">shw_min</span><span class="p">,</span> <span class="n">shh_min</span><span class="p">),</span>
+                    <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">shh_max</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sizes</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">shh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">minimum_size_none</span> <span class="o">+=</span> <span class="n">h</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">hint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">shh</span>
+                    <span class="k">if</span> <span class="n">shh_min</span><span class="p">:</span>
+                        <span class="n">has_bound</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">minimum_size_bounded</span> <span class="o">+=</span> <span class="n">shh_min</span>
+                    <span class="k">elif</span> <span class="n">shh_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">has_bound</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">stretch_sum</span> <span class="o">+=</span> <span class="n">shh</span>
+
+                <span class="k">if</span> <span class="n">shw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">minimum_size_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">minimum_size_x</span><span class="p">,</span> <span class="n">w</span><span class="p">)</span>
+                <span class="k">elif</span> <span class="n">shw_min</span><span class="p">:</span>
+                    <span class="n">minimum_size_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">minimum_size_x</span><span class="p">,</span> <span class="n">shw_min</span><span class="p">)</span>
+
+            <span class="n">minimum_size_y</span> <span class="o">=</span> <span class="n">minimum_size_bounded</span> <span class="o">+</span> <span class="n">minimum_size_none</span>
+            <span class="n">minimum_size_x</span> <span class="o">+=</span> <span class="n">padding_x</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">minimum_size</span> <span class="o">=</span> <span class="n">minimum_size_x</span><span class="p">,</span> <span class="n">minimum_size_y</span>
+        <span class="c1"># do not move the w/h get above, it&#39;s likely to change on above line</span>
+        <span class="n">selfx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span>
+        <span class="n">selfy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">:</span>
+            <span class="n">stretch_space</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">minimum_size_none</span><span class="p">)</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stretch_space</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">minimum_size_none</span><span class="p">)</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">has_bound</span><span class="p">:</span>
+            <span class="c1"># make sure the size_hint_min/max are not violated</span>
+            <span class="k">if</span> <span class="n">stretch_space</span> <span class="o">&lt;</span> <span class="mf">1e-9</span><span class="p">:</span>
+                <span class="c1"># there&#39;s no space, so just set to min size or zero</span>
+                <span class="n">stretch_sum</span> <span class="o">=</span> <span class="n">stretch_space</span> <span class="o">=</span> <span class="mf">1.</span>
+
+                <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sizes</span><span class="p">):</span>
+                    <span class="n">sh</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">dim</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">sh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                    <span class="n">sh_min</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">dim</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="n">sh_min</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">hint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sh_min</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">hint</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span>  <span class="c1"># everything else is zero</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># hint gets updated in place</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">layout_hint_with_bounds</span><span class="p">(</span>
+                    <span class="n">stretch_sum</span><span class="p">,</span> <span class="n">stretch_space</span><span class="p">,</span> <span class="n">minimum_size_bounded</span><span class="p">,</span>
+                    <span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="n">dim</span><span class="p">]</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">),</span>
+                    <span class="p">(</span><span class="n">elem</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="n">dim</span><span class="p">]</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">sizes</span><span class="p">),</span> <span class="n">hint</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">orientation</span> <span class="o">==</span> <span class="s1">&#39;horizontal&#39;</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">padding_left</span> <span class="o">+</span> <span class="n">selfx</span>
+            <span class="n">size_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">-</span> <span class="n">padding_y</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">shh</span><span class="p">),</span> <span class="n">pos_hint</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                    <span class="nb">zip</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">hint</span><span class="p">),</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">sizes</span><span class="p">))):</span>
+                <span class="n">cy</span> <span class="o">=</span> <span class="n">selfy</span> <span class="o">+</span> <span class="n">padding_bottom</span>
+
+                <span class="k">if</span> <span class="n">sh</span><span class="p">:</span>
+                    <span class="n">w</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">stretch_space</span> <span class="o">*</span> <span class="n">sh</span> <span class="o">/</span> <span class="n">stretch_sum</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">shh</span><span class="p">:</span>
+                    <span class="n">h</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shh</span> <span class="o">*</span> <span class="n">size_y</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">pos_hint</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">posy</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">size_y</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;y&#39;</span><span class="p">:</span>
+                        <span class="n">cy</span> <span class="o">+=</span> <span class="n">posy</span>
+                    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;top&#39;</span><span class="p">:</span>
+                        <span class="n">cy</span> <span class="o">+=</span> <span class="n">posy</span> <span class="o">-</span> <span class="n">h</span>
+                    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;center_y&#39;</span><span class="p">:</span>
+                        <span class="n">cy</span> <span class="o">+=</span> <span class="n">posy</span> <span class="o">-</span> <span class="p">(</span><span class="n">h</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+
+                <span class="k">yield</span> <span class="n">len_children</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">cy</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
+                <span class="n">x</span> <span class="o">+=</span> <span class="n">w</span> <span class="o">+</span> <span class="n">spacing</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">padding_bottom</span> <span class="o">+</span> <span class="n">selfy</span>
+            <span class="n">size_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="n">padding_x</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">sh</span><span class="p">,</span> <span class="p">((</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="p">(</span><span class="n">shw</span><span class="p">,</span> <span class="n">_</span><span class="p">),</span> <span class="n">pos_hint</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">))</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                    <span class="nb">zip</span><span class="p">(</span><span class="n">hint</span><span class="p">,</span> <span class="n">sizes</span><span class="p">)):</span>
+                <span class="n">cx</span> <span class="o">=</span> <span class="n">selfx</span> <span class="o">+</span> <span class="n">padding_left</span>
+
+                <span class="k">if</span> <span class="n">sh</span><span class="p">:</span>
+                    <span class="n">h</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">stretch_space</span> <span class="o">*</span> <span class="n">sh</span> <span class="o">/</span> <span class="n">stretch_sum</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">shw</span><span class="p">:</span>
+                    <span class="n">w</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">shw</span> <span class="o">*</span> <span class="n">size_x</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">pos_hint</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">posx</span> <span class="o">=</span> <span class="n">value</span> <span class="o">*</span> <span class="n">size_x</span>
+                    <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;x&#39;</span><span class="p">:</span>
+                        <span class="n">cx</span> <span class="o">+=</span> <span class="n">posx</span>
+                    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;right&#39;</span><span class="p">:</span>
+                        <span class="n">cx</span> <span class="o">+=</span> <span class="n">posx</span> <span class="o">-</span> <span class="n">w</span>
+                    <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;center_x&#39;</span><span class="p">:</span>
+                        <span class="n">cx</span> <span class="o">+=</span> <span class="n">posx</span> <span class="o">-</span> <span class="p">(</span><span class="n">w</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+
+                <span class="k">yield</span> <span class="n">i</span><span class="p">,</span> <span class="n">cx</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span>
+                <span class="n">y</span> <span class="o">+=</span> <span class="n">h</span> <span class="o">+</span> <span class="n">spacing</span>
+
+    <span class="k">def</span> <span class="nf">do_layout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span>
+        <span class="n">children</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">children</span><span class="p">:</span>
+            <span class="n">l</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">padding</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">minimum_size</span> <span class="o">=</span> <span class="n">l</span> <span class="o">+</span> <span class="n">r</span><span class="p">,</span> <span class="n">t</span> <span class="o">+</span> <span class="n">b</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_iterate_layout</span><span class="p">(</span>
+                <span class="p">[(</span><span class="n">c</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">size_hint</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">pos_hint</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">size_hint_min</span><span class="p">,</span>
+                  <span class="n">c</span><span class="o">.</span><span class="n">size_hint_max</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">children</span><span class="p">]):</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">children</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+            <span class="n">shw</span><span class="p">,</span> <span class="n">shh</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">size_hint</span>
+            <span class="k">if</span> <span class="n">shw</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">shh</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="n">h</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">shh</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">w</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">c</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">canvas</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">fbind</span><span class="p">(</span><span class="s1">&#39;pos_hint&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">canvas</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="n">widget</span><span class="o">.</span><span class="n">funbind</span><span class="p">(</span><span class="s1">&#39;pos_hint&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_trigger_layout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">widget</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">Anki_CardGen</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.utils.html">ACG.utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form action="../../../search.html" class="search" method="get">
+      <input aria-labelledby="searchlabel" name="q" type="text" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, David Fischer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

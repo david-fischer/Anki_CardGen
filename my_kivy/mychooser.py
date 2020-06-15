@@ -1,3 +1,5 @@
+import os
+
 from kivy.animation import Animation
 from kivy.lang import Builder
 from kivy.properties import (
@@ -22,7 +24,8 @@ from kivymd.uix.imagelist import SmartTile
 try:
     Builder.load_file("my_kivy/mychooser.kv")
 except FileNotFoundError:
-    Builder.load_file("mychooser.kv")
+    this_directory = os.path.dirname(__file__)
+    Builder.load_file(os.path.join(this_directory, "mychooser.kv"))
 
 
 # TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE

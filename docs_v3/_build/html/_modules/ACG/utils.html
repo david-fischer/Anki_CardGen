@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>ACG.utils &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <link href="../../_static/alabaster.css" rel="stylesheet" type="text/css" />
+    <link href="../../_static/pygments.css" rel="stylesheet" type="text/css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <link href="../../genindex.html" rel="index" title="Index" />
+    <link href="../../search.html" rel="search" title="Search" />
+   
+  <link href="../../_static/custom.css" rel="stylesheet" type="text/css" />
+  
+  
+  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for ACG.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">spacy</span>
+
+    <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s2">&quot;Spacy is not available, fall back to limited version. &quot;</span>
+        <span class="s2">&quot;This means, words will not be lemmatized in the clean-up&quot;</span>
+    <span class="p">)</span>
+    <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
+
+<span class="n">COLOR2MEANING</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;highlight_yellow&quot;</span><span class="p">:</span> <span class="s2">&quot;words&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_blue&quot;</span><span class="p">:</span>   <span class="s2">&quot;phrases&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_pink&quot;</span><span class="p">:</span>   <span class="s2">&quot;sentences&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_orange&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">MEANING2COLOR</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">COLOR2MEANING</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="n">nlp</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<span class="c1"># GENERAL</span>
+
+
+<div class="viewcode-block" id="CD"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.CD">[docs]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Context manager for changing the current working directory&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_path</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">new_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_path</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">saved_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">new_path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">etype</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">traceback</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="save_dict_to_csv"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.save_dict_to_csv">[docs]</a><span class="k">def</span> <span class="nf">save_dict_to_csv</span><span class="p">(</span><span class="n">some_dict</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
+    <span class="n">is_first_entry</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">some_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">is_first_entry</span><span class="p">:</span>
+            <span class="n">writer</span><span class="o">.</span><span class="n">writeheader</span><span class="p">()</span>
+        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">some_dict</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="load_dicts_from_csv"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.load_dicts_from_csv">[docs]</a><span class="k">def</span> <span class="nf">load_dicts_from_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_obj</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">read_obj</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="smart_loader"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.smart_loader">[docs]</a><span class="k">def</span> <span class="nf">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">load_dicts_from_csv</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span></div>
+
+
+<div class="viewcode-block" id="smart_saver"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.smart_saver">[docs]</a><span class="k">def</span> <span class="nf">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+        <span class="n">save_dict_to_csv</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="now_string"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.now_string">[docs]</a><span class="k">def</span> <span class="nf">now_string</span><span class="p">():</span>
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
+
+
+<span class="c1"># KIVY</span>
+
+
+<div class="viewcode-block" id="set_screen"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.set_screen">[docs]</a><span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">):</span>
+    <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;screen_man&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">screen_name</span></div>
+
+
+<div class="viewcode-block" id="widget_by_id"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.widget_by_id">[docs]</a><span class="k">def</span> <span class="nf">widget_by_id</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :arg string: &quot;/edit_tab/word_prop/translation_chips</span>
+<span class="sd">    :returns widget root.ids.edit_tab.ids.word_prop ... usw</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span> <span class="k">if</span> <span class="nb">id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span>
+    <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">obj</span></div>
+
+
+<div class="viewcode-block" id="selection_helper"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.selection_helper">[docs]</a><span class="k">def</span> <span class="nf">selection_helper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">props</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
+    <span class="n">base_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_obj</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">props</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">iconcat</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="p">[])</span></div>
+
+
+<span class="c1"># KINDLE EXPORT PARSING</span>
+
+
+<div class="viewcode-block" id="dict_from_kindle_export"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.dict_from_kindle_export">[docs]</a><span class="k">def</span> <span class="nf">dict_from_kindle_export</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+    <span class="n">heading_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.noteHeading span&quot;</span><span class="p">)</span>
+    <span class="n">highlight_dict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">heading_tags</span><span class="p">:</span>
+        <span class="n">highlight_dict</span><span class="p">[</span><span class="n">tag</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">highlight_dict</span></div>
+
+
+<div class="viewcode-block" id="clean_up"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.clean_up">[docs]</a><span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">remove_punct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">remove_punct</span><span class="p">:</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;,.;:-–—!?¿¡</span><span class="se">\&quot;</span><span class="s2">&#39;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">lower_case</span><span class="p">:</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">lemmatize</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">SPACY_IS_AVAILABLE</span><span class="p">:</span>
+            <span class="k">global</span> <span class="n">nlp</span>
+            <span class="k">if</span> <span class="n">nlp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;pt_core_news_sm&quot;</span><span class="p">)</span>
+            <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">lemma</span><span class="o">.</span><span class="n">lemma_</span><span class="p">])</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">nlp</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lemmatization skipped. Spacy modul is not installed.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">words</span></div>
+
+
+<div class="viewcode-block" id="word_list_from_kindle"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.word_list_from_kindle">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_kindle</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">color</span> <span class="o">=</span> <span class="n">MEANING2COLOR</span><span class="p">[</span><span class="s2">&quot;words&quot;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dict_from_kindle_export</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="n">color</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="tag_word_in_sentence"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.tag_word_in_sentence">[docs]</a><span class="k">def</span> <span class="nf">tag_word_in_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">tag_word</span><span class="p">):</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="n">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    <span class="n">lemmas</span> <span class="o">=</span> <span class="n">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">lemmas</span><span class="p">)</span>
+    <span class="n">tag_lemma</span> <span class="o">=</span> <span class="n">clean_up</span><span class="p">([</span><span class="n">tag_word</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">words_found</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">word</span>
+        <span class="k">for</span> <span class="n">word</span><span class="p">,</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">lemmas</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lemma</span> <span class="o">==</span> <span class="n">tag_lemma</span> <span class="ow">or</span> <span class="n">word</span> <span class="o">==</span> <span class="n">tag_word</span>
+    <span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">words_found</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">words_found</span><span class="p">):</span>
+        <span class="n">sentence</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;([^&gt;])(</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">)([^&lt;])&quot;</span><span class="p">,</span>
+            <span class="sa">r</span><span class="s1">&#39;\1&lt;span class=&quot;word&quot;&gt;\2&lt;/span&gt;\3&#39;</span><span class="p">,</span>
+            <span class="n">sentence</span><span class="p">,</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">sentence</span></div>
+
+
+<span class="c1"># Image resizing</span>
+
+
+<div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">720</span><span class="p">:</span>
+        <span class="n">resize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">720</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">resize</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1"># out = word_list_from_kindle(&quot;test/test_data/Portuguese Short Stories for Beginners 20 Captiva - Notizbuch.html&quot;)</span>
+
+    <span class="c1"># example = (&quot;Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,&quot;</span>
+    <span class="c1">#            &quot;normalmente térrea ou com dois andares. - Voltaire&quot;)</span>
+    <span class="c1"># expl = (&quot;Os homens que procuram a felicidade são como os embriagados que não conseguem encontrar a própria casa, &quot;</span>
+    <span class="c1">#         &quot;apesar de saberem que a têm. Test Casas, casa, casa.&quot;)</span>
+    <span class="c1">#</span>
+    <span class="c1"># print(tag_word(expl, &quot;casa&quot;))</span>
+    <span class="n">compress_img</span><span class="p">(</span><span class="s2">&quot;data/casa/casa.jpg&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">Anki_CardGen</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.utils.html">ACG.utils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" role="search" style="display: none">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form action="../../search.html" class="search" method="get">
+      <input aria-labelledby="searchlabel" name="q" type="text" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, David Fischer.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
