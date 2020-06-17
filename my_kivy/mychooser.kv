@@ -40,6 +40,7 @@
     size_hint: 1,None
     border_radio: 20
     height: label.texture_size[1]+2*self.padding[1]
+    state_dicts: { True: {"bg_color": self.theme_cls.primary_color,"text_color": [1, 1, 1, 1],}, False: {"bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light" else self.theme_cls.bg_light,"text_color": self.theme_cls.secondary_text_color}}
 
     canvas:
         Color:
@@ -55,6 +56,11 @@
         height: self.texture_size[1]
         theme_text_color: "Custom"
         color: root.text_color
+
+<MyTransCard>:
+    state_dicts: { True: {"bg_color": self.theme_cls.primary_color,"text_color": [1, 1, 1, 1],}, False: {"bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light" else self.theme_cls.bg_light,"text_color": self.theme_cls.secondary_text_color}}
+
+
 
 <MyCheckCardContainer>:
     orientation: "vertical"
