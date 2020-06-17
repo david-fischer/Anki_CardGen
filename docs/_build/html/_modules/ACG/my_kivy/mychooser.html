@@ -4,9 +4,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>ACG.my_kivy.mychooser &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <title>ACG.my_kivy.mychooser &#8212; ACG 0.3.0 documentation</title>
     <link href="../../../_static/alabaster.css" rel="stylesheet" type="text/css" />
     <link href="../../../_static/pygments.css" rel="stylesheet" type="text/css" />
+      <link href="../../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
@@ -64,8 +65,11 @@
 <span class="c1"># TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE</span>
 <div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../../../ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">:</span>
     <span class="n">checked</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Current state of widget&quot;&quot;&quot;</span>
     <span class="n">checked_state</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;DictProperty that should be set if checked is True&quot;&quot;&quot;</span>
     <span class="n">unchecked_state</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;Dictionary {attr: value} that should be set if checked is False&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="n">state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked_state</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">checked</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">unchecked_state</span>
@@ -285,7 +289,7 @@
       </div>
       <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../../index.html">Anki_CardGen</a></h1>
+            <h1 class="logo"><a href="../../../index.html">ACG</a></h1>
 
 
 
@@ -301,6 +305,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../ACG.word_requests.html">ACG.word_requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../ACG.main.html">ACG.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../ACG.utils.html">ACG.utils</a></li>
+    <li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
 </ul>
 
 <div class="relations">

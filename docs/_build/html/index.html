@@ -4,9 +4,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to ACG’s documentation! &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <title>Welcome to ACG’s documentation! &#8212; ACG 0.3.0 documentation</title>
     <link href="_static/alabaster.css" rel="stylesheet" type="text/css" />
     <link href="_static/pygments.css" rel="stylesheet" type="text/css" />
+      <link href="_static/graphviz.css" rel="stylesheet" type="text/css"/>
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -36,23 +37,619 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ACG.anki.html">ACG.anki</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ACG.anki.html#module-ACG.anki.generate_anki_card">ACG.anki.generate_anki_card</a></li>
+    <li class="toctree-l2"><a class="reference internal" href="ACG.anki.html#module-ACG.anki.generate_anki_card">ACG.anki.generate_anki_card</a>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.anki.html#ACG.anki.generate_anki_card.HtmlLoader">HtmlLoader</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.anki.html#ACG.anki.generate_anki_card.HtmlLoader.set_of_fields">set_of_fields</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.anki.html#ACG.anki.generate_anki_card.HtmlLoader.replace_includes_with_content">replace_includes_with_content</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.anki.html#ACG.anki.generate_anki_card.model_from_html">model_from_html</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.anki.html#ACG.anki.generate_anki_card.AnkiObject">AnkiObject</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.anki.html#ACG.anki.generate_anki_card.AnkiObject.add_card">add_card</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.anki.html#ACG.anki.generate_anki_card.AnkiObject.write_apkg">write_apkg</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.my_kivy.html">ACG.my_kivy</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ACG.my_kivy.html#module-ACG.my_kivy.mychooser">ACG.my_kivy.mychooser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ACG.my_kivy.html#module-ACG.my_kivy.screen_queue">ACG.my_kivy.screen_queue</a></li>
 <li class="toctree-l2"><a class="reference internal" href="ACG.my_kivy.html#module-ACG.my_kivy.screen_single_word">ACG.my_kivy.screen_single_word</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ACG.my_kivy.html#module-ACG.my_kivy.scroll_list">ACG.my_kivy.scroll_list</a></li>
+    <li class="toctree-l2"><a class="reference internal" href="ACG.my_kivy.html#module-ACG.my_kivy.scroll_list">ACG.my_kivy.scroll_list</a>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior">CheckBehavior</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior.checked">checked</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior.checked_state">checked_state</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior.unchecked_state">unchecked_state</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckBehavior.on_checked">on_checked</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer">CheckContainer</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.check_one">check_one</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.element_dicts">element_dicts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.CheckElementObject">CheckElementObject</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.conditional_uncheck">conditional_uncheck</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.get_checked">get_checked</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.mychooser.CheckContainer.on_element_dicts">on_element_dicts</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.worker_single_word">worker_single_word</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.start_workers">start_workers</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.queue_word">queue_word</a></li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.is_duplicate">is_duplicate</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.import_from">import_from</a></li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.click_on_queue_item">click_on_queue_item</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.click_on_done_item">click_on_done_item</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.click_on_error_item">click_on_error_item</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.import_from_kindle">import_from_kindle</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_queue.choose_replacements_dialog">choose_replacements_dialog</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_single_word.WordProperties">WordProperties</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.screen_single_word.WordProperties.refresh_data">refresh_data</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.screen_single_word.WordProperties.accept_suggestion">accept_suggestion</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.screen_single_word.WordProperties.load_or_search">load_or_search</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_single_word.get_selection_dict">get_selection_dict</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.screen_single_word.confirm_choice">confirm_choice</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList">ScrollList</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList.item_type">item_type</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList.item_dicts">item_dicts</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList.items">items</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList.list">list</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList.callback">callback</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.ScrollList.on_item_dicts">on_item_dicts</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.my_kivy.html#ACG.my_kivy.scroll_list.schedule">schedule</a></li>
+        </ul>
+    </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.word_requests.html">ACG.word_requests</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="ACG.word_requests.html#module-ACG.word_requests.pt_word">ACG.word_requests.pt_word</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ACG.word_requests.html#module-ACG.word_requests.urls_and_parsers">ACG.word_requests.urls_and_parsers</a></li>
+    <li class="toctree-l2"><a class="reference internal"
+                              href="ACG.word_requests.html#module-ACG.word_requests.urls_and_parsers">ACG.word_requests.urls_and_parsers</a>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.pt_word.translate">translate</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.pt_word.html_list">html_list</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.pt_word.Word">Word</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.search_term_utf8">search_term_utf8</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.folder">folder</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.request_data">request_data</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.redirect_url">redirect_url</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.reverso_request">reverso_request</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.dicio_request">dicio_request</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.update_from_dict">update_from_dict</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.add_translations">add_translations</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.request_img_urls">request_img_urls</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.html_from_conj_df">html_from_conj_df</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.mark_examples">mark_examples</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.from_pickle">from_pickle</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.pickle">pickle</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="ACG.word_requests.html#ACG.word_requests.pt_word.Word.search">search</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.get_element_after_regex">get_element_after_regex</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.to_stripped_multiline_str">to_stripped_multiline_str</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.span_not_cl">span_not_cl</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.NoMatchError">NoMatchError</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.get_soup_object">get_soup_object</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.linguee_api_url">linguee_api_url</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.dicio_url">dicio_url</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.reverso_url">reverso_url</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.parse_linguee_api_resp">parse_linguee_api_resp</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.dicio_conj_df">dicio_conj_df</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.parse_dicio_resp">parse_dicio_resp</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.parse_reverso_resp">parse_reverso_resp</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal"
+                                      href="ACG.word_requests.html#ACG.word_requests.urls_and_parsers.linguee_did_you_mean">linguee_did_you_mean</a>
+            </li>
+        </ul>
+    </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a></li>
+    <li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.main.html#ACG.main.MainMenu">MainMenu</a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="ACG.main.html#ACG.main.MainMenu.screen_dicts">screen_dicts</a></li>
+                </ul>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="ACG.main.html#ACG.main.MainMenu.on_parent">on_parent</a></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+    <li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.CD">CD</a></li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.save_dict_to_csv">save_dict_to_csv</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.load_dicts_from_csv">load_dicts_from_csv</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.smart_loader">smart_loader</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal"
+                                      href="ACG.utils.html#ACG.utils.smart_saver">smart_saver</a></li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal"
+                                      href="ACG.utils.html#ACG.utils.now_string">now_string</a></li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal"
+                                      href="ACG.utils.html#ACG.utils.set_screen">set_screen</a></li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.widget_by_id">widget_by_id</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.selection_helper">selection_helper</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal"
+                                      href="ACG.utils.html#ACG.utils.dict_from_kindle_export">dict_from_kindle_export</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.clean_up">clean_up</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.word_list_from_kindle">word_list_from_kindle</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.tag_word_in_sentence">tag_word_in_sentence</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="ACG.utils.html#ACG.utils.compress_img">compress_img</a>
+            </li>
+        </ul>
+    </li>
+    <li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a>
+        <ul>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/main/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">main</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal" href="autoapi/main/index.html#module-contents">Module
+                        Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal" href="autoapi/main/index.html#classes">Classes</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/utils/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">utils</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/utils/index.html#module-contents">Module Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/utils/index.html#classes">Classes</a></li>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/utils/index.html#functions">Functions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/google_images_download/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">google_images_download</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/google_images_download/index.html#submodules">Submodules</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/google_images_download/__main__/index.html"><code
+                                    class="xref py py-mod docutils literal notranslate"><span class="pre">google_images_download.__main__</span></code></a>
+                            </li>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/google_images_download/google_images_download/index.html"><code
+                                    class="xref py py-mod docutils literal notranslate"><span class="pre">google_images_download.google_images_download</span></code></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/google_images_download/index.html#package-contents">Package
+                        Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/google_images_download/index.html#functions">Functions</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/generate_anki_card/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span
+                    class="pre">generate_anki_card</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/generate_anki_card/index.html#module-contents">Module
+                        Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/generate_anki_card/index.html#classes">Classes</a>
+                            </li>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/generate_anki_card/index.html#functions">Functions</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/pt_word/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">pt_word</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/pt_word/index.html#module-contents">Module Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/pt_word/index.html#classes">Classes</a></li>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/pt_word/index.html#functions">Functions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/urls_and_parsers/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">urls_and_parsers</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/urls_and_parsers/index.html#module-contents">Module
+                        Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/urls_and_parsers/index.html#functions">Functions</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/screen_single_word/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span
+                    class="pre">screen_single_word</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/screen_single_word/index.html#module-contents">Module
+                        Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/screen_single_word/index.html#classes">Classes</a>
+                            </li>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/screen_single_word/index.html#functions">Functions</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/scroll_list/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">scroll_list</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/scroll_list/index.html#module-contents">Module Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/scroll_list/index.html#classes">Classes</a></li>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/scroll_list/index.html#functions">Functions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/screen_queue/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">screen_queue</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/screen_queue/index.html#module-contents">Module Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/screen_queue/index.html#functions">Functions</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li class="toctree-l2"><a class="reference internal" href="autoapi/mychooser/index.html"><code
+                    class="xref py py-mod docutils literal notranslate"><span class="pre">mychooser</span></code></a>
+                <ul>
+                    <li class="toctree-l3"><a class="reference internal"
+                                              href="autoapi/mychooser/index.html#module-contents">Module Contents</a>
+                        <ul>
+                            <li class="toctree-l4"><a class="reference internal"
+                                                      href="autoapi/mychooser/index.html#classes">Classes</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
 </ul>
 </div>
 </div>
@@ -72,7 +669,7 @@
       </div>
       <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">Anki_CardGen</a></h1>
+            <h1 class="logo"><a href="#">ACG</a></h1>
 
 
 
@@ -88,6 +685,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ACG.word_requests.html">ACG.word_requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a></li>
+    <li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
 </ul>
 
 <div class="relations">
