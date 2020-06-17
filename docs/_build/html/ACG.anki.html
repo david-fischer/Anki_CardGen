@@ -4,9 +4,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>ACG.anki &#8212; Anki_CardGen 0.3.0 documentation</title>
+    <title>ACG.anki &#8212; ACG 0.3.0 documentation</title>
     <link href="_static/alabaster.css" rel="stylesheet" type="text/css" />
     <link href="_static/pygments.css" rel="stylesheet" type="text/css" />
+      <link href="_static/graphviz.css" rel="stylesheet" type="text/css"/>
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -83,7 +84,7 @@
       </div>
       <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="index.html">Anki_CardGen</a></h1>
+            <h1 class="logo"><a href="index.html">ACG</a></h1>
 
 
 
@@ -95,13 +96,46 @@
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">ACG.anki</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-ACG.anki.generate_anki_card">ACG.anki.generate_anki_card</a></li>
+    <li class="toctree-l2"><a class="reference internal" href="#module-ACG.anki.generate_anki_card">ACG.anki.generate_anki_card</a>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal" href="#ACG.anki.generate_anki_card.HtmlLoader">HtmlLoader</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="#ACG.anki.generate_anki_card.HtmlLoader.set_of_fields">set_of_fields</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="#ACG.anki.generate_anki_card.HtmlLoader.replace_includes_with_content">replace_includes_with_content</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal" href="#ACG.anki.generate_anki_card.model_from_html">model_from_html</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toctree-l3"><a class="reference internal" href="#ACG.anki.generate_anki_card.AnkiObject">AnkiObject</a>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="#ACG.anki.generate_anki_card.AnkiObject.add_card">add_card</a></li>
+                </ul>
+                <ul>
+                    <li class="toctree-l4"><a class="reference internal"
+                                              href="#ACG.anki.generate_anki_card.AnkiObject.write_apkg">write_apkg</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.my_kivy.html">ACG.my_kivy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.word_requests.html">ACG.word_requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a></li>
+    <li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
 </ul>
 
 <div class="relations">
