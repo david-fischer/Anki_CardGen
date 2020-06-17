@@ -8,7 +8,7 @@ from kivy.properties import (
     ListProperty,
     NumericProperty,
     ObjectProperty,
-    StringProperty,
+    Property, StringProperty,
 )
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
@@ -24,11 +24,40 @@ from kivymd.uix.imagelist import SmartTile
 try:
     Builder.load_file("my_kivy/mychooser.kv")
 except FileNotFoundError:
+    Builder.load_file("mychooser.kv")
     this_directory = os.path.dirname(__file__)
     Builder.load_file(os.path.join(this_directory, "mychooser.kv"))
 
 
-# TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE
+# TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE+
+class MultiStateBehaviour:
+    possible_states = ListProperty()
+    current_state = Property("")
+    state_dicts = DictProperty()
+    animated_properties = ListProperty()
+
+    def __init__(self, **kwargs):
+        if "state_dicts" in kwargs:
+            self.state_dicts = kwargs["state_dicts"]
+        if "current_state" in kwargs:
+            self.current_state = kwargs["current_state"]
+        init_state = self.state_dicts[self.current_state]
+        # print(vars(self),init_state,kwargs)
+        super(MultiStateBehaviour, self).__init__(**init_state, **kwargs)
+
+    def on_current_state(self, current_state):
+        animation_dict = {
+            key: val
+            for key, val in self.state_dicts[current_state]
+            if key in self.animated_properties
+        }
+        for key, val in self.state_dicts[current_state]:
+            if key not in self.animated_properties:
+                setattr(self, key, val)
+        anim = Animation(**animation_dict, duration=0.5, t="out_circ")
+        anim.start(self)
+
+
 class CheckBehavior:
     checked = BooleanProperty(False)
     checked_state = DictProperty()
@@ -209,7 +238,7 @@ FloatLayout:
             spacing: dp(4)
             check_one: True
             element_dicts: [{"source":"../assets/guitar.png"} for i in range(10)]
-            
+
     MDFloatingActionButton:
         pos_hint: {"center_x":0.5,"center_y":0.5}
         on_press: image_grid.element_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]

@@ -22,13 +22,12 @@ print(sys.path)
 
 # -- Project information -----------------------------------------------------
 
-project = 'Anki_CardGen'
+project = 'ACG'
 copyright = '2020, David Fischer'
 author = 'David Fischer'
 
 # The full version, including alpha/beta/rc tags
 release = '0.3.0'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -41,23 +40,25 @@ extensions = [
     'sphinx.ext.todo',
     "sphinx.ext.autosummary",
     "sphinx.ext.intersphinx",
-#    "autoapi.extension",
-#    "sphinx.ext.napoleon",
+    "autoapi.extension",
+    "kivy_lexer",
+    "sphinx.ext.napoleon",
 ]
-#autoapi_type = "python"
-#autoapi_dirs = [".."]
-#autoapi_ignore = [f"*/{folder}/*" for folder in ]
+autoapi_type = "python"
+autoapi_dirs = [".."]
+autoapi_ignore = [f"*/{folder}/*" for folder in [".buildozer", "apkgs", "app_state", "bin", "data", "docs",
+                                                 "google_image_download", "src", "test"]]
+autoapi_generate_api_docs = True
 
 autodoc_mock_imports = ["kivymd"]
 autodoc_inherit_docstrings = False
 autodoc_default_options = {
-    'members': True,
-    'member-order': 'bysource',
-    'undoc-members': True,
-    'inherited-members': "ObjectProperty,DictProperty",
-    #'show-inheritance': True,
+    'members':          True,
+    'member-order':     'bysource',
+    'undoc-members':    True,
+    #    'exclude-members':  "checked",  # "ObjectProperty,DictProperty",
+    'show-inheritance': True,
 }
-
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -74,7 +75,6 @@ language = 'en'
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
-
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -87,7 +87,6 @@ html_theme = 'alabaster'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
 
-
 # -- Extension configuration -------------------------------------------------
 
 # -- Options for todo extension ----------------------------------------------
@@ -98,6 +97,6 @@ todo_include_todos = True
 # InterSphinx configuration
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
-    "kivy": ("https://kivy.org/doc/stable/", None),
+    "kivy":   ("https://kivy.org/doc/stable/", None),
     "kivymd": ("https://kivymd.readthedocs.io/en/0.104.1/", None),
 }
