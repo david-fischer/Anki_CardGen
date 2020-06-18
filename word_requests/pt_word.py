@@ -58,9 +58,22 @@ class Word:
     translations = attr.ib(default=[])
     trans_syns = attr.ib(default=[])
     image_urls = attr.ib(default=[])
-    audio_url = attr.ib(default="")
+    _audio_url = attr.ib(default="")
     add_info_dict = attr.ib(default={})
     conj_table_df = attr.ib(default=pd.DataFrame())
+
+    @property
+    def audio_url(self):
+        return self._audio_url
+
+    @audio_url.setter
+    def audio_url(self, value):
+        self._audio_url = value
+        print(f"start downloading audio from {value}...")
+        r_audio = UrlRequest(
+            value,
+            file_path=f"data/{self.folder()}/{self.folder()}.mp3",
+            on_success=lambda *args: print("Finished downloading audio."))
 
     def search_term_utf8(self):
         return unidecode(self.search_term).lower()
@@ -177,36 +190,35 @@ class Word:
     @classmethod
     def from_pickle(cls, path):
         with open(path, "rb") as file:
-            return pickle.load(file)
+            return cls(pickle.load(file))
 
     def pickle(self):
         if not os.path.exists(f"data/{self.folder()}"):
             os.makedirs(f"data/{self.folder()}")
         with open(f"data/{self.folder()}/{self.folder()}.p", "wb") as file:
-            pickle.dump(self, file)
+            pickle.dump(attr.asdict(self), file)
 
     def search(self, new_search_term):
         self.search_term = new_search_term
         path = f"{self.data_dir}/{self.folder()}/{self.folder()}.p"
         if os.path.exists(path):
             try:
-                self.__init__(**vars(self.from_pickle(path)))
+                with open(path, "rb") as file:
+                    attribute_dict = pickle.load(file)
+                    attribute_dict["audio_url"] = attribute_dict.pop("_audio_url")
+                    self.__init__(**attribute_dict)
+                print(vars(self))
                 return True
-            except TypeError:
-                pass
+            except (TypeError, AttributeError):
+                print("Could not load previously saved file. Fetching data again...")
         r_dicio, r_linguee, r_rev = self.request_data()
         self.request_img_urls()
         r_linguee.wait()
-        r_audio = UrlRequest(
-            self.audio_url,
-            file_path=f"data/{self.folder()}/{self.folder()}.mp3",
-            on_success=lambda *args: print("Finished downloading audio."),
-        )
         r_dicio.wait()
         r_rev.wait()
         self.add_translations()
         self.pickle()
-        r_audio.wait()
+        return True
 
 
 if __name__ == "__main__":
