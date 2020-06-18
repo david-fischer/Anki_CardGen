@@ -6,7 +6,7 @@
 
 # Import Libraries
 import sys
-import ast
+
 version = (3, 0)
 cur_version = sys.version_info
 if cur_version >= version:  # If the Current Version of Python is 3.0 or above
@@ -33,7 +33,6 @@ import datetime
 import json
 import re
 import codecs
-import socket
 
 args_list = ["keywords", "keywords_from_file", "prefix_keywords", "suffix_keywords",
              "limit", "format", "color", "color_type", "usage_rights", "size",
@@ -749,7 +748,7 @@ class googleimagesdownload:
         start_object = s.find('[', start_line + 1)
         end_object = s.find('</script>', start_object + 1) - 4
         object_raw = str(s[start_object:end_object])
-        object_decode = bytes(object_raw, "utf-8").decode("unicode_escape")
+        object_decode = bytes(object_raw, "utf-8")[:-1].decode("unicode_escape")
         image_objects = json.loads(object_decode)[31][0][12][2]
         image_objects = [x for x in image_objects if x[0]==1]
         return image_objects
