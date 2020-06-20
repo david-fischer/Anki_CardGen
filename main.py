@@ -22,19 +22,27 @@ from utils import now_string, smart_loader, smart_saver, widget_by_id
 from word_requests.pt_word import Word
 
 Builder.load_file(f"{os.path.dirname(__file__)}/my_kivy/screens.kv")
+Builder.load_file(f"{os.path.dirname(__file__)}/my_kivy/fixes.kv")
+
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
     icon = StringProperty()
     screen_name = StringProperty("test")
 
     def __init__(self, **kwargs):
-        super(DrawerItem, self).__init__()
-        self.checked_state = {"text_color": self.theme_cls.primary_color}
-        self.unchecked_state = {"text_color": self.theme_cls.text_color}
         super(DrawerItem, self).__init__(**kwargs)
+        self.theme_cls.bind(theme_style=self.__post_init__)
+        self.theme_cls.bind(primary_palette=self.__post_init__)
+
+    def __post_init__(self, *_):
+        self.state_dicts = {
+            True:  {"text_color": self.theme_cls.primary_color},
+            False: {"text_color": self.theme_cls.text_color},
+        }
+        super(DrawerItem, self).__post_init__()
 
     def on_release(self):
-        self.checked = True
+        self.current_state = True
         widget_by_id("nav_drawer").set_state("close")
 
 
