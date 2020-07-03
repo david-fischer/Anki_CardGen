@@ -29,20 +29,14 @@ except FileNotFoundError:
     Builder.load_file(os.path.join(this_directory, "mychooser.kv"))
 
 
-# TODO: GENERALIZE TO MULTI-STATE OBJECT AND DERIVE 2-STATE OBJECT AS SPECIAL CASE+
 class MultiStateBehaviour:
-    possible_states = ListProperty()
-    current_state = BooleanProperty(None)
-    state_dicts = DictProperty()
+    current_state = Property(None)
+    state_dicts = DictProperty(None)
     animated_properties = ListProperty()
 
     def __init__(self, **kwargs):
-        if "state_dicts" in kwargs:
-            self.state_dicts = kwargs["state_dicts"]
-        if "current_state" in kwargs:
-            self.current_state = kwargs["current_state"]
-        init_state = self.state_dicts[self.current_state]
-        super(MultiStateBehaviour, self).__init__(**init_state, **kwargs)
+        super(MultiStateBehaviour, self).__init__(**kwargs)
+        clock.Clock.schedule_once(self.__post_init__)
 
     def on_current_state(self, *_):
         animation_dict = {
@@ -56,79 +50,33 @@ class MultiStateBehaviour:
         anim = Animation(**animation_dict, duration=0.5, t="out_circ")
         anim.start(self)
 
+    def __post_init__(self, *_):
+        self.on_current_state()
+
 
 class CheckBehavior(MultiStateBehaviour):
-    possible_states = [True, False]
-    state_dicts = {True: {}, False: {}}
-    current_state = False
-    checked = BooleanProperty()
-
-    def on_checked(self, *_):
-        self.current_state = self.checked
-        self.on_current_state(_)
-
-    def on_current_state(self, *_):
-        super(CheckBehavior, self).on_current_state()
-        self.checked = self.current_state
-
-
-#
-# class CheckBehavior:
-#     checked = BooleanProperty(False)
-#     checked_state = DictProperty()
-#     unchecked_state = DictProperty()
-#
-#     def __init__(self, **kwargs):
-#         state = self.checked_state if self.checked else self.unchecked_state
-#         super(CheckBehavior, self).__init__(**kwargs, **state)
-#
-#     def on_checked(self, *_):
-#         if self.checked:
-#             anim = Animation(**self.checked_state, duration=0.5, t="out_circ")
-#         else:
-#             anim = Animation(**self.unchecked_state, duration=0.5, t="out_circ")
-#         anim.start(self)
-
-
-class CheckElement(CheckBehavior, ButtonBehavior, ThemableBehavior):
-    text_color = ListProperty([0, 0, 0, 1])
-    bg_color = ListProperty([1, 1, 1, 1])
-    text = StringProperty("test " * 15)
 
     def __init__(self, **kwargs):
-        self.theme_cls = ThemableBehavior().theme_cls
-        self.checked_state = {
-            "bg_color":   self.theme_cls.primary_color,
-            "text_color": [1, 1, 1, 1],
-        }
-        self.unchecked_state = {
-            "bg_color":   self.theme_cls.bg_darkest
-                          if self.theme_cls.theme_style == "Light"
-                          else self.theme_cls.bg_light,
-            "text_color": self.theme_cls.secondary_text_color,
-        }
-
-        super(CheckElement, self).__init__(**kwargs)
-
-    def on_press(self):
-        self.checked = not self.checked
+        self.current_state = False
+        self.state_dicts = {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
+        super(CheckBehavior, self).__init__(**kwargs)
 
 
 class CheckContainer(Widget):
     check_one = BooleanProperty(False)
     element_dicts = ListProperty([])
-    CheckElementObject = ObjectProperty(CheckElement)
+    CheckElementObject = ObjectProperty()
 
     def conditional_uncheck(self, instance, value):
         if self.check_one:
             for check_element in [
                 others for others in self.children if others != instance and value
             ]:
-                check_element.checked = False
+                check_element.current_state = False
 
     def get_checked(self, property_name=None):
         checked_elements = [
-            element for element in self.children[::-1] if element.checked
+            element for element in self.children[::-1] if element.current_state
         ]
         if property_name is None:
             return checked_elements
@@ -138,78 +86,63 @@ class CheckContainer(Widget):
         self.clear_widgets()
         for elem_dict in self.element_dicts:
             new_check_element = self.CheckElementObject(**elem_dict)
-            new_check_element.bind(checked=self.conditional_uncheck)
+            new_check_element.bind(current_state=self.conditional_uncheck)
             self.add_widget(new_check_element)
         # if self.check_one:
         #     self.children[-1].checked = True
 
 
-class MyCheckCard(CheckBehavior, MDCard):
+class TranslationOnCheckBehavior:
+    text_orig = StringProperty("orig")
+    text_trans = StringProperty("trans")
+
+    def __post_init__(self, *_):
+        self.state_dicts[True]["text"] = self.text_orig
+        self.state_dicts[False]["text"] = self.text_trans
+        super(TranslationOnCheckBehavior, self).__post_init__()
+
+
+class ThemableColorChangeBehavior:
     text_color = ListProperty([0, 0, 0, 1])
     bg_color = ListProperty([1, 1, 1, 1])
-    text = StringProperty("test " * 15)
-    
-    def __init__(self,**kwargs):
-        super(MyCheckCard, self).__init__()
-        clock.Clock.schedule_once(self.on_current_state)
+    animated_properties = ["bg_color", "text_color"]
 
-    # def __init__(self, **kwargs):
-        # self.theme_cls = ThemableBehavior().theme_cls
-        # self.checked_state = {
-        #     "bg_color":   self.theme_cls.primary_color,
-        #     "text_color": [1, 1, 1, 1],
-        # }
-        # self.unchecked_state = {
-        #     "bg_color":   self.theme_cls.bg_darkest
-        #                   if self.theme_cls.theme_style == "Light"
-        #                   else self.theme_cls.bg_light,
-        #     "text_color": self.theme_cls.secondary_text_color,
-        # }
-        # super(MyCheckCard, self).__init__(**kwargs)
+    def __init__(self, **kwargs):
+        super(ThemableColorChangeBehavior, self).__init__(**kwargs)
+        self.theme_cls.bind(theme_style=self.__post_init__)
+        self.theme_cls.bind(primary_palette=self.__post_init__)
+
+    def __post_init__(self, *_):
+        self.state_dicts[True]["bg_color"] = self.theme_cls.primary_color
+        self.state_dicts[False]["bg_color"] = self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light" else \
+            self.theme_cls.bg_light
+        self.state_dicts[True]["text_color"] = [1, 1, 1, 1]
+        self.state_dicts[False]["text_color"] = self.theme_cls.secondary_text_color
+        super(ThemableColorChangeBehavior, self).__post_init__()
+
+
+class MyCheckCard(ThemableColorChangeBehavior, CheckBehavior, MDCard):
+    text = StringProperty("test " * 15)
 
     def on_press(self):
-        self.checked = not self.checked
+        self.current_state = not self.current_state
 
 
-class MyTransCard(MyCheckCard):
-    text_orig = StringProperty()
-    text_trans = StringProperty()
-
-    def __post__init__(self):
+class MyTransCard(TranslationOnCheckBehavior, MyCheckCard):
+    pass
 
 
-    def __init__(self, **kwargs):
-        if "checked" in kwargs:
-            self.checked = kwargs["checked"]
-        text = kwargs["text_orig"] if self.checked else kwargs["text_trans"]
-        if "text" not in kwargs:
-            kwargs["text"] = text
-        super(MyTransCard, self).__init__(**kwargs)
-
-    def on_checked(self, *args):
-        self.text = self.text_orig if self.checked else self.text_trans
-        super(MyTransCard, self).on_checked(*args)
-
-
-class MyCheckChip(CircularRippleBehavior, CheckElement, BoxLayout):
+class MyCheckChip(CircularRippleBehavior, ButtonBehavior, ThemableColorChangeBehavior, CheckBehavior,
+                  ThemableBehavior, BoxLayout):
     icon = StringProperty("")
+    text = StringProperty("Chip")
+
+    def on_press(self):
+        self.current_state = not self.current_state
 
 
-class MyTransChip(MyCheckChip):
-    text_orig = StringProperty()
-    text_trans = StringProperty()
-
-    def __init__(self, **kwargs):
-        if "checked" in kwargs:
-            self.checked = kwargs["checked"]
-        text = kwargs["text_orig"] if self.checked else kwargs["text_trans"]
-        if "text" not in kwargs:
-            kwargs["text"] = text
-        super(MyTransChip, self).__init__(**kwargs)
-
-    def on_checked(self, *args):
-        super(MyTransChip, self).on_checked(*args)
-        self.text = self.text_orig if self.checked else self.text_trans
+class MyTransChip(TranslationOnCheckBehavior, MyCheckChip):
+    pass
 
 
 class MyCheckCardContainer(CheckContainer, ThemableBehavior, BoxLayout):
@@ -224,17 +157,22 @@ class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
     CheckElementObject = MyCheckChip
 
 
-class MyTransChipContainer(CheckContainer, ThemableBehavior, StackLayout):
+class MyTransChipContainer(MyCheckChipContainer):
     CheckElementObject = MyTransChip
 
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
-    checked_state = {"opacity": 1, "border_width": 3}
-    unchecked_state = {"opacity": 0.8, "border_width": 0.01}
     border_width = NumericProperty(0.01)
 
+    def __init__(self, **kwargs):
+        self.state_dicts = {
+            True:  {"opacity": 1, "border_width": 3},
+            False: {"opacity": 0.8, "border_width": 0.01}
+        }
+        super(MyCheckImageTile, self).__init__(**kwargs)
+
     def on_press(self):
-        self.checked = not self.checked
+        self.current_state = not self.current_state
 
 
 class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
@@ -243,7 +181,6 @@ class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
 
 if __name__ == "__main__":
     IMG_STRING = """
-#:import lorem lorem
 FloatLayout:
     ScrollView:
         do_scroll_x: False
@@ -259,7 +196,7 @@ FloatLayout:
             padding: dp(4), dp(4)
             spacing: dp(4)
             check_one: True
-            element_dicts: [{"source":"../assets/guitar.png"} for i in range(10)]
+            element_dicts: [{"source":"../assets/AnkiCardGen.png"} for i in range(10)]
 
     MDFloatingActionButton:
         pos_hint: {"center_x":0.5,"center_y":0.5}
@@ -270,7 +207,7 @@ FloatLayout:
         "BoxLayout:\n"
         "    MyTransCardContainer:\n"
         "        element_dicts: [{\"text_orig\":(\"text_orig_\"+str(i))*10,\"text_trans\": (\"text_trans_\"+str("
-        "i))*10} for i in range(10)]"
+        "i))*10,  \"current_state\": i%2==0} for i in range(10)]"
     )
 
     CHECK_CARD_STRING = (
@@ -292,7 +229,7 @@ FloatLayout:
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
-            return Builder.load_string(CHECK_CARD_STRING)
+            return Builder.load_string(TRANS_CHIP_STRING)
 
 
     TestApp().run()
