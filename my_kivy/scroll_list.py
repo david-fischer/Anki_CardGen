@@ -25,6 +25,7 @@ Builder.load_string(
         id: spinner
         active: root.active
         size_hint: 0.7,0.7
+        opacity: float(root.active)
 
 <LeftStatusIndicatorListItem>:
     loading_state: "queued"
