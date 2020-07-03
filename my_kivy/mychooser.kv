@@ -1,3 +1,8 @@
+<ThemableColorChangeBehavior>:
+    canvas:
+        Color:
+            rgba: root.bg_color
+
 <MyCheckChip>:
     icon: ""
     size_hint: None,  None
@@ -5,13 +10,10 @@
     padding: 0, 0, "5dp", 0
     width: self.minimum_width - dp(10)
     canvas:
-        Color:
-            rgba: root.bg_color
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [dp(12)]
-
 
     BoxLayout:
         size_hint_x: None
@@ -40,11 +42,7 @@
     size_hint: 1,None
     border_radio: 20
     height: label.texture_size[1]+2*self.padding[1]
-    state_dicts: { True: {"bg_color": self.theme_cls.primary_color,"text_color": [1, 1, 1, 1],}, False: {"bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light" else self.theme_cls.bg_light,"text_color": self.theme_cls.secondary_text_color}}
-
     canvas:
-        Color:
-            rgba: root.bg_color
         Rectangle:
             pos: self.pos
             size: self.size
@@ -56,10 +54,6 @@
         height: self.texture_size[1]
         theme_text_color: "Custom"
         color: root.text_color
-
-<MyTransCard>:
-    state_dicts: { True: {"bg_color": self.theme_cls.primary_color,"text_color": [1, 1, 1, 1],}, False: {"bg_color": self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light" else self.theme_cls.bg_light,"text_color": self.theme_cls.secondary_text_color}}
-
 
 
 <MyCheckCardContainer>:
@@ -76,21 +70,7 @@
             rectangle: self.x, self.y, self.width, self.height
 
 
-
 <MyCheckChipContainer>:
-    orientation: "lr-tb"
-    padding: 20,20
-    spacing: 10,10
-    size_hint:1, None
-    height: self.minimum_height
-    canvas:
-        Color:
-            rgba: self.theme_cls.divider_color
-        Line:
-            width: 1
-            rectangle: self.x, self.y, self.width, self.height
-
-<MyTransChipContainer>:
     orientation: "lr-tb"
     padding: 20,20
     spacing: 10,10
