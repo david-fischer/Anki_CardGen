@@ -151,10 +151,23 @@ class AnkiCardGenApp(MDApp):
             "Theme",
             {
                 "primary_palette": "Red",
-                "accent_palette":  "Yellow",
+                "accent_palette":  "Amber",
                 "theme_style":     "Dark",
             },
         )
+        config.setdefaults(
+            "Paths",
+            {
+                "queue_words":        "app_state/queue_words.json",
+                "done_words":         "app_state/done_words.json",
+                "error_words":        "app_state/error_words.json",
+                "loading_state_dict": "app_state/loading_state_dict.json",
+                "anki":               "app_state/anki.p",
+                "generated":          "app_state/generated_cards.csv",
+                "apkg":               "apkgs/portuguese_vocab.apkg",
+            },
+        )
+        os.makedirs("app_state", exist_ok=True)
 
     def build(self):
         # Config and Theme
