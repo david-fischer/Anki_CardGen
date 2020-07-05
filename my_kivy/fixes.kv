@@ -1,0 +1,27 @@
+#<MDTabs>:
+#    background_color:
+#        self.theme_cls.primary_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.bg_dark
+#    text_color_active:
+#        self.specific_text_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.primary_color
+#    text_color_normal:
+#        self.specific_secondary_text_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.secondary_text_color
+#    color_indicator:
+#        self.theme_cls.accent_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.primary_color
+#<MDTabs>:
+#    text_color_normal:
+#        self.specific_secondary_text_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.secondary_text_color
+
+<MDTabsCarousel>:
+    min_move: 0.07
+
+<MyFloatingActionButtonSpeedDial@MDFloatingActionButtonSpeedDial+SpecificBackgroundColorBehavior>:
+    label_text_color: self.specific_text_color
+    background_palette: "Accent"
+
+<MDFloatingRootButton,MDFloatingBottomButton>:
+    -md_bg_color: app.theme_cls.accent_color
+    -background_palette: "Accent"
+
+<MDFloatingLabel>:
+    -bg_color: app.theme_cls.accent_color
+    -text_color: []
