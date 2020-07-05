@@ -34,6 +34,7 @@
         height: self.texture_size[1]
 
     MDLabel:
+        id: mail
         text: "david.fischer.git@posteo.de"
         font_style: "Caption"
         theme_text_color: "Secondary"
@@ -71,7 +72,11 @@
 
             DrawerContent:
                 id: drawer_content
-
+                canvas.before:
+                    Color:
+                        rgba: app.theme_cls.primary_color
+                    Rectangle:
+                        size: self.size[0],self.ids.mail.pos[1]
+                        pos: self.pos[0], self.ids.mail.pos[1]- self.ids.mail.height
                 ScrollView:
                     DrawerList:
-                        id: drawer_list
