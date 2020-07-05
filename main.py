@@ -21,8 +21,11 @@ from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import now_string, smart_loader, smart_saver, widget_by_id
 from word_requests.pt_word import Word
 
-Builder.load_file(f"{os.path.dirname(__file__)}/my_kivy/screens.kv")
-Builder.load_file(f"{os.path.dirname(__file__)}/my_kivy/fixes.kv")
+this_dir = os.path.dirname(__file__)
+if this_dir:
+    this_dir = this_dir + "/"
+Builder.load_file(f"{this_dir}my_kivy/screens.kv")
+Builder.load_file(f"{this_dir}my_kivy/fixes.kv")
 
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
@@ -65,7 +68,7 @@ class MainMenu(StackLayout):
     screen_dicts = ListProperty(
         [
             {
-                "icon":        "textbox",
+                "icon":        "form-textbox",
                 "text":        "Manual Input",
                 "screen_name": "screen_single_word",
             },
