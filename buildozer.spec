@@ -13,7 +13,7 @@ package.domain = org.ankicardgen
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg
+source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg,ini
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -22,13 +22,13 @@ source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = bin, test, .buildozer
+source.exclude_dirs = bin, test, .buildozer, docs
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.3.0
+version = 0.3.1
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
