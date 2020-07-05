@@ -123,7 +123,7 @@ def selection_helper(base, id=None, props=None):
     if props is None:
         props = ["text"]
     base_obj = getattr(base.ids, id) if id is not None else base
-    out = [base_obj.get_checked(property=prop) for prop in props]
+    out = [base_obj.get_checked(property_name=prop) for prop in props]
     return functools.reduce(operator.iconcat, out, [])
 
 
