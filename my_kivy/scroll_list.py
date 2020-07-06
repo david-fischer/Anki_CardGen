@@ -87,6 +87,7 @@ def schedule(obj):
 
 
 if __name__ == "__main__":
+
     class TestApp(MDApp):
         def build(self):
             return ScrollList(
