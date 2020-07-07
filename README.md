@@ -2,7 +2,7 @@
 
 ![GitHub Logo](assets/AnkiCardGen_small.png)
 
-<h3 align="center">AnkiCardGen</h3>
+<h1 align="center">AnkiCardGen</h1>
 
 <!--
 
@@ -11,7 +11,6 @@
   [![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
   [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-
 </div>
 
 -->
@@ -25,13 +24,12 @@
 * Definition
 
 Currently supported languages:
-* Brazilian Portuguese
+* **Brazilian Portuguese**
 
 
 ## ❓ About 
 Anki is a powerful tool for reviewing flash cards, in particular for language learning.
-While having flash cards with multiple cues (image, audio, example, ...) is beneficial, one does not want to spend a large amount of time in the creation. This project aims to provide the solution to this process
-by automatically downloading and processing data for a given word in the target language. Then it offers the user a choice of various options for the content of the card.
+Having flash cards with multiple cues (image, audio, example-sentence, ...) is beneficial, but one does not want to spend a large amount of time in the creation. This project aims to provide the solution to this process by automatically downloading and processing data for a given word in the target language. Then it offers the user a choice of various options for the content of the card.
 This allows quick generation of high-quality, personalized cards.
 
 ## 🏗 Current State
@@ -43,16 +41,16 @@ This allows quick generation of high-quality, personalized cards.
     * [x] Pre-Processing
         * [x] Extracting the words
         * [x] Removal of punctuation
-        * [x] Get dictionary form of word
+        * [x] Get dictionary form of word **(only desktop)**
     * [ ] Clicking on loaded words to start generation-process
-* [ ] Processing single words
+* [x] Processing single words
     * [x] Fetching necessary data to build card
     * [x] Provide user interface to select content of card
     * [x] Process the user input
     * [x] Downloading image and audio files
     * [x] Building the Anki card from html-templates
 
-## 🔧 Installing 
+## 🚧 Installing 
 
 ### App
 <!-- TODO: Add apk file-->
@@ -66,13 +64,13 @@ Install requirements:
 pip install -r requirements.txt
 ```
 
-Install [spacy](https://github.com/explosion/spaCy) module. 
+Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese: 
 
 ```
 pythn -m spacy download pt_core_news_sm
 ```
 
-**NOTE:** This modul is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version.
+**NOTE:** This model is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version.
 
 ### Building the Android App
 
@@ -87,23 +85,24 @@ buildozer android debug deploy
 buildozer ios debug deploy
 ```
 
-## :microscope: Troubleshooting
+## 🎯 Troubleshooting
 
 * python3.8 not working -> change to 3.7
-* I could not manage to 
 
-## 🎈 Usage 
+## 🔧 Usage 
 (add info)
 
 ## 🚀 Contribute
-So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
-Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
+* So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
+  Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
+
+* Unfortunately, I had problems building SpaCy (more precisely its dependency blis) on arm. I therefore removed it from the dependencies in buildozer.spec and built the code to work around it if the package is not present.make blis work on mobile
 
 ## ✍️ Authors 
 - [David Fischer](https://github.com/david-fischer) - Author
 
 <!--
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+See also the list of [contributors](https://link/to/contributers) who participated in this project.
 -->
 
 ## 🎉 Acknowledgements 
