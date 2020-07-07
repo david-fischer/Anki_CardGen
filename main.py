@@ -39,7 +39,7 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
 
     def __post_init__(self, *_):
         self.state_dicts = {
-            True:  {"text_color": self.theme_cls.primary_color},
+            True: {"text_color": self.theme_cls.primary_color},
             False: {"text_color": self.theme_cls.text_color},
         }
         super(DrawerItem, self).__post_init__()
@@ -68,13 +68,13 @@ class MainMenu(StackLayout):
     screen_dicts = ListProperty(
         [
             {
-                "icon":        "form-textbox",
-                "text":        "Manual Input",
+                "icon": "form-textbox",
+                "text": "Manual Input",
                 "screen_name": "screen_single_word",
             },
             {
-                "icon":        "format-list-checkbox",
-                "text":        "Queue",
+                "icon": "format-list-checkbox",
+                "text": "Queue",
                 "screen_name": "screen_queue",
             },
             {"icon": "cogs", "text": "Settings", "screen_name": "screen_settings"},
@@ -86,7 +86,7 @@ class MainMenu(StackLayout):
         for screen_dict in self.screen_dicts:
             name = screen_dict["screen_name"]
             path = f"my_kivy/{name}.kv"
-            screen = Screen(name=name, id=name)
+            screen = Screen(name=name)
             if not os.path.exists(path):
                 with open(path, "w") as file:
                     file.write(f'MDLabel:\n\ttext:"{name}"')
@@ -117,9 +117,10 @@ class AnkiCardGenApp(MDApp):
 
     @mainthread
     def show_dialog(
-            self, message, options=None, callback=print, item_function=None, buttons=None
+        self, message, options=None, callback=print, item_function=None, buttons=None
     ):
         if item_function is None:
+
             def item_function(obj):
                 self.dialog.dismiss()
                 callback(obj.text)
@@ -151,20 +152,20 @@ class AnkiCardGenApp(MDApp):
             "Theme",
             {
                 "primary_palette": "Red",
-                "accent_palette":  "Amber",
-                "theme_style":     "Dark",
+                "accent_palette": "Amber",
+                "theme_style": "Dark",
             },
         )
         config.setdefaults(
             "Paths",
             {
-                "queue_words":        "app_state/queue_words.json",
-                "done_words":         "app_state/done_words.json",
-                "error_words":        "app_state/error_words.json",
+                "queue_words": "app_state/queue_words.json",
+                "done_words": "app_state/done_words.json",
+                "error_words": "app_state/error_words.json",
                 "loading_state_dict": "app_state/loading_state_dict.json",
-                "anki":               "app_state/anki.p",
-                "generated":          "app_state/generated_cards.csv",
-                "apkg":               "apkgs/portuguese_vocab.apkg",
+                "anki": "app_state/anki.p",
+                "generated": "app_state/generated_cards.csv",
+                "apkg": "apkgs/portuguese_vocab.apkg",
             },
         )
         os.makedirs("app_state", exist_ok=True)
