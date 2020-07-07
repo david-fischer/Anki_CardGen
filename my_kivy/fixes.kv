@@ -1,3 +1,4 @@
+#: import Window kivy.core.window.Window
 #<MDTabs>:
 #    background_color:
 #        self.theme_cls.primary_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.bg_dark
@@ -25,3 +26,6 @@
 <MDFloatingLabel>:
     -bg_color: app.theme_cls.accent_color
     -text_color: []
+
+<MDDialog>:
+    width: min(512,Window.width - 48)
