@@ -1,3 +1,7 @@
+from functools import partial
+from threading import Thread
+from time import sleep
+
 from kivy.clock import Clock, mainthread
 from kivy.lang import Builder
 from kivy.properties import ListProperty, ObjectProperty, OptionProperty
@@ -83,6 +87,7 @@ class LeftStatusIndicatorListItem(OneLineAvatarListItem):
 def schedule(obj):
     if obj.loading_state == "queued":
         obj.loading_state = "loading"
+        sleep(10)
         Clock.schedule_once(lambda dt: setattr(obj, "loading_state", "ready"), 5)
 
 
@@ -93,7 +98,7 @@ if __name__ == "__main__":
             return ScrollList(
                 item_type=LeftStatusIndicatorListItem,
                 item_dicts=[{"text": "test"}] * 25,
-                callback=schedule,
+                callback=lambda obj: Thread(target=partial(schedule, obj)).start(),
             )
 
     TestApp().run()
