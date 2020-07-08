@@ -26,8 +26,8 @@ from kivymd.app import MDApp
 
 COLOR2MEANING = {
     "highlight_yellow": "words",
-    "highlight_blue":   "phrases",
-    "highlight_pink":   "sentences",
+    "highlight_blue": "phrases",
+    "highlight_pink": "sentences",
     "highlight_orange": "",
 }
 MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
@@ -161,6 +161,12 @@ def word_list_from_kindle(path):
     return dict_from_kindle_export(path)[color]
 
 
+def word_list_from_txt(path):
+    with open(path, "r") as file:
+        words = file.read().splitlines()
+    return words
+
+
 def tag_word_in_sentence(sentence, tag_word):
     words = sentence.split()
     words = clean_up(words, lemmatize=False)
@@ -196,7 +202,10 @@ def compress_img(path):
 
 
 if __name__ == "__main__":
-    # out = word_list_from_kindle("test/test_data/Portuguese Short Stories for Beginners 20 Captiva - Notizbuch.html")
+    out = word_list_from_kindle("test/test_data/kindle_export.html")
+    print(out)
+    with open("test/test_data/words.txt", "w") as file:
+        file.write("\n".join(out))
 
     # example = ("Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,"
     #            "normalmente térrea ou com dois andares. - Voltaire")
@@ -204,4 +213,4 @@ if __name__ == "__main__":
     #         "apesar de saberem que a têm. Test Casas, casa, casa.")
     #
     # print(tag_word(expl, "casa"))
-    compress_img("data/casa/casa.jpg")
+    # compress_img("data/casa/casa.jpg")
