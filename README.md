@@ -1,10 +1,26 @@
-
-
-![GitHub Logo](assets/AnkiCardGen_small.png)
+![Logo](assets/AnkiCardG
 
 <h1 align="center">AnkiCardGen</h1>
 
+
+
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
+#### Screenshots
+
+<table>
+  <tr>
+    <td>Queue</td>
+     <td>Single Word</td>
+     <td>Settings</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/nav_drawer_open.png" width=270 height=480></td>
+    <td><img src="screenshots/screen_queue.png" width=270 height=480></td>
+    <td><img src="screenshots/screen_single_word.png" width=270 height=480></td>
+  </tr>
+ </table>
+
 
 <!--
 
