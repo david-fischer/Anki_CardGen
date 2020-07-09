@@ -1,10 +1,12 @@
 #:import ScrollList my_kivy.scroll_list.ScrollList
 #:import LeftStatusIndicatorListItem my_kivy.scroll_list.LeftStatusIndicatorListItem
 #:import options_dict my_kivy.screen_queue.options_dict
-#:import import_from my_kivy.screen_queue.import_from
+#:import choose_file_to_import my_kivy.screen_queue.choose_file_to_import
 #:import click_on_queue_item my_kivy.screen_queue.click_on_queue_item
 #:import click_on_error_item my_kivy.screen_queue.click_on_error_item
 #:import click_on_done_item my_kivy.screen_queue.click_on_done_item
+#:import start_downloading my_kivy.screen_queue.start_downloading
+#:import pause_downloading my_kivy.screen_queue.pause_downloading
 FloatLayout:
 
     MDTabs:
@@ -39,4 +41,13 @@ FloatLayout:
     MyFloatingActionButtonSpeedDial:
         id: speed_dial
         data: options_dict
-        callback: import_from
+        callback: choose_file_to_import
+
+    MDFloatingActionButton:
+        id: start_pause_button
+        icon: "pause" if self.active else "play"
+        active: False
+        pos: 24,24
+        pos_hint: {"center_x":0.5}
+        #pos_hint: {"x": 0.8, "y": 0.5}
+        on_press:start_downloading() if not self.active else pause_downloading(); self.active = not self.active
