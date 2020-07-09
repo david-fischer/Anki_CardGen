@@ -10,14 +10,19 @@ from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
 
 from my_kivy.mychooser import MyCheckImageGrid
-from utils import compress_img, selection_helper, tag_word_in_sentence, widget_by_id
+from utils import (
+    compress_img,
+    selection_helper,
+    set_screen,
+    tag_word_in_sentence,
+    widget_by_id,
+)
 from word_requests.urls_and_parsers import linguee_did_you_mean, NoMatchError
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
 
 class WordProperties(BoxLayout):
-
     def refresh_data(self):
         word = MDApp.get_running_app().word
         self.ids.translation_chips.element_dicts = [
@@ -66,8 +71,8 @@ def get_selection_dict():
     try:
         img_url = (
             widget_by_id("/screen_single_word/image_tab/image_grid/")
-                .get_checked(property_name="source")[0]
-                .replace("http:", "https:")
+            .get_checked(property_name="source")[0]
+            .replace("http:", "https:")
         )
         print(img_url)
         r_i = UrlRequest(
@@ -80,10 +85,10 @@ def get_selection_dict():
         print("Error with image download. Try different Image instead.")
     selections = {
         "translation_chips": ["text"],
-        "synonym_chips":     ["text_orig", "text_trans"],
-        "antonym_chips":     ["text_orig", "text_trans"],
+        "synonym_chips": ["text_orig", "text_trans"],
+        "antonym_chips": ["text_orig", "text_trans"],
         "explanation_cards": ["text"],
-        "example_cards":     ["text_orig", "text_trans"],
+        "example_cards": ["text_orig", "text_trans"],
     }
     out = {}
     for key, props in selections.items():
@@ -94,22 +99,22 @@ def get_selection_dict():
     r_i.wait()
     print("Finished downloading image.")
     return {
-        "Word":               word.search_term,
-        "Translation":        ", ".join(out["translation"]),
-        "Synonym":            out["synonym"][0] if out["synonym"] else "",
-        "Image":              f'<img src="{word.search_term}.jpg">',
-        "Explanation":        tag_word_in_sentence(out["explanation"][0], word.search_term)
-                              if out["explanation"]
-                              else "",
+        "Word": word.search_term,
+        "Translation": ", ".join(out["translation"]),
+        "Synonym": out["synonym"][0] if out["synonym"] else "",
+        "Image": f'<img src="{word.search_term}.jpg">',
+        "Explanation": tag_word_in_sentence(out["explanation"][0], word.search_term)
+        if out["explanation"]
+        else "",
         "ExampleTranslation": out["example"][1] if out["example"] else "",
-        "Example":            tag_word_in_sentence(out["example"][0], word.search_term)
-                              if out["example"]
-                              else "",
-        "ConjugationTable":   word.html_from_conj_df(),
-        "Audio":              f"[sound:{word.search_term}.mp3]",
-        "Antonym":            out["antonym"][0] if out["antonym"] else "",
-        "AdditionalInfo":     str(word.add_info_dict),
-        "media_files":        [f"{base_path}.{ext}" for ext in ["jpg", "mp3"]],
+        "Example": tag_word_in_sentence(out["example"][0], word.search_term)
+        if out["example"]
+        else "",
+        "ConjugationTable": word.html_from_conj_df(),
+        "Audio": f"[sound:{word.search_term}.mp3]",
+        "Antonym": out["antonym"][0] if out["antonym"] else "",
+        "AdditionalInfo": str(word.add_info_dict),
+        "media_files": [f"{base_path}.{ext}" for ext in ["jpg", "mp3"]],
     }
 
 
@@ -140,12 +145,17 @@ def confirm_choice():
     widget_by_id("/screen_single_word/edit_tab/word_prop/search_field").focus = True
     MDApp.get_running_app().word.__init__()
     widget_by_id("/screen_single_word/edit_tab/word_prop").refresh_data()
+    search_term = result_dict["Word"]
+    if search_term in MDApp.get_running_app().queue_words:
+        set_screen("screen_queue")
+        MDApp.get_running_app().queue_words.remove(search_term)
 
 
 if __name__ == "__main__":
+
     class TestApp(MDApp):
         def build(self):
             return Builder.load_file("screen_single_word.kv")
 
-
+    TestApp().run()
     TestApp().run()
