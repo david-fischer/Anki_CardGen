@@ -1,28 +1,39 @@
 import os
 import pickle
 import re
+from functools import partial
 
 import attr
 import pandas as pd
+import requests
 from googletrans import Translator
-from kivy.network.urlrequest import UrlRequest
 from unidecode import unidecode
 
 from google_images_download import google_images_download
 from word_requests.urls_and_parsers import (
-    DEFAULT_HEADERS,
     dicio_url,
     linguee_api_url,
     parse_dicio_resp,
     parse_linguee_api_resp,
     parse_reverso_resp,
-    REVERSO_HEADERS,
     reverso_url,
 )
 
 FROM_LANG = "pt"
 TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
+
+PARSE_FUNCTIONS = {
+    "linguee": lambda resp: parse_linguee_api_resp(resp.json(), from_lang=FROM_LANG),
+    "reverso": lambda resp: parse_reverso_resp(resp.content),
+    "dicio": lambda resp: parse_dicio_resp(resp.content),
+}
+
+URL_FUNCTIONS = {
+    "linguee": partial(linguee_api_url, from_lang=FROM_LANG, to_lang=TO_LANG),
+    "reverso": partial(reverso_url, from_lang=FROM_LANG, to_lang=TO_LANG),
+    "dicio": dicio_url,
+}
 
 translator = Translator()
 
@@ -69,11 +80,14 @@ class Word:
     @audio_url.setter
     def audio_url(self, value):
         self._audio_url = value
+        if not value:
+            return
         print(f"start downloading audio from {value}...")
-        r_audio = UrlRequest(
-            value,
-            file_path=f"data/{self.folder()}/{self.folder()}.mp3",
-            on_success=lambda *args: print("Finished downloading audio."))
+        r = requests.get(value, allow_redirects=True)
+        os.makedirs(f"data/{self.folder()}", exist_ok=True)
+        with open(f"data/{self.folder()}/{self.folder()}.mp3", "wb") as file:
+            file.write(r.content)
+        print("audio download complete.")
 
     def search_term_utf8(self):
         return unidecode(self.search_term).lower()
@@ -83,42 +97,11 @@ class Word:
 
     def request_data(self):
         self.__init__(search_term=self.search_term.strip().lower())
-        resp_reverso = self.reverso_request(
-            reverso_url(self.search_term, FROM_LANG, TO_LANG)
-        )
-        resp_linguee = UrlRequest(
-            linguee_api_url(self.search_term, FROM_LANG, TO_LANG),
-            on_success=lambda req, res: self.update_from_dict(
-                parse_linguee_api_resp(res, from_lang=FROM_LANG)
-            ),
-        )
-        resp_dicio = self.dicio_request(dicio_url(self.search_term))
-        return [resp_dicio, resp_linguee, resp_reverso]
-
-    def redirect_url(self, req):
-        return "/".join(req.url.split("/")[:3]) + req.resp_headers["Location"]
-
-    def reverso_request(self, url):
-        return UrlRequest(
-            url,
-            req_headers=REVERSO_HEADERS,
-            on_success=lambda req, res: self.update_from_dict(parse_reverso_resp(res)),
-            on_redirect=lambda req, res: self.reverso_request(
-                self.redirect_url(req)
-            ).wait(),
-            on_error=print,
-        )
-
-    def dicio_request(self, url):
-        return UrlRequest(
-            url,
-            req_headers=DEFAULT_HEADERS,
-            on_success=lambda req, res: self.update_from_dict(parse_dicio_resp(res)),
-            on_redirect=lambda req, res: self.dicio_request(
-                self.redirect_url(req)
-            ).wait(),
-            on_error=print,
-        )
+        for site in ["linguee", "dicio", "reverso"]:
+            url = URL_FUNCTIONS[site](self.search_term)
+            resp = requests.get(url)
+            parsed_resp = PARSE_FUNCTIONS[site](resp)
+            self.update_from_dict(parsed_resp)
 
     def update_from_dict(self, attr_dict):
         for key, value in attr_dict.items():
@@ -137,7 +120,7 @@ class Word:
                     values[i] = [val[0], translate(val[0])]
             setattr(self, key, values)
 
-    def request_img_urls(self, conn=None, keywords=None):
+    def request_img_urls(self, keywords=None):
         """
         sets self.img_urls from first 20 results of google_images
         """
@@ -145,23 +128,19 @@ class Word:
         # keywords = unidecode(keywords).lower()
         response = google_images_download.googleimagesdownload()
         arguments = {
-            "keywords":         keywords,
+            "keywords": keywords,
             "output_directory": f"data/{self.folder()}",
-            "no_directory":     True,
-            "limit":            10,
-            "format":           "jpg",
-            "language":         LANGUAGE[FROM_LANG],
-            "no_download":      True,
-            "print_urls":       True,
-            "prefix":           "img_",
-            "save_source":      "source",
+            "no_directory": True,
+            "limit": 10,
+            "format": "jpg",
+            "language": LANGUAGE[FROM_LANG],
+            "no_download": True,
+            "print_urls": False,
+            "prefix": "img_",
         }
         paths = response.download(arguments)[0][keywords]
         self.image_urls = paths
-        if conn is None:
-            return paths
-        else:
-            conn.send(paths)
+        return paths
 
     def html_from_conj_df(self):
         return "\n".join(
@@ -171,8 +150,8 @@ class Word:
                     classes="subj" if "Subjuntivo" in col else "ind",
                     index=False,
                 )
-                    .replace("do Subjuntivo", "")
-                    .replace("do Indicativo", "")
+                .replace("do Subjuntivo", "")
+                .replace("do Indicativo", "")
                 for col in self.conj_table_df
             ]
         )
@@ -211,11 +190,8 @@ class Word:
                 return True
             except (TypeError, AttributeError):
                 print("Could not load previously saved file. Fetching data again...")
-        r_dicio, r_linguee, r_rev = self.request_data()
+        self.request_data()
         self.request_img_urls()
-        r_linguee.wait()
-        r_dicio.wait()
-        r_rev.wait()
         self.add_translations()
         self.pickle()
         return True
