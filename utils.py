@@ -7,8 +7,14 @@ import pickle
 import re
 from collections import defaultdict
 from datetime import datetime
+from time import sleep
 
-from PIL import Image
+from kivy.clock import mainthread
+from kivy.core.image import Image
+from kivy.core.window import Window
+from kivy.graphics.context_instructions import Scale, Translate
+from kivy.graphics.fbo import Fbo
+from kivy.graphics.gl_instructions import ClearBuffers, ClearColor
 
 try:
     import spacy
@@ -121,6 +127,51 @@ def widget_by_id(string):
         except:
             obj = obj.ids.screen_man.get_screen(id).children[0]
     return obj
+
+
+def sleep_decorator(time):
+    def the_real_decorator(function):
+        def wrapper(*args, **kwargs):
+            sleep(time)
+            function(*args, **kwargs)
+            sleep(time)
+
+        return wrapper
+
+    return the_real_decorator
+
+
+@sleep_decorator(1)
+@mainthread
+def screenshot(path):
+    root_widget = MDApp.get_running_app().root
+
+    fbo = Fbo(size=(root_widget.width, root_widget.height), with_stencilbuffer=True,)
+
+    with fbo:
+        ClearColor(*MDApp.get_running_app().theme_cls.bg_normal)
+        ClearBuffers()
+        Scale(1, -1, 1)
+        Translate(-root_widget.x, -root_widget.y - root_widget.height, 0)
+
+    fbo.add(root_widget.canvas)
+    fbo.draw()
+    img = Image(fbo.texture)
+
+    img.save(path)
+
+
+def make_screenshots(window_size=[270 * 1.4, 480 * 1.4]):
+    old_size = Window.size
+    Window.size = window_size
+    for item in widget_by_id("drawer_list").children:
+        item.on_release()
+        screenshot(f"screenshots/{item.screen_name}.png")
+    widget_by_id("nav_drawer").set_state("open")
+    screenshot("screenshots/nav_drawer_open.png")
+    Window.size = old_size
+    # Word
+    widget_by_id("")
 
 
 def selection_helper(base, id=None, props=None):
