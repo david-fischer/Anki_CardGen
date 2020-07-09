@@ -189,10 +189,17 @@ class AnkiCardGenApp(MDApp):
             }
         )  # partial(
         self.word = Word()
-        self.q = queue.Queue()
+        self.setup_queue()
         # Kivy Objects
         self.file_manager = MDFileManager()
         return Builder.load_string("MainMenu:")
+
+    def setup_queue(self):
+        self.q = queue.Queue()
+        for word in self.queue_words:
+            if self.loading_state_dict[word] in ["loading", "queued"]:
+                self.loading_state_dict[word] = "queued"
+                self.q.put(word)
 
     def save_theme(self, *_):
         for key in self.config["Theme"]:
