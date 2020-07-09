@@ -1,16 +1,22 @@
 import threading
-from functools import partial
+from queue import Queue
 
 from kivymd.app import MDApp
 from kivymd.uix.button import MDFlatButton
 
-from utils import clean_up, word_list_from_kindle
+from utils import (
+    clean_up,
+    set_screen,
+    widget_by_id,
+    word_list_from_kindle,
+    word_list_from_txt,
+)
 from word_requests.pt_word import Word
 from word_requests.urls_and_parsers import NoMatchError
 
 options_dict = {
     "script-text-outline": "Import from Kindle",
-    "note-text":           "Import from Text File",
+    "note-text": "Import from Text File",
 }
 
 
@@ -54,8 +60,20 @@ def queue_word(word):
         MDApp.get_running_app().loading_state_dict[word] = "queued"
         MDApp.get_running_app().queue_words.append(word)
         MDApp.get_running_app().q.put(word)
-        if "worker" not in [thread.name for thread in threading.enumerate()]:
-            start_workers(worker_single_word, 1)
+        start_downloading()
+
+
+def start_downloading():
+    MDApp.get_running_app().setup_queue()
+    if "worker" not in [thread.name for thread in threading.enumerate()]:
+        print("starting a worker")
+        start_workers(worker_single_word, 1)
+    else:
+        print(threading.enumerate())
+
+
+def pause_downloading():
+    MDApp.get_running_app().q = Queue()
 
 
 def is_duplicate(word):
@@ -68,25 +86,29 @@ def is_duplicate(word):
     return False
 
 
-def import_from(button):
+def choose_file_to_import(button):
     button.parent.close_stack()
     text = options_dict[button.icon]
     if text == "Import from Kindle":
-        MDApp.get_running_app().open_file_manager(
-            ext=[".html"],
-            path="./test/test_data/",
-            select_path=lambda path: threading.Thread(
-                target=partial(import_from_kindle, path)
-            ).start(),
+        extensions = [".html"]
+        import_function = lambda path: start_workers(
+            import_from(path, source="kindle"), 1
         )
-    elif text == "Import from Text File":
-        print("Importing from text-file...")
+    else:  # elif text == "Import from Text File":
+        extensions = [".txt"]
+        import_function = lambda path: start_workers(import_from(path, source="txt"), 1)
+    MDApp.get_running_app().open_file_manager(
+        ext=extensions, path="./test/test_data/", select_path=import_function
+    )
 
 
 def click_on_queue_item(item):
     print(item.text)
-    MDApp.get_running_app().queue_words.remove(item.text)
-    MDApp.get_running_app().done_words.append(item.text)
+    # MDApp.get_running_app().queue_words.remove(item.text)
+    set_screen("screen_single_word")
+    widget_by_id("screen_single_word/edit_tab/word_prop/search_field").text = item.text
+    widget_by_id("screen_single_word/edit_tab/word_prop").load_or_search(item.text)
+    # MDApp.get_running_app().done_words.append(item.text)
 
 
 def click_on_done_item(item):
@@ -97,18 +119,19 @@ def click_on_error_item(item):
     print(item.text)
 
 
-def import_from_kindle(path):
-    print("Importing from kindle-html-file...")
+def import_from(path, source="kindle"):
     MDApp.get_running_app().file_manager.close()
-    words = clean_up(word_list_from_kindle(path), lemmatize=False)
-    lemmas = clean_up(words)
+    import_function_dict = {"kindle": word_list_from_kindle, "txt": word_list_from_txt}
+    words = import_function_dict[source](path)
+    words = clean_up(words, lemmatize=False, remove_punct=True, lower_case=True)
+    lemmas = clean_up(words, lemmatize=True, remove_punct=False, lower_case=False)
     suggested_replacements = [
         f"{old} -> {new}" for old, new in zip(words, lemmas) if old != new
     ]
     unchanged_words = [word for word, lemma in zip(words, lemmas) if word == lemma]
+    choose_replacements_dialog(replacements=suggested_replacements)
     for word in unchanged_words:
         queue_word(word)
-    choose_replacements_dialog(replacements=suggested_replacements)
 
 
 def choose_replacements_dialog(replacements):
