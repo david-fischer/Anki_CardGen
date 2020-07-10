@@ -1,6 +1,5 @@
 import os
 import queue
-import threading
 from functools import partial
 
 from kivy.clock import mainthread
@@ -19,7 +18,7 @@ from kivymd.uix.picker import MDThemePicker
 
 from anki.generate_anki_card import AnkiObject
 from my_kivy.mychooser import CheckBehavior, CheckContainer
-from utils import make_screenshots, now_string, smart_loader, smart_saver, widget_by_id
+from utils import now_string, smart_loader, smart_saver, widget_by_id
 from word_requests.pt_word import Word
 
 this_dir = os.path.dirname(__file__)
@@ -195,8 +194,8 @@ class AnkiCardGenApp(MDApp):
         self.file_manager = MDFileManager()
         return Builder.load_string("MainMenu:")
 
-    def on_start(self):
-        threading.Thread(target=make_screenshots).start()
+    # def on_start(self):
+    #    threading.Thread(target=make_screenshots).start()
 
     def setup_queue(self):
         self.q = queue.Queue()
@@ -238,6 +237,7 @@ class AnkiCardGenApp(MDApp):
 
     def add_anki_card(self, result_dict):
         toast(f'Added card for "{result_dict["Word"]}" to Deck.', 10)
+        smart_saver(result_dict, f"{self.word.folder()}/{self.word.folder()}.json")
         self.save_by_config_key("generated", obj=result_dict)
         self.anki.add_card(**result_dict)
         apkg_path = self.config["Paths"]["apkg"]
