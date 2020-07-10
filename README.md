@@ -10,16 +10,19 @@
 
 <table>
   <tr>
-    <td>Queue</td>
-     <td>Single Word</td>
-     <td>Settings</td>
+      <td>Nav-Drawer</td>
+      <td>Queue</td>
+      <td>Single Word Text</td>
+      <td>Single Word Image</td>
   </tr>
   <tr>
     <td><img src="screenshots/nav_drawer_open.png" width=270 height=480></td>
     <td><img src="screenshots/screen_queue.png" width=270 height=480></td>
-    <td><img src="screenshots/screen_single_word.png" width=270 height=480></td>
+    <td><img src="screenshots/example_word_text.png" width=270 height=480></td>
+    <td><img src="screenshots/example_word_images.png" width=270 height=480></td>
   </tr>
  </table>
+
 
 
 <!--
@@ -33,7 +36,7 @@
 
 -->
 ---
-[Kivy](https://kivy.org/) App (mobile/dektop) for quick generation of personalized flash cards for [Anki](https://apps.ankiweb.net/) with:
+[Kivy](https://kivy.org/) App (mobile/dektop) for quick generation of personalized flash cards for [Anki](https://apps.ankiweb.net/) containing:
 
 * Image
 * Audio
