@@ -169,9 +169,16 @@ def make_screenshots(window_size=[270 * 1.4, 480 * 1.4]):
         screenshot(f"screenshots/{item.screen_name}.png")
     widget_by_id("nav_drawer").set_state("open")
     screenshot("screenshots/nav_drawer_open.png")
-    Window.size = old_size
+    widget_by_id("nav_drawer").set_state("close")
     # Word
-    widget_by_id("")
+    word_prop = widget_by_id("screen_single_word/edit_tab/word_prop/")
+    word_prop.ids.search_field.text = "casa"
+    word_prop.load_or_search("casa")
+    screenshot("screenshots/example_word_text.png")
+    tabs = widget_by_id("screen_single_word/tabs")
+    tabs.carousel.index = 1  # (tabs.carousel, 1)
+    screenshot("screenshots/example_word_images.png")
+    Window.size = old_size
 
 
 def selection_helper(base, id=None, props=None):
