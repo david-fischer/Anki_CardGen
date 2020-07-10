@@ -10,11 +10,12 @@ from datetime import datetime
 from time import sleep
 
 from kivy.clock import mainthread
-from kivy.core.image import Image
+from kivy.core.image import Image as KivyImage
 from kivy.core.window import Window
 from kivy.graphics.context_instructions import Scale, Translate
 from kivy.graphics.fbo import Fbo
 from kivy.graphics.gl_instructions import ClearBuffers, ClearColor
+from PIL import Image
 
 try:
     import spacy
@@ -156,7 +157,7 @@ def screenshot(path):
 
     fbo.add(root_widget.canvas)
     fbo.draw()
-    img = Image(fbo.texture)
+    img = KivyImage(fbo.texture)
 
     img.save(path)
 
