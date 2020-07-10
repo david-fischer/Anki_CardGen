@@ -237,7 +237,9 @@ class AnkiCardGenApp(MDApp):
 
     def add_anki_card(self, result_dict):
         toast(f'Added card for "{result_dict["Word"]}" to Deck.', 10)
-        smart_saver(result_dict, f"data/{self.word.folder()}/{self.word.folder()}.json")
+        smart_saver(
+            result_dict, f"data/{self.word.folder()}/{self.word.folder()}_card.json"
+        )
         self.save_by_config_key("generated", obj=result_dict)
         self.anki.add_card(**result_dict)
         apkg_path = self.config["Paths"]["apkg"]
