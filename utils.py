@@ -94,7 +94,7 @@ def smart_saver(obj, path):
             pickle.dump(obj, file)
     if ext == "json":
         with open(path, "w") as file:
-            json.dump(obj, file)
+            json.dump(obj, file, indent=4, sort_keys=True)
     if ext == "csv":
         save_dict_to_csv(obj, path)
 

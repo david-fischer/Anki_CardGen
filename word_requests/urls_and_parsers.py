@@ -132,9 +132,10 @@ class DicioParser(Parser):
         add_info_dict = to_stripped_multiline_str(
             get_element_after_regex(bs, "Definição.*")
         )
-        conj_table_df = pd.DataFrame()
+        conj_table_html = ""
         try:
             conj_table_df = self.conj_df(bs)
+            conj_table_html = self.html_from_conj_df(conj_table_df)
         except:
             print("no conjugation table obtained :(")
         return {
@@ -143,7 +144,7 @@ class DicioParser(Parser):
             "antonyms": antonyms,
             "examples": examples,
             "add_info_dict": add_info_dict,
-            "conj_table_df": conj_table_df,
+            "conj_table_html": conj_table_html,
         }
 
     def conj_df(self, bs_obj):
@@ -168,6 +169,20 @@ class DicioParser(Parser):
         return pd.DataFrame.from_dict(conjugation_table_dict).loc[
             ["eu", "ele", "nós", "eles"]
         ]
+
+    def html_from_conj_df(self, conj_table_df):
+        return "\n".join(
+            [
+                conj_table_df.to_html(
+                    columns=[col],
+                    classes="subj" if "Subjuntivo" in col else "ind",
+                    index=False,
+                )
+                .replace("do Subjuntivo", "")
+                .replace("do Indicativo", "")
+                for col in conj_table_df
+            ]
+        )
 
 
 @attr.s

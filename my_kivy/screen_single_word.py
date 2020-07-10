@@ -110,7 +110,7 @@ def get_selection_dict():
         "Example": tag_word_in_sentence(out["example"][0], word.search_term)
         if out["example"]
         else "",
-        "ConjugationTable": word.html_from_conj_df(),
+        "ConjugationTable": word.conj_table_html,
         "Audio": f"[sound:{word.search_term}.mp3]",
         "Antonym": out["antonym"][0] if out["antonym"] else "",
         "AdditionalInfo": str(word.add_info_dict),
