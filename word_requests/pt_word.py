@@ -1,14 +1,13 @@
 import os
-import pickle
 import re
 
 import attr
-import pandas as pd
 import requests
 from googletrans import Translator
 from unidecode import unidecode
 
 from google_images_download import google_images_download
+from utils import smart_loader, smart_saver
 from word_requests.urls_and_parsers import (
     DicioParser,
     LingueeParser,
@@ -56,7 +55,7 @@ class Word:
     image_urls = attr.ib(default=[])
     _audio_url = attr.ib(default="")
     add_info_dict = attr.ib(default={})
-    conj_table_df = attr.ib(default=pd.DataFrame())
+    conj_table_html = attr.ib(default="")
 
     def __attrs_post_init__(self):
         parser_attrs = {
@@ -140,20 +139,6 @@ class Word:
         self.image_urls = paths
         return paths
 
-    def html_from_conj_df(self):
-        return "\n".join(
-            [
-                self.conj_table_df.to_html(
-                    columns=[col],
-                    classes="subj" if "Subjuntivo" in col else "ind",
-                    index=False,
-                )
-                .replace("do Subjuntivo", "")
-                .replace("do Indicativo", "")
-                for col in self.conj_table_df
-            ]
-        )
-
     def mark_examples(self):
         """
         Highlights the search_word in the example sentences using css.
@@ -165,33 +150,37 @@ class Word:
             ]
 
     @classmethod
-    def from_pickle(cls, path):
-        with open(path, "rb") as file:
-            return cls(pickle.load(file))
+    def from_json(cls, path):
+        return cls(**smart_loader(path))
 
-    def pickle(self):
-        if not os.path.exists(f"data/{self.folder()}"):
-            os.makedirs(f"data/{self.folder()}")
-        with open(f"data/{self.folder()}/{self.folder()}.p", "wb") as file:
-            pickle.dump(attr.asdict(self), file)
+    def save_as_json(self, path=None):
+        if path is None:
+            path = f"data/{self.folder()}/{self.folder()}.json"
+        directory = os.path.dirname(path)
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        attribute_dict = {
+            re.sub("^_", "", key): value
+            for key, value in vars(self).items()
+            if key != "parsers"
+        }
+        smart_saver(attribute_dict, path)
 
+    # TODO: check if return value is important
     def search(self, new_search_term):
         self.search_term = new_search_term
-        path = f"{self.data_dir}/{self.folder()}/{self.folder()}.p"
+        path = f"{self.data_dir}/{self.folder()}/{self.folder()}.json"
         if os.path.exists(path):
             try:
-                with open(path, "rb") as file:
-                    attribute_dict = pickle.load(file)
-                    attribute_dict["audio_url"] = attribute_dict.pop("_audio_url")
-                    self.__init__(**attribute_dict)
-                print(vars(self))
+                attribute_dict = smart_loader(path)
+                self.__init__(**attribute_dict)
                 return True
             except (TypeError, AttributeError):
                 print("Could not load previously saved file. Fetching data again...")
         self.request_data()
         self.request_img_urls()
         self.add_translations()
-        self.pickle()
+        self.save_as_json()
         return True
 
 
