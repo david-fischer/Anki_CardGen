@@ -1,7 +1,6 @@
 import os
 import pickle
 import re
-from functools import partial
 
 import attr
 import pandas as pd
@@ -11,29 +10,15 @@ from unidecode import unidecode
 
 from google_images_download import google_images_download
 from word_requests.urls_and_parsers import (
-    dicio_url,
-    linguee_api_url,
-    parse_dicio_resp,
-    parse_linguee_api_resp,
-    parse_reverso_resp,
-    reverso_url,
+    DicioParser,
+    LingueeParser,
+    ReversoParser,
 )
 
 FROM_LANG = "pt"
 TO_LANG = "de"
 LANGUAGE = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
 
-PARSE_FUNCTIONS = {
-    "linguee": lambda resp: parse_linguee_api_resp(resp.json(), from_lang=FROM_LANG),
-    "reverso": lambda resp: parse_reverso_resp(resp.content),
-    "dicio": lambda resp: parse_dicio_resp(resp.content),
-}
-
-URL_FUNCTIONS = {
-    "linguee": partial(linguee_api_url, from_lang=FROM_LANG, to_lang=TO_LANG),
-    "reverso": partial(reverso_url, from_lang=FROM_LANG, to_lang=TO_LANG),
-    "dicio": dicio_url,
-}
 
 translator = Translator()
 
@@ -73,6 +58,18 @@ class Word:
     add_info_dict = attr.ib(default={})
     conj_table_df = attr.ib(default=pd.DataFrame())
 
+    def __attrs_post_init__(self):
+        parser_attrs = {
+            "phrase": self.search_term,
+            "from_lang": FROM_LANG,
+            "to_lang": TO_LANG,
+        }
+        self.parsers = {
+            "linguee": LingueeParser(**parser_attrs),
+            "dicio": DicioParser(**parser_attrs),
+            "reverso": ReversoParser(**parser_attrs),
+        }
+
     @property
     def audio_url(self):
         return self._audio_url
@@ -97,11 +94,12 @@ class Word:
 
     def request_data(self):
         self.__init__(search_term=self.search_term.strip().lower())
-        for site in ["linguee", "dicio", "reverso"]:
-            url = URL_FUNCTIONS[site](self.search_term)
-            resp = requests.get(url)
-            parsed_resp = PARSE_FUNCTIONS[site](resp)
-            self.update_from_dict(parsed_resp)
+        for parser in self.parsers.values():
+            self.update_from_dict(parser.result_dict(self.search_term))
+            # url = URL_FUNCTIONS[site](self.search_term)
+            # resp = requests.get(url)
+            # parsed_resp = PARSE_FUNCTIONS[site](resp)
+            # self.update_from_dict(parsed_resp)
 
     def update_from_dict(self, attr_dict):
         for key, value in attr_dict.items():
