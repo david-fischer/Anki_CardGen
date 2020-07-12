@@ -5,16 +5,22 @@ import operator
 import os
 import pickle
 import re
+import shutil
 from collections import defaultdict
 from datetime import datetime
+from glob import glob
 from time import sleep
 
+import imgkit
+import pystache
+from bs4 import BeautifulSoup
 from kivy.clock import mainthread
 from kivy.core.image import Image as KivyImage
 from kivy.core.window import Window
 from kivy.graphics.context_instructions import Scale, Translate
 from kivy.graphics.fbo import Fbo
 from kivy.graphics.gl_instructions import ClearBuffers, ClearColor
+from kivymd.app import MDApp
 from PIL import Image
 
 try:
@@ -27,9 +33,6 @@ except ModuleNotFoundError:
         "This means, words will not be lemmatized in the clean-up"
     )
     SPACY_IS_AVAILABLE = False
-
-from bs4 import BeautifulSoup
-from kivymd.app import MDApp
 
 COLOR2MEANING = {
     "highlight_yellow": "words",
@@ -182,6 +185,55 @@ def make_screenshots(window_size=[270 * 1.4, 480 * 1.4]):
     Window.size = old_size
 
 
+rend = pystache.Renderer(escape=lambda s: s)
+
+
+# TODO: path remove ..
+def save_card_htmls(word="casa"):
+    with CD("screenshots"):
+        field_dict = smart_loader(f"../data/{word}/{word}_card.json")
+        field_dict["Audio"] = "&#9658;"
+        shutil.copytree("../anki/", word)
+        with CD(word):
+            shutil.copy(f"../../data/{word}/{word}.jpg", ".")
+            paths = glob("*.html")
+            for path in paths:
+                print()
+                with open(path, "r") as file:
+                    html_template = file.read()
+                with open(path, "w") as file:
+                    file.write(rend.render(html_template, field_dict))
+
+
+def save_card_pngs(word="casa", size=(540, 960)):
+    # with CD(f"screenshots/{word}"):
+    paths = glob("anki/*.html")
+    field_dict = smart_loader(f"data/{word}/{word}_card.json")
+    field_dict["Audio"] = "&#9658;"
+    try:
+        shutil.copytree("anki/js", "/tmp/js/")
+        shutil.copytree("anki/css", "/tmp/css/")
+    except:
+        print("JS AND CSS FOLDER ALREADY EXIST IN /tmp/ skip copying.")
+    shutil.copy2(f"data/{word}/{word}.jpg", f"/tmp/{word}.jpg")
+    compress_img(f"/tmp/{word}.jpg", width=int(size[0]) - 12)
+    os.makedirs(f"screenshots/{word}", exist_ok=True)
+    for path in paths:
+        with open(path, "r") as file:
+            string = file.read()
+            string = rend.render(string, **field_dict)
+        imgkit.from_string(
+            string,
+            f'screenshots/{word}/{os.path.basename(path).replace(".html",".png")}',
+            options={
+                "width": int(size[0]),
+                "height": int(size[1]),
+                "allow": "./anki/*",
+                # "--allow": f"../../data/{word}"
+            },
+        )
+
+
 def selection_helper(base, id=None, props=None):
     if props is None:
         props = ["text"]
@@ -256,19 +308,20 @@ def tag_word_in_sentence(sentence, tag_word):
 # Image resizing
 
 
-def compress_img(path):
+def compress_img(path, width=512):
     img = Image.open(path)
-    if img.size[0] > 720:
-        resize = (720, 720 * img.size[1] // img.size[0])
+    if img.size[0] > width:
+        resize = (width, width * img.size[1] // img.size[0])
         img = img.resize(resize, Image.ANTIALIAS)
     img.save(path, optimize=True)
 
 
 if __name__ == "__main__":
-    out = word_list_from_kindle("test/test_data/kindle_export.html")
-    print(out)
-    with open("test/test_data/words.txt", "w") as file:
-        file.write("\n".join(out))
+    # pass
+    # out = word_list_from_kindle("test/test_data/kindle_export.html")
+    # print(out)
+    # with open("test/test_data/words.txt", "w") as file:
+    #     file.write("\n".join(out))
 
     # example = ("Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,"
     #            "normalmente térrea ou com dois andares. - Voltaire")
@@ -276,4 +329,6 @@ if __name__ == "__main__":
     #         "apesar de saberem que a têm. Test Casas, casa, casa.")
     #
     # print(tag_word(expl, "casa"))
-    # compress_img("data/casa/casa.jpg")
+    # compress_img("screenshots/casa/casa.jpg")
+    # save_card_htmls("casa")#
+    save_card_pngs("comecar", size=(270 * 1.4, 480 * 1.4))
