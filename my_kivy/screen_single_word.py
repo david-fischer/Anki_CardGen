@@ -102,7 +102,7 @@ def get_selection_dict():
         "Word": word.search_term,
         "Translation": ", ".join(out["translation"]),
         "Synonym": out["synonym"][0] if out["synonym"] else "",
-        "Image": f'<img src="{word.search_term}.jpg">',
+        "Image": f'<img src="{word.folder()}.jpg">',
         "Explanation": tag_word_in_sentence(out["explanation"][0], word.search_term)
         if out["explanation"]
         else "",
