@@ -123,18 +123,20 @@ card {
 blockquote {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   position: relative;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 300;
   font-style: italic;
-  line-height: 1.35;
-  letter-spacing: 0.08em; }
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin: 10px;
+}
 
 blockquote:before {
   position: absolute;
   left: -0.5em;
   content: '“'; }
 
-blockquote cite:before {
+blockquote:after {
   content: '”';
   margin-left: -0.05em; }
 
@@ -150,6 +152,11 @@ img {
   background: inherit;
   color: #002b36; }
 
+  blockquote .word {
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
 .synonym, .antonym {
   font-size: 25px;
   background: inherit;

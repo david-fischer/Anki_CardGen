@@ -4,7 +4,7 @@ import attr
 import bs4
 import genanki
 
-from utils import CD
+from utils import CD, smart_loader
 
 
 @attr.s
@@ -23,17 +23,25 @@ class HtmlLoader:
         js_tags = soup.select("script")
         for tag in js_tags:
             src = tag["src"]
+            # print(tag.attrs)
+            defer = "defer" in tag.attrs
             del tag.attrs
             with open(src, "r") as file:
                 tag.string = file.read()
-        return str(soup)
+            if defer:
+                tag.extract()
+                soup.body.append(tag)
+        # css_tags = soup.select("link[rel=stylesheet][href*=css]")
+        # for css in css_tags:
+        #     css.extract()
+        return str(soup.body)
 
 
 def model_from_html(name, template_names, id, css_path):
     templates_html = {
         template_name: {
             "front": HtmlLoader(f"{template_name}_front.html"),
-            "back":  HtmlLoader(f"{template_name}_back.html"),
+            "back": HtmlLoader(f"{template_name}_back.html"),
         }
         for template_name in template_names
     }
@@ -99,11 +107,14 @@ class AnkiObject:
 
 
 if __name__ == "__main__":
-    ankiobject = AnkiObject()
-    ankiobject.add_card(
-        Word="casa",
-        Audio="[sound:casa.mp3]",
-        Image='<img src="casa.jpg">',
-        media_files=["../data/casa/casa.mp3", "../data/casa/casa.jpg"],
-    )
-    ankiobject.write_apkg("output.apkg")
+    with CD(".."):
+        ankiobject = AnkiObject(root_dir="anki")
+        ankiobject.add_card(
+            **smart_loader("data/casa/casa_card.json")
+            # Word="casa",
+            # Audio="[sound:casa.mp3]",
+            # Image='<img src="casa.jpg">',
+            # media_files=["../data/casa/casa.mp3", "../data/casa/casa.jpg"],
+        )
+        ankiobject.write_apkg("output.apkg")
+    # HtmlLoader("meaning-pt_back.html").replace_includes_with_content()
