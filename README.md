@@ -1,4 +1,4 @@
-![Logo](assets/AnkiCardG
+![Logo](assets/AnkiCardGen_small.png)
 
 <h1 align="center">AnkiCardGen</h1>
 
@@ -22,21 +22,32 @@
     <td><img src="screenshots/example_word_images.png" width=270 height=480></td>
   </tr>
  </table>
-
-
-
-<!--
-
-<div align="center">
-  [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
-  [![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
-  [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
-</div>
-
--->
----
-[Kivy](https://kivy.org/) App (mobile/dektop) for quick generation of personalized flash cards for [Anki](https://apps.ankiweb.net/) containing:
+<details>
+<summary>Example Cards</summary>
+<table>
+  <tr>
+      <td>Word-Meaning Front</td>
+      <td>Meaning-Word Front</td>
+      <td>Back</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/casa/pt-meaning_front.png" width=270 height=480></td>
+    <td><img src="screenshots/casa/meaning-pt_front.png" width=270 height=480></td>
+    <td><img src="screenshots/casa/pt-meaning_back.png" width=270 height=480></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/convite/pt-meaning_front.png" width=270 height=480></td>
+    <td><img src="screenshots/convite/meaning-pt_front.png" width=270 height=480></td>
+    <td><img src="screenshots/convite/pt-meaning_back.png" width=270 height=480></td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/comecar/pt-meaning_front.png" width=270 height=480></td>
+    <td><img src="screenshots/comecar/meaning-pt_front.png" width=270 height=480></td>
+    <td><img src="screenshots/comecar/pt-meaning_back.png" width=270 height=480></td>
+  </tr>
+ </table>
+</details>
+[Kivy](https://kivy.org/) App (mobile/dektop) for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing:
 
 * Image
 * Audio
@@ -47,8 +58,8 @@
 Currently supported languages:
 * **Brazilian Portuguese**
 
-
 ## ❓ About 
+
 Anki is a powerful tool for reviewing flash cards, in particular for language learning.
 Having flash cards with multiple cues (image, audio, example-sentence, ...) is beneficial, but one does not want to spend a large amount of time in the creation. This project aims to provide the solution to this process by automatically downloading and processing data for a given word in the target language. Then it offers the user a choice of various options for the content of the card.
 This allows quick generation of high-quality, personalized cards.
@@ -58,12 +69,12 @@ This allows quick generation of high-quality, personalized cards.
 * [x] Importing a list of words
     * [x] User interface to load
         * [x] from exported kindle-notes in html-format
-        * [ ] from simple text file
+        * [x] from simple text file
     * [x] Pre-Processing
         * [x] Extracting the words
         * [x] Removal of punctuation
         * [x] Get dictionary form of word **(only desktop)**
-    * [ ] Clicking on loaded words to start generation-process
+    * [x] Clicking on loaded words to start generation-process
 * [x] Processing single words
     * [x] Fetching necessary data to build card
     * [x] Provide user interface to select content of card
