@@ -63,7 +63,7 @@ autoapi_ignore = [
 autoapi_generate_api_docs = True
 
 autodoc_mock_imports = ["kivymd"]
-autodoc_inherit_docstrings = False
+autodoc_inherit_docstrings = True
 autodoc_default_options = {
     "members": True,
     "member-order": "bysource",
@@ -87,12 +87,15 @@ language = "en"
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+pygments_style = "monokai"
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+# html_theme = "alabaster"
+html_theme = "sphinx_rtd_theme"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -111,4 +114,5 @@ intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "kivy": ("https://kivy.org/doc/stable/", None),
     "kivymd": ("https://kivymd.readthedocs.io/en/0.104.1/", None),
+    "requests": ("https://requests.readthedocs.io/en/master/", None),
 }

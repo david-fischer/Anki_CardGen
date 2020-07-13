@@ -1,35 +1,155 @@
 
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ACG.utils &mdash; ACG 0.3.0 documentation</title>
+  
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>ACG.utils &#8212; ACG 0.3.0 documentation</title>
-    <link href="../../_static/alabaster.css" rel="stylesheet" type="text/css" />
-    <link href="../../_static/pygments.css" rel="stylesheet" type="text/css" />
-      <link href="../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
-    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-    <script src="../../_static/jquery.js"></script>
-    <script src="../../_static/underscore.js"></script>
-    <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
-    <link href="../../genindex.html" rel="index" title="Index" />
-    <link href="../../search.html" rel="search" title="Search" />
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link href="../../_static/custom.css" rel="stylesheet" type="text/css" />
-  
-  
-  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>ACG.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for ACG.utils</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">csv</span>
@@ -39,9 +159,22 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
+<span class="kn">import</span> <span class="nn">imgkit</span>
+<span class="kn">import</span> <span class="nn">pystache</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">mainthread</span>
+<span class="kn">from</span> <span class="nn">kivy.core.image</span> <span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">KivyImage</span>
+<span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
+<span class="kn">from</span> <span class="nn">kivy.graphics.context_instructions</span> <span class="kn">import</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">Translate</span>
+<span class="kn">from</span> <span class="nn">kivy.graphics.fbo</span> <span class="kn">import</span> <span class="n">Fbo</span>
+<span class="kn">from</span> <span class="nn">kivy.graphics.gl_instructions</span> <span class="kn">import</span> <span class="n">ClearBuffers</span><span class="p">,</span> <span class="n">ClearColor</span>
+<span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
 <span class="k">try</span><span class="p">:</span>
@@ -55,13 +188,10 @@
     <span class="p">)</span>
     <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
 
-<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
-
 <span class="n">COLOR2MEANING</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;highlight_yellow&quot;</span><span class="p">:</span> <span class="s2">&quot;words&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;highlight_blue&quot;</span><span class="p">:</span>   <span class="s2">&quot;phrases&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;highlight_pink&quot;</span><span class="p">:</span>   <span class="s2">&quot;sentences&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_blue&quot;</span><span class="p">:</span> <span class="s2">&quot;phrases&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;highlight_pink&quot;</span><span class="p">:</span> <span class="s2">&quot;sentences&quot;</span><span class="p">,</span>
     <span class="s2">&quot;highlight_orange&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 <span class="n">MEANING2COLOR</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">COLOR2MEANING</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
@@ -121,7 +251,7 @@
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
         <span class="n">save_dict_to_csv</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
@@ -153,11 +283,112 @@
     <span class="k">return</span> <span class="n">obj</span></div>
 
 
+<div class="viewcode-block" id="sleep_decorator"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.sleep_decorator">[docs]</a><span class="k">def</span> <span class="nf">sleep_decorator</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">the_real_decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+            <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">wrapper</span>
+
+    <span class="k">return</span> <span class="n">the_real_decorator</span></div>
+
+
+<div class="viewcode-block" id="screenshot"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.screenshot">[docs]</a><span class="nd">@sleep_decorator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nd">@mainthread</span>
+<span class="k">def</span> <span class="nf">screenshot</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="n">root_widget</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span>
+
+    <span class="n">fbo</span> <span class="o">=</span> <span class="n">Fbo</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">root_widget</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">root_widget</span><span class="o">.</span><span class="n">height</span><span class="p">),</span> <span class="n">with_stencilbuffer</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
+
+    <span class="k">with</span> <span class="n">fbo</span><span class="p">:</span>
+        <span class="n">ClearColor</span><span class="p">(</span><span class="o">*</span><span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_normal</span><span class="p">)</span>
+        <span class="n">ClearBuffers</span><span class="p">()</span>
+        <span class="n">Scale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">Translate</span><span class="p">(</span><span class="o">-</span><span class="n">root_widget</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">root_widget</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">root_widget</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">fbo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">root_widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+    <span class="n">fbo</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">KivyImage</span><span class="p">(</span><span class="n">fbo</span><span class="o">.</span><span class="n">texture</span><span class="p">)</span>
+
+    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="make_screenshots"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.make_screenshots">[docs]</a><span class="k">def</span> <span class="nf">make_screenshots</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="p">[</span><span class="mi">270</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">480</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">]):</span>
+    <span class="n">old_size</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">Window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">window_size</span>
+    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;drawer_list&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+        <span class="n">item</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span>
+        <span class="n">screenshot</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;screenshots/</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">screen_name</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+    <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">)</span>
+    <span class="n">screenshot</span><span class="p">(</span><span class="s2">&quot;screenshots/nav_drawer_open.png&quot;</span><span class="p">)</span>
+    <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span>
+    <span class="c1"># Word</span>
+    <span class="n">word_prop</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;screen_single_word/edit_tab/word_prop/&quot;</span><span class="p">)</span>
+    <span class="n">word_prop</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">search_field</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;casa&quot;</span>
+    <span class="n">word_prop</span><span class="o">.</span><span class="n">load_or_search</span><span class="p">(</span><span class="s2">&quot;casa&quot;</span><span class="p">)</span>
+    <span class="n">screenshot</span><span class="p">(</span><span class="s2">&quot;screenshots/example_word_text.png&quot;</span><span class="p">)</span>
+    <span class="n">tabs</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;screen_single_word/tabs&quot;</span><span class="p">)</span>
+    <span class="n">tabs</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># (tabs.carousel, 1)</span>
+    <span class="n">screenshot</span><span class="p">(</span><span class="s2">&quot;screenshots/example_word_images.png&quot;</span><span class="p">)</span>
+    <span class="n">Window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">old_size</span></div>
+
+
+<span class="n">rend</span> <span class="o">=</span> <span class="n">pystache</span><span class="o">.</span><span class="n">Renderer</span><span class="p">(</span><span class="n">escape</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span>
+
+
+<span class="c1"># TODO: path remove ..</span>
+<div class="viewcode-block" id="save_card_htmls"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.save_card_htmls">[docs]</a><span class="k">def</span> <span class="nf">save_card_htmls</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="s2">&quot;screenshots&quot;</span><span class="p">):</span>
+        <span class="n">field_dict</span> <span class="o">=</span> <span class="n">smart_loader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../data/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">_card.json&quot;</span><span class="p">)</span>
+        <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;Audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&amp;#9658;&quot;</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;../anki/&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../../data/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">)</span>
+            <span class="n">paths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.html&quot;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">()</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">html_template</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rend</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">field_dict</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="save_card_pngs"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.save_card_pngs">[docs]</a><span class="k">def</span> <span class="nf">save_card_pngs</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">540</span><span class="p">,</span> <span class="mi">960</span><span class="p">)):</span>
+    <span class="c1"># with CD(f&quot;screenshots/{word}&quot;):</span>
+    <span class="n">paths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;anki/*.html&quot;</span><span class="p">)</span>
+    <span class="n">field_dict</span> <span class="o">=</span> <span class="n">smart_loader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">_card.json&quot;</span><span class="p">)</span>
+    <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;Audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&amp;#9658;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/js&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/js/&quot;</span><span class="p">)</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/css&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/css/&quot;</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;JS AND CSS FOLDER ALREADY EXIST IN /tmp/ skip copying.&quot;</span><span class="p">)</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;data/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;/tmp/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">)</span>
+    <span class="n">compress_img</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/tmp/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">12</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">string</span> <span class="o">=</span> <span class="n">rend</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">**</span><span class="n">field_dict</span><span class="p">)</span>
+        <span class="n">imgkit</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span>
+            <span class="n">string</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
+                <span class="s2">&quot;allow&quot;</span><span class="p">:</span> <span class="s2">&quot;./anki/*&quot;</span><span class="p">,</span>
+                <span class="c1"># &quot;--allow&quot;: f&quot;../../data/{word}&quot;</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="selection_helper"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.selection_helper">[docs]</a><span class="k">def</span> <span class="nf">selection_helper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">props</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
     <span class="n">base_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_obj</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="nb">property</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">props</span><span class="p">]</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_obj</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">property_name</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">props</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">iconcat</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="p">[])</span></div>
 
 
@@ -195,6 +426,12 @@
     <span class="k">return</span> <span class="n">dict_from_kindle_export</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="n">color</span><span class="p">]</span></div>
 
 
+<div class="viewcode-block" id="word_list_from_txt"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.word_list_from_txt">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_txt</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">words</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">words</span></div>
+
+
 <div class="viewcode-block" id="tag_word_in_sentence"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.tag_word_in_sentence">[docs]</a><span class="k">def</span> <span class="nf">tag_word_in_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">tag_word</span><span class="p">):</span>
     <span class="n">words</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">words</span> <span class="o">=</span> <span class="n">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -221,16 +458,20 @@
 <span class="c1"># Image resizing</span>
 
 
-<div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../../ACG.utils.html#ACG.utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">720</span><span class="p">:</span>
-        <span class="n">resize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">720</span><span class="p">,</span> <span class="mi">720</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
+        <span class="n">resize</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">width</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">resize</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span>
     <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="c1"># out = word_list_from_kindle(&quot;test/test_data/Portuguese Short Stories for Beginners 20 Captiva - Notizbuch.html&quot;)</span>
+    <span class="c1"># pass</span>
+    <span class="c1"># out = word_list_from_kindle(&quot;test/test_data/kindle_export.html&quot;)</span>
+    <span class="c1"># print(out)</span>
+    <span class="c1"># with open(&quot;test/test_data/words.txt&quot;, &quot;w&quot;) as file:</span>
+    <span class="c1">#     file.write(&quot;\n&quot;.join(out))</span>
 
     <span class="c1"># example = (&quot;Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,&quot;</span>
     <span class="c1">#            &quot;normalmente térrea ou com dois andares. - Voltaire&quot;)</span>
@@ -238,76 +479,55 @@
     <span class="c1">#         &quot;apesar de saberem que a têm. Test Casas, casa, casa.&quot;)</span>
     <span class="c1">#</span>
     <span class="c1"># print(tag_word(expl, &quot;casa&quot;))</span>
-    <span class="n">compress_img</span><span class="p">(</span><span class="s2">&quot;data/casa/casa.jpg&quot;</span><span class="p">)</span>
+    <span class="c1"># compress_img(&quot;screenshots/casa/casa.jpg&quot;)</span>
+    <span class="c1"># save_card_htmls(&quot;casa&quot;)#</span>
+    <span class="n">save_card_pngs</span><span class="p">(</span><span class="s2">&quot;comecar&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">270</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">480</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">))</span>
 </pre></div>
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
-        <div class="sphinxsidebarwrapper">
-            <h1 class="logo"><a href="../../index.html">ACG</a></h1>
+          <footer>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
 
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../ACG.anki.html">ACG.anki</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ACG.my_kivy.html">ACG.my_kivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ACG.word_requests.html">ACG.word_requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ACG.main.html">ACG.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../ACG.utils.html">ACG.utils</a></li>
-    <li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../index.html">Documentation overview</a><ul>
-  <li><a href="../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" role="search" style="display: none">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form action="../../search.html" class="search" method="get">
-      <input aria-labelledby="searchlabel" name="q" type="text" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, David Fischer.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>
