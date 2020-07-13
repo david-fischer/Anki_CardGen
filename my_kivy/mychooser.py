@@ -9,7 +9,8 @@ from kivy.properties import (
     ListProperty,
     NumericProperty,
     ObjectProperty,
-    Property, StringProperty,
+    Property,
+    StringProperty,
 )
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
@@ -55,10 +56,11 @@ class MultiStateBehaviour:
 
 
 class CheckBehavior(MultiStateBehaviour):
-
     def __init__(self, **kwargs):
         self.current_state = False
-        self.state_dicts = {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
+        self.state_dicts = (
+            {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
+        )
         super(CheckBehavior, self).__init__(**kwargs)
 
 
@@ -114,8 +116,11 @@ class ThemableColorChangeBehavior:
 
     def __post_init__(self, *_):
         self.state_dicts[True]["bg_color"] = self.theme_cls.primary_color
-        self.state_dicts[False]["bg_color"] = self.theme_cls.bg_darkest if self.theme_cls.theme_style == "Light" else \
-            self.theme_cls.bg_light
+        self.state_dicts[False]["bg_color"] = (
+            self.theme_cls.bg_darkest
+            if self.theme_cls.theme_style == "Light"
+            else self.theme_cls.bg_light
+        )
         self.state_dicts[True]["text_color"] = [1, 1, 1, 1]
         self.state_dicts[False]["text_color"] = self.theme_cls.secondary_text_color
         super(ThemableColorChangeBehavior, self).__post_init__()
@@ -132,8 +137,14 @@ class MyTransCard(TranslationOnCheckBehavior, MyCheckCard):
     pass
 
 
-class MyCheckChip(CircularRippleBehavior, ButtonBehavior, ThemableColorChangeBehavior, CheckBehavior,
-                  ThemableBehavior, BoxLayout):
+class MyCheckChip(
+    CircularRippleBehavior,
+    ButtonBehavior,
+    ThemableColorChangeBehavior,
+    CheckBehavior,
+    ThemableBehavior,
+    BoxLayout,
+):
     icon = StringProperty("")
     text = StringProperty("Chip")
 
@@ -166,8 +177,8 @@ class MyCheckImageTile(CheckBehavior, SmartTile):
 
     def __init__(self, **kwargs):
         self.state_dicts = {
-            True:  {"opacity": 1, "border_width": 3},
-            False: {"opacity": 0.8, "border_width": 0.01}
+            True: {"opacity": 1, "border_width": 3},
+            False: {"opacity": 0.8, "border_width": 0.01},
         }
         super(MyCheckImageTile, self).__init__(**kwargs)
 
@@ -206,30 +217,28 @@ FloatLayout:
     TRANS_CARD_STRING = (
         "BoxLayout:\n"
         "    MyTransCardContainer:\n"
-        "        element_dicts: [{\"text_orig\":(\"text_orig_\"+str(i))*10,\"text_trans\": (\"text_trans_\"+str("
-        "i))*10,  \"current_state\": i%2==0} for i in range(10)]"
+        '        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
+        'i))*10,  "current_state": i%2==0} for i in range(10)]'
     )
 
     CHECK_CARD_STRING = (
         "BoxLayout:\n"
         "    MyCheckCardContainer:\n"
-        "        element_dicts: [{\"text\":(\"text_orig_\"+str(i))*10, \"current_state\":True} for i in range(10)]"
+        '        element_dicts: [{"text":("text_orig_"+str(i))*10, "current_state":True} for i in range(10)]'
     )
 
     TRANS_CHIP_STRING = (
         "\n"
         "BoxLayout:\n"
         "    MyTransChipContainer:\n"
-        "        element_dicts: [{\"text_orig\":(\"text_orig_\"+str(i))*10,\"text_trans\": (\"text_trans_\"+str("
+        '        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
         "i))*10} for i in range(10)]"
     )
-
 
     class TestApp(MDApp):
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
             return Builder.load_string(TRANS_CHIP_STRING)
-
 
     TestApp().run()
