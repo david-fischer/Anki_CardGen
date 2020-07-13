@@ -1,6 +1,15 @@
+"""
+This module provides different parsers (children of :class:`Parser`) to obtain the necessary data to fill the
+Anki-cards.
+
+Each parser returns a dict, that can directly be used by the :meth:`pt_word.Word.update_from_dict` method of the
+:class:`pt_word.Word`
+class.
+"""
 import re
 from collections import defaultdict
 from pprint import pprint
+from typing import Any, Dict
 from urllib.parse import quote
 
 import attr
@@ -13,6 +22,9 @@ DEFAULT_HEADERS = {
     "Chrome/56.0.2924.87 Safari/537.36",
     "referrer": "https://google.de",
 }
+"""
+Default headers for the :class:`Parser` class.
+"""
 
 REVERSO_HEADERS = {
     "user-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0",
@@ -34,29 +46,73 @@ LINGUEE_HEADERS = {
 }
 
 
-@attr.s
+@attr.s(auto_attribs=True)
 class Parser:
-    phrase = attr.ib()
-    from_lang = attr.ib()
-    to_lang = attr.ib()
-    base_url = attr.ib(default="")
-    headers = attr.ib(default=DEFAULT_HEADERS)
+    """Base class for parsers.
+
+    Main functionality is the result_dict function.
+    """
+
+    phrase: str
+    """The word or phrase to search the site for."""
+    from_lang: str
+    """Target language."""
+    to_lang: str
+    """Source Language."""
+    base_url = ""
+    """
+    URL to make request to. Can contain every class attribute.
+    E.g. https://some.url/{phrase}/dest={from_lang};src={to_lang}.html
+    """
+    headers: dict = DEFAULT_HEADERS
+    """Headers for the request. Defaults to :const:`DEFAULT_HEADERS`."""
 
     def setup(self):
+        """Stuff that needs to be executed before :meth:`url` is called."""
         self.phrase = quote(self.phrase.replace(" ", "+"))
 
     def url(self):
+        """Get url for http-request.
+
+        Returns:
+          :  :attr:`base_url` formatted with all class attributes.
+        """
         return self.base_url.format(**vars(self))
 
     def make_request(self, url=None):
+        """Uses :attr:`headers` to make an http-request via :meth:`~requests.get`
+
+        Args:
+          url: If None, will be set to :meth:`url`. (Default value = None)
+
+        Returns:
+          : :class:`~requests.Response` object
+
+        """
         if url is None:
             url = self.url()
         return requests.get(url, headers=self.headers)
 
-    def parse_response(self, response):
-        """placeholder to implement in subclasses"""
+    def parse_response(self, response: requests.Response) -> Dict[str, Any]:
+        """
+
+
+        Args:
+          response (:class:`~requests.Response`): Response to parse.
+
+        Returns:
+          Dictionary with extracted information.
+        """
 
     def result_dict(self, phrase=None):
+        """
+
+        Args:
+          phrase: If None, uses :attr:`phrase`. (Default value = None)
+
+        Returns:
+            Result of :meth:`parse_response`.
+        """
         if phrase is not None:
             self.phrase = phrase
         self.setup()
@@ -65,15 +121,18 @@ class Parser:
         return self.parse_response(resp)
 
 
-@attr.s
+@attr.s(auto_attribs=True)
 class LingueeParser(Parser):
-    base_url = attr.ib(
-        default="https://linguee-api.herokuapp.com/api?q={phrase}&src={from_lang}&dst={to_lang}"
+    """Uses Linguee to obtain: translation, word_type, gender and audio_url"""
+
+    base_url = (
+        "https://linguee-api.herokuapp.com/api?q={phrase}&src={from_lang}&dst={to_lang}"
     )
     lang_dict = {"pt": "Brazilian Portuguese"}
     audio_base_url = "https://www.linguee.de/mp3/%s.mp3"
 
-    def parse_response(self, response):
+    def parse_response(self, response: requests.Response) -> Dict[str, Any]:
+        """Extracts translation, word_type, gender, audio_url"""
         response = response.json()
         try:
             match = response["exact_matches"][0]
@@ -103,14 +162,19 @@ class LingueeParser(Parser):
         }
 
 
-@attr.s
+@attr.s(auto_attribs=True)
 class DicioParser(Parser):
-    base_url = attr.ib("https://www.dicio.com.br/pesquisa.php?q={phrase}/")
+    """Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html"""
+
+    base_url = "https://www.dicio.com.br/pesquisa.php?q={phrase}/"
 
     def setup(self):
         self.phrase = quote(self.phrase.replace(" ", "-"))
 
     def parse_response(self, response):
+        """
+        Extracts explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html
+        """
         bs = BeautifulSoup(response.content, "lxml")
         suggestion = bs.select("a._sugg")
         if suggestion:
@@ -134,9 +198,9 @@ class DicioParser(Parser):
         )
         conj_table_html = ""
         try:
-            conj_table_df = self.conj_df(bs)
-            conj_table_html = self.html_from_conj_df(conj_table_df)
-        except:
+            conj_table_df = self._conj_df(bs)
+            conj_table_html = self._html_from_conj_df(conj_table_df)
+        except KeyError:
             print("no conjugation table obtained :(")
         return {
             "explanations": explanations,
@@ -147,7 +211,8 @@ class DicioParser(Parser):
             "conj_table_html": conj_table_html,
         }
 
-    def conj_df(self, bs_obj):
+    @staticmethod
+    def _conj_df(bs_obj):
         html_string = re.sub(r"(<a[^>]*>)", "", bs_obj.prettify())
         bs = BeautifulSoup(html_string, "lxml")
         conjugation_table_dict = defaultdict(dict)
@@ -170,7 +235,8 @@ class DicioParser(Parser):
             ["eu", "ele", "nós", "eles"]
         ]
 
-    def html_from_conj_df(self, conj_table_df):
+    @staticmethod
+    def _html_from_conj_df(conj_table_df):
         return "\n".join(
             [
                 conj_table_df.to_html(
@@ -185,9 +251,11 @@ class DicioParser(Parser):
         )
 
 
-@attr.s
+@attr.s(auto_attribs=True)
 class ReversoParser(Parser):
-    base_url = attr.ib(default="https://context.reverso.net/{language_string}/{phrase}")
+    """Uses Reverso to obtain: examples"""
+
+    base_url = "https://context.reverso.net/{language_string}/{phrase}"
     lang_dict = {"pt": {"de": "traducao/portugues-alemao"}}
     language_string = None
     headers = REVERSO_HEADERS
@@ -196,7 +264,15 @@ class ReversoParser(Parser):
         self.phrase = quote(self.phrase)
         self.language_string = self.lang_dict[self.from_lang][self.to_lang]
 
-    def parse_response(self, response):
+    def parse_response(self, response: requests.Response) -> Dict[str, list]:
+        """
+
+        Args:
+            response (:class:`~requests.Response`):
+
+        Returns:
+            : Dictionary {"examples": [[ex_1_from_lang,ex_1_to_lang],...]}
+        """
         bs = BeautifulSoup(response.content, features="lxml")
         # test = bs.select_one("div.example")
         # print(test.select_one("div.src").text.strip())
@@ -215,6 +291,9 @@ class ReversoParser(Parser):
 
 
 def get_element_after_regex(bs_obj, regex):
+    """
+    Get bs_object after element which text-attribute matches a given regex.
+    """
     match = bs_obj.body.find(text=re.compile(regex))
     if match is None:
         return BeautifulSoup(features="lxml")
@@ -222,6 +301,7 @@ def get_element_after_regex(bs_obj, regex):
 
 
 def to_stripped_multiline_str(bs_obj):
+    """Strips each line of a string of leading and trailing whitespace."""
     return "\n".join([line.strip() for line in bs_obj.text.strip().splitlines()])
 
 
@@ -229,30 +309,36 @@ def to_stripped_multiline_str(bs_obj):
 
 
 class NoMatchError(Exception):
+    """Error if no match can be found for the current search."""
+
     def __init__(self, site=""):
         super(NoMatchError, self).__init__()
         self.site = site
 
 
-def get_soup_object(url, headers=None):
-    if headers is None:
-        headers = DEFAULT_HEADERS
-    return BeautifulSoup(requests.get(url, headers=headers).content, features="lxml")
-
-
 def linguee_did_you_mean(search_term):
-    bs = get_soup_object(
+    """
+    Exctracts suggested corrections if the original search is not successful.
+
+    Args:
+      search_term: original search_term
+
+    Returns:
+        List of possible corrections for the original search_term.
+    """
+    response = requests.get(
         f"https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&query={search_term}",
         headers=LINGUEE_HEADERS,
     )
+    bs = BeautifulSoup(response.content, "lxml")
     return [element.text for element in bs.select("span.corrected")]
 
 
 if __name__ == "__main__":
     TEST_WORD = ""
     # print(linguee_did_you_mean("comecar"))
-    phrase = "começar"
-    RP = ReversoParser(phrase=phrase, from_lang="pt", to_lang="de")
-    DP = DicioParser(phrase=phrase, from_lang="pt", to_lang="de")
-    LP = LingueeParser(phrase=phrase, from_lang="pt", to_lang="de")
+    PHRASE = "começar"
+    RP = ReversoParser(phrase=PHRASE, from_lang="pt", to_lang="de")
+    DP = DicioParser(phrase=PHRASE, from_lang="pt", to_lang="de")
+    LP = LingueeParser(phrase=PHRASE, from_lang="pt", to_lang="de")
     pprint(LP.result_dict())
