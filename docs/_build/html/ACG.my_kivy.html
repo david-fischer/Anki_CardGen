@@ -1,74 +1,465 @@
 
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ACG.my_kivy &mdash; ACG 0.3.0 documentation</title>
+  
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>ACG.my_kivy &#8212; ACG 0.3.0 documentation</title>
-    <link href="_static/alabaster.css" rel="stylesheet" type="text/css" />
-    <link href="_static/pygments.css" rel="stylesheet" type="text/css" />
-      <link href="_static/graphviz.css" rel="stylesheet" type="text/css"/>
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
-    <link href="genindex.html" rel="index" title="Index" />
-    <link href="search.html" rel="search" title="Search" />
-    <link href="ACG.word_requests.html" rel="next" title="ACG.word_requests" />
-    <link href="ACG.anki.html" rel="prev" title="ACG.anki" />
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ACG.word_requests" href="ACG.word_requests.html" />
+    <link rel="prev" title="ACG.anki" href="ACG.anki.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link href="_static/custom.css" rel="stylesheet" type="text/css" />
-  
-  
-  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ACG.my_kivy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.mychooser">ACG.my_kivy.mychooser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.screen_queue">ACG.my_kivy.screen_queue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.screen_single_word">ACG.my_kivy.screen_single_word</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.scroll_list">ACG.my_kivy.scroll_list</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.MultiStateBehaviour">MultiStateBehaviour</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.current_state">current_state</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.state_dicts">state_dicts</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.animated_properties">animated_properties</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.on_current_state">on_current_state</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckBehavior">CheckBehavior</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer">CheckContainer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer.check_one">check_one</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer.element_dicts">element_dicts</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer.CheckElementObject">CheckElementObject</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer.conditional_uncheck">conditional_uncheck</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer.get_checked">get_checked</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer.on_element_dicts">on_element_dicts</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.TranslationOnCheckBehavior">TranslationOnCheckBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.TranslationOnCheckBehavior.text_orig">text_orig</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.TranslationOnCheckBehavior.text_trans">text_trans</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior">ThemableColorChangeBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior.text_color">text_color</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior.bg_color">bg_color</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior.animated_properties">animated_properties</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.worker_single_word">worker_single_word</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.start_workers">start_workers</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.queue_word">queue_word</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.start_downloading">start_downloading</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.pause_downloading">pause_downloading</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.is_duplicate">is_duplicate</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.choose_file_to_import">choose_file_to_import</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.click_on_queue_item">click_on_queue_item</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.click_on_done_item">click_on_done_item</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.click_on_error_item">click_on_error_item</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.import_from">import_from</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.choose_replacements_dialog">choose_replacements_dialog</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.WordProperties">WordProperties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.WordProperties.refresh_data">refresh_data</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.WordProperties.accept_suggestion">accept_suggestion</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.WordProperties.load_or_search">load_or_search</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.get_selection_dict">get_selection_dict</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.confirm_choice">confirm_choice</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList">ScrollList</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList.item_type">item_type</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList.item_dicts">item_dicts</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList.items">items</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList.list">list</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList.callback">callback</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#ACG.my_kivy.scroll_list.ScrollList.on_item_dicts">on_item_dicts</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.scroll_list.schedule">schedule</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>ACG.my_kivy</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/ACG.my_kivy.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <div class="section" id="acg-my-kivy">
 <h1>ACG.my_kivy<a class="headerlink" href="#acg-my-kivy" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-ACG.my_kivy.mychooser">
 <span id="acg-my-kivy-mychooser"></span><h2>ACG.my_kivy.mychooser<a class="headerlink" href="#module-ACG.my_kivy.mychooser" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="ACG.my_kivy.mychooser.CheckBehavior">
-<em class="property">class </em><code class="sig-prename descclassname">ACG.my_kivy.mychooser.</code><code class="sig-name descname">CheckBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#CheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dt id="ACG.my_kivy.mychooser.MultiStateBehaviour">
+<em class="property">class </em><code class="sig-prename descclassname">ACG.my_kivy.mychooser.</code><code class="sig-name descname">MultiStateBehaviour</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#MultiStateBehaviour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.MultiStateBehaviour" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="py attribute">
-<dt id="ACG.my_kivy.mychooser.CheckBehavior.checked">
-<code class="sig-name descname">checked</code><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckBehavior.checked" title="Permalink to this definition">¶</a></dt>
-    <dd><p>Current state of widget</p>
-    </dd></dl>
+<dt id="ACG.my_kivy.mychooser.MultiStateBehaviour.current_state">
+<code class="sig-name descname">current_state</code><a class="headerlink" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Property(defaultvalue, <a href="#id1"><span class="problematic" id="id2">**</span></a>kw)
+Base class for building more complex properties.</p>
+<blockquote>
+<div><p>This class handles all the basic setters and getters, None type handling,
+the observer list and storage initialisation. This class should not be
+directly instantiated.</p>
+<p>By default, a <code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code> always takes a default value:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+
+    <span class="n">hello</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="s1">&#39;Hello world&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The default value must be a value that agrees with the Property type. For
+example, you can’t set a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code> because the
+StringProperty will check the default value.</p>
+<p>None is a special case: you can set the default value of a Property to
+None, but you can’t set None to a property afterward.  If you really want
+to do that, you must declare the Property with <cite>allownone=True</cite>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyObject</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+
+    <span class="n">hello</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">allownone</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># then later</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">MyObject</span><span class="p">()</span>
+<span class="n">a</span><span class="o">.</span><span class="n">hello</span> <span class="o">=</span> <span class="s1">&#39;bleh&#39;</span> <span class="c1"># working</span>
+<span class="n">a</span><span class="o">.</span><span class="n">hello</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># working too, because allownone is True.</span>
+</pre></div>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><cite>default</cite>:</dt><dd><p>Specifies the default value for the property.</p>
+</dd>
+<dt><cite>**kwargs</cite>:</dt><dd><p>If the parameters include <cite>errorhandler</cite>, this should be a callable
+which must take a single argument and return a valid substitute
+value.</p>
+<p>If the parameters include <cite>errorvalue</cite>, this should be an object.
+If set, it will replace an invalid property value (overrides
+errorhandler).</p>
+<p>If the parameters include <cite>force_dispatch</cite>, it should be a boolean.
+If True, no value comparison will be done, so the property event
+will be dispatched even if the new value matches the old value (by
+default identical values are not dispatched to avoid infinite
+recursion in two-way binds). Be careful, this is for advanced use only.</p>
+<dl class="simple">
+<dt><cite>comparator</cite>: callable or None</dt><dd><p>When not None, it’s called with two values to be compared.
+The function returns whether they are considered the same.</p>
+</dd>
+<dt><cite>deprecated</cite>: bool</dt><dd><p>When True, a warning will be logged if the property is accessed
+or set. Defaults to False.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.4.2: </span>Parameters errorhandler and errorvalue added</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.9.0: </span>Parameter force_dispatch added</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0: </span>Parameter deprecated added</p>
+</div>
+</div></blockquote>
+</dd></dl>
 
 <dl class="py attribute">
-<dt id="ACG.my_kivy.mychooser.CheckBehavior.checked_state">
-<code class="sig-name descname">checked_state</code><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckBehavior.checked_state" title="Permalink to this definition">¶</a></dt>
-    <dd><p>DictProperty that should be set if checked is True</p>
-    </dd></dl>
+<dt id="ACG.my_kivy.mychooser.MultiStateBehaviour.state_dicts">
+<code class="sig-name descname">state_dicts</code><a class="headerlink" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.state_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p>DictProperty(defaultvalue=0, rebind=False, <a href="#id3"><span class="problematic" id="id4">**</span></a>kw)
+Property that represents a dict.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: dict, defaults to {}</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>See <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code> for details.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.9.0: </span><cite>rebind</cite> has been introduced.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Similar to <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, when assigning a dict to a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code>, the dict stored in the property is a shallow copy of the
+dict and not the original dict. See <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code> for details.</p>
+</div>
+</div></blockquote>
+</dd></dl>
 
 <dl class="py attribute">
-<dt id="ACG.my_kivy.mychooser.CheckBehavior.unchecked_state">
-<code class="sig-name descname">unchecked_state</code><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckBehavior.unchecked_state" title="Permalink to this definition">¶</a></dt>
-    <dd><p>value} that should be set if checked is False</p>
-        <dl class="field-list simple">
-            <dt class="field-odd">Type</dt>
-            <dd class="field-odd"><p>Dictionary {attr</p>
-            </dd>
-        </dl>
-    </dd></dl>
+<dt id="ACG.my_kivy.mychooser.MultiStateBehaviour.animated_properties">
+<code class="sig-name descname">animated_properties</code><a class="headerlink" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.animated_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id5"><span class="problematic" id="id6">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
+the property is a shallow copy of the list and not the original list. This can
+be demonstrated with the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;hi&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">my_list</span> <span class="o">=</span> <span class="n">my_list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span> <span class="ow">is</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;hello&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;hello&#39;}]</span>
+</pre></div>
+</div>
+<p>However, changes to nested levels will affect the property as well,
+since the property uses a shallow copy of my_list.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;hi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bye&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;bye&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;bye&#39;}]</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</dd></dl>
 
 <dl class="py method">
-<dt id="ACG.my_kivy.mychooser.CheckBehavior.on_checked">
-<code class="sig-name descname">on_checked</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#CheckBehavior.on_checked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckBehavior.on_checked" title="Permalink to this definition">¶</a></dt>
+<dt id="ACG.my_kivy.mychooser.MultiStateBehaviour.on_current_state">
+<code class="sig-name descname">on_current_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#MultiStateBehaviour.on_current_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.MultiStateBehaviour.on_current_state" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt id="ACG.my_kivy.mychooser.CheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">ACG.my_kivy.mychooser.</code><code class="sig-name descname">CheckBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#CheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#ACG.my_kivy.mychooser.MultiStateBehaviour" title="ACG.my_kivy.mychooser.MultiStateBehaviour"><code class="xref py py-class docutils literal notranslate"><span class="pre">ACG.my_kivy.mychooser.MultiStateBehaviour</span></code></a></p>
 </dd></dl>
 
 <dl class="py class">
@@ -78,40 +469,34 @@
 <dl class="py attribute">
 <dt id="ACG.my_kivy.mychooser.CheckContainer.check_one">
 <code class="sig-name descname">check_one</code><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckContainer.check_one" title="Permalink to this definition">¶</a></dt>
-    <dd><p>BooleanProperty(defaultvalue=True, <a href="#id1"><span class="problematic" id="id2">**</span></a>kw)
-        Property that represents only a boolean value.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list simple">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl class="simple">
-                            <dt><cite>defaultvalue</cite>: boolean</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                        </dl>
-                    </dd>
-                </dl>
+<dd><p>BooleanProperty(defaultvalue=True, <a href="#id7"><span class="problematic" id="id8">**</span></a>kw)
+Property that represents only a boolean value.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: boolean</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </div></blockquote>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="ACG.my_kivy.mychooser.CheckContainer.element_dicts">
 <code class="sig-name descname">element_dicts</code><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckContainer.element_dicts" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ListProperty(defaultvalue=0, <a href="#id3"><span class="problematic" id="id4">**</span></a>kw)
-        Property that represents a list.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list simple">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl class="simple">
-                            <dt><cite>defaultvalue</cite>: list, defaults to []</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                        </dl>
-                    </dd>
-                </dl>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id9"><span class="problematic" id="id10">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
@@ -144,22 +529,17 @@ since the property uses a shallow copy of my_list.</p>
 <dl class="py attribute">
 <dt id="ACG.my_kivy.mychooser.CheckContainer.CheckElementObject">
 <code class="sig-name descname">CheckElementObject</code><a class="headerlink" href="#ACG.my_kivy.mychooser.CheckContainer.CheckElementObject" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id5"><span class="problematic"
-                                                                                id="id6">**</span></a>kw)
-        Property that represents a Python object.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl>
-                            <dt><cite>defaultvalue</cite>: object type</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                            <dt><cite>rebind</cite>: bool, defaults to False</dt>
-                            <dd><p>Whether kv rules using this object as an intermediate attribute
-                                in a kv rule, will update the bound property when this object
-                                changes.</p>
+<dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id11"><span class="problematic" id="id12">**</span></a>kw)
+Property that represents a Python object.</p>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><cite>defaultvalue</cite>: object type</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>Whether kv rules using this object as an intermediate attribute
+in a kv rule, will update the bound property when this object
+changes.</p>
 <p>That is the standard behavior is that if there’s a kv rule
 <code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.a.b.c.d</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code> are
 properties with <code class="docutils literal notranslate"><span class="pre">rebind</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> is a
@@ -216,6 +596,143 @@ used for validation: <cite>isinstance(value, kwargs[‘baseclass’])</cite>.</p
 
 </dd></dl>
 
+<dl class="py class">
+<dt id="ACG.my_kivy.mychooser.TranslationOnCheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">ACG.my_kivy.mychooser.</code><code class="sig-name descname">TranslationOnCheckBehavior</code><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#TranslationOnCheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.TranslationOnCheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt id="ACG.my_kivy.mychooser.TranslationOnCheckBehavior.text_orig">
+<code class="sig-name descname">text_orig</code><a class="headerlink" href="#ACG.my_kivy.mychooser.TranslationOnCheckBehavior.text_orig" title="Permalink to this definition">¶</a></dt>
+<dd><p>StringProperty(defaultvalue=’’, <a href="#id13"><span class="problematic" id="id14">**</span></a>kw)
+Property that represents a string value.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: string, defaults to ‘’</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="ACG.my_kivy.mychooser.TranslationOnCheckBehavior.text_trans">
+<code class="sig-name descname">text_trans</code><a class="headerlink" href="#ACG.my_kivy.mychooser.TranslationOnCheckBehavior.text_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>StringProperty(defaultvalue=’’, <a href="#id15"><span class="problematic" id="id16">**</span></a>kw)
+Property that represents a string value.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: string, defaults to ‘’</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="ACG.my_kivy.mychooser.ThemableColorChangeBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">ACG.my_kivy.mychooser.</code><code class="sig-name descname">ThemableColorChangeBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/mychooser.html#ThemableColorChangeBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py attribute">
+<dt id="ACG.my_kivy.mychooser.ThemableColorChangeBehavior.text_color">
+<code class="sig-name descname">text_color</code><a class="headerlink" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id17"><span class="problematic" id="id18">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
+the property is a shallow copy of the list and not the original list. This can
+be demonstrated with the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;hi&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">my_list</span> <span class="o">=</span> <span class="n">my_list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span> <span class="ow">is</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;hello&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;hello&#39;}]</span>
+</pre></div>
+</div>
+<p>However, changes to nested levels will affect the property as well,
+since the property uses a shallow copy of my_list.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;hi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bye&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;bye&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;bye&#39;}]</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="ACG.my_kivy.mychooser.ThemableColorChangeBehavior.bg_color">
+<code class="sig-name descname">bg_color</code><a class="headerlink" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior.bg_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id19"><span class="problematic" id="id20">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
+the property is a shallow copy of the list and not the original list. This can
+be demonstrated with the following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyWidget</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">my_list</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span> <span class="o">=</span> <span class="n">MyWidget</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;hi&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">}]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">widget</span><span class="o">.</span><span class="n">my_list</span> <span class="o">=</span> <span class="n">my_list</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span> <span class="ow">is</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;hello&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;hello&#39;}]</span>
+</pre></div>
+</div>
+<p>However, changes to nested levels will affect the property as well,
+since the property uses a shallow copy of my_list.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">my_list</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="s1">&#39;hi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;bye&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">my_list</span><span class="p">,</span> <span class="n">widget</span><span class="o">.</span><span class="n">my_list</span><span class="p">)</span>
+<span class="go">[1, 5, {&#39;hi&#39;: &#39;bye&#39;}, 10] [1, 5, {&#39;hi&#39;: &#39;bye&#39;}]</span>
+</pre></div>
+</div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="ACG.my_kivy.mychooser.ThemableColorChangeBehavior.animated_properties">
+<code class="sig-name descname">animated_properties</code><em class="property"> = ['bg_color', 'text_color']</em><a class="headerlink" href="#ACG.my_kivy.mychooser.ThemableColorChangeBehavior.animated_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="module-ACG.my_kivy.screen_queue">
 <span id="acg-my-kivy-screen-queue"></span><h2>ACG.my_kivy.screen_queue<a class="headerlink" href="#module-ACG.my_kivy.screen_queue" title="Permalink to this headline">¶</a></h2>
@@ -244,13 +761,23 @@ If no worker is present starts a worker in a different thread.
 </dd></dl>
 
 <dl class="py function">
+<dt id="ACG.my_kivy.screen_queue.start_downloading">
+<code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">start_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#start_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.start_downloading" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="ACG.my_kivy.screen_queue.pause_downloading">
+<code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.pause_downloading" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="ACG.my_kivy.screen_queue.is_duplicate">
 <code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.is_duplicate" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="ACG.my_kivy.screen_queue.import_from">
-<code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.import_from" title="Permalink to this definition">¶</a></dt>
+<dt id="ACG.my_kivy.screen_queue.choose_file_to_import">
+<code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">choose_file_to_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#choose_file_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.choose_file_to_import" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -269,8 +796,8 @@ If no worker is present starts a worker in a different thread.
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="ACG.my_kivy.screen_queue.import_from_kindle">
-<code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">import_from_kindle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#import_from_kindle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.import_from_kindle" title="Permalink to this definition">¶</a></dt>
+<dt id="ACG.my_kivy.screen_queue.import_from">
+<code class="sig-prename descclassname">ACG.my_kivy.screen_queue.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">source</span><span class="o">=</span><span class="default_value">'kindle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ACG/my_kivy/screen_queue.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ACG.my_kivy.screen_queue.import_from" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -322,22 +849,17 @@ If no worker is present starts a worker in a different thread.
 <dl class="py attribute">
 <dt id="ACG.my_kivy.scroll_list.ScrollList.item_type">
 <code class="sig-name descname">item_type</code><a class="headerlink" href="#ACG.my_kivy.scroll_list.ScrollList.item_type" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id7"><span class="problematic"
-                                                                                id="id8">**</span></a>kw)
-        Property that represents a Python object.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl>
-                            <dt><cite>defaultvalue</cite>: object type</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                            <dt><cite>rebind</cite>: bool, defaults to False</dt>
-                            <dd><p>Whether kv rules using this object as an intermediate attribute
-                                in a kv rule, will update the bound property when this object
-                                changes.</p>
+<dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id21"><span class="problematic" id="id22">**</span></a>kw)
+Property that represents a Python object.</p>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><cite>defaultvalue</cite>: object type</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>Whether kv rules using this object as an intermediate attribute
+in a kv rule, will update the bound property when this object
+changes.</p>
 <p>That is the standard behavior is that if there’s a kv rule
 <code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.a.b.c.d</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code> are
 properties with <code class="docutils literal notranslate"><span class="pre">rebind</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> is a
@@ -380,20 +902,17 @@ used for validation: <cite>isinstance(value, kwargs[‘baseclass’])</cite>.</p
 <dl class="py attribute">
 <dt id="ACG.my_kivy.scroll_list.ScrollList.item_dicts">
 <code class="sig-name descname">item_dicts</code><a class="headerlink" href="#ACG.my_kivy.scroll_list.ScrollList.item_dicts" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ListProperty(defaultvalue=0, <a href="#id9"><span class="problematic" id="id10">**</span></a>kw)
-        Property that represents a list.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list simple">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl class="simple">
-                            <dt><cite>defaultvalue</cite>: list, defaults to []</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                        </dl>
-                    </dd>
-                </dl>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id23"><span class="problematic" id="id24">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
@@ -426,20 +945,17 @@ since the property uses a shallow copy of my_list.</p>
 <dl class="py attribute">
 <dt id="ACG.my_kivy.scroll_list.ScrollList.items">
 <code class="sig-name descname">items</code><a class="headerlink" href="#ACG.my_kivy.scroll_list.ScrollList.items" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ListProperty(defaultvalue=0, <a href="#id11"><span class="problematic" id="id12">**</span></a>kw)
-        Property that represents a list.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list simple">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl class="simple">
-                            <dt><cite>defaultvalue</cite>: list, defaults to []</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                        </dl>
-                    </dd>
-                </dl>
+<dd><p>ListProperty(defaultvalue=0, <a href="#id25"><span class="problematic" id="id26">**</span></a>kw)
+Property that represents a list.</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>defaultvalue</cite>: list, defaults to []</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>When assigning a list to a <code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code>, the list stored in
@@ -472,21 +988,17 @@ since the property uses a shallow copy of my_list.</p>
 <dl class="py attribute">
 <dt id="ACG.my_kivy.scroll_list.ScrollList.list">
 <code class="sig-name descname">list</code><a class="headerlink" href="#ACG.my_kivy.scroll_list.ScrollList.list" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id13"><span class="problematic" id="id14">**</span></a>kw)
-        Property that represents a Python object.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl>
-                            <dt><cite>defaultvalue</cite>: object type</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                            <dt><cite>rebind</cite>: bool, defaults to False</dt>
-                            <dd><p>Whether kv rules using this object as an intermediate attribute
-                                in a kv rule, will update the bound property when this object
-                                changes.</p>
+<dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id27"><span class="problematic" id="id28">**</span></a>kw)
+Property that represents a Python object.</p>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><cite>defaultvalue</cite>: object type</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>Whether kv rules using this object as an intermediate attribute
+in a kv rule, will update the bound property when this object
+changes.</p>
 <p>That is the standard behavior is that if there’s a kv rule
 <code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.a.b.c.d</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code> are
 properties with <code class="docutils literal notranslate"><span class="pre">rebind</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> is a
@@ -529,21 +1041,17 @@ used for validation: <cite>isinstance(value, kwargs[‘baseclass’])</cite>.</p
 <dl class="py attribute">
 <dt id="ACG.my_kivy.scroll_list.ScrollList.callback">
 <code class="sig-name descname">callback</code><a class="headerlink" href="#ACG.my_kivy.scroll_list.ScrollList.callback" title="Permalink to this definition">¶</a></dt>
-    <dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id15"><span class="problematic" id="id16">**</span></a>kw)
-        Property that represents a Python object.</p>
-        <blockquote>
-            <div>
-                <dl class="field-list">
-                    <dt class="field-odd">Parameters</dt>
-                    <dd class="field-odd">
-                        <dl>
-                            <dt><cite>defaultvalue</cite>: object type</dt>
-                            <dd><p>Specifies the default value of the property.</p>
-                            </dd>
-                            <dt><cite>rebind</cite>: bool, defaults to False</dt>
-                            <dd><p>Whether kv rules using this object as an intermediate attribute
-                                in a kv rule, will update the bound property when this object
-                                changes.</p>
+<dd><p>ObjectProperty(defaultvalue=None, rebind=False, <a href="#id29"><span class="problematic" id="id30">**</span></a>kw)
+Property that represents a Python object.</p>
+<blockquote>
+<div><dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><cite>defaultvalue</cite>: object type</dt><dd><p>Specifies the default value of the property.</p>
+</dd>
+<dt><cite>rebind</cite>: bool, defaults to False</dt><dd><p>Whether kv rules using this object as an intermediate attribute
+in a kv rule, will update the bound property when this object
+changes.</p>
 <p>That is the standard behavior is that if there’s a kv rule
 <code class="docutils literal notranslate"><span class="pre">text:</span> <span class="pre">self.a.b.c.d</span></code>, where <code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>, and <code class="docutils literal notranslate"><span class="pre">c</span></code> are
 properties with <code class="docutils literal notranslate"><span class="pre">rebind</span></code> <code class="docutils literal notranslate"><span class="pre">False</span></code> and <code class="docutils literal notranslate"><span class="pre">d</span></code> is a
@@ -599,242 +1107,59 @@ used for validation: <cite>isinstance(value, kwargs[‘baseclass’])</cite>.</p
 </div>
 
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
-        <div class="sphinxsidebarwrapper">
-            <h1 class="logo"><a href="index.html">ACG</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="ACG.anki.html">ACG.anki</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">ACG.my_kivy</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.mychooser">ACG.my_kivy.mychooser</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.screen_queue">ACG.my_kivy.screen_queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-ACG.my_kivy.screen_single_word">ACG.my_kivy.screen_single_word</a></li>
-    <li class="toctree-l2"><a class="reference internal"
-                              href="#module-ACG.my_kivy.scroll_list">ACG.my_kivy.scroll_list</a>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckBehavior">CheckBehavior</a>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckBehavior.checked">checked</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckBehavior.checked_state">checked_state</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckBehavior.unchecked_state">unchecked_state</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckBehavior.on_checked">on_checked</a></li>
-                </ul>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.mychooser.CheckContainer">CheckContainer</a>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckContainer.check_one">check_one</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckContainer.element_dicts">element_dicts</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckContainer.CheckElementObject">CheckElementObject</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckContainer.conditional_uncheck">conditional_uncheck</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckContainer.get_checked">get_checked</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.mychooser.CheckContainer.on_element_dicts">on_element_dicts</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.worker_single_word">worker_single_word</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.start_workers">start_workers</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal"
-                                      href="#ACG.my_kivy.screen_queue.queue_word">queue_word</a></li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.is_duplicate">is_duplicate</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.import_from">import_from</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.click_on_queue_item">click_on_queue_item</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.click_on_done_item">click_on_done_item</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.click_on_error_item">click_on_error_item</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_queue.import_from_kindle">import_from_kindle</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal"
-                                      href="#ACG.my_kivy.screen_queue.choose_replacements_dialog">choose_replacements_dialog</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.WordProperties">WordProperties</a>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.screen_single_word.WordProperties.refresh_data">refresh_data</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.screen_single_word.WordProperties.accept_suggestion">accept_suggestion</a>
-                    </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.screen_single_word.WordProperties.load_or_search">load_or_search</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal"
-                                      href="#ACG.my_kivy.screen_single_word.get_selection_dict">get_selection_dict</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.screen_single_word.confirm_choice">confirm_choice</a>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal"
-                                      href="#ACG.my_kivy.scroll_list.ScrollList">ScrollList</a>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.scroll_list.ScrollList.item_type">item_type</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.scroll_list.ScrollList.item_dicts">item_dicts</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.scroll_list.ScrollList.items">items</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.scroll_list.ScrollList.list">list</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.scroll_list.ScrollList.callback">callback</a></li>
-                </ul>
-                <ul>
-                    <li class="toctree-l4"><a class="reference internal"
-                                              href="#ACG.my_kivy.scroll_list.ScrollList.on_item_dicts">on_item_dicts</a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <ul>
-            <li class="toctree-l3"><a class="reference internal" href="#ACG.my_kivy.scroll_list.schedule">schedule</a>
-            </li>
-        </ul>
-    </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="ACG.word_requests.html">ACG.word_requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ACG.main.html">ACG.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ACG.utils.html">ACG.utils</a></li>
-    <li class="toctree-l1"><a class="reference internal" href="autoapi/index.html">API Reference</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="ACG.anki.html" title="previous chapter">ACG.anki</a></li>
-      <li>Next: <a href="ACG.word_requests.html" title="next chapter">ACG.word_requests</a></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" role="search" style="display: none">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form action="search.html" class="search" method="get">
-      <input aria-labelledby="searchlabel" name="q" type="text" />
-      <input type="submit" value="Go" />
-    </form>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="ACG.word_requests.html" class="btn btn-neutral float-right" title="ACG.word_requests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ACG.anki.html" class="btn btn-neutral float-left" title="ACG.anki" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
     </div>
-</div>
-<script>$('#searchbox').show(0);</script>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
 
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, David Fischer.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/ACG.my_kivy.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>

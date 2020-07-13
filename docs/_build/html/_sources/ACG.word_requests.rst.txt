@@ -2,10 +2,10 @@ ACG.word\_requests
 ======================================
 
 
-ACG.word\_requests.pt\_word
+ACG.word\_requests.words
 --------------------------------------------
 
-.. automodule:: ACG.word_requests.pt_word
+.. automodule:: ACG.word_requests.words
    :members:
    :undoc-members:
    :show-inheritance:
