@@ -8,7 +8,6 @@ class.
 """
 import re
 from collections import defaultdict
-from pprint import pprint
 from typing import Any, Dict
 from urllib.parse import quote
 
@@ -16,6 +15,11 @@ import attr
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+
+from google_images_download import google_images_download
+
+LANGUAGES = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
+
 
 DEFAULT_HEADERS = {
     "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -134,6 +138,7 @@ class LingueeParser(Parser):
     def parse_response(self, response: requests.Response) -> Dict[str, Any]:
         """Extracts translation, word_type, gender, audio_url"""
         response = response.json()
+        print(response)
         try:
             match = response["exact_matches"][0]
         except (TypeError, IndexError, KeyError):
@@ -287,6 +292,28 @@ class ReversoParser(Parser):
         }
 
 
+class GoogleImagesParser(Parser):
+    """Uses google_images_download to get img_urls."""
+
+    def result_dict(self, phrase=None):
+        if phrase is not None:
+            self.phrase = phrase
+        self.setup()
+        gid = google_images_download.googleimagesdownload()
+        arguments = {
+            "keywords": self.phrase,
+            # "no_directory": True,
+            "limit": 10,
+            "format": "jpg",
+            "language": LANGUAGES[self.from_lang],
+            "no_download": True,
+            "print_urls": False,
+            # "prefix": "img_",
+        }
+        paths = gid.download(arguments)[0][self.phrase]
+        return {"image_urls": paths}
+
+
 # BS4 Helper Functions
 
 
@@ -341,4 +368,4 @@ if __name__ == "__main__":
     RP = ReversoParser(phrase=PHRASE, from_lang="pt", to_lang="de")
     DP = DicioParser(phrase=PHRASE, from_lang="pt", to_lang="de")
     LP = LingueeParser(phrase=PHRASE, from_lang="pt", to_lang="de")
-    pprint(LP.result_dict())
+    # pprint(LP.result_dict())
