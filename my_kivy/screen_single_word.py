@@ -17,7 +17,7 @@ from utils import (
     tag_word_in_sentence,
     widget_by_id,
 )
-from word_requests.urls_and_parsers import linguee_did_you_mean, NoMatchError
+from word_requests.parsers import linguee_did_you_mean, NoMatchError
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
