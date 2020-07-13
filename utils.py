@@ -110,11 +110,7 @@ def now_string():
 
 
 def set_screen(screen_name):
-    for item in widget_by_id("drawer_list").children:
-        if item.screen_name == screen_name:
-            item.on_release()
-    # [item.screen_name for item in widget_by_id("drawer_list").children]
-    # widget_by_id("screen_man").current = screen_name
+    widget_by_id("screen_man").current = screen_name
 
 
 def widget_by_id(string):
