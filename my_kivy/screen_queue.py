@@ -11,8 +11,8 @@ from utils import (
     word_list_from_kindle,
     word_list_from_txt,
 )
-from word_requests.pt_word import Word
-from word_requests.urls_and_parsers import NoMatchError
+from word_requests.parsers import NoMatchError
+from word_requests.words import Word
 
 options_dict = {
     "script-text-outline": "Import from Kindle",
