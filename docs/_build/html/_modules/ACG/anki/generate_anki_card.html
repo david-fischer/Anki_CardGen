@@ -1,35 +1,155 @@
 
+
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>ACG.anki.generate_anki_card &mdash; ACG 0.3.0 documentation</title>
+  
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>ACG.anki.generate_anki_card &#8212; ACG 0.3.0 documentation</title>
-    <link href="../../../_static/alabaster.css" rel="stylesheet" type="text/css" />
-    <link href="../../../_static/pygments.css" rel="stylesheet" type="text/css" />
-      <link href="../../../_static/graphviz.css" rel="stylesheet" type="text/css"/>
-    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-    <script src="../../../_static/jquery.js"></script>
-    <script src="../../../_static/underscore.js"></script>
-    <script src="../../../_static/doctools.js"></script>
-    <script src="../../../_static/language_data.js"></script>
-    <link href="../../../genindex.html" rel="index" title="Index" />
-    <link href="../../../search.html" rel="search" title="Search" />
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
    
-  <link href="../../../_static/custom.css" rel="stylesheet" type="text/css" />
-  
-  
-  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport" />
-
-  </head><body>
-  
-
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
           
 
-          <div class="body" role="main">
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>ACG.anki.generate_anki_card</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
             
   <h1>Source code for ACG.anki.generate_anki_card</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">re</span>
@@ -38,7 +158,7 @@
 <span class="kn">import</span> <span class="nn">bs4</span>
 <span class="kn">import</span> <span class="nn">genanki</span>
 
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">CD</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">CD</span><span class="p">,</span> <span class="n">smart_loader</span>
 
 
 <div class="viewcode-block" id="HtmlLoader"><a class="viewcode-back" href="../../../ACG.anki.html#ACG.anki.generate_anki_card.HtmlLoader">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
@@ -57,17 +177,25 @@
         <span class="n">js_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">js_tags</span><span class="p">:</span>
             <span class="n">src</span> <span class="o">=</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+            <span class="c1"># print(tag.attrs)</span>
+            <span class="n">defer</span> <span class="o">=</span> <span class="s2">&quot;defer&quot;</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span>
             <span class="k">del</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
                 <span class="n">tag</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="p">)</span></div></div>
+            <span class="k">if</span> <span class="n">defer</span><span class="p">:</span>
+                <span class="n">tag</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+                <span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="c1"># css_tags = soup.select(&quot;link[rel=stylesheet][href*=css]&quot;)</span>
+        <span class="c1"># for css in css_tags:</span>
+        <span class="c1">#     css.extract()</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="model_from_html"><a class="viewcode-back" href="../../../ACG.anki.html#ACG.anki.generate_anki_card.model_from_html">[docs]</a><span class="k">def</span> <span class="nf">model_from_html</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">template_names</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">css_path</span><span class="p">):</span>
     <span class="n">templates_html</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">template_name</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;front&quot;</span><span class="p">:</span> <span class="n">HtmlLoader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template_name</span><span class="si">}</span><span class="s2">_front.html&quot;</span><span class="p">),</span>
-            <span class="s2">&quot;back&quot;</span><span class="p">:</span>  <span class="n">HtmlLoader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template_name</span><span class="si">}</span><span class="s2">_back.html&quot;</span><span class="p">),</span>
+            <span class="s2">&quot;back&quot;</span><span class="p">:</span> <span class="n">HtmlLoader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template_name</span><span class="si">}</span><span class="s2">_back.html&quot;</span><span class="p">),</span>
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">template_name</span> <span class="ow">in</span> <span class="n">template_names</span>
     <span class="p">}</span>
@@ -133,83 +261,63 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">()</span>
-    <span class="n">ankiobject</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span>
-        <span class="n">Word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">,</span>
-        <span class="n">Audio</span><span class="o">=</span><span class="s2">&quot;[sound:casa.mp3]&quot;</span><span class="p">,</span>
-        <span class="n">Image</span><span class="o">=</span><span class="s1">&#39;&lt;img src=&quot;casa.jpg&quot;&gt;&#39;</span><span class="p">,</span>
-        <span class="n">media_files</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;../data/casa/casa.mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;../data/casa/casa.jpg&quot;</span><span class="p">],</span>
-    <span class="p">)</span>
-    <span class="n">ankiobject</span><span class="o">.</span><span class="n">write_apkg</span><span class="p">(</span><span class="s2">&quot;output.apkg&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">):</span>
+        <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span>
+        <span class="n">ankiobject</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span>
+            <span class="o">**</span><span class="n">smart_loader</span><span class="p">(</span><span class="s2">&quot;data/casa/casa_card.json&quot;</span><span class="p">)</span>
+            <span class="c1"># Word=&quot;casa&quot;,</span>
+            <span class="c1"># Audio=&quot;[sound:casa.mp3]&quot;,</span>
+            <span class="c1"># Image=&#39;&lt;img src=&quot;casa.jpg&quot;&gt;&#39;,</span>
+            <span class="c1"># media_files=[&quot;../data/casa/casa.mp3&quot;, &quot;../data/casa/casa.jpg&quot;],</span>
+        <span class="p">)</span>
+        <span class="n">ankiobject</span><span class="o">.</span><span class="n">write_apkg</span><span class="p">(</span><span class="s2">&quot;output.apkg&quot;</span><span class="p">)</span>
+    <span class="c1"># HtmlLoader(&quot;meaning-pt_back.html&quot;).replace_includes_with_content()</span>
 </pre></div>
 
+           </div>
+           
           </div>
-          
-        </div>
-      </div>
-      <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
-        <div class="sphinxsidebarwrapper">
-            <h1 class="logo"><a href="../../../index.html">ACG</a></h1>
+          <footer>
+  
 
+  <hr/>
 
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
 
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
-
-
-
-
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../ACG.anki.html">ACG.anki</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ACG.my_kivy.html">ACG.my_kivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ACG.word_requests.html">ACG.word_requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ACG.main.html">ACG.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../ACG.utils.html">ACG.utils</a></li>
-    <li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
-  <li><a href="../../index.html">Module code</a><ul>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" role="search" style="display: none">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form action="../../../search.html" class="search" method="get">
-      <input aria-labelledby="searchlabel" name="q" type="text" />
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
+</footer>
 
         </div>
       </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2020, David Fischer.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-    </div>
 
-    
+    </section>
 
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
     
-  </body>
+   
+
+</body>
 </html>
