@@ -19,7 +19,7 @@ from kivymd.uix.picker import MDThemePicker
 from anki.generate_anki_card import AnkiObject
 from my_kivy.mychooser import CheckBehavior, CheckContainer
 from utils import now_string, smart_loader, smart_saver, widget_by_id
-from word_requests.pt_word import Word
+from word_requests.words import Word
 
 this_dir = os.path.dirname(__file__)
 if this_dir:
@@ -29,6 +29,8 @@ Builder.load_file(f"{this_dir}my_kivy/fixes.kv")
 
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
+    """Test"""
+
     icon = StringProperty()
     screen_name = StringProperty("test")
 
@@ -45,26 +47,27 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
         super(DrawerItem, self).__post_init__()
 
     def on_release(self):
+        """ """
         self.current_state = True
         widget_by_id("nav_drawer").set_state("close")
 
 
 class DrawerList(ThemableBehavior, CheckContainer, MDList):
+    """Test"""
+
     check_one = True
     CheckElementObject = DrawerItem
     current = StringProperty("")
 
     def conditional_uncheck(self, instance, value):
+        """changes color of clicked item and updates :attr:`current`"""
         super(DrawerList, self).conditional_uncheck(instance, value)
         self.current = instance.screen_name
 
-    def click_screen_name(self, screen_name):
-        for item in self.children:
-            if item.screen_name == screen_name:
-                item.on_release()
-
 
 class MainMenu(StackLayout):
+    """Test"""
+
     screen_dicts = ListProperty(
         [
             {
@@ -78,11 +81,17 @@ class MainMenu(StackLayout):
                 "screen_name": "screen_queue",
             },
             {"icon": "cogs", "text": "Settings", "screen_name": "screen_settings"},
-            # {"icon": "folder", "text": "My files", "screen_name": "my_files"},
         ]
     )
+    """:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens."""
 
     def on_parent(self, *_):
+        """
+        This function sets up the screens using the data from :attr:`screen_dicts`.
+
+        The screens are added to the screen_man and corresponding entries to the drawer_list.
+        Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.
+        """
         for screen_dict in self.screen_dicts:
             name = screen_dict["screen_name"]
             path = f"my_kivy/{name}.kv"
@@ -94,34 +103,70 @@ class MainMenu(StackLayout):
             self.ids.screen_man.add_widget(screen)
         self.ids.drawer_list.element_dicts = self.screen_dicts
         self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
+        self.ids.screen_man.bind(current=self.ids.drawer_list.setter("current"))
         self.ids.drawer_list.children[-1].on_release()
 
 
 class AnkiCardGenApp(MDApp):
+    """
+    Main App.
+    """
+
     # Kivy
     dialog = ObjectProperty()
+    """:class:`~kivymd.uix.dialog.MDDialog` Object"""
     file_manager = ObjectProperty()
+    """:class:`~kivymd.uix.filemanager.MDFileManager` Object"""
     theme_dialog = ObjectProperty()
+    """:class:`~kivymd.uix.picker.MDThemePicker` Object"""
     # Other Objects
     word = ObjectProperty()
-    anki = ObjectProperty(rebind=True)
+    """:class:`pt_word.Word` Object"""
+    anki = ObjectProperty()
+    """:class:`generate_anki_card.AnkiObject` Object"""
     q = ObjectProperty()
+    """:class:`queue.Queue` Object"""
     # Data
     error_words = ListProperty([])
+    """:class:`~kivy.properties.ListProperty` containing all words that could not be processed by Queue."""
     queue_words = ListProperty([])
-    loading_state_dict = DictProperty({})
+    """:class:`~kivy.properties.ListProperty` containing all words not yet made into Anki-cards."""
     done_words = ListProperty([])
+    """:class:`~kivy.properties.ListProperty` containing all words for which Anki-cards have been generated."""
+    loading_state_dict = DictProperty({})
+    """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
     keys_to_save = ListProperty(
         ["queue_words", "done_words", "error_words", "loading_state_dict", "anki"]
     )
+    """:class:`~kivy.properties.ListProperty` containing the name of all attributes that should be saved on change."""
 
     @mainthread
     def show_dialog(
         self, message, options=None, callback=print, item_function=None, buttons=None
     ):
+        """
+
+        Args:
+          message:
+          options:  (Default value = None)
+          callback:  (Default value = print)
+          item_function:  (Default value = None)
+          buttons:  (Default value = None)
+
+        Returns:
+
+        """
         if item_function is None:
 
             def item_function(obj):
+                """
+
+                Args:
+                  obj:
+
+                Returns:
+
+                """
                 self.dialog.dismiss()
                 callback(obj.text)
 
@@ -148,6 +193,14 @@ class AnkiCardGenApp(MDApp):
         self.dialog.open()
 
     def build_config(self, config):
+        """
+
+        Args:
+          config:
+
+        Returns:
+
+        """
         config.setdefaults(
             "Theme",
             {
@@ -171,6 +224,7 @@ class AnkiCardGenApp(MDApp):
         os.makedirs("app_state", exist_ok=True)
 
     def build(self):
+        """ """
         # Config and Theme
         self.theme_cls = ThemeManager(**self.config["Theme"])
         self.theme_dialog = MDThemePicker()
@@ -198,6 +252,7 @@ class AnkiCardGenApp(MDApp):
     #    threading.Thread(target=make_screenshots).start()
 
     def setup_queue(self):
+        """ """
         self.q = queue.Queue()
         for word in self.queue_words:
             if self.loading_state_dict[word] in ["loading", "queued"]:
@@ -205,11 +260,29 @@ class AnkiCardGenApp(MDApp):
                 self.q.put(word)
 
     def save_theme(self, *_):
+        """
+
+        Args:
+          *_:
+
+        Returns:
+
+        """
         for key in self.config["Theme"]:
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
 
     def open_file_manager(self, path="/", select_path=print, ext=None):
+        """
+
+        Args:
+          path:  (Default value = "/")
+          select_path:  (Default value = print)
+          ext:  (Default value = None)
+
+        Returns:
+
+        """
         print("opening file manager...")
         if ext is None:
             ext = [".html"]
@@ -218,16 +291,35 @@ class AnkiCardGenApp(MDApp):
         self.file_manager.show(path)
 
     def load_by_config_key(self, key):
+        """
+
+        Args:
+          key:
+
+        Returns:
+
+        """
         path = self.config["Paths"][key]
         setattr(self, key, smart_loader(path))
 
     def save_by_config_key(self, key, *_, obj=None):
+        """
+
+        Args:
+          key:
+          *_:
+          obj:  (Default value = None)
+
+        Returns:
+
+        """
         if obj is None:
             obj = getattr(self, key)
         path = self.config["Paths"][key]
         smart_saver(obj, path)
 
     def load_app_state(self):
+        """ """
         for key in self.keys_to_save:
             try:
                 self.load_by_config_key(key)
@@ -236,6 +328,14 @@ class AnkiCardGenApp(MDApp):
                 self.save_by_config_key(key)
 
     def add_anki_card(self, result_dict):
+        """
+
+        Args:
+          result_dict:
+
+        Returns:
+
+        """
         toast(f'Added card for "{result_dict["Word"]}" to Deck.', 10)
         smart_saver(
             result_dict, f"data/{self.word.folder()}/{self.word.folder()}_card.json"
