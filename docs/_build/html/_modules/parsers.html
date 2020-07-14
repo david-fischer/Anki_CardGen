@@ -153,7 +153,7 @@
             
   <h1>Source code for parsers</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module provides different parsers (children of :class:`Parser`) to obtain the necessary data to fill the</span>
+<span class="sd">This module provides different parsers (children of :class:`Parser`) to obtain the necessary words to fill the</span>
 <span class="sd">Anki-cards.</span>
 
 <span class="sd">Each parser returns a dict, that can directly be used by the :meth:`pt_word.Word.update_from_dict` method of the</span>
@@ -169,8 +169,7 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-
-<span class="kn">from</span> <span class="nn">src.google_images_download</span> <span class="kn">import</span> <span class="n">google_images_download</span>
+<span class="kn">from</span> <span class="nn">google_images_download</span> <span class="kn">import</span> <span class="n">google_images_download</span>
 
 <div class="viewcode-block" id="LANGUAGES"><a class="viewcode-back" href="../autoapi/parsers/index.html#parsers.LANGUAGES">[docs]</a><span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="s2">&quot;Portuguese&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;German&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;English&quot;</span><span class="p">,</span> <span class="s2">&quot;es&quot;</span><span class="p">:</span> <span class="s2">&quot;Spanish&quot;</span><span class="p">}</span></div>
 

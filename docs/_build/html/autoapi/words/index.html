@@ -168,7 +168,7 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#words.Word" title="words.Word"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Word</span></code></a>()</p></td>
-<td><p>Class that fetches and edits the data that makes up the choices, presented to the user in the card-generation</p></td>
+<td><p>Class that fetches and edits the words that makes up the choices, presented to the user in the card-generation</p></td>
 </tr>
 </tbody>
 </table>
@@ -180,7 +180,7 @@
 <dl class="py class">
 <dt id="words.Word">
 <em class="property">class </em><code class="sig-prename descclassname">words.</code><code class="sig-name descname">Word</code><a class="reference internal" href="../../_modules/words.html#Word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class that fetches and edits the data that makes up the choices, presented to the user in the card-generation
+<dd><p>Class that fetches and edits the words that makes up the choices, presented to the user in the card-generation
 process.</p>
 <p>Main function is <a class="reference internal" href="#words.Word.search" title="words.Word.search"><code class="xref py py-meth docutils literal notranslate"><span class="pre">search()</span></code></a> function.</p>
 <dl class="py attribute">
@@ -250,7 +250,7 @@ process.</p>
 
 <dl class="py attribute">
 <dt id="words.Word.data_dir">
-<code class="sig-name descname">data_dir</code><em class="property"> :str = data</em><a class="reference internal" href="../../_modules/words.html#Word.data_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word.data_dir" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">data_dir</code><em class="property"> :str = ../app_data/words</em><a class="reference internal" href="../../_modules/words.html#Word.data_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word.data_dir" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -291,6 +291,17 @@ process.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p><a href="#id1"><span class="problematic" id="id2">:method:`search_term_utf8`</span></a> with spaces replaced by underscores.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="words.Word.base_path">
+<code class="sig-name descname">base_path</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/words.html#Word.base_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word.base_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used as base to save files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><a href="#id3"><span class="problematic" id="id4">`</span></a>f”{self.data_dir}/{self.folder()}/{self.folder()}”’</p>
 </dd>
 </dl>
 </dd></dl>
@@ -363,7 +374,7 @@ If not set, defaults to <a class="reference internal" href="#words.Word.search_t
 <dd><p>Saves class attributes as dictionary in a .json-file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> – If None, is set to f”data/{self.folder()}/{self.folder()}.json” (Default value = None)</p>
+<dd class="field-odd"><p><strong>path</strong> – If None, is set to f”words/{self.folder()}/{self.folder()}.json” (Default value = None)</p>
 </dd>
 </dl>
 </dd></dl>
