@@ -1,0 +1,307 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>scroll_list &mdash; ACG 0.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>scroll_list</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for scroll_list</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span><span class="p">,</span> <span class="n">mainthread</span>
+<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">OptionProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.anchorlayout</span> <span class="kn">import</span> <span class="n">AnchorLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.scrollview</span> <span class="kn">import</span> <span class="n">ScrollView</span>
+<span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">ILeftBody</span><span class="p">,</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineAvatarListItem</span><span class="p">,</span> <span class="n">OneLineListItem</span>
+
+<span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">&lt;LeftStatusIndicator&gt;:</span>
+<span class="sd">    spinner: spinner</span>
+<span class="sd">    active: False</span>
+<span class="sd">    icon: &quot;&quot;</span>
+
+<span class="sd">    MDIcon:</span>
+<span class="sd">        id: _icon</span>
+<span class="sd">        icon: root.icon</span>
+<span class="sd">        color: (0,1,0 ,1 )</span>
+<span class="sd">        size_hint: 1,1</span>
+<span class="sd">        font_size: 30</span>
+<span class="sd">        texture_size: self.size</span>
+
+<span class="sd">    MDSpinner:</span>
+<span class="sd">        id: spinner</span>
+<span class="sd">        active: root.active</span>
+<span class="sd">        size_hint: 0.7,0.7</span>
+<span class="sd">        opacity: float(root.active)</span>
+
+<span class="sd">&lt;LeftStatusIndicatorListItem&gt;:</span>
+<span class="sd">    loading_state: &quot;queued&quot;</span>
+<span class="sd">    active: self.loading_state==&quot;loading&quot;</span>
+<span class="sd">    icon: &quot;check-circle&quot; if self.loading_state==&quot;ready&quot; else &quot;&quot;</span>
+
+
+<span class="sd">    LeftStatusIndicator:</span>
+<span class="sd">        active: root.active</span>
+<span class="sd">        icon: root.icon</span>
+
+
+<span class="sd">&lt;ScrollList&gt;:</span>
+<span class="sd">    list: md_list</span>
+<span class="sd">    ScrollView:</span>
+<span class="sd">        MDList:</span>
+<span class="sd">            id: md_list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollList.item_type"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList.item_type">[docs]</a>    <span class="n">item_type</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">OneLineListItem</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ScrollList.item_dicts"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList.item_dicts">[docs]</a>    <span class="n">item_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ScrollList.items"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList.items">[docs]</a>    <span class="n">items</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ScrollList.list"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList.list">[docs]</a>    <span class="nb">list</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">MDList</span><span class="p">())</span></div>
+<div class="viewcode-block" id="ScrollList.callback"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList.callback">[docs]</a>    <span class="n">callback</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ScrollList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_item_dicts</span><span class="p">()</span>
+
+    <span class="nd">@mainthread</span>
+<div class="viewcode-block" id="ScrollList.on_item_dicts"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.ScrollList.on_item_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">item_type</span><span class="p">(</span><span class="o">**</span><span class="n">item_dict</span><span class="p">,</span> <span class="n">on_press</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">item_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_dicts</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+            <span class="n">item</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="bp">self</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LeftStatusIndicator"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.LeftStatusIndicator">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicator</span><span class="p">(</span><span class="n">ILeftBody</span><span class="p">,</span> <span class="n">AnchorLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="LeftStatusIndicator.spinner"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.LeftStatusIndicator.spinner">[docs]</a>    <span class="n">spinner</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="LeftStatusIndicator.icon"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.LeftStatusIndicator.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="LeftStatusIndicatorListItem"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.LeftStatusIndicatorListItem">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicatorListItem</span><span class="p">(</span><span class="n">OneLineAvatarListItem</span><span class="p">):</span>
+<div class="viewcode-block" id="LeftStatusIndicatorListItem.loading_state"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.LeftStatusIndicatorListItem.loading_state">[docs]</a>    <span class="n">loading_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">])</span></div>
+<div class="viewcode-block" id="LeftStatusIndicatorListItem.spinner"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.LeftStatusIndicatorListItem.spinner">[docs]</a>    <span class="n">spinner</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="schedule"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.schedule">[docs]</a><span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">loading_state</span> <span class="o">==</span> <span class="s2">&quot;queued&quot;</span><span class="p">:</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">loading_state</span> <span class="o">=</span> <span class="s2">&quot;loading&quot;</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;loading_state&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+
+<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../autoapi/scroll_list/index.html#scroll_list.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">ScrollList</span><span class="p">(</span>
+                <span class="n">item_type</span><span class="o">=</span><span class="n">LeftStatusIndicatorListItem</span><span class="p">,</span>
+                <span class="n">item_dicts</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">}]</span> <span class="o">*</span> <span class="mi">25</span><span class="p">,</span>
+                <span class="n">callback</span><span class="o">=</span><span class="k">lambda</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">schedule</span><span class="p">,</span> <span class="n">obj</span><span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span></div></div>
+            <span class="p">)</span>
+
+    <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

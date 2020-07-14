@@ -1,0 +1,855 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mychooser &mdash; ACG 0.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">mychooser</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/autoapi/mychooser/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-mychooser">
+<span id="mychooser"></span><h1><a class="reference internal" href="#module-mychooser" title="mychooser"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mychooser</span></code></a><a class="headerlink" href="#module-mychooser" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.MultiStateBehaviour" title="mychooser.MultiStateBehaviour"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MultiStateBehaviour</span></code></a>(**kwargs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.CheckBehavior" title="mychooser.CheckBehavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CheckBehavior</span></code></a>(**kwargs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.CheckContainer" title="mychooser.CheckContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CheckContainer</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.TranslationOnCheckBehavior" title="mychooser.TranslationOnCheckBehavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TranslationOnCheckBehavior</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.ThemableColorChangeBehavior" title="mychooser.ThemableColorChangeBehavior"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThemableColorChangeBehavior</span></code></a>(**kwargs)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.MyCheckCard" title="mychooser.MyCheckCard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyCheckCard</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.MyTransCard" title="mychooser.MyTransCard"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyTransCard</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.MyCheckChip" title="mychooser.MyCheckChip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyCheckChip</span></code></a>(**kwargs)</p></td>
+<td><p>Class implements a circular ripple effect.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.MyTransChip" title="mychooser.MyTransChip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyTransChip</span></code></a>(**kwargs)</p></td>
+<td><p>Class implements a circular ripple effect.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.MyCheckCardContainer" title="mychooser.MyCheckCardContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyCheckCardContainer</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.MyTransCardContainer" title="mychooser.MyTransCardContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyTransCardContainer</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.MyCheckChipContainer" title="mychooser.MyCheckChipContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyCheckChipContainer</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.MyTransChipContainer" title="mychooser.MyTransChipContainer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyTransChipContainer</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#mychooser.MyCheckImageTile" title="mychooser.MyCheckImageTile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyCheckImageTile</span></code></a>(**kwargs)</p></td>
+<td><p>A tile for more complex needs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mychooser.MyCheckImageGrid" title="mychooser.MyCheckImageGrid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MyCheckImageGrid</span></code></a>(**kwargs)</p></td>
+<td><p>Widget class. See module documentation for more information.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt id="mychooser.this_directory">
+<code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">this_directory</code><a class="reference internal" href="../../_modules/mychooser.html#this_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.this_directory" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MultiStateBehaviour">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MultiStateBehaviour</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MultiStateBehaviour"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MultiStateBehaviour" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="mychooser.MultiStateBehaviour.current_state">
+<code class="sig-name descname">current_state</code><a class="reference internal" href="../../_modules/mychooser.html#MultiStateBehaviour.current_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MultiStateBehaviour.current_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.MultiStateBehaviour.state_dicts">
+<code class="sig-name descname">state_dicts</code><a class="reference internal" href="../../_modules/mychooser.html#MultiStateBehaviour.state_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MultiStateBehaviour.state_dicts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.MultiStateBehaviour.animated_properties">
+<code class="sig-name descname">animated_properties</code><a class="reference internal" href="../../_modules/mychooser.html#MultiStateBehaviour.animated_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MultiStateBehaviour.animated_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.MultiStateBehaviour.on_current_state">
+<code class="sig-name descname">on_current_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MultiStateBehaviour.on_current_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MultiStateBehaviour.on_current_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.MultiStateBehaviour.__post_init__">
+<code class="sig-name descname">__post_init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MultiStateBehaviour.__post_init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MultiStateBehaviour.__post_init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.CheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">CheckBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#CheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.MultiStateBehaviour" title="mychooser.MultiStateBehaviour"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MultiStateBehaviour</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.CheckContainer">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">CheckContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.widget.Widget</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.CheckContainer.check_one">
+<code class="sig-name descname">check_one</code><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer.check_one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.CheckContainer.element_dicts">
+<code class="sig-name descname">element_dicts</code><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer.element_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer.element_dicts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.CheckContainer.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.CheckContainer.conditional_uncheck">
+<code class="sig-name descname">conditional_uncheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">instance</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer.conditional_uncheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer.conditional_uncheck" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.CheckContainer.get_checked">
+<code class="sig-name descname">get_checked</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">property_name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer.get_checked"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer.get_checked" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.CheckContainer.on_element_dicts">
+<code class="sig-name descname">on_element_dicts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#CheckContainer.on_element_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.CheckContainer.on_element_dicts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.TranslationOnCheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">TranslationOnCheckBehavior</code><a class="reference internal" href="../../_modules/mychooser.html#TranslationOnCheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.TranslationOnCheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="mychooser.TranslationOnCheckBehavior.text_orig">
+<code class="sig-name descname">text_orig</code><a class="reference internal" href="../../_modules/mychooser.html#TranslationOnCheckBehavior.text_orig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.TranslationOnCheckBehavior.text_orig" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.TranslationOnCheckBehavior.text_trans">
+<code class="sig-name descname">text_trans</code><a class="reference internal" href="../../_modules/mychooser.html#TranslationOnCheckBehavior.text_trans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.TranslationOnCheckBehavior.text_trans" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.TranslationOnCheckBehavior.__post_init__">
+<code class="sig-name descname">__post_init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#TranslationOnCheckBehavior.__post_init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.TranslationOnCheckBehavior.__post_init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.ThemableColorChangeBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">ThemableColorChangeBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#ThemableColorChangeBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.ThemableColorChangeBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="mychooser.ThemableColorChangeBehavior.text_color">
+<code class="sig-name descname">text_color</code><a class="reference internal" href="../../_modules/mychooser.html#ThemableColorChangeBehavior.text_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.ThemableColorChangeBehavior.text_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.ThemableColorChangeBehavior.bg_color">
+<code class="sig-name descname">bg_color</code><a class="reference internal" href="../../_modules/mychooser.html#ThemableColorChangeBehavior.bg_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.ThemableColorChangeBehavior.bg_color" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.ThemableColorChangeBehavior.animated_properties">
+<code class="sig-name descname">animated_properties</code><em class="property"> = ['bg_color', 'text_color']</em><a class="reference internal" href="../../_modules/mychooser.html#ThemableColorChangeBehavior.animated_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.ThemableColorChangeBehavior.animated_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.ThemableColorChangeBehavior.__post_init__">
+<code class="sig-name descname">__post_init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#ThemableColorChangeBehavior.__post_init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.ThemableColorChangeBehavior.__post_init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyCheckCard">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyCheckCard</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.ThemableColorChangeBehavior" title="mychooser.ThemableColorChangeBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.ThemableColorChangeBehavior</span></code></a>, <a class="reference internal" href="#mychooser.CheckBehavior" title="mychooser.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/card/index.html#kivymd.uix.card.MDCard" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.card.MDCard</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.MyCheckCard.text">
+<code class="sig-name descname">text</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckCard.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckCard.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.MyCheckCard.on_press">
+<code class="sig-name descname">on_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckCard.on_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckCard.on_press" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyTransCard">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyTransCard</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyTransCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyTransCard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.TranslationOnCheckBehavior" title="mychooser.TranslationOnCheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.TranslationOnCheckBehavior</span></code></a>, <a class="reference internal" href="#mychooser.MyCheckCard" title="mychooser.MyCheckCard"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MyCheckCard</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyCheckChip">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyCheckChip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckChip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckChip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.behaviors.CircularRippleBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a>, <a class="reference internal" href="#mychooser.ThemableColorChangeBehavior" title="mychooser.ThemableColorChangeBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.ThemableColorChangeBehavior</span></code></a>, <a class="reference internal" href="#mychooser.CheckBehavior" title="mychooser.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<p>Class implements a circular ripple effect.</p>
+<dl class="py attribute">
+<dt id="mychooser.MyCheckChip.icon">
+<code class="sig-name descname">icon</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckChip.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckChip.icon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="mychooser.MyCheckChip.text">
+<code class="sig-name descname">text</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckChip.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckChip.text" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.MyCheckChip.on_press">
+<code class="sig-name descname">on_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckChip.on_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckChip.on_press" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyTransChip">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyTransChip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyTransChip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyTransChip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.TranslationOnCheckBehavior" title="mychooser.TranslationOnCheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.TranslationOnCheckBehavior</span></code></a>, <a class="reference internal" href="#mychooser.MyCheckChip" title="mychooser.MyCheckChip"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MyCheckChip</span></code></a></p>
+<p>Class implements a circular ripple effect.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyCheckCardContainer">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyCheckCardContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckCardContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckCardContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.CheckContainer" title="mychooser.CheckContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.CheckContainer</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.MyCheckCardContainer.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckCardContainer.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckCardContainer.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyTransCardContainer">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyTransCardContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyTransCardContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyTransCardContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.MyCheckCardContainer" title="mychooser.MyCheckCardContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MyCheckCardContainer</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.MyTransCardContainer.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/mychooser.html#MyTransCardContainer.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyTransCardContainer.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyCheckChipContainer">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyCheckChipContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckChipContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckChipContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.CheckContainer" title="mychooser.CheckContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.CheckContainer</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.MyCheckChipContainer.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckChipContainer.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckChipContainer.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyTransChipContainer">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyTransChipContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyTransChipContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyTransChipContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.MyCheckChipContainer" title="mychooser.MyCheckChipContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MyCheckChipContainer</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.MyTransChipContainer.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/mychooser.html#MyTransChipContainer.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyTransChipContainer.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyCheckImageTile">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyCheckImageTile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckImageTile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckImageTile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.CheckBehavior" title="mychooser.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/image-list/index.html#kivymd.uix.imagelist.SmartTile" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.imagelist.SmartTile</span></code></a></p>
+<p>A tile for more complex needs.</p>
+<p>Includes an image, a container to place overlays and a box that can act
+as a header or a footer, as described in the Material Design specs.</p>
+<dl class="py attribute">
+<dt id="mychooser.MyCheckImageTile.border_width">
+<code class="sig-name descname">border_width</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckImageTile.border_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckImageTile.border_width" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="mychooser.MyCheckImageTile.on_press">
+<code class="sig-name descname">on_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckImageTile.on_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckImageTile.on_press" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="mychooser.MyCheckImageGrid">
+<em class="property">class </em><code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">MyCheckImageGrid</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/mychooser.html#MyCheckImageGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckImageGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mychooser.CheckContainer" title="mychooser.CheckContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.CheckContainer</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.gridlayout.html#kivy.uix.gridlayout.GridLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.gridlayout.GridLayout</span></code></a></p>
+<p>Widget class. See module documentation for more information.</p>
+<dl class="field-list">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl>
+<dt><cite>on_touch_down</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when a new touch event occurs. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_move</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch moves. <cite>touch</cite> is the touch object.</p>
+</dd>
+<dt><cite>on_touch_up</cite>: <cite>(touch, )</cite></dt><dd><p>Fired when an existing touch disappears. <cite>touch</cite> is the touch
+object.</p>
+</dd>
+<dt><cite>on_kv_post</cite>: <cite>(base_widget, )</cite></dt><dd><p>Fired after all the kv rules associated with the widget
+and all other widgets that are in any of those rules have had
+all their kv rules applied. <cite>base_widget</cite> is the base-most widget
+whose instantiation triggered the kv rules (i.e. the widget
+instantiated from Python, e.g. <code class="docutils literal notranslate"><span class="pre">MyWidget()</span></code>).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.11.0.</span></p>
+</div>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Adding a <cite>__del__</cite> method to a class derived from Widget with Python
+prior to 3.4 will disable automatic garbage collection for instances
+of that class. This is because the Widget class creates reference
+cycles, thereby <a class="reference external" href="https://docs.python.org/2/library/gc.html#gc.garbage">preventing garbage collection</a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.0.9: </span>Everything related to event properties has been moved to the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">EventDispatcher</span></code></a>. Event properties can now be used
+when contructing a simple class without subclassing <code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.5.0: </span>The constructor now accepts on_* arguments to automatically bind
+callbacks to properties or events, as in the Kv language.</p>
+</div>
+<dl class="py attribute">
+<dt id="mychooser.MyCheckImageGrid.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/mychooser.html#MyCheckImageGrid.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.MyCheckImageGrid.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt id="mychooser.IMG_STRING">
+<code class="sig-prename descclassname">mychooser.</code><code class="sig-name descname">IMG_STRING</code><em class="property"> =</em><a class="reference internal" href="../../_modules/mychooser.html#IMG_STRING"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mychooser.IMG_STRING" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl>
+<dt>FloatLayout:</dt><dd><dl>
+<dt>ScrollView:</dt><dd><p>do_scroll_x: False
+do_scroll_y: True
+size_hint: 1,1
+MyCheckImageGrid:</p>
+<blockquote>
+<div><p>cols: 2
+id: image_grid
+row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols <a href="#id8"><span class="problematic" id="id9">*</span></a>3/4
+row_force_default: True
+size_hint_y: None
+height: self.minimum_height
+padding: dp(4), dp(4)
+spacing: dp(4)
+check_one: True
+element_dicts: [{“source”:”../assets/AnkiCardGen.png”} for i in range(10)]</p>
+</div></blockquote>
+</dd>
+<dt>MDFloatingActionButton:</dt><dd><p>pos_hint: {“center_x”:0.5,”center_y”:0.5}
+on_press: image_grid.element_dicts = [{“source”:”../assets/Latte.jpg”} for i in range(10)]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

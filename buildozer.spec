@@ -10,7 +10,7 @@ package.name = ankicardgenapp
 package.domain = org.ankicardgen
 
 # (str) Source code where the main.py live
-source.dir = .
+source.dir = src
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg
@@ -52,7 +52,7 @@ requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,ki
 presplash.filename = assets/AnkiCardGen.png
 
 # (str) Icon of the application
-icon.filename = assets/AnkiCardGen.png
+icon.filename = src/assets/AnkiCardGen.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait

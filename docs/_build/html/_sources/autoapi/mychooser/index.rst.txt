@@ -1,0 +1,562 @@
+:mod:`mychooser`
+================
+
+.. py:module:: mychooser
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   mychooser.MultiStateBehaviour
+   mychooser.CheckBehavior
+   mychooser.CheckContainer
+   mychooser.TranslationOnCheckBehavior
+   mychooser.ThemableColorChangeBehavior
+   mychooser.MyCheckCard
+   mychooser.MyTransCard
+   mychooser.MyCheckChip
+   mychooser.MyTransChip
+   mychooser.MyCheckCardContainer
+   mychooser.MyTransCardContainer
+   mychooser.MyCheckChipContainer
+   mychooser.MyTransChipContainer
+   mychooser.MyCheckImageTile
+   mychooser.MyCheckImageGrid
+
+
+
+.. data:: this_directory
+   
+
+   
+
+.. py:class:: MultiStateBehaviour(**kwargs)
+
+   .. attribute:: current_state
+      
+
+      
+
+   .. attribute:: state_dicts
+      
+
+      
+
+   .. attribute:: animated_properties
+      
+
+      
+
+   .. method:: on_current_state(self, *_)
+
+
+
+   .. method:: __post_init__(self, *_)
+
+
+
+
+.. py:class:: CheckBehavior(**kwargs)
+
+   Bases: :class:`mychooser.MultiStateBehaviour`
+
+
+.. py:class:: CheckContainer(**kwargs)
+
+   Bases: :class:`kivy.uix.widget.Widget`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: check_one
+      
+
+      
+
+   .. attribute:: element_dicts
+      
+
+      
+
+   .. attribute:: CheckElementObject
+      
+
+      
+
+   .. method:: conditional_uncheck(self, instance, value)
+
+
+
+   .. method:: get_checked(self, property_name=None)
+
+
+
+   .. method:: on_element_dicts(self, *_)
+
+
+
+
+.. py:class:: TranslationOnCheckBehavior
+
+   .. attribute:: text_orig
+      
+
+      
+
+   .. attribute:: text_trans
+      
+
+      
+
+   .. method:: __post_init__(self, *_)
+
+
+
+
+.. py:class:: ThemableColorChangeBehavior(**kwargs)
+
+   .. attribute:: text_color
+      
+
+      
+
+   .. attribute:: bg_color
+      
+
+      
+
+   .. attribute:: animated_properties
+      :annotation: = ['bg_color', 'text_color']
+
+      
+
+   .. method:: __post_init__(self, *_)
+
+
+
+
+.. py:class:: MyCheckCard(**kwargs)
+
+   Bases: :class:`mychooser.ThemableColorChangeBehavior`, :class:`mychooser.CheckBehavior`, :class:`kivymd.uix.card.MDCard`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: text
+      
+
+      
+
+   .. method:: on_press(self)
+
+
+
+
+.. py:class:: MyTransCard(**kwargs)
+
+   Bases: :class:`mychooser.TranslationOnCheckBehavior`, :class:`mychooser.MyCheckCard`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+
+.. py:class:: MyCheckChip(**kwargs)
+
+   Bases: :class:`kivymd.uix.behaviors.CircularRippleBehavior`, :class:`kivy.uix.behaviors.ButtonBehavior`, :class:`mychooser.ThemableColorChangeBehavior`, :class:`mychooser.CheckBehavior`, :class:`kivymd.theming.ThemableBehavior`, :class:`kivy.uix.boxlayout.BoxLayout`
+
+   Class implements a circular ripple effect.
+
+   .. attribute:: icon
+      
+
+      
+
+   .. attribute:: text
+      
+
+      
+
+   .. method:: on_press(self)
+
+
+
+
+.. py:class:: MyTransChip(**kwargs)
+
+   Bases: :class:`mychooser.TranslationOnCheckBehavior`, :class:`mychooser.MyCheckChip`
+
+   Class implements a circular ripple effect.
+
+
+.. py:class:: MyCheckCardContainer(**kwargs)
+
+   Bases: :class:`mychooser.CheckContainer`, :class:`kivymd.theming.ThemableBehavior`, :class:`kivy.uix.boxlayout.BoxLayout`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: CheckElementObject
+      
+
+      
+
+
+.. py:class:: MyTransCardContainer(**kwargs)
+
+   Bases: :class:`mychooser.MyCheckCardContainer`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: CheckElementObject
+      
+
+      
+
+
+.. py:class:: MyCheckChipContainer(**kwargs)
+
+   Bases: :class:`mychooser.CheckContainer`, :class:`kivymd.theming.ThemableBehavior`, :class:`kivy.uix.stacklayout.StackLayout`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: CheckElementObject
+      
+
+      
+
+
+.. py:class:: MyTransChipContainer(**kwargs)
+
+   Bases: :class:`mychooser.MyCheckChipContainer`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: CheckElementObject
+      
+
+      
+
+
+.. py:class:: MyCheckImageTile(**kwargs)
+
+   Bases: :class:`mychooser.CheckBehavior`, :class:`kivymd.uix.imagelist.SmartTile`
+
+   A tile for more complex needs.
+
+   Includes an image, a container to place overlays and a box that can act
+   as a header or a footer, as described in the Material Design specs.
+
+   .. attribute:: border_width
+      
+
+      
+
+   .. method:: on_press(self)
+
+
+
+
+.. py:class:: MyCheckImageGrid(**kwargs)
+
+   Bases: :class:`mychooser.CheckContainer`, :class:`kivymd.theming.ThemableBehavior`, :class:`kivy.uix.gridlayout.GridLayout`
+
+   Widget class. See module documentation for more information.
+
+   :Events:
+       `on_touch_down`: `(touch, )`
+           Fired when a new touch event occurs. `touch` is the touch object.
+       `on_touch_move`: `(touch, )`
+           Fired when an existing touch moves. `touch` is the touch object.
+       `on_touch_up`: `(touch, )`
+           Fired when an existing touch disappears. `touch` is the touch
+           object.
+       `on_kv_post`: `(base_widget, )`
+           Fired after all the kv rules associated with the widget
+           and all other widgets that are in any of those rules have had
+           all their kv rules applied. `base_widget` is the base-most widget
+           whose instantiation triggered the kv rules (i.e. the widget
+           instantiated from Python, e.g. ``MyWidget()``).
+
+           .. versionchanged:: 1.11.0
+
+   .. warning::
+       Adding a `__del__` method to a class derived from Widget with Python
+       prior to 3.4 will disable automatic garbage collection for instances
+       of that class. This is because the Widget class creates reference
+       cycles, thereby `preventing garbage collection
+       <https://docs.python.org/2/library/gc.html#gc.garbage>`_.
+
+   .. versionchanged:: 1.0.9
+       Everything related to event properties has been moved to the
+       :class:`~kivy.event.EventDispatcher`. Event properties can now be used
+       when contructing a simple class without subclassing :class:`Widget`.
+
+   .. versionchanged:: 1.5.0
+       The constructor now accepts on_* arguments to automatically bind
+       callbacks to properties or events, as in the Kv language.
+
+   .. attribute:: CheckElementObject
+      
+
+      
+
+
+.. data:: IMG_STRING
+   :annotation: = 
+FloatLayout:
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: 1,1
+        MyCheckImageGrid:
+            cols: 2
+            id: image_grid
+            row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
+            row_force_default: True
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(4), dp(4)
+            spacing: dp(4)
+            check_one: True
+            element_dicts: [{"source":"../assets/AnkiCardGen.png"} for i in range(10)]
+
+    MDFloatingActionButton:
+        pos_hint: {"center_x":0.5,"center_y":0.5}
+        on_press: image_grid.element_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
+
+
+
+   
+

@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>generate_anki_card &mdash; ACG 0.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.anki.html">ACG.anki</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.my_kivy.html">ACG.my_kivy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.word_requests.html">ACG.word_requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.main.html">ACG.main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">generate_anki_card</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/autoapi/generate_anki_card/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-generate_anki_card">
+<span id="generate-anki-card"></span><h1><a class="reference internal" href="#module-generate_anki_card" title="generate_anki_card"><code class="xref py py-mod docutils literal notranslate"><span class="pre">generate_anki_card</span></code></a><a class="headerlink" href="#module-generate_anki_card" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#generate_anki_card.HtmlLoader" title="generate_anki_card.HtmlLoader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HtmlLoader</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#generate_anki_card.AnkiObject" title="generate_anki_card.AnkiObject"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnkiObject</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#generate_anki_card.model_from_html" title="generate_anki_card.model_from_html"><code class="xref py py-obj docutils literal notranslate"><span class="pre">model_from_html</span></code></a>(name, template_names, id, css_path)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="generate_anki_card.HtmlLoader">
+<em class="property">class </em><code class="sig-prename descclassname">generate_anki_card.</code><code class="sig-name descname">HtmlLoader</code><a class="reference internal" href="../../_modules/generate_anki_card.html#HtmlLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.HtmlLoader" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="generate_anki_card.HtmlLoader.path">
+<code class="sig-name descname">path</code><a class="reference internal" href="../../_modules/generate_anki_card.html#HtmlLoader.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.HtmlLoader.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="generate_anki_card.HtmlLoader.__attrs_post_init__">
+<code class="sig-name descname">__attrs_post_init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#HtmlLoader.__attrs_post_init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.HtmlLoader.__attrs_post_init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="generate_anki_card.HtmlLoader.set_of_fields">
+<code class="sig-name descname">set_of_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#HtmlLoader.set_of_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.HtmlLoader.set_of_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="generate_anki_card.HtmlLoader.replace_includes_with_content">
+<code class="sig-name descname">replace_includes_with_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#HtmlLoader.replace_includes_with_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.HtmlLoader.replace_includes_with_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="generate_anki_card.model_from_html">
+<code class="sig-prename descclassname">generate_anki_card.</code><code class="sig-name descname">model_from_html</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">template_names</span></em>, <em class="sig-param"><span class="n">id</span></em>, <em class="sig-param"><span class="n">css_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#model_from_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.model_from_html" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt id="generate_anki_card.AnkiObject">
+<em class="property">class </em><code class="sig-prename descclassname">generate_anki_card.</code><code class="sig-name descname">AnkiObject</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py attribute">
+<dt id="generate_anki_card.AnkiObject.model_name">
+<code class="sig-name descname">model_name</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.model_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.model_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="generate_anki_card.AnkiObject.templates">
+<code class="sig-name descname">templates</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.templates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="generate_anki_card.AnkiObject.deck_name">
+<code class="sig-name descname">deck_name</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.deck_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.deck_name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="generate_anki_card.AnkiObject.css_path">
+<code class="sig-name descname">css_path</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.css_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.css_path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="generate_anki_card.AnkiObject.root_dir">
+<code class="sig-name descname">root_dir</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.root_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.root_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="generate_anki_card.AnkiObject.id">
+<code class="sig-name descname">id</code><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="generate_anki_card.AnkiObject.__attrs_post_init__">
+<code class="sig-name descname">__attrs_post_init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.__attrs_post_init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.__attrs_post_init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="generate_anki_card.AnkiObject.add_card">
+<code class="sig-name descname">add_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">media_files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.add_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.add_card" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="generate_anki_card.AnkiObject.write_apkg">
+<code class="sig-name descname">write_apkg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/generate_anki_card.html#AnkiObject.write_apkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.AnkiObject.write_apkg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt id="generate_anki_card.ankiobject">
+<code class="sig-prename descclassname">generate_anki_card.</code><code class="sig-name descname">ankiobject</code><a class="reference internal" href="../../_modules/generate_anki_card.html#ankiobject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#generate_anki_card.ankiobject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

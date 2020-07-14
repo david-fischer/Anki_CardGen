@@ -1,0 +1,215 @@
+:mod:`pt_word`
+==============
+
+.. py:module:: pt_word
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   pt_word.Word
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   pt_word.translate
+   pt_word.html_list
+
+
+.. data:: FROM_LANG
+   :annotation: = pt
+
+   
+
+.. data:: TO_LANG
+   :annotation: = de
+
+   
+
+.. data:: LANGUAGE
+   
+
+   
+
+.. data:: translator
+   
+
+   
+
+.. function:: translate(string)
+
+   :param string:
+
+   Returns:
+
+
+.. function:: html_list(str_list)
+
+   Returns a string, that is displayed as a list in HTML.
+
+   :param str_list: return:
+
+   Returns:
+
+
+.. py:class:: Word
+
+   .. attribute:: search_term
+      
+
+      
+
+   .. attribute:: data_dir
+      
+
+      
+
+   .. attribute:: word_type
+      
+
+      
+
+   .. attribute:: gender
+      
+
+      
+
+   .. attribute:: examples
+      
+
+      
+
+   .. attribute:: explanations
+      
+
+      
+
+   .. attribute:: synonyms
+      
+
+      
+
+   .. attribute:: antonyms
+      
+
+      
+
+   .. attribute:: translations
+      
+
+      
+
+   .. attribute:: trans_syns
+      
+
+      
+
+   .. attribute:: image_urls
+      
+
+      
+
+   .. attribute:: _audio_url
+      
+
+      
+
+   .. attribute:: add_info_dict
+      
+
+      
+
+   .. attribute:: conj_table_html
+      
+
+      
+
+   .. method:: __attrs_post_init__(self)
+
+
+
+   .. method:: audio_url(self)
+      :property:
+
+
+
+   .. method:: search_term_utf8(self)
+
+
+
+   .. method:: folder(self)
+
+
+
+   .. method:: request_data(self)
+
+
+
+   .. method:: update_from_dict(self, attr_dict)
+
+
+      :param attr_dict:
+
+      Returns:
+
+
+   .. method:: add_translations(self)
+
+
+
+   .. method:: request_img_urls(self, keywords=None)
+
+
+      sets self.img_urls from first 20 results of google_images
+
+      :param keywords: (Default value = None)
+
+      Returns:
+
+
+   .. method:: mark_examples(self)
+
+
+      Highlights the search_word in the example sentences using css.
+
+
+   .. method:: from_json(cls, path)
+      :classmethod:
+
+
+      :param path:
+
+      Returns:
+
+
+   .. method:: save_as_json(self, path=None)
+
+
+      :param path: (Default value = None)
+
+      Returns:
+
+
+   .. method:: search(self, new_search_term)
+
+
+      :param new_search_term:
+
+      Returns:
+
+
+
+.. data:: q
+   
+
+   
+
