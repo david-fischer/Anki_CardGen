@@ -12,9 +12,9 @@ Classes
 
 .. autoapisummary::
 
-   scroll_list.ScrollList
    scroll_list.LeftStatusIndicator
    scroll_list.LeftStatusIndicatorListItem
+   scroll_list.ScrollList
    scroll_list.TestApp
 
 
@@ -25,6 +25,44 @@ Functions
 .. autoapisummary::
 
    scroll_list.schedule
+
+
+.. py:class:: LeftStatusIndicator(**kwargs)
+
+   Bases: :class:`kivymd.uix.list.ILeftBody`, :class:`kivy.uix.anchorlayout.AnchorLayout`
+
+   Pseudo-interface for widgets that go in the left container for
+   ListItems that support it.
+
+   Implements nothing and requires no implementation, for annotation only.
+
+   .. attribute:: icon
+      
+
+      
+
+   .. attribute:: spinner
+      
+
+      
+
+
+.. py:class:: LeftStatusIndicatorListItem(**kwargs)
+
+   Bases: :class:`kivymd.uix.list.OneLineAvatarListItem`
+
+   Overrides ``add_widget`` in a ``ListItem`` to include support
+   for ``I*Body`` widgets when the appropiate containers are present.
+
+   .. attribute:: loading_state
+      
+
+      
+
+   .. attribute:: spinner
+      
+
+      
 
 
 .. py:class:: ScrollList(**kwargs)
@@ -49,12 +87,17 @@ Functions
        `auto_scroll`, `scroll_friction`, `scroll_moves`, `scroll_stoptime' has
        been deprecated, use :attr:`effect_cls` instead.
 
-   .. attribute:: item_type
+   .. attribute:: callback
       
 
       
 
    .. attribute:: item_dicts
+      
+
+      
+
+   .. attribute:: item_type
       
 
       
@@ -69,55 +112,9 @@ Functions
 
       
 
-   .. attribute:: callback
-      
-
-      
-
    .. method:: on_item_dicts(self, *_)
 
 
-
-
-.. py:class:: LeftStatusIndicator(**kwargs)
-
-   Bases: :class:`kivymd.uix.list.ILeftBody`, :class:`kivy.uix.anchorlayout.AnchorLayout`
-
-   Pseudo-interface for widgets that go in the left container for
-   ListItems that support it.
-
-   Implements nothing and requires no implementation, for annotation only.
-
-   .. attribute:: spinner
-      
-
-      
-
-   .. attribute:: icon
-      
-
-      
-
-
-.. py:class:: LeftStatusIndicatorListItem(**kwargs)
-
-   Bases: :class:`kivymd.uix.list.OneLineAvatarListItem`
-
-   Overrides ``add_widget`` in a ``ListItem`` to include support
-   for ``I*Body`` widgets when the appropiate containers are present.
-
-   .. attribute:: loading_state
-      
-
-      
-
-   .. attribute:: spinner
-      
-
-      
-
-
-.. function:: schedule(obj)
 
 
 .. py:class:: TestApp(**kwargs)
@@ -156,5 +153,8 @@ Functions
           None or a root :class:`~kivy.uix.widget.Widget` instance
           if no self.root exists.
 
+
+
+.. function:: schedule(obj)
 
 

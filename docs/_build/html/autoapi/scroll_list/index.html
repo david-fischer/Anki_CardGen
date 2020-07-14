@@ -165,14 +165,14 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#scroll_list.ScrollList" title="scroll_list.ScrollList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScrollList</span></code></a>(**kwargs)</p></td>
-<td><p>ScrollView class. See module documentation for more information.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#scroll_list.LeftStatusIndicator" title="scroll_list.LeftStatusIndicator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftStatusIndicator</span></code></a>(**kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scroll_list.LeftStatusIndicator" title="scroll_list.LeftStatusIndicator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftStatusIndicator</span></code></a>(**kwargs)</p></td>
 <td><p>Pseudo-interface for widgets that go in the left container for</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#scroll_list.LeftStatusIndicatorListItem" title="scroll_list.LeftStatusIndicatorListItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftStatusIndicatorListItem</span></code></a>(**kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#scroll_list.LeftStatusIndicatorListItem" title="scroll_list.LeftStatusIndicatorListItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LeftStatusIndicatorListItem</span></code></a>(**kwargs)</p></td>
 <td><p>Overrides <code class="docutils literal notranslate"><span class="pre">add_widget</span></code> in a <code class="docutils literal notranslate"><span class="pre">ListItem</span></code> to include support</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#scroll_list.ScrollList" title="scroll_list.ScrollList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ScrollList</span></code></a>(**kwargs)</p></td>
+<td><p>ScrollView class. See module documentation for more information.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#scroll_list.TestApp" title="scroll_list.TestApp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TestApp</span></code></a>(**kwargs)</p></td>
 <td><p>Application class, see module documentation for more information.</p></td>
@@ -193,6 +193,43 @@
 </tr>
 </tbody>
 </table>
+<dl class="py class">
+<dt id="scroll_list.LeftStatusIndicator">
+<em class="property">class </em><code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">LeftStatusIndicator</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.ILeftBody" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.ILeftBody</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.anchorlayout.html#kivy.uix.anchorlayout.AnchorLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.anchorlayout.AnchorLayout</span></code></a></p>
+<p>Pseudo-interface for widgets that go in the left container for
+ListItems that support it.</p>
+<p>Implements nothing and requires no implementation, for annotation only.</p>
+<dl class="py attribute">
+<dt id="scroll_list.LeftStatusIndicator.icon">
+<code class="sig-name descname">icon</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicator.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicator.icon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="scroll_list.LeftStatusIndicator.spinner">
+<code class="sig-name descname">spinner</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicator.spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicator.spinner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="scroll_list.LeftStatusIndicatorListItem">
+<em class="property">class </em><code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">LeftStatusIndicatorListItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicatorListItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicatorListItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineAvatarListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineAvatarListItem</span></code></a></p>
+<p>Overrides <code class="docutils literal notranslate"><span class="pre">add_widget</span></code> in a <code class="docutils literal notranslate"><span class="pre">ListItem</span></code> to include support
+for <code class="docutils literal notranslate"><span class="pre">I*Body</span></code> widgets when the appropiate containers are present.</p>
+<dl class="py attribute">
+<dt id="scroll_list.LeftStatusIndicatorListItem.loading_state">
+<code class="sig-name descname">loading_state</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicatorListItem.loading_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicatorListItem.loading_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="scroll_list.LeftStatusIndicatorListItem.spinner">
+<code class="sig-name descname">spinner</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicatorListItem.spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicatorListItem.spinner" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt id="scroll_list.ScrollList">
 <em class="property">class </em><code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">ScrollList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList" title="Permalink to this definition">¶</a></dt>
@@ -219,13 +256,18 @@ now dispatched when scrolling to handle nested ScrollViews.</p>
 been deprecated, use :attr:`effect_cls</cite> instead.</p>
 </div>
 <dl class="py attribute">
-<dt id="scroll_list.ScrollList.item_type">
-<code class="sig-name descname">item_type</code><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.item_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.item_type" title="Permalink to this definition">¶</a></dt>
+<dt id="scroll_list.ScrollList.callback">
+<code class="sig-name descname">callback</code><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.callback" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt id="scroll_list.ScrollList.item_dicts">
 <code class="sig-name descname">item_dicts</code><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.item_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.item_dicts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="scroll_list.ScrollList.item_type">
+<code class="sig-name descname">item_type</code><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.item_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.item_type" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -238,59 +280,12 @@ been deprecated, use :attr:`effect_cls</cite> instead.</p>
 <code class="sig-name descname">list</code><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.list" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py attribute">
-<dt id="scroll_list.ScrollList.callback">
-<code class="sig-name descname">callback</code><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.callback" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt id="scroll_list.ScrollList.on_item_dicts">
 <code class="sig-name descname">on_item_dicts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#ScrollList.on_item_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList.on_item_dicts" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
-
-<dl class="py class">
-<dt id="scroll_list.LeftStatusIndicator">
-<em class="property">class </em><code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">LeftStatusIndicator</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.ILeftBody" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.ILeftBody</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.anchorlayout.html#kivy.uix.anchorlayout.AnchorLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.anchorlayout.AnchorLayout</span></code></a></p>
-<p>Pseudo-interface for widgets that go in the left container for
-ListItems that support it.</p>
-<p>Implements nothing and requires no implementation, for annotation only.</p>
-<dl class="py attribute">
-<dt id="scroll_list.LeftStatusIndicator.spinner">
-<code class="sig-name descname">spinner</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicator.spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicator.spinner" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="scroll_list.LeftStatusIndicator.icon">
-<code class="sig-name descname">icon</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicator.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicator.icon" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="scroll_list.LeftStatusIndicatorListItem">
-<em class="property">class </em><code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">LeftStatusIndicatorListItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicatorListItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicatorListItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineAvatarListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineAvatarListItem</span></code></a></p>
-<p>Overrides <code class="docutils literal notranslate"><span class="pre">add_widget</span></code> in a <code class="docutils literal notranslate"><span class="pre">ListItem</span></code> to include support
-for <code class="docutils literal notranslate"><span class="pre">I*Body</span></code> widgets when the appropiate containers are present.</p>
-<dl class="py attribute">
-<dt id="scroll_list.LeftStatusIndicatorListItem.loading_state">
-<code class="sig-name descname">loading_state</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicatorListItem.loading_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicatorListItem.loading_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="scroll_list.LeftStatusIndicatorListItem.spinner">
-<code class="sig-name descname">spinner</code><a class="reference internal" href="../../_modules/scroll_list.html#LeftStatusIndicatorListItem.spinner"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.LeftStatusIndicatorListItem.spinner" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt id="scroll_list.schedule">
-<code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">schedule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.schedule" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py class">
 <dt id="scroll_list.TestApp">
@@ -335,6 +330,11 @@ if no self.root exists.</p>
 </dd></dl>
 
 </dd></dl>
+
+<dl class="py function">
+<dt id="scroll_list.schedule">
+<code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">schedule</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/scroll_list.html#schedule"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.schedule" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>

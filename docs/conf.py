@@ -36,7 +36,7 @@ release = "0.3.0"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx.ext.autodoc",
+    # "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinx.ext.todo",
     "sphinx.ext.autosummary",
@@ -58,17 +58,18 @@ autoapi_ignore = [
         "python-for-android",
     ]
 ]
+autoapi_member_order = "groupwise"
 autoapi_generate_api_docs = True
 
-autodoc_mock_imports = ["kivymd"]
-autodoc_inherit_docstrings = True
-autodoc_default_options = {
-    "members": True,
-    "member-order": "bysource",
-    "undoc-members": True,
-    #    'exclude-members':  "checked",  # "ObjectProperty,DictProperty",
-    "show-inheritance": True,
-}
+# autodoc_mock_imports = ["kivymd"]
+# autodoc_inherit_docstrings = True
+# autodoc_default_options = {
+#     "members": True,
+#     "member-order": "bysource",
+#     "undoc-members": True,
+#     #    'exclude-members':  "checked",  # "ObjectProperty,DictProperty",
+#     "show-inheritance": True,
+# }
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

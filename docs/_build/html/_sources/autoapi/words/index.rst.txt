@@ -21,6 +21,11 @@ Classes
 
 
 
+.. data:: q
+   
+
+   
+
 .. data:: translator
    
 
@@ -33,56 +38,6 @@ Classes
 
    Main function is :meth:`search` function.
 
-   .. attribute:: search_term
-      :annotation: :str = 
-
-      
-
-   .. attribute:: word_type
-      :annotation: :str = 
-
-      
-
-   .. attribute:: gender
-      :annotation: :str = 
-
-      
-
-   .. attribute:: examples
-      :annotation: :list = []
-
-      
-
-   .. attribute:: explanations
-      :annotation: :list = []
-
-      
-
-   .. attribute:: synonyms
-      :annotation: :list = []
-
-      
-
-   .. attribute:: antonyms
-      :annotation: :list = []
-
-      
-
-   .. attribute:: translations
-      :annotation: :list = []
-
-      
-
-   .. attribute:: trans_syns
-      :annotation: :list = []
-
-      
-
-   .. attribute:: image_urls
-      :annotation: :list = []
-
-      
-
    .. attribute:: _audio_url
       :annotation: :str = 
 
@@ -90,6 +45,11 @@ Classes
 
    .. attribute:: add_info_dict
       :annotation: :dict
+
+      
+
+   .. attribute:: antonyms
+      :annotation: :list = []
 
       
 
@@ -103,8 +63,38 @@ Classes
 
       
 
+   .. attribute:: examples
+      :annotation: :list = []
+
+      
+
+   .. attribute:: explanations
+      :annotation: :list = []
+
+      
+
    .. attribute:: from_lang
       :annotation: :str = pt
+
+      
+
+   .. attribute:: gender
+      :annotation: :str = 
+
+      
+
+   .. attribute:: image_urls
+      :annotation: :list = []
+
+      
+
+   .. attribute:: search_term
+      :annotation: :str = 
+
+      
+
+   .. attribute:: synonyms
+      :annotation: :list = []
 
       
 
@@ -113,8 +103,30 @@ Classes
 
       
 
+   .. attribute:: trans_syns
+      :annotation: :list = []
+
+      
+
+   .. attribute:: translations
+      :annotation: :list = []
+
+      
+
+   .. attribute:: word_type
+      :annotation: :str = 
+
+      
+
    .. method:: __attrs_post_init__(self)
 
+
+
+   .. method:: add_translations(self)
+
+
+      For the attributes ["examples", "synonyms", "antonyms"], it iterates to the corresponding lists and adds
+      translations, where none are already present.
 
 
    .. method:: audio_url(self)
@@ -122,20 +134,6 @@ Classes
 
 
       Getter function for :attr:`_audio_url`
-
-
-   .. method:: search_term_utf8(self)
-
-
-      :returns: :attr:`search_term` with special characters replaced.
-
-
-   .. method:: folder(self)
-
-
-      Used as folder name to save files to.
-
-      :returns: :method:`search_term_utf8` with spaces replaced by underscores.
 
 
    .. method:: base_path(self)
@@ -146,35 +144,31 @@ Classes
       :returns: `f"{self.data_dir}/{self.folder()}/{self.folder()}"'
 
 
-   .. method:: translate(self, string)
+   .. method:: folder(self)
 
 
-      Translates string from :attr:`from_lang` to :attr:`to_lang`.
+      Used as folder name to save files to.
 
-      :returns: Translated string.
+      :returns: :method:`search_term_utf8` with spaces replaced by underscores.
+
+
+   .. method:: from_json(cls, path)
+      :classmethod:
+
+
+      Initializes :class:`Word` from dictionary saved as .json.
+
+
+   .. method:: mark_examples(self)
+
+
+      Highlights the search_word in the example sentences using css.
 
 
    .. method:: request_data(self)
 
 
       Iterates through parsers and passes results to :meth:`update_from_dict`
-
-
-   .. method:: update_from_dict(self, attr_dict)
-
-
-      Iterates through attr_dict and updates :class:`Word` attributes.
-
-      If the value is a list, it extends the original list, else the value is set to the value of attr_dict
-
-      :param attr_dict: Each key should be the name of an attribute of :class:`Word`, the value corresponds to the updated value.
-
-
-   .. method:: add_translations(self)
-
-
-      For the attributes ["examples", "synonyms", "antonyms"], it iterates to the corresponding lists and adds
-      translations, where none are already present.
 
 
    .. method:: request_img_urls(self, keywords=None)
@@ -184,19 +178,6 @@ Classes
                        If not set, defaults to :attr:`search_term`.
 
       :returns: List of img_urls.
-
-
-   .. method:: mark_examples(self)
-
-
-      Highlights the search_word in the example sentences using css.
-
-
-   .. method:: from_json(cls, path)
-      :classmethod:
-
-
-      Initializes :class:`Word` from dictionary saved as .json.
 
 
    .. method:: save_as_json(self, path=None)
@@ -216,9 +197,28 @@ Classes
       :param new_search_term:
 
 
+   .. method:: search_term_utf8(self)
 
-.. data:: q
-   
 
-   
+      :returns: :attr:`search_term` with special characters replaced.
+
+
+   .. method:: translate(self, string)
+
+
+      Translates string from :attr:`from_lang` to :attr:`to_lang`.
+
+      :returns: Translated string.
+
+
+   .. method:: update_from_dict(self, attr_dict)
+
+
+      Iterates through attr_dict and updates :class:`Word` attributes.
+
+      If the value is a list, it extends the original list, else the value is set to the value of attr_dict
+
+      :param attr_dict: Each key should be the name of an attribute of :class:`Word`, the value corresponds to the updated value.
+
+
 

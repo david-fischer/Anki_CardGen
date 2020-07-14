@@ -1,7 +1,7 @@
 ACG.main
 -------------------------
 
-.. automodule:: ACG.main
+.. autoapimodule:: main
    :members:
    :undoc-members:
    :show-inheritance:
