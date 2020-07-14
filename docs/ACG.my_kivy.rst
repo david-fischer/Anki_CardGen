@@ -4,7 +4,7 @@ ACG.my\_kivy
 ACG.my\_kivy.mychooser 
 ---------------------------------------
 
-.. automodule:: ACG.my_kivy.mychooser
+.. autoapimodule:: mychooser
    :members:
    :undoc-members:
    :show-inheritance:
@@ -12,7 +12,7 @@ ACG.my\_kivy.mychooser
 ACG.my\_kivy.screen\_queue 
 -------------------------------------------
 
-.. automodule:: ACG.my_kivy.screen_queue
+.. autoapimodule:: screen_queue
    :members:
    :undoc-members:
    :show-inheritance:
@@ -20,7 +20,7 @@ ACG.my\_kivy.screen\_queue
 ACG.my\_kivy.screen\_single\_word 
 --------------------------------------------------
 
-.. automodule:: ACG.my_kivy.screen_single_word
+.. autoapimodule:: screen_single_word
    :members:
    :undoc-members:
    :show-inheritance:
@@ -28,7 +28,7 @@ ACG.my\_kivy.screen\_single\_word
 ACG.my\_kivy.scroll\_list 
 ------------------------------------------
 
-.. automodule:: ACG.my_kivy.scroll_list
+.. autoapimodule:: scroll_list
    :members:
    :undoc-members:
    :show-inheritance:

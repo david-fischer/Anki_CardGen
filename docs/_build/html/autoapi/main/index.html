@@ -165,17 +165,17 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#main.DrawerItem" title="main.DrawerItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DrawerItem</span></code></a>(**kwargs)</p></td>
-<td><p>Test</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#main.DrawerList" title="main.DrawerList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DrawerList</span></code></a>(**kwargs)</p></td>
-<td><p>Test</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#main.MainMenu" title="main.MainMenu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MainMenu</span></code></a>(**kwargs)</p></td>
-<td><p>Test</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#main.AnkiCardGenApp" title="main.AnkiCardGenApp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnkiCardGenApp</span></code></a>(**kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.AnkiCardGenApp" title="main.AnkiCardGenApp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AnkiCardGenApp</span></code></a>(**kwargs)</p></td>
 <td><p>Main App.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.DrawerItem" title="main.DrawerItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DrawerItem</span></code></a>(**kwargs)</p></td>
+<td><p>Test</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#main.DrawerList" title="main.DrawerList"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DrawerList</span></code></a>(**kwargs)</p></td>
+<td><p>Test</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#main.MainMenu" title="main.MainMenu"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MainMenu</span></code></a>(**kwargs)</p></td>
+<td><p>Test</p></td>
 </tr>
 </tbody>
 </table>
@@ -188,6 +188,185 @@
 <dt id="id0">
 <code class="sig-prename descclassname">main.</code><code class="sig-name descname">this_dir</code><a class="reference internal" href="../../_modules/main.html#this_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py class">
+<dt id="main.AnkiCardGenApp">
+<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">AnkiCardGenApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/material-app/index.html#kivymd.app.MDApp" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.app.MDApp</span></code></a></p>
+<p>Main App.</p>
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.anki">
+<code class="sig-name descname">anki</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.anki"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.anki" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../generate_anki_card/index.html#generate_anki_card.AnkiObject" title="generate_anki_card.AnkiObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">generate_anki_card.AnkiObject</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.dialog">
+<code class="sig-name descname">dialog</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDDialog</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.done_words">
+<code class="sig-name descname">done_words</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.done_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.done_words" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words for which Anki-cards have been generated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.error_words">
+<code class="sig-name descname">error_words</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.error_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.error_words" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words that could not be processed by Queue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.file_manager">
+<code class="sig-name descname">file_manager</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.file_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.keys_to_save">
+<code class="sig-name descname">keys_to_save</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.keys_to_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.keys_to_save" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the name of all attributes that should be saved on change.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.loading_state_dict">
+<code class="sig-name descname">loading_state_dict</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.loading_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.loading_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> containing all words that could not be processed by Queue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.q">
+<code class="sig-name descname">q</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.q" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3/library/queue.html#queue.Queue" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">queue.Queue</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.queue_words">
+<code class="sig-name descname">queue_words</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.queue_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.queue_words" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words not yet made into Anki-cards.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.theme_dialog">
+<code class="sig-name descname">theme_dialog</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.theme_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.theme_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/pickers/index.html#kivymd.uix.picker.MDThemePicker" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDThemePicker</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.word">
+<code class="sig-name descname">word</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.word" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pt_word.Word</span></code> Object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.add_anki_card">
+<code class="sig-name descname">add_anki_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">result_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.add_anki_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.add_anki_card" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>result_dict</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.build_config">
+<code class="sig-name descname">build_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.load_app_state">
+<code class="sig-name descname">load_app_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.load_app_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_app_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.load_by_config_key">
+<code class="sig-name descname">load_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.load_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_by_config_key" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.open_file_manager">
+<code class="sig-name descname">open_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'/'</span></em>, <em class="sig-param"><span class="n">select_path</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.open_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.open_file_manager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – (Default value = “/”)</p></li>
+<li><p><strong>select_path</strong> – (Default value = print)</p></li>
+<li><p><strong>ext</strong> – (Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.save_by_config_key">
+<code class="sig-name descname">save_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em>, <em class="sig-param"><span class="n">obj</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.save_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_by_config_key" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – </p></li>
+<li><p><strong>*_</strong> – </p></li>
+<li><p><strong>obj</strong> – (Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.save_theme">
+<code class="sig-name descname">save_theme</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.save_theme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_theme" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*_</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.setup_queue">
+<code class="sig-name descname">setup_queue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.setup_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.setup_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.show_dialog">
+<code class="sig-name descname">show_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">item_function</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">buttons</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.show_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.show_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – </p></li>
+<li><p><strong>options</strong> – (Default value = None)</p></li>
+<li><p><strong>callback</strong> – (Default value = print)</p></li>
+<li><p><strong>item_function</strong> – (Default value = None)</p></li>
+<li><p><strong>buttons</strong> – (Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+</dd></dl>
 
 <dl class="py class">
 <dt id="main.DrawerItem">
@@ -222,13 +401,13 @@
 <dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.mychooser.CheckContainer</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.MDList" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.MDList</span></code></a></p>
 <p>Test</p>
 <dl class="py attribute">
-<dt id="main.DrawerList.check_one">
-<code class="sig-name descname">check_one</code><em class="property"> = True</em><a class="reference internal" href="../../_modules/main.html#DrawerList.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.check_one" title="Permalink to this definition">¶</a></dt>
+<dt id="main.DrawerList.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/main.html#DrawerList.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.CheckElementObject" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="main.DrawerList.CheckElementObject">
-<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../../_modules/main.html#DrawerList.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dt id="main.DrawerList.check_one">
+<code class="sig-name descname">check_one</code><em class="property"> = True</em><a class="reference internal" href="../../_modules/main.html#DrawerList.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.check_one" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -261,185 +440,6 @@
 <dd><p>This function sets up the screens using the words from <a class="reference internal" href="#main.MainMenu.screen_dicts" title="main.MainMenu.screen_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_dicts</span></code></a>.</p>
 <p>The screens are added to the screen_man and corresponding entries to the drawer_list.
 Then <a class="reference internal" href="#main.DrawerList.current" title="main.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerList.current</span></code></a> is bound to screen_man.current and vice-versa.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="main.AnkiCardGenApp">
-<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">AnkiCardGenApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/material-app/index.html#kivymd.app.MDApp" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.app.MDApp</span></code></a></p>
-<p>Main App.</p>
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.dialog">
-<code class="sig-name descname">dialog</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDDialog</span></code></a> Object</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.file_manager">
-<code class="sig-name descname">file_manager</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.file_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> Object</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.theme_dialog">
-<code class="sig-name descname">theme_dialog</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.theme_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.theme_dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/pickers/index.html#kivymd.uix.picker.MDThemePicker" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDThemePicker</span></code></a> Object</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.word">
-<code class="sig-name descname">word</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.word" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pt_word.Word</span></code> Object</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.anki">
-<code class="sig-name descname">anki</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.anki"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.anki" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference internal" href="../generate_anki_card/index.html#generate_anki_card.AnkiObject" title="generate_anki_card.AnkiObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">generate_anki_card.AnkiObject</span></code></a> Object</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.q">
-<code class="sig-name descname">q</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.q" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://docs.python.org/3/library/queue.html#queue.Queue" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">queue.Queue</span></code></a> Object</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.error_words">
-<code class="sig-name descname">error_words</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.error_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.error_words" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words that could not be processed by Queue.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.queue_words">
-<code class="sig-name descname">queue_words</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.queue_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.queue_words" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words not yet made into Anki-cards.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.done_words">
-<code class="sig-name descname">done_words</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.done_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.done_words" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words for which Anki-cards have been generated.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.loading_state_dict">
-<code class="sig-name descname">loading_state_dict</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.loading_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.loading_state_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> containing all words that could not be processed by Queue.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.keys_to_save">
-<code class="sig-name descname">keys_to_save</code><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.keys_to_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.keys_to_save" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the name of all attributes that should be saved on change.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.show_dialog">
-<code class="sig-name descname">show_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">item_function</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">buttons</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.show_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.show_dialog" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>message</strong> – </p></li>
-<li><p><strong>options</strong> – (Default value = None)</p></li>
-<li><p><strong>callback</strong> – (Default value = print)</p></li>
-<li><p><strong>item_function</strong> – (Default value = None)</p></li>
-<li><p><strong>buttons</strong> – (Default value = None)</p></li>
-</ul>
-</dd>
-</dl>
-<p>Returns:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.build_config">
-<code class="sig-name descname">build_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build_config" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>config</strong> – </p>
-</dd>
-</dl>
-<p>Returns:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.build">
-<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.setup_queue">
-<code class="sig-name descname">setup_queue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.setup_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.setup_queue" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.save_theme">
-<code class="sig-name descname">save_theme</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.save_theme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_theme" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>*_</strong> – </p>
-</dd>
-</dl>
-<p>Returns:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.open_file_manager">
-<code class="sig-name descname">open_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'/'</span></em>, <em class="sig-param"><span class="n">select_path</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.open_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.open_file_manager" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> – (Default value = “/”)</p></li>
-<li><p><strong>select_path</strong> – (Default value = print)</p></li>
-<li><p><strong>ext</strong> – (Default value = None)</p></li>
-</ul>
-</dd>
-</dl>
-<p>Returns:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.load_by_config_key">
-<code class="sig-name descname">load_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.load_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_by_config_key" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>key</strong> – </p>
-</dd>
-</dl>
-<p>Returns:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.save_by_config_key">
-<code class="sig-name descname">save_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em>, <em class="sig-param"><span class="n">obj</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.save_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_by_config_key" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>key</strong> – </p></li>
-<li><p><strong>*_</strong> – </p></li>
-<li><p><strong>obj</strong> – (Default value = None)</p></li>
-</ul>
-</dd>
-</dl>
-<p>Returns:</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.load_app_state">
-<code class="sig-name descname">load_app_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.load_app_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_app_state" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.add_anki_card">
-<code class="sig-name descname">add_anki_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">result_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/main.html#AnkiCardGenApp.add_anki_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.add_anki_card" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>result_dict</strong> – </p>
-</dd>
-</dl>
-<p>Returns:</p>
 </dd></dl>
 
 </dd></dl>

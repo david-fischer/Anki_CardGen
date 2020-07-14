@@ -22,11 +22,11 @@ Classes
 
 .. autoapisummary::
 
-   parsers.Parser
-   parsers.LingueeParser
    parsers.DicioParser
-   parsers.ReversoParser
    parsers.GoogleImagesParser
+   parsers.LingueeParser
+   parsers.Parser
+   parsers.ReversoParser
 
 
 
@@ -36,14 +36,9 @@ Functions
 .. autoapisummary::
 
    parsers.get_element_after_regex
-   parsers.to_stripped_multiline_str
    parsers.linguee_did_you_mean
+   parsers.to_stripped_multiline_str
 
-
-.. data:: LANGUAGES
-   
-
-   
 
 .. data:: DEFAULT_HEADERS
    
@@ -51,7 +46,7 @@ Functions
    Default headers for the :class:`Parser` class.
 
 
-.. data:: REVERSO_HEADERS
+.. data:: LANGUAGES
    
 
    
@@ -61,41 +56,48 @@ Functions
 
    
 
-.. py:class:: Parser
+.. data:: REVERSO_HEADERS
+   
 
-   Base class for parsers.
+   
 
-   Main functionality is the result_dict function.
+.. data:: TEST_WORD
+   :annotation: = 
 
-   .. attribute:: phrase
-      :annotation: :str
+   
 
-      The word or phrase to search the site for.
+.. py:exception:: NoMatchError(site='')
 
+   Bases: :class:`Exception`
 
-   .. attribute:: from_lang
-      :annotation: :str
-
-      Target language.
+   Error if no match can be found for the current search.
 
 
-   .. attribute:: to_lang
-      :annotation: :str
+.. py:class:: DicioParser
 
-      Source Language.
+   Bases: :class:`parsers.Parser`
 
+   Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html
 
    .. attribute:: base_url
-      :annotation: = 
+      :annotation: = https://www.dicio.com.br/pesquisa.php?q={phrase}/
 
-      URL to make request to. Can contain every class attribute.
-      E.g. https://some.url/{phrase}/dest={from_lang};src={to_lang}.html
+      
+
+   .. method:: _conj_df(bs_obj)
+      :staticmethod:
 
 
-   .. attribute:: headers
-      :annotation: :dict
 
-      Headers for the request. Defaults to :const:`DEFAULT_HEADERS`.
+   .. method:: _html_from_conj_df(conj_table_df)
+      :staticmethod:
+
+
+
+   .. method:: parse_response(self, response)
+
+
+      Extracts explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html
 
 
    .. method:: setup(self)
@@ -104,12 +106,85 @@ Functions
       Stuff that needs to be executed before :meth:`url` is called.
 
 
-   .. method:: url(self)
+
+.. py:class:: GoogleImagesParser
+
+   Bases: :class:`parsers.Parser`
+
+   Uses google_images_download to get img_urls.
+
+   .. method:: result_dict(self, phrase=None)
 
 
-      Get url for http-request.
+      :param phrase: If None, uses :attr:`phrase`. (Default value = None)
 
-      :returns: :attr:`base_url` formatted with all class attributes.
+      :returns: Result of :meth:`parse_response`.
+
+
+
+.. py:class:: LingueeParser
+
+   Bases: :class:`parsers.Parser`
+
+   Uses Linguee to obtain: translation, word_type, gender and audio_url
+
+   .. attribute:: audio_base_url
+      :annotation: = https://www.linguee.de/mp3/%s.mp3
+
+      
+
+   .. attribute:: base_url
+      :annotation: = https://linguee-api.herokuapp.com/api?q={phrase}&src={from_lang}&dst={to_lang}
+
+      
+
+   .. attribute:: lang_dict
+      
+
+      
+
+   .. method:: parse_response(self, response: requests.Response)
+
+
+      Extracts translation, word_type, gender, audio_url
+
+
+
+.. py:class:: Parser
+
+   Base class for parsers.
+
+   Main functionality is the result_dict function.
+
+   .. attribute:: base_url
+      :annotation: = 
+
+      URL to make request to. Can contain every class attribute.
+      E.g. https://some.url/{phrase}/dest={from_lang};src={to_lang}.html
+
+
+   .. attribute:: from_lang
+      :annotation: :str
+
+      Target language.
+
+
+   .. attribute:: headers
+      :annotation: :dict
+
+      Headers for the request. Defaults to :const:`DEFAULT_HEADERS`.
+
+
+   .. attribute:: phrase
+      :annotation: :str
+
+      The word or phrase to search the site for.
+
+
+   .. attribute:: to_lang
+      :annotation: :str
+
+      Source Language.
 
 
    .. method:: make_request(self, url=None)
@@ -139,66 +214,18 @@ Functions
       :returns: Result of :meth:`parse_response`.
 
 
-
-.. py:class:: LingueeParser
-
-   Bases: :class:`parsers.Parser`
-
-   Uses Linguee to obtain: translation, word_type, gender and audio_url
-
-   .. attribute:: base_url
-      :annotation: = https://linguee-api.herokuapp.com/api?q={phrase}&src={from_lang}&dst={to_lang}
-
-      
-
-   .. attribute:: lang_dict
-      
-
-      
-
-   .. attribute:: audio_base_url
-      :annotation: = https://www.linguee.de/mp3/%s.mp3
-
-      
-
-   .. method:: parse_response(self, response: requests.Response)
-
-
-      Extracts translation, word_type, gender, audio_url
-
-
-
-.. py:class:: DicioParser
-
-   Bases: :class:`parsers.Parser`
-
-   Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html
-
-   .. attribute:: base_url
-      :annotation: = https://www.dicio.com.br/pesquisa.php?q={phrase}/
-
-      
-
    .. method:: setup(self)
 
 
       Stuff that needs to be executed before :meth:`url` is called.
 
 
-   .. method:: parse_response(self, response)
+   .. method:: url(self)
 
 
-      Extracts explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html
+      Get url for http-request.
 
-
-   .. method:: _conj_df(bs_obj)
-      :staticmethod:
-
-
-
-   .. method:: _html_from_conj_df(conj_table_df)
-      :staticmethod:
-
+      :returns: :attr:`base_url` formatted with all class attributes.
 
 
 
@@ -213,6 +240,11 @@ Functions
 
       
 
+   .. attribute:: headers
+      
+
+      
+
    .. attribute:: lang_dict
       
 
@@ -223,17 +255,6 @@ Functions
 
       
 
-   .. attribute:: headers
-      
-
-      
-
-   .. method:: setup(self)
-
-
-      Stuff that needs to be executed before :meth:`url` is called.
-
-
    .. method:: parse_response(self, response: requests.Response)
 
 
@@ -243,37 +264,16 @@ Functions
       :returns: Dictionary {"examples": [[ex_1_from_lang,ex_1_to_lang],...]}
 
 
-
-.. py:class:: GoogleImagesParser
-
-   Bases: :class:`parsers.Parser`
-
-   Uses google_images_download to get img_urls.
-
-   .. method:: result_dict(self, phrase=None)
+   .. method:: setup(self)
 
 
-      :param phrase: If None, uses :attr:`phrase`. (Default value = None)
-
-      :returns: Result of :meth:`parse_response`.
+      Stuff that needs to be executed before :meth:`url` is called.
 
 
 
 .. function:: get_element_after_regex(bs_obj, regex)
 
    Get bs_object after element which text-attribute matches a given regex.
-
-
-.. function:: to_stripped_multiline_str(bs_obj)
-
-   Strips each line of a string of leading and trailing whitespace.
-
-
-.. py:exception:: NoMatchError(site='')
-
-   Bases: :class:`Exception`
-
-   Error if no match can be found for the current search.
 
 
 .. function:: linguee_did_you_mean(search_term)
@@ -285,8 +285,8 @@ Functions
    :returns: List of possible corrections for the original search_term.
 
 
-.. data:: TEST_WORD
-   :annotation: = 
+.. function:: to_stripped_multiline_str(bs_obj)
 
-   
+   Strips each line of a string of leading and trailing whitespace.
+
 

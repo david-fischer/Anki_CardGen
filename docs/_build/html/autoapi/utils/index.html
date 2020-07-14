@@ -179,22 +179,52 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.save_dict_to_csv" title="utils.save_dict_to_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_dict_to_csv</span></code></a>(some_dict, out_path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.clean_up" title="utils.clean_up"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_up</span></code></a>(words, remove_punct=True, lower_case=True, lemmatize=True)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.compress_img" title="utils.compress_img"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compress_img</span></code></a>(path, width=512)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.dict_from_kindle_export" title="utils.dict_from_kindle_export"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict_from_kindle_export</span></code></a>(file_path)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#utils.load_dicts_from_csv" title="utils.load_dicts_from_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_dicts_from_csv</span></code></a>(path)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.smart_loader" title="utils.smart_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">smart_loader</span></code></a>(path)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.make_screenshots" title="utils.make_screenshots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_screenshots</span></code></a>(window_size=[270 * 1.4, 480 * 1.4])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.smart_saver" title="utils.smart_saver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">smart_saver</span></code></a>(obj, path)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.now_string" title="utils.now_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">now_string</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.now_string" title="utils.now_string"><code class="xref py py-obj docutils literal notranslate"><span class="pre">now_string</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.save_card_htmls" title="utils.save_card_htmls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_card_htmls</span></code></a>(word=’casa’)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.save_card_pngs" title="utils.save_card_pngs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_card_pngs</span></code></a>(word=’casa’, size=(540, 960))</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.save_dict_to_csv" title="utils.save_dict_to_csv"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_dict_to_csv</span></code></a>(some_dict, out_path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.screenshot" title="utils.screenshot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">screenshot</span></code></a>(path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.selection_helper" title="utils.selection_helper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">selection_helper</span></code></a>(base, id=None, props=None)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#utils.set_screen" title="utils.set_screen"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_screen</span></code></a>(screen_name)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.sleep_decorator" title="utils.sleep_decorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sleep_decorator</span></code></a>(time)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.smart_loader" title="utils.smart_loader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">smart_loader</span></code></a>(path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#utils.smart_saver" title="utils.smart_saver"><code class="xref py py-obj docutils literal notranslate"><span class="pre">smart_saver</span></code></a>(obj, path)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#utils.tag_word_in_sentence" title="utils.tag_word_in_sentence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tag_word_in_sentence</span></code></a>(sentence, tag_word)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#utils.widget_by_id" title="utils.widget_by_id"><code class="xref py py-obj docutils literal notranslate"><span class="pre">widget_by_id</span></code></a>(string)</p></td>
@@ -205,49 +235,14 @@
 </dl>
 </p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.sleep_decorator" title="utils.sleep_decorator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sleep_decorator</span></code></a>(time)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.screenshot" title="utils.screenshot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">screenshot</span></code></a>(path)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.make_screenshots" title="utils.make_screenshots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_screenshots</span></code></a>(window_size=[270 * 1.4, 480 * 1.4])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.save_card_htmls" title="utils.save_card_htmls"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_card_htmls</span></code></a>(word=’casa’)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.save_card_pngs" title="utils.save_card_pngs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_card_pngs</span></code></a>(word=’casa’, size=(540, 960))</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.selection_helper" title="utils.selection_helper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">selection_helper</span></code></a>(base, id=None, props=None)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.dict_from_kindle_export" title="utils.dict_from_kindle_export"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict_from_kindle_export</span></code></a>(file_path)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.clean_up" title="utils.clean_up"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clean_up</span></code></a>(words, remove_punct=True, lower_case=True, lemmatize=True)</p></td>
-<td><p></p></td>
-</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#utils.word_list_from_kindle" title="utils.word_list_from_kindle"><code class="xref py py-obj docutils literal notranslate"><span class="pre">word_list_from_kindle</span></code></a>(path)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#utils.word_list_from_txt" title="utils.word_list_from_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">word_list_from_txt</span></code></a>(path)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#utils.tag_word_in_sentence" title="utils.tag_word_in_sentence"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tag_word_in_sentence</span></code></a>(sentence, tag_word)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#utils.compress_img" title="utils.compress_img"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compress_img</span></code></a>(path, width=512)</p></td>
-<td><p></p></td>
-</tr>
 </tbody>
 </table>
-<dl class="py data">
-<dt id="utils.SPACY_IS_AVAILABLE">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">SPACY_IS_AVAILABLE</code><em class="property"> = True</em><a class="reference internal" href="../../_modules/utils.html#SPACY_IS_AVAILABLE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.SPACY_IS_AVAILABLE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py data">
 <dt id="utils.COLOR2MEANING">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">COLOR2MEANING</code><a class="reference internal" href="../../_modules/utils.html#COLOR2MEANING"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.COLOR2MEANING" title="Permalink to this definition">¶</a></dt>
@@ -259,8 +254,18 @@
 <dd></dd></dl>
 
 <dl class="py data">
+<dt id="utils.SPACY_IS_AVAILABLE">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">SPACY_IS_AVAILABLE</code><em class="property"> = True</em><a class="reference internal" href="../../_modules/utils.html#SPACY_IS_AVAILABLE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.SPACY_IS_AVAILABLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
 <dt id="utils.nlp">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">nlp</code><a class="reference internal" href="../../_modules/utils.html#nlp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.nlp" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="utils.rend">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">rend</code><a class="reference internal" href="../../_modules/utils.html#rend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.rend" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py class">
@@ -280,13 +285,68 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="utils.save_dict_to_csv">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_dict_to_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_dict</span></em>, <em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#save_dict_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_dict_to_csv" title="Permalink to this definition">¶</a></dt>
+<dt id="utils.clean_up">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">clean_up</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">words</span></em>, <em class="sig-param"><span class="n">remove_punct</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">lower_case</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">lemmatize</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.clean_up" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.compress_img">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">compress_img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#compress_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.compress_img" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.dict_from_kindle_export">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">dict_from_kindle_export</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#dict_from_kindle_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.dict_from_kindle_export" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt id="utils.load_dicts_from_csv">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">load_dicts_from_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#load_dicts_from_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.load_dicts_from_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.make_screenshots">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">make_screenshots</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window_size</span><span class="o">=</span><span class="default_value">[270 * 1.4, 480 * 1.4]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#make_screenshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.make_screenshots" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.now_string">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">now_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#now_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.now_string" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.save_card_htmls">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_htmls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#save_card_htmls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_htmls" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.save_card_pngs">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_pngs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em>, <em class="sig-param"><span class="n">size</span><span class="o">=</span><span class="default_value">540, 960</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#save_card_pngs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_pngs" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.save_dict_to_csv">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_dict_to_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_dict</span></em>, <em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#save_dict_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_dict_to_csv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.screenshot">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.screenshot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.selection_helper">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">selection_helper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base</span></em>, <em class="sig-param"><span class="n">id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">props</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#selection_helper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.selection_helper" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.set_screen">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.set_screen" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="utils.sleep_decorator">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">sleep_decorator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#sleep_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.sleep_decorator" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -300,13 +360,8 @@
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="utils.now_string">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">now_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#now_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.now_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.set_screen">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.set_screen" title="Permalink to this definition">¶</a></dt>
+<dt id="utils.tag_word_in_sentence">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">tag_word_in_sentence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sentence</span></em>, <em class="sig-param"><span class="n">tag_word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#tag_word_in_sentence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.tag_word_in_sentence" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -321,51 +376,6 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="utils.sleep_decorator">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">sleep_decorator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#sleep_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.sleep_decorator" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.screenshot">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.screenshot" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.make_screenshots">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">make_screenshots</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window_size</span><span class="o">=</span><span class="default_value">[270 * 1.4, 480 * 1.4]</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#make_screenshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.make_screenshots" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt id="utils.rend">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">rend</code><a class="reference internal" href="../../_modules/utils.html#rend"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.rend" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.save_card_htmls">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_htmls</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#save_card_htmls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_htmls" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.save_card_pngs">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_pngs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em>, <em class="sig-param"><span class="n">size</span><span class="o">=</span><span class="default_value">540, 960</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#save_card_pngs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_pngs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.selection_helper">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">selection_helper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base</span></em>, <em class="sig-param"><span class="n">id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">props</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#selection_helper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.selection_helper" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.dict_from_kindle_export">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">dict_from_kindle_export</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#dict_from_kindle_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.dict_from_kindle_export" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.clean_up">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">clean_up</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">words</span></em>, <em class="sig-param"><span class="n">remove_punct</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">lower_case</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">lemmatize</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.clean_up" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt id="utils.word_list_from_kindle">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">word_list_from_kindle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#word_list_from_kindle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.word_list_from_kindle" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -373,16 +383,6 @@
 <dl class="py function">
 <dt id="utils.word_list_from_txt">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">word_list_from_txt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#word_list_from_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.word_list_from_txt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.tag_word_in_sentence">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">tag_word_in_sentence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sentence</span></em>, <em class="sig-param"><span class="n">tag_word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#tag_word_in_sentence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.tag_word_in_sentence" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="utils.compress_img">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">compress_img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#compress_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.compress_img" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

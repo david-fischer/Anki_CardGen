@@ -12,10 +12,10 @@ Classes
 
 .. autoapisummary::
 
-   screen_single_word.WordProperties
-   screen_single_word.Tab
    screen_single_word.ImageSearchResultGrid
+   screen_single_word.Tab
    screen_single_word.TestApp
+   screen_single_word.WordProperties
 
 
 
@@ -24,52 +24,8 @@ Functions
 
 .. autoapisummary::
 
-   screen_single_word.get_selection_dict
    screen_single_word.confirm_choice
-
-
-.. py:class:: WordProperties(**kwargs)
-
-   Bases: :class:`kivy.uix.boxlayout.BoxLayout`
-
-   Box layout class. See module documentation for more information.
-
-   .. method:: refresh_data(self)
-
-
-
-   .. method:: accept_suggestion(self, suggestion)
-
-
-
-   .. method:: load_or_search(self, search_term)
-
-
-
-
-.. function:: get_selection_dict()
-
-
-.. py:class:: Tab(**kwargs)
-
-   Bases: :class:`kivy.uix.floatlayout.FloatLayout`, :class:`kivymd.uix.tab.MDTabsBase`
-
-   Class implementing content for a tab.
-
-   .. attribute:: id
-      
-
-      
-
-   .. attribute:: text
-      
-
-      
-
-   .. attribute:: icon
-      
-
-      
+   screen_single_word.get_selection_dict
 
 
 .. py:class:: ImageSearchResultGrid(**kwargs)
@@ -116,7 +72,26 @@ Functions
 
 
 
-.. function:: confirm_choice()
+.. py:class:: Tab(**kwargs)
+
+   Bases: :class:`kivy.uix.floatlayout.FloatLayout`, :class:`kivymd.uix.tab.MDTabsBase`
+
+   Class implementing content for a tab.
+
+   .. attribute:: icon
+      
+
+      
+
+   .. attribute:: id
+      
+
+      
+
+   .. attribute:: text
+      
+
+      
 
 
 .. py:class:: TestApp(**kwargs)
@@ -155,5 +130,30 @@ Functions
           None or a root :class:`~kivy.uix.widget.Widget` instance
           if no self.root exists.
 
+
+
+.. py:class:: WordProperties(**kwargs)
+
+   Bases: :class:`kivy.uix.boxlayout.BoxLayout`
+
+   Box layout class. See module documentation for more information.
+
+   .. method:: accept_suggestion(self, suggestion)
+
+
+
+   .. method:: load_or_search(self, search_term)
+
+
+
+   .. method:: refresh_data(self)
+
+
+
+
+.. function:: confirm_choice()
+
+
+.. function:: get_selection_dict()
 
 

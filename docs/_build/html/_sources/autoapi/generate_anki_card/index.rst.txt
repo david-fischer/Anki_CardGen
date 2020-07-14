@@ -12,8 +12,8 @@ Classes
 
 .. autoapisummary::
 
-   generate_anki_card.HtmlLoader
    generate_anki_card.AnkiObject
+   generate_anki_card.HtmlLoader
 
 
 
@@ -25,37 +25,14 @@ Functions
    generate_anki_card.model_from_html
 
 
-.. py:class:: HtmlLoader
+.. data:: ankiobject
+   
 
-   .. attribute:: path
-      
-
-      
-
-   .. method:: __attrs_post_init__(self)
-
-
-
-   .. method:: set_of_fields(self)
-
-
-
-   .. method:: replace_includes_with_content(self)
-
-
-
-
-.. function:: model_from_html(name, template_names, id, css_path)
-
+   
 
 .. py:class:: AnkiObject
 
-   .. attribute:: model_name
-      
-
-      
-
-   .. attribute:: templates
+   .. attribute:: css_path
       
 
       
@@ -65,7 +42,12 @@ Functions
 
       
 
-   .. attribute:: css_path
+   .. attribute:: id
+      
+
+      
+
+   .. attribute:: model_name
       
 
       
@@ -75,7 +57,7 @@ Functions
 
       
 
-   .. attribute:: id
+   .. attribute:: templates
       
 
       
@@ -93,8 +75,26 @@ Functions
 
 
 
-.. data:: ankiobject
-   
+.. py:class:: HtmlLoader
 
-   
+   .. attribute:: path
+      
+
+      
+
+   .. method:: __attrs_post_init__(self)
+
+
+
+   .. method:: replace_includes_with_content(self)
+
+
+
+   .. method:: set_of_fields(self)
+
+
+
+
+.. function:: model_from_html(name, template_names, id, css_path)
+
 
