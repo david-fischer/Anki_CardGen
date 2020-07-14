@@ -31,7 +31,7 @@ Classes
 
 .. py:class:: DrawerItem(**kwargs)
 
-   Bases: :class:`src.my_kivy.mychooser.CheckBehavior`, :class:`kivymd.uix.list.OneLineIconListItem`
+   Bases: :class:`my_kivy.mychooser.CheckBehavior`, :class:`kivymd.uix.list.OneLineIconListItem`
 
    Test
 
@@ -56,7 +56,7 @@ Classes
 
 .. py:class:: DrawerList(**kwargs)
 
-   Bases: :class:`kivymd.theming.ThemableBehavior`, :class:`src.my_kivy.mychooser.CheckContainer`, :class:`kivymd.uix.list.MDList`
+   Bases: :class:`kivymd.theming.ThemableBehavior`, :class:`my_kivy.mychooser.CheckContainer`, :class:`kivymd.uix.list.MDList`
 
    Test
 
@@ -97,7 +97,7 @@ Classes
    .. method:: on_parent(self, *_)
 
 
-      This function sets up the screens using the data from :attr:`screen_dicts`.
+      This function sets up the screens using the words from :attr:`screen_dicts`.
 
       The screens are added to the screen_man and corresponding entries to the drawer_list.
       Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.

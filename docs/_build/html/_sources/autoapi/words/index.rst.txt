@@ -28,7 +28,7 @@ Classes
 
 .. py:class:: Word
 
-   Class that fetches and edits the data that makes up the choices, presented to the user in the card-generation
+   Class that fetches and edits the words that makes up the choices, presented to the user in the card-generation
    process.
 
    Main function is :meth:`search` function.
@@ -99,7 +99,7 @@ Classes
       
 
    .. attribute:: data_dir
-      :annotation: :str = data
+      :annotation: :str = ../app_data/words
 
       
 
@@ -136,6 +136,14 @@ Classes
       Used as folder name to save files to.
 
       :returns: :method:`search_term_utf8` with spaces replaced by underscores.
+
+
+   .. method:: base_path(self)
+
+
+      Used as base to save files.
+
+      :returns: `f"{self.data_dir}/{self.folder()}/{self.folder()}"'
 
 
    .. method:: translate(self, string)
@@ -196,7 +204,7 @@ Classes
 
       Saves class attributes as dictionary in a .json-file.
 
-      :param path: If None, is set to f"data/{self.folder()}/{self.folder()}.json" (Default value = None)
+      :param path: If None, is set to f"words/{self.folder()}/{self.folder()}.json" (Default value = None)
 
 
    .. method:: search(self, new_search_term)
