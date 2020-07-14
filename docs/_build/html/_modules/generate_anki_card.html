@@ -158,7 +158,7 @@
 <span class="kn">import</span> <span class="nn">bs4</span>
 <span class="kn">import</span> <span class="nn">genanki</span>
 
-<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="n">CD</span><span class="p">,</span> <span class="n">smart_loader</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">CD</span><span class="p">,</span> <span class="n">smart_loader</span>
 
 
 <div class="viewcode-block" id="HtmlLoader"><a class="viewcode-back" href="../autoapi/generate_anki_card/index.html#generate_anki_card.HtmlLoader">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
@@ -261,16 +261,15 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">):</span>
-<div class="viewcode-block" id="ankiobject"><a class="viewcode-back" href="../autoapi/generate_anki_card/index.html#generate_anki_card.ankiobject">[docs]</a>        <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span></div>
-        <span class="n">ankiobject</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span>
-            <span class="o">**</span><span class="n">smart_loader</span><span class="p">(</span><span class="s2">&quot;data/casa/casa_card.json&quot;</span><span class="p">)</span>
-            <span class="c1"># Word=&quot;casa&quot;,</span>
-            <span class="c1"># Audio=&quot;[sound:casa.mp3]&quot;,</span>
-            <span class="c1"># Image=&#39;&lt;img src=&quot;casa.jpg&quot;&gt;&#39;,</span>
-            <span class="c1"># media_files=[&quot;../data/casa/casa.mp3&quot;, &quot;../data/casa/casa.jpg&quot;],</span>
-        <span class="p">)</span>
-        <span class="n">ankiobject</span><span class="o">.</span><span class="n">write_apkg</span><span class="p">(</span><span class="s2">&quot;output.apkg&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="ankiobject"><a class="viewcode-back" href="../autoapi/generate_anki_card/index.html#generate_anki_card.ankiobject">[docs]</a>    <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span></div>
+    <span class="n">ankiobject</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span>
+        <span class="o">**</span><span class="n">smart_loader</span><span class="p">(</span><span class="s2">&quot;../app_data/words/casa/casa_card.json&quot;</span><span class="p">)</span>
+        <span class="c1"># Word=&quot;casa&quot;,</span>
+        <span class="c1"># Audio=&quot;[sound:casa.mp3]&quot;,</span>
+        <span class="c1"># Image=&#39;&lt;img src=&quot;casa.jpg&quot;&gt;&#39;,</span>
+        <span class="c1"># media_files=[&quot;../words/casa/casa.mp3&quot;, &quot;../words/casa/casa.jpg&quot;],</span>
+    <span class="p">)</span>
+    <span class="n">ankiobject</span><span class="o">.</span><span class="n">write_apkg</span><span class="p">(</span><span class="s2">&quot;output.apkg&quot;</span><span class="p">)</span>
     <span class="c1"># HtmlLoader(&quot;meaning-pt_back.html&quot;).replace_includes_with_content()</span>
 </pre></div>
 

@@ -5,7 +5,7 @@
 
 .. autoapi-nested-parse::
 
-   This module provides different parsers (children of :class:`Parser`) to obtain the necessary data to fill the
+   This module provides different parsers (children of :class:`Parser`) to obtain the necessary words to fill the
    Anki-cards.
 
    Each parser returns a dict, that can directly be used by the :meth:`pt_word.Word.update_from_dict` method of the

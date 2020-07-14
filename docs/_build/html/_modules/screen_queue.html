@@ -158,15 +158,15 @@
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.button</span> <span class="kn">import</span> <span class="n">MDFlatButton</span>
 
-<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">parsers</span> <span class="kn">import</span> <span class="n">NoMatchError</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">clean_up</span><span class="p">,</span>
     <span class="n">set_screen</span><span class="p">,</span>
     <span class="n">widget_by_id</span><span class="p">,</span>
     <span class="n">word_list_from_kindle</span><span class="p">,</span>
     <span class="n">word_list_from_txt</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">src.parsers</span> <span class="kn">import</span> <span class="n">NoMatchError</span>
-<span class="kn">from</span> <span class="nn">src.words</span> <span class="kn">import</span> <span class="n">Word</span>
+<span class="kn">from</span> <span class="nn">words</span> <span class="kn">import</span> <span class="n">Word</span>
 
 <div class="viewcode-block" id="options_dict"><a class="viewcode-back" href="../autoapi/screen_queue/index.html#screen_queue.options_dict">[docs]</a><span class="n">options_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;script-text-outline&quot;</span><span class="p">:</span> <span class="s2">&quot;Import from Kindle&quot;</span><span class="p">,</span>

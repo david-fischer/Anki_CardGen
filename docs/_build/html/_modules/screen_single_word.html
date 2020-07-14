@@ -164,14 +164,14 @@
 <span class="kn">from</span> <span class="nn">kivymd.uix.tab</span> <span class="kn">import</span> <span class="n">MDTabsBase</span>
 
 <span class="kn">from</span> <span class="nn">my_kivy.mychooser</span> <span class="kn">import</span> <span class="n">MyCheckImageGrid</span>
-<span class="kn">from</span> <span class="nn">src.utils</span> <span class="kn">import</span> <span class="p">(</span>
+<span class="kn">from</span> <span class="nn">parsers</span> <span class="kn">import</span> <span class="n">linguee_did_you_mean</span><span class="p">,</span> <span class="n">NoMatchError</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">compress_img</span><span class="p">,</span>
     <span class="n">selection_helper</span><span class="p">,</span>
     <span class="n">set_screen</span><span class="p">,</span>
     <span class="n">tag_word_in_sentence</span><span class="p">,</span>
     <span class="n">widget_by_id</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">src.parsers</span> <span class="kn">import</span> <span class="n">linguee_did_you_mean</span><span class="p">,</span> <span class="n">NoMatchError</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SSL_CERT_FILE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">()</span>
 
@@ -221,7 +221,7 @@
 <div class="viewcode-block" id="get_selection_dict"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.get_selection_dict">[docs]</a><span class="k">def</span> <span class="nf">get_selection_dict</span><span class="p">():</span>
     <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
     <span class="n">word_prop</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/edit_tab/word_prop&quot;</span><span class="p">)</span>
-    <span class="n">base_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;data/</span><span class="si">{</span><span class="n">word</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">base_path</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">img_url</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/image_tab/image_grid/&quot;</span><span class="p">)</span>
