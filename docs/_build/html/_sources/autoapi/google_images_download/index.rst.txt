@@ -1,0 +1,31 @@
+:mod:`google_images_download`
+=============================
+
+.. py:module:: google_images_download
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   __main__/index.rst
+   google_images_download/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   google_images_download.main
+
+
+.. function:: main()
+
+

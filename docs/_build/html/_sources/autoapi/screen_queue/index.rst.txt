@@ -1,0 +1,82 @@
+:mod:`screen_queue`
+===================
+
+.. py:module:: screen_queue
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   screen_queue.worker_single_word
+   screen_queue.start_workers
+   screen_queue.queue_word
+   screen_queue.start_downloading
+   screen_queue.pause_downloading
+   screen_queue.is_duplicate
+   screen_queue.choose_file_to_import
+   screen_queue.click_on_queue_item
+   screen_queue.click_on_done_item
+   screen_queue.click_on_error_item
+   screen_queue.import_from
+   screen_queue.choose_replacements_dialog
+
+
+.. data:: options_dict
+   
+
+   
+
+.. function:: worker_single_word()
+
+   As long as the queue is not empty, tries to process a single word.
+   Changing the states accordingly to "loading" and "ready"
+   If it fails, it moves the word to the error_words list.
+
+
+.. function:: start_workers(worker, num)
+
+   Starts a number of workers in seperate threads
+   :param worker: function to be started
+   :param num:
+
+
+.. function:: queue_word(word)
+
+   Adds the word to the app.queue_words list and Queue and changes state to "queued".
+   If no worker is present starts a worker in a different thread.
+   :param word:
+
+
+.. function:: start_downloading()
+
+
+.. function:: pause_downloading()
+
+
+.. function:: is_duplicate(word)
+
+
+.. function:: choose_file_to_import(button)
+
+
+.. function:: click_on_queue_item(item)
+
+
+.. function:: click_on_done_item(item)
+
+
+.. function:: click_on_error_item(item)
+
+
+.. function:: import_from(path, source='kindle')
+
+
+.. function:: choose_replacements_dialog(replacements)
+
+

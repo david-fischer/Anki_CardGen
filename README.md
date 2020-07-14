@@ -1,4 +1,4 @@
-![Logo](assets/AnkiCardGen_small.png)
+![Logo](src/assets/AnkiCardGen_small.png)
 
 <h1 align="center">AnkiCardGen</h1>
 

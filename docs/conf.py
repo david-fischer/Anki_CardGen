@@ -17,6 +17,7 @@ import sys
 sys.path.append(os.path.abspath("sphinxext"))
 sys.path.append(os.path.abspath("../../"))
 sys.path.append(os.path.abspath(".."))
+sys.path.append(os.path.abspath("../src/"))
 
 print(sys.path)
 
@@ -45,19 +46,16 @@ extensions = [
     "sphinx.ext.napoleon",
 ]
 autoapi_type = "python"
-autoapi_dirs = [".."]
+autoapi_dirs = ["../src"]
 autoapi_ignore = [
-    f"*/{folder}/*"
+    f"*{folder}/*"
     for folder in [
-        ".buildozer",
+        "anki",
         "apkgs",
         "app_state",
-        "bin",
-        "data",
-        "docs",
-        "google_image_download",
-        "src",
-        "test",
+        "words",
+        "google_images_download",
+        "python-for-android",
     ]
 ]
 autoapi_generate_api_docs = True

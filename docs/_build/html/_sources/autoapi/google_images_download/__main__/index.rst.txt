@@ -1,0 +1,6 @@
+:mod:`google_images_download.__main__`
+======================================
+
+.. py:module:: google_images_download.__main__
+
+

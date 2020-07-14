@@ -1,0 +1,19 @@
+API Reference
+=============
+
+This page contains auto-generated API reference documentation [#f1]_.
+
+.. toctree::
+   :titlesonly:
+
+   /autoapi/words/index
+   /autoapi/main/index
+   /autoapi/parsers/index
+   /autoapi/generate_anki_card/index
+   /autoapi/utils/index
+   /autoapi/screen_single_word/index
+   /autoapi/scroll_list/index
+   /autoapi/screen_queue/index
+   /autoapi/mychooser/index
+
+.. [#f1] Created with `sphinx-autoapi <https://github.com/readthedocs/sphinx-autoapi>`_
