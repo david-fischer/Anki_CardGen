@@ -165,28 +165,10 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.worker_single_word" title="screen_queue.worker_single_word"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker_single_word</span></code></a>()</p></td>
-<td><p>As long as the queue is not empty, tries to process a single word.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.start_workers" title="screen_queue.start_workers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_workers</span></code></a>(worker, num)</p></td>
-<td><p>Starts a number of workers in seperate threads</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.queue_word" title="screen_queue.queue_word"><code class="xref py py-obj docutils literal notranslate"><span class="pre">queue_word</span></code></a>(word)</p></td>
-<td><p>Adds the word to the app.queue_words list and Queue and changes state to “queued”.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.start_downloading" title="screen_queue.start_downloading"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_downloading</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.pause_downloading" title="screen_queue.pause_downloading"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pause_downloading</span></code></a>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.is_duplicate" title="screen_queue.is_duplicate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_duplicate</span></code></a>(word)</p></td>
-<td><p></p></td>
-</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.choose_file_to_import" title="screen_queue.choose_file_to_import"><code class="xref py py-obj docutils literal notranslate"><span class="pre">choose_file_to_import</span></code></a>(button)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.click_on_queue_item" title="screen_queue.click_on_queue_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">click_on_queue_item</span></code></a>(item)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.choose_replacements_dialog" title="screen_queue.choose_replacements_dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">choose_replacements_dialog</span></code></a>(replacements)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.click_on_done_item" title="screen_queue.click_on_done_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">click_on_done_item</span></code></a>(item)</p></td>
@@ -195,11 +177,29 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.click_on_error_item" title="screen_queue.click_on_error_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">click_on_error_item</span></code></a>(item)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.import_from" title="screen_queue.import_from"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_from</span></code></a>(path, source=’kindle’)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.click_on_queue_item" title="screen_queue.click_on_queue_item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">click_on_queue_item</span></code></a>(item)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.choose_replacements_dialog" title="screen_queue.choose_replacements_dialog"><code class="xref py py-obj docutils literal notranslate"><span class="pre">choose_replacements_dialog</span></code></a>(replacements)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.import_from" title="screen_queue.import_from"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_from</span></code></a>(path, source=’kindle’)</p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.is_duplicate" title="screen_queue.is_duplicate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_duplicate</span></code></a>(word)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.pause_downloading" title="screen_queue.pause_downloading"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pause_downloading</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.queue_word" title="screen_queue.queue_word"><code class="xref py py-obj docutils literal notranslate"><span class="pre">queue_word</span></code></a>(word)</p></td>
+<td><p>Adds the word to the app.queue_words list and Queue and changes state to “queued”.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.start_downloading" title="screen_queue.start_downloading"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_downloading</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#screen_queue.start_workers" title="screen_queue.start_workers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">start_workers</span></code></a>(worker, num)</p></td>
+<td><p>Starts a number of workers in seperate threads</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#screen_queue.worker_single_word" title="screen_queue.worker_single_word"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker_single_word</span></code></a>()</p></td>
+<td><p>As long as the queue is not empty, tries to process a single word.</p></td>
 </tr>
 </tbody>
 </table>
@@ -209,20 +209,44 @@
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.worker_single_word">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">worker_single_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#worker_single_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.worker_single_word" title="Permalink to this definition">¶</a></dt>
-<dd><p>As long as the queue is not empty, tries to process a single word.
-Changing the states accordingly to “loading” and “ready”
-If it fails, it moves the word to the error_words list.</p>
-</dd></dl>
+<dt id="screen_queue.choose_file_to_import">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_file_to_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#choose_file_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_file_to_import" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.start_workers">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">worker</span></em>, <em class="sig-param"><span class="n">num</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#start_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_workers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts a number of workers in seperate threads
-:param worker: function to be started
-:param num:</p>
-</dd></dl>
+<dt id="screen_queue.choose_replacements_dialog">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_replacements_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">replacements</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#choose_replacements_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_replacements_dialog" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="screen_queue.click_on_done_item">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_done_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#click_on_done_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_done_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="screen_queue.click_on_error_item">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_error_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#click_on_error_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_error_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="screen_queue.click_on_queue_item">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_queue_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#click_on_queue_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_queue_item" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="screen_queue.import_from">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">source</span><span class="o">=</span><span class="default_value">'kindle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.import_from" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="screen_queue.is_duplicate">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.is_duplicate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="screen_queue.pause_downloading">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.pause_downloading" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.queue_word">
@@ -238,44 +262,20 @@ If no worker is present starts a worker in a different thread.
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.pause_downloading">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.pause_downloading" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="screen_queue.start_workers">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">worker</span></em>, <em class="sig-param"><span class="n">num</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#start_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a number of workers in seperate threads
+:param worker: function to be started
+:param num:</p>
+</dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.is_duplicate">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.is_duplicate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.choose_file_to_import">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_file_to_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#choose_file_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_file_to_import" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.click_on_queue_item">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_queue_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#click_on_queue_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_queue_item" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.click_on_done_item">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_done_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#click_on_done_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_done_item" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.click_on_error_item">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_error_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#click_on_error_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_error_item" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.import_from">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">source</span><span class="o">=</span><span class="default_value">'kindle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.import_from" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.choose_replacements_dialog">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_replacements_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">replacements</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#choose_replacements_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_replacements_dialog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dt id="screen_queue.worker_single_word">
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">worker_single_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/screen_queue.html#worker_single_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.worker_single_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>As long as the queue is not empty, tries to process a single word.
+Changing the states accordingly to “loading” and “ready”
+If it fails, it moves the word to the error_words list.</p>
+</dd></dl>
 
 </div>
 </div>

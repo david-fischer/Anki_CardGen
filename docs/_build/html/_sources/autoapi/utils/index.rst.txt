@@ -21,31 +21,26 @@ Functions
 
 .. autoapisummary::
 
-   utils.save_dict_to_csv
+   utils.clean_up
+   utils.compress_img
+   utils.dict_from_kindle_export
    utils.load_dicts_from_csv
-   utils.smart_loader
-   utils.smart_saver
-   utils.now_string
-   utils.set_screen
-   utils.widget_by_id
-   utils.sleep_decorator
-   utils.screenshot
    utils.make_screenshots
+   utils.now_string
    utils.save_card_htmls
    utils.save_card_pngs
+   utils.save_dict_to_csv
+   utils.screenshot
    utils.selection_helper
-   utils.dict_from_kindle_export
-   utils.clean_up
+   utils.set_screen
+   utils.sleep_decorator
+   utils.smart_loader
+   utils.smart_saver
+   utils.tag_word_in_sentence
+   utils.widget_by_id
    utils.word_list_from_kindle
    utils.word_list_from_txt
-   utils.tag_word_in_sentence
-   utils.compress_img
 
-
-.. data:: SPACY_IS_AVAILABLE
-   :annotation: = True
-
-   
 
 .. data:: COLOR2MEANING
    
@@ -57,7 +52,17 @@ Functions
 
    
 
+.. data:: SPACY_IS_AVAILABLE
+   :annotation: = True
+
+   
+
 .. data:: nlp
+   
+
+   
+
+.. data:: rend
    
 
    
@@ -75,10 +80,43 @@ Functions
 
 
 
-.. function:: save_dict_to_csv(some_dict, out_path)
+.. function:: clean_up(words, remove_punct=True, lower_case=True, lemmatize=True)
+
+
+.. function:: compress_img(path, width=512)
+
+
+.. function:: dict_from_kindle_export(file_path)
 
 
 .. function:: load_dicts_from_csv(path)
+
+
+.. function:: make_screenshots(window_size=[270 * 1.4, 480 * 1.4])
+
+
+.. function:: now_string()
+
+
+.. function:: save_card_htmls(word='casa')
+
+
+.. function:: save_card_pngs(word='casa', size=(540, 960))
+
+
+.. function:: save_dict_to_csv(some_dict, out_path)
+
+
+.. function:: screenshot(path)
+
+
+.. function:: selection_helper(base, id=None, props=None)
+
+
+.. function:: set_screen(screen_name)
+
+
+.. function:: sleep_decorator(time)
 
 
 .. function:: smart_loader(path)
@@ -87,10 +125,7 @@ Functions
 .. function:: smart_saver(obj, path)
 
 
-.. function:: now_string()
-
-
-.. function:: set_screen(screen_name)
+.. function:: tag_word_in_sentence(sentence, tag_word)
 
 
 .. function:: widget_by_id(string)
@@ -99,44 +134,9 @@ Functions
    :returns widget root.ids.edit_tab.ids.word_prop ... usw
 
 
-.. function:: sleep_decorator(time)
-
-
-.. function:: screenshot(path)
-
-
-.. function:: make_screenshots(window_size=[270 * 1.4, 480 * 1.4])
-
-
-.. data:: rend
-   
-
-   
-
-.. function:: save_card_htmls(word='casa')
-
-
-.. function:: save_card_pngs(word='casa', size=(540, 960))
-
-
-.. function:: selection_helper(base, id=None, props=None)
-
-
-.. function:: dict_from_kindle_export(file_path)
-
-
-.. function:: clean_up(words, remove_punct=True, lower_case=True, lemmatize=True)
-
-
 .. function:: word_list_from_kindle(path)
 
 
 .. function:: word_list_from_txt(path)
-
-
-.. function:: tag_word_in_sentence(sentence, tag_word)
-
-
-.. function:: compress_img(path, width=512)
 
 

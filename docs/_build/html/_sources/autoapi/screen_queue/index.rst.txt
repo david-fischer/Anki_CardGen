@@ -13,18 +13,18 @@ Functions
 
 .. autoapisummary::
 
-   screen_queue.worker_single_word
-   screen_queue.start_workers
-   screen_queue.queue_word
-   screen_queue.start_downloading
-   screen_queue.pause_downloading
-   screen_queue.is_duplicate
    screen_queue.choose_file_to_import
-   screen_queue.click_on_queue_item
+   screen_queue.choose_replacements_dialog
    screen_queue.click_on_done_item
    screen_queue.click_on_error_item
+   screen_queue.click_on_queue_item
    screen_queue.import_from
-   screen_queue.choose_replacements_dialog
+   screen_queue.is_duplicate
+   screen_queue.pause_downloading
+   screen_queue.queue_word
+   screen_queue.start_downloading
+   screen_queue.start_workers
+   screen_queue.worker_single_word
 
 
 .. data:: options_dict
@@ -32,18 +32,28 @@ Functions
 
    
 
-.. function:: worker_single_word()
-
-   As long as the queue is not empty, tries to process a single word.
-   Changing the states accordingly to "loading" and "ready"
-   If it fails, it moves the word to the error_words list.
+.. function:: choose_file_to_import(button)
 
 
-.. function:: start_workers(worker, num)
+.. function:: choose_replacements_dialog(replacements)
 
-   Starts a number of workers in seperate threads
-   :param worker: function to be started
-   :param num:
+
+.. function:: click_on_done_item(item)
+
+
+.. function:: click_on_error_item(item)
+
+
+.. function:: click_on_queue_item(item)
+
+
+.. function:: import_from(path, source='kindle')
+
+
+.. function:: is_duplicate(word)
+
+
+.. function:: pause_downloading()
 
 
 .. function:: queue_word(word)
@@ -56,27 +66,17 @@ Functions
 .. function:: start_downloading()
 
 
-.. function:: pause_downloading()
+.. function:: start_workers(worker, num)
+
+   Starts a number of workers in seperate threads
+   :param worker: function to be started
+   :param num:
 
 
-.. function:: is_duplicate(word)
+.. function:: worker_single_word()
 
-
-.. function:: choose_file_to_import(button)
-
-
-.. function:: click_on_queue_item(item)
-
-
-.. function:: click_on_done_item(item)
-
-
-.. function:: click_on_error_item(item)
-
-
-.. function:: import_from(path, source='kindle')
-
-
-.. function:: choose_replacements_dialog(replacements)
+   As long as the queue is not empty, tries to process a single word.
+   Changing the states accordingly to "loading" and "ready"
+   If it fails, it moves the word to the error_words list.
 
 
