@@ -1,0 +1,142 @@
+:mod:`utils`
+============
+
+.. py:module:: utils
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   utils.CD
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   utils.save_dict_to_csv
+   utils.load_dicts_from_csv
+   utils.smart_loader
+   utils.smart_saver
+   utils.now_string
+   utils.set_screen
+   utils.widget_by_id
+   utils.sleep_decorator
+   utils.screenshot
+   utils.make_screenshots
+   utils.save_card_htmls
+   utils.save_card_pngs
+   utils.selection_helper
+   utils.dict_from_kindle_export
+   utils.clean_up
+   utils.word_list_from_kindle
+   utils.word_list_from_txt
+   utils.tag_word_in_sentence
+   utils.compress_img
+
+
+.. data:: SPACY_IS_AVAILABLE
+   :annotation: = True
+
+   
+
+.. data:: COLOR2MEANING
+   
+
+   
+
+.. data:: MEANING2COLOR
+   
+
+   
+
+.. data:: nlp
+   
+
+   
+
+.. py:class:: CD(new_path)
+
+   Context manager for changing the current working directory
+
+   .. method:: __enter__(self)
+
+
+
+   .. method:: __exit__(self, etype, value, traceback)
+
+
+
+
+.. function:: save_dict_to_csv(some_dict, out_path)
+
+
+.. function:: load_dicts_from_csv(path)
+
+
+.. function:: smart_loader(path)
+
+
+.. function:: smart_saver(obj, path)
+
+
+.. function:: now_string()
+
+
+.. function:: set_screen(screen_name)
+
+
+.. function:: widget_by_id(string)
+
+   :arg string: "/edit_tab/word_prop/translation_chips
+   :returns widget root.ids.edit_tab.ids.word_prop ... usw
+
+
+.. function:: sleep_decorator(time)
+
+
+.. function:: screenshot(path)
+
+
+.. function:: make_screenshots(window_size=[270 * 1.4, 480 * 1.4])
+
+
+.. data:: rend
+   
+
+   
+
+.. function:: save_card_htmls(word='casa')
+
+
+.. function:: save_card_pngs(word='casa', size=(540, 960))
+
+
+.. function:: selection_helper(base, id=None, props=None)
+
+
+.. function:: dict_from_kindle_export(file_path)
+
+
+.. function:: clean_up(words, remove_punct=True, lower_case=True, lemmatize=True)
+
+
+.. function:: word_list_from_kindle(path)
+
+
+.. function:: word_list_from_txt(path)
+
+
+.. function:: tag_word_in_sentence(sentence, tag_word)
+
+
+.. function:: compress_img(path, width=512)
+
+
