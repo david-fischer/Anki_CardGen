@@ -162,7 +162,7 @@ class Word:
         """
         if keywords is None:
             keywords = self.search_term
-        return self.parsers["google_images"].result_dict(keywords)["img_urls"]
+        return self.parsers["google_images"].result_dict(keywords)["image_urls"]
 
     def mark_examples(self):
         """Highlights the search_word in the example sentences using css."""
