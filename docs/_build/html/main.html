@@ -1,0 +1,587 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>main &mdash; ACG 0.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="utils" href="utils.html" />
+    <link rel="prev" title="my_kivy.scroll_list" href="ui/scroll_list.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ui.html">UI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">main</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#main.AnkiCardGenApp">AnkiCardGenApp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.add_anki_card">add_anki_card</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.anki">anki</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.build">build</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.build_config">build_config</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.dialog">dialog</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.done_words">done_words</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.error_words">error_words</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.file_manager">file_manager</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.keys_to_save">keys_to_save</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.load_app_state">load_app_state</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.load_by_config_key">load_by_config_key</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.loading_state_dict">loading_state_dict</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.open_file_manager">open_file_manager</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.q">q</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.queue_words">queue_words</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.save_by_config_key">save_by_config_key</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.save_theme">save_theme</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.setup_queue">setup_queue</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.show_dialog">show_dialog</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.theme_dialog">theme_dialog</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.word">word</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#main.DrawerItem">DrawerItem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerItem.icon">icon</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerItem.on_release">on_release</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerItem.screen_name">screen_name</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#main.DrawerList">DrawerList</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerList.CheckElementObject">CheckElementObject</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerList.check_one">check_one</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerList.conditional_uncheck">conditional_uncheck</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.DrawerList.current">current</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#main.MainMenu">MainMenu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.MainMenu.on_parent">on_parent</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main.MainMenu.screen_dicts">screen_dicts</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#main.this_dir">this_dir</a></li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#id0">this_dir</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">utils</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/main.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-main">
+<span id="main"></span><h1>main<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="main.AnkiCardGenApp">
+<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">AnkiCardGenApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/material-app/index.html#kivymd.app.MDApp" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.app.MDApp</span></code></a></p>
+<p>Main App.</p>
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.add_anki_card">
+<code class="sig-name descname">add_anki_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">result_dict</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.add_anki_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.add_anki_card" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>result_dict</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.anki">
+<code class="sig-name descname">anki</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.anki"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.anki" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="word_processing/anki.html#generate_anki_card.AnkiObject" title="generate_anki_card.AnkiObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">generate_anki_card.AnkiObject</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.build_config">
+<code class="sig-name descname">build_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build_config" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>config</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.dialog">
+<code class="sig-name descname">dialog</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDDialog</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.done_words">
+<code class="sig-name descname">done_words</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.done_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.done_words" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words for which Anki-cards have been generated.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.error_words">
+<code class="sig-name descname">error_words</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.error_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.error_words" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words that could not be processed by Queue.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.file_manager">
+<code class="sig-name descname">file_manager</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.file_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.keys_to_save">
+<code class="sig-name descname">keys_to_save</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.keys_to_save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.keys_to_save" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the name of all attributes that should be saved on change.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.load_app_state">
+<code class="sig-name descname">load_app_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.load_app_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_app_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.load_by_config_key">
+<code class="sig-name descname">load_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.load_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_by_config_key" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.loading_state_dict">
+<code class="sig-name descname">loading_state_dict</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.loading_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.loading_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> containing all words that could not be processed by Queue.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.open_file_manager">
+<code class="sig-name descname">open_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'/'</span></em>, <em class="sig-param"><span class="n">select_path</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.open_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.open_file_manager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – (Default value = “/”)</p></li>
+<li><p><strong>select_path</strong> – (Default value = print)</p></li>
+<li><p><strong>ext</strong> – (Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.q">
+<code class="sig-name descname">q</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.q"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.q" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://docs.python.org/3/library/queue.html#queue.Queue" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">queue.Queue</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.queue_words">
+<code class="sig-name descname">queue_words</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.queue_words"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.queue_words" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing all words not yet made into Anki-cards.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.save_by_config_key">
+<code class="sig-name descname">save_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em>, <em class="sig-param"><span class="n">obj</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.save_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_by_config_key" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – </p></li>
+<li><p><strong>*_</strong> – </p></li>
+<li><p><strong>obj</strong> – (Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.save_theme">
+<code class="sig-name descname">save_theme</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.save_theme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_theme" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>*_</strong> – </p>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.setup_queue">
+<code class="sig-name descname">setup_queue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.setup_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.setup_queue" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.AnkiCardGenApp.show_dialog">
+<code class="sig-name descname">show_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">message</span></em>, <em class="sig-param"><span class="n">options</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">item_function</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">buttons</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.show_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.show_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>message</strong> – </p></li>
+<li><p><strong>options</strong> – (Default value = None)</p></li>
+<li><p><strong>callback</strong> – (Default value = print)</p></li>
+<li><p><strong>item_function</strong> – (Default value = None)</p></li>
+<li><p><strong>buttons</strong> – (Default value = None)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.theme_dialog">
+<code class="sig-name descname">theme_dialog</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.theme_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.theme_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/pickers/index.html#kivymd.uix.picker.MDThemePicker" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDThemePicker</span></code></a> Object</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.AnkiCardGenApp.word">
+<code class="sig-name descname">word</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.word" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pt_word.Word</span></code> Object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="main.DrawerItem">
+<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">DrawerItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#DrawerItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.mychooser.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineIconListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineIconListItem</span></code></a></p>
+<p>Test</p>
+<dl class="py attribute">
+<dt id="main.DrawerItem.icon">
+<code class="sig-name descname">icon</code><a class="reference internal" href="_modules/main.html#DrawerItem.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerItem.icon" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main.DrawerItem.on_release">
+<code class="sig-name descname">on_release</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#DrawerItem.on_release"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerItem.on_release" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="main.DrawerItem.screen_name">
+<code class="sig-name descname">screen_name</code><a class="reference internal" href="_modules/main.html#DrawerItem.screen_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerItem.screen_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="main.DrawerList">
+<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">DrawerList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#DrawerList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.mychooser.CheckContainer</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.MDList" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.MDList</span></code></a></p>
+<p>Test</p>
+<dl class="py attribute">
+<dt id="main.DrawerList.CheckElementObject">
+<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="_modules/main.html#DrawerList.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="main.DrawerList.check_one">
+<code class="sig-name descname">check_one</code><em class="property"> = True</em><a class="reference internal" href="_modules/main.html#DrawerList.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.check_one" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main.DrawerList.conditional_uncheck">
+<code class="sig-name descname">conditional_uncheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">instance</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#DrawerList.conditional_uncheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.conditional_uncheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>changes color of clicked item and updates <a class="reference internal" href="#main.DrawerList.current" title="main.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.DrawerList.current">
+<code class="sig-name descname">current</code><a class="reference internal" href="_modules/main.html#DrawerList.current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.DrawerList.current" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="main.MainMenu">
+<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">MainMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#MainMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.MainMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
+<p>Test</p>
+<dl class="py method">
+<dt id="main.MainMenu.on_parent">
+<code class="sig-name descname">on_parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#MainMenu.on_parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.MainMenu.on_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function sets up the screens using the words from <a class="reference internal" href="#main.MainMenu.screen_dicts" title="main.MainMenu.screen_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_dicts</span></code></a>.</p>
+<p>The screens are added to the screen_man and corresponding entries to the drawer_list.
+Then <a class="reference internal" href="#main.DrawerList.current" title="main.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerList.current</span></code></a> is bound to screen_man.current and vice-versa.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main.MainMenu.screen_dicts">
+<code class="sig-name descname">screen_dicts</code><a class="reference internal" href="_modules/main.html#MainMenu.screen_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.MainMenu.screen_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries describing all screens.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt id="main.this_dir">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">this_dir</code><a class="reference internal" href="_modules/main.html#this_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.this_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="id0">
+<code class="sig-prename descclassname">main.</code><code class="sig-name descname">this_dir</code><a class="reference internal" href="_modules/main.html#this_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#id0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ui/scroll_list.html" class="btn btn-neutral float-left" title="my_kivy.scroll_list" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
