@@ -1,3 +1,7 @@
+"""
+Implements :class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.
+"""
+
 from functools import partial
 from threading import Thread
 from time import sleep
@@ -52,17 +56,26 @@ Builder.load_string(
 
 
 class ScrollList(ScrollView):
+    """
+    Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.
+
+    Automatically updates upon change of :attr:`item_dicts`.
+    """
+
     item_type = ObjectProperty(OneLineListItem)
-    """:class:`~kivy.properties.ObjectProperty`"""
+    """:class:`~kivy.properties.ObjectProperty` constructor for items."""
 
     item_dicts = ListProperty()
-    """:class:`~kivy.properties.ListProperty`"""
+    """:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed."""
 
     items = ListProperty()
-    """:class:`~kivy.properties.ListProperty`"""
+    """:class:`~kivy.properties.ListProperty` containing the constructed items."""
 
     list = ObjectProperty(MDList())
-    """:class:`~kivy.properties.ObjectProperty`"""
+    """
+    :class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.MDList`.
+    Contains the items.
+    """
 
     callback = ObjectProperty(lambda x: print(x.text))
     """:class:`~kivy.properties.ObjectProperty`"""
@@ -73,6 +86,9 @@ class ScrollList(ScrollView):
 
     @mainthread
     def on_item_dicts(self, *_):
+        """
+        Construct items from :attr:`item_dicts` using :attr:`item_type`.
+        """
         items = [
             self.item_type(**item_dict, on_press=self.callback)
             for item_dict in self.item_dicts
@@ -84,28 +100,42 @@ class ScrollList(ScrollView):
 
 
 class LeftStatusIndicator(ILeftBody, AnchorLayout):
+    """
+    Contains :class:`~kivy.uix.spinner.MDSpinner` and :class:`~kivy.uix.label.MDIcon`.
+    """
+
     spinner = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty`"""
+    """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`."""
 
     icon = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty`"""
+    """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.label.MDIcon`"""
 
 
 class LeftStatusIndicatorListItem(OneLineAvatarListItem):
+    """
+    Contains :class:`LeftStatusIndicator` as left element.
+
+    Depending on :attr:`loading_state`, either the spinner is active or an icon is shown.
+    """
+
     loading_state = OptionProperty("queued", options=["loading", "queued", "ready"])
-    """:class:`~kivy.properties.OptionProperty`"""
+    """:class:`~kivy.properties.OptionProperty` with options ``["loading", "queued", "ready"]``."""
 
     spinner = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty`"""
+    """
+    :class:`~kivy.properties.ObjectProperty` reference to instance of :class:`~kivy.uix.spinner.MDSpinner` of
+    :class:`LeftStatusIndicator`.
+    """
 
 
-def schedule(obj):
+def _schedule(obj):
     if obj.loading_state == "queued":
         obj.loading_state = "loading"
         sleep(10)
         Clock.schedule_once(lambda dt: setattr(obj, "loading_state", "ready"), 5)
 
 
+# pylint: disable = W,C,R,I
 if __name__ == "__main__":
 
     class TestApp(MDApp):
@@ -113,7 +143,7 @@ if __name__ == "__main__":
             return ScrollList(
                 item_type=LeftStatusIndicatorListItem,
                 item_dicts=[{"text": "test"}] * 25,
-                callback=lambda obj: Thread(target=partial(schedule, obj)).start(),
+                callback=lambda obj: Thread(target=partial(_schedule, obj)).start(),
             )
 
     TestApp().run()
