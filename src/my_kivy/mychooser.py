@@ -32,8 +32,13 @@ except FileNotFoundError:
 
 class MultiStateBehaviour:
     current_state = Property(None)
+    """:class:`~kivy.properties.Property`"""
+
     state_dicts = DictProperty(None)
+    """:class:`~kivy.properties.DictProperty`"""
+
     animated_properties = ListProperty()
+    """:class:`~kivy.properties.ListProperty`"""
 
     def __init__(self, **kwargs):
         super(MultiStateBehaviour, self).__init__(**kwargs)
@@ -65,9 +70,16 @@ class CheckBehavior(MultiStateBehaviour):
 
 
 class CheckContainer(Widget):
+    """Test"""
+
     check_one = BooleanProperty(False)
+    """:class:`~kivy.properties.BooleanProperty`"""
+
     element_dicts = ListProperty([])
+    """:class:`~kivy.properties.ListProperty`"""
+
     CheckElementObject = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty`"""
 
     def conditional_uncheck(self, instance, value):
         if self.check_one:
@@ -96,7 +108,10 @@ class CheckContainer(Widget):
 
 class TranslationOnCheckBehavior:
     text_orig = StringProperty("orig")
+    """:class:`~kivy.properties.StringProperty`"""
+
     text_trans = StringProperty("trans")
+    """:class:`~kivy.properties.StringProperty`"""
 
     def __post_init__(self, *_):
         self.state_dicts[True]["text"] = self.text_orig
@@ -106,7 +121,11 @@ class TranslationOnCheckBehavior:
 
 class ThemableColorChangeBehavior:
     text_color = ListProperty([0, 0, 0, 1])
+    """:class:`~kivy.properties.ListProperty`"""
+
     bg_color = ListProperty([1, 1, 1, 1])
+    """:class:`~kivy.properties.ListProperty`"""
+
     animated_properties = ["bg_color", "text_color"]
 
     def __init__(self, **kwargs):
@@ -128,6 +147,7 @@ class ThemableColorChangeBehavior:
 
 class MyCheckCard(ThemableColorChangeBehavior, CheckBehavior, MDCard):
     text = StringProperty("test " * 15)
+    """:class:`~kivy.properties.StringProperty`"""
 
     def on_press(self):
         self.current_state = not self.current_state
@@ -146,7 +166,10 @@ class MyCheckChip(
     BoxLayout,
 ):
     icon = StringProperty("")
+    """:class:`~kivy.properties.StringProperty`"""
+
     text = StringProperty("Chip")
+    """:class:`~kivy.properties.StringProperty`"""
 
     def on_press(self):
         self.current_state = not self.current_state
@@ -174,6 +197,7 @@ class MyTransChipContainer(MyCheckChipContainer):
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
     border_width = NumericProperty(0.01)
+    """:class:`~kivy.properties.NumericProperty`"""
 
     def __init__(self, **kwargs):
         self.state_dicts = {

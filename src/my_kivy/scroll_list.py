@@ -53,10 +53,19 @@ Builder.load_string(
 
 class ScrollList(ScrollView):
     item_type = ObjectProperty(OneLineListItem)
+    """:class:`~kivy.properties.ObjectProperty`"""
+
     item_dicts = ListProperty()
+    """:class:`~kivy.properties.ListProperty`"""
+
     items = ListProperty()
+    """:class:`~kivy.properties.ListProperty`"""
+
     list = ObjectProperty(MDList())
+    """:class:`~kivy.properties.ObjectProperty`"""
+
     callback = ObjectProperty(lambda x: print(x.text))
+    """:class:`~kivy.properties.ObjectProperty`"""
 
     def __init__(self, **kwargs):
         super(ScrollList, self).__init__(**kwargs)
@@ -76,12 +85,18 @@ class ScrollList(ScrollView):
 
 class LeftStatusIndicator(ILeftBody, AnchorLayout):
     spinner = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty`"""
+
     icon = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty`"""
 
 
 class LeftStatusIndicatorListItem(OneLineAvatarListItem):
     loading_state = OptionProperty("queued", options=["loading", "queued", "ready"])
+    """:class:`~kivy.properties.OptionProperty`"""
+
     spinner = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty`"""
 
 
 def schedule(obj):

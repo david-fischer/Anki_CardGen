@@ -122,8 +122,13 @@ class Tab(FloatLayout, MDTabsBase):
     """Class implementing content for a tab. """
 
     id = StringProperty("")
+    """:class:`~kivy.properties.StringProperty`"""
+
     text = StringProperty("")
+    """:class:`~kivy.properties.StringProperty`"""
+
     icon = StringProperty("")
+    """:class:`~kivy.properties.StringProperty`"""
 
 
 class ImageSearchResultGrid(MyCheckImageGrid):
