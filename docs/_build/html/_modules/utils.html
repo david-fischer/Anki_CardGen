@@ -152,7 +152,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for utils</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">csv</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module contains lots of helper functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">csv</span>
 <span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">operator</span>
@@ -181,6 +185,7 @@
     <span class="kn">import</span> <span class="nn">spacy</span>
 
 <div class="viewcode-block" id="SPACY_IS_AVAILABLE"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.SPACY_IS_AVAILABLE">[docs]</a>    <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span></div>
+    <span class="sd">&quot;&quot;&quot;``True`` if spacy could be imported, else ``False``&quot;&quot;&quot;</span>
 <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span>
         <span class="s2">&quot;Spacy is not available, fall back to limited version. &quot;</span>
@@ -194,16 +199,20 @@
     <span class="s2">&quot;highlight_pink&quot;</span><span class="p">:</span> <span class="s2">&quot;sentences&quot;</span><span class="p">,</span>
     <span class="s2">&quot;highlight_orange&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span></div>
 <span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Dictionary relating highlight colors to the things that are highlighted with them.</span>
+<span class="sd">Currently only ``COLOR2MEANING[&quot;highlight_yellow&quot;] = &quot;words&quot;`` is used.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="MEANING2COLOR"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.MEANING2COLOR">[docs]</a><span class="n">MEANING2COLOR</span> <span class="o">=</span> <span class="p">{</span><span class="n">val</span><span class="p">:</span> <span class="n">key</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">COLOR2MEANING</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span></div>
 
-<div class="viewcode-block" id="nlp"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.nlp">[docs]</a><span class="n">nlp</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="nlp"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.nlp">[docs]</a><span class="n">nlp</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># pylint: disable = invalid-name</span></div>
 
 
 <span class="c1"># GENERAL</span>
 
 
 <div class="viewcode-block" id="CD"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.CD">[docs]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Context manager for changing the current working directory&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Context manager for changing the current working directory to :attr:`new_path`.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_path</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">new_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">new_path</span><span class="p">)</span>
@@ -218,6 +227,9 @@
 
 
 <div class="viewcode-block" id="save_dict_to_csv"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.save_dict_to_csv">[docs]</a><span class="k">def</span> <span class="nf">save_dict_to_csv</span><span class="p">(</span><span class="n">some_dict</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves dictionary as row to csv.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">is_first_entry</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">some_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -227,11 +239,31 @@
 
 
 <div class="viewcode-block" id="load_dicts_from_csv"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.load_dicts_from_csv">[docs]</a><span class="k">def</span> <span class="nf">load_dicts_from_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads csv. Has to have the keys as first line.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        : List of dictionaries.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">read_obj</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">read_obj</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="smart_loader"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.smart_loader">[docs]</a><span class="k">def</span> <span class="nf">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uses file ending of path to determine which function to use to load file.</span>
+
+<span class="sd">    Supported file endings:</span>
+<span class="sd">        * .p (pickle)</span>
+<span class="sd">        * .csv</span>
+<span class="sd">        * .json</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      path: Path of file to load.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      : Loaded object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -245,6 +277,19 @@
 
 
 <div class="viewcode-block" id="smart_saver"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.smart_saver">[docs]</a><span class="k">def</span> <span class="nf">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uses file ending of path to determine which function to use to save file.</span>
+
+<span class="sd">    Supported file endings:</span>
+<span class="sd">        * .p (pickle)</span>
+<span class="sd">        * .csv</span>
+<span class="sd">        * .json</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      obj: Object to save.</span>
+<span class="sd">      path: Path where object should be stored.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">ext</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">ext</span> <span class="o">==</span> <span class="s2">&quot;p&quot;</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -257,6 +302,11 @@
 
 
 <div class="viewcode-block" id="now_string"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.now_string">[docs]</a><span class="k">def</span> <span class="nf">now_string</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      : Current time in the format ``YYYY-MM-DD_HH:MM:SS``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
 
 
@@ -264,28 +314,45 @@
 
 
 <div class="viewcode-block" id="set_screen"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.set_screen">[docs]</a><span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sets current screen to the one with name ``screen_name``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;screen_man&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">screen_name</span></div>
 
 
 <div class="viewcode-block" id="widget_by_id"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.widget_by_id">[docs]</a><span class="k">def</span> <span class="nf">widget_by_id</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    :arg string: &quot;/edit_tab/word_prop/translation_chips</span>
-<span class="sd">    :returns widget root.ids.edit_tab.ids.word_prop ... usw</span>
+<span class="sd">    Get widget by string of ids, seperated by &quot;/&quot;.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      string: Stings of ids, seperated by &quot;/&quot;. The first one can be a screen name.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      : widget</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">      &gt;&gt;&gt; widget_by_id(&quot;screen_single_word/edit_tab/word_prop&quot;)</span>
+<span class="sd">      MDApp.get_running_app().root.ids.screen_man.get_screen(&quot;screen_single_word&quot;).children[</span>
+<span class="sd">      0].ids.word_prop</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">ids</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
-    <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">id</span> <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span> <span class="k">if</span> <span class="nb">id</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
+    <span class="n">id_list</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
+    <span class="n">id_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_str</span> <span class="k">for</span> <span class="n">id_str</span> <span class="ow">in</span> <span class="n">id_list</span> <span class="k">if</span> <span class="n">id_str</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span>
-    <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">id_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">screen_names</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="n">id_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">id_str</span> <span class="ow">in</span> <span class="n">id_list</span><span class="p">:</span>
+        <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="n">id_str</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span></div>
 
 
 <div class="viewcode-block" id="sleep_decorator"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.sleep_decorator">[docs]</a><span class="k">def</span> <span class="nf">sleep_decorator</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Executes sleep(time) before and after decorated function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">the_real_decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
             <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
             <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
@@ -298,6 +365,11 @@
 <span class="nd">@sleep_decorator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 <span class="nd">@mainthread</span>
 <div class="viewcode-block" id="screenshot"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.screenshot">[docs]</a><span class="k">def</span> <span class="nf">screenshot</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Takes screenshot of the current state of the app and saves it under ``path``.</span>
+
+<span class="sd">    The sleep- and mainthread-decorator ensure that the app shows the current state properly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">root_widget</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span>
 
     <span class="n">fbo</span> <span class="o">=</span> <span class="n">Fbo</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">root_widget</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">root_widget</span><span class="o">.</span><span class="n">height</span><span class="p">),</span> <span class="n">with_stencilbuffer</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
@@ -315,7 +387,8 @@
     <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="make_screenshots"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.make_screenshots">[docs]</a><span class="k">def</span> <span class="nf">make_screenshots</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="p">[</span><span class="mi">270</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">480</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">]):</span>
+<div class="viewcode-block" id="make_screenshots"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.make_screenshots">[docs]</a><span class="k">def</span> <span class="nf">make_screenshots</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="p">(</span><span class="mi">270</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">480</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;Set the app in a number of predefined states and takes a screenshot of each.&quot;&quot;&quot;</span>
     <span class="n">old_size</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">size</span>
     <span class="n">Window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">window_size</span>
     <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;drawer_list&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
@@ -338,56 +411,50 @@
 <div class="viewcode-block" id="rend"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.rend">[docs]</a><span class="n">rend</span> <span class="o">=</span> <span class="n">pystache</span><span class="o">.</span><span class="n">Renderer</span><span class="p">(</span><span class="n">escape</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span></div>
 
 
-<span class="c1"># TODO: path remove ..</span>
-<div class="viewcode-block" id="save_card_htmls"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.save_card_htmls">[docs]</a><span class="k">def</span> <span class="nf">save_card_htmls</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">):</span>
-    <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="s2">&quot;../screenshots&quot;</span><span class="p">):</span>
-        <span class="n">field_dict</span> <span class="o">=</span> <span class="n">smart_loader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../app_data/words/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">_card.json&quot;</span><span class="p">)</span>
-        <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;Audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&amp;#9658;&quot;</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/&quot;</span><span class="p">,</span> <span class="n">word</span><span class="p">)</span>
-        <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../../data/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">)</span>
-            <span class="n">paths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;*.html&quot;</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">()</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                    <span class="n">html_template</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">rend</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">html_template</span><span class="p">,</span> <span class="n">field_dict</span><span class="p">))</span></div>
-
-
 <div class="viewcode-block" id="save_card_pngs"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.save_card_pngs">[docs]</a><span class="k">def</span> <span class="nf">save_card_pngs</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">540</span><span class="p">,</span> <span class="mi">960</span><span class="p">)):</span>
-    <span class="c1"># with CD(f&quot;screenshots/{word}&quot;):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Saves pngs of the anki-cards for a given word, for which a card has to be generated earlier.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      word:  (Default value = &quot;casa&quot;)</span>
+<span class="sd">      size:  (Default value = (540,960))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">paths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;anki/*.html&quot;</span><span class="p">)</span>
     <span class="n">field_dict</span> <span class="o">=</span> <span class="n">smart_loader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../app_data/words/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">_card.json&quot;</span><span class="p">)</span>
     <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;Audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&amp;#9658;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/js&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/js/&quot;</span><span class="p">)</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/css&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/css/&quot;</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
+    <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;JS AND CSS FOLDER ALREADY EXIST IN /tmp/ skip copying.&quot;</span><span class="p">)</span>
     <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../app_data/words/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;/tmp/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">)</span>
     <span class="n">compress_img</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/tmp/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">12</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">string</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
             <span class="n">string</span> <span class="o">=</span> <span class="n">rend</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">**</span><span class="n">field_dict</span><span class="p">)</span>
         <span class="n">imgkit</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span>
             <span class="n">string</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s1">&#39;screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="n">options</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
-                <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span>
-                <span class="s2">&quot;allow&quot;</span><span class="p">:</span> <span class="s2">&quot;./anki/*&quot;</span><span class="p">,</span></div>
-                <span class="c1"># &quot;--allow&quot;: f&quot;../../words/{word}&quot;</span>
-            <span class="p">},</span>
+            <span class="sa">f</span><span class="s1">&#39;../screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),},</span></div>
         <span class="p">)</span>
 
 
-<div class="viewcode-block" id="selection_helper"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.selection_helper">[docs]</a><span class="k">def</span> <span class="nf">selection_helper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="selection_helper"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.selection_helper">[docs]</a><span class="k">def</span> <span class="nf">selection_helper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">id_str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      base:</span>
+<span class="sd">      id_str:  (Default value = None)</span>
+<span class="sd">      props:  (Default value = None)</span>
+
+<span class="sd">    Returns:</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">props</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
-    <span class="n">base_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base</span>
+    <span class="n">base_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="n">id_str</span><span class="p">)</span> <span class="k">if</span> <span class="n">id_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base</span>
     <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_obj</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">property_name</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">props</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">iconcat</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="p">[])</span></div>
 
@@ -396,6 +463,15 @@
 
 
 <div class="viewcode-block" id="dict_from_kindle_export"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.dict_from_kindle_export">[docs]</a><span class="k">def</span> <span class="nf">dict_from_kindle_export</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extracts highlighted parts and sorts them by color in a dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      file_path: Path to an html-file exported from kindle.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        :Dictionary `{&quot;highlight_color_1&quot; : [&quot;list&quot;, &quot;of&quot; , &quot;highlighted parts&quot;, ...],...}`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
     <span class="n">heading_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.noteHeading span&quot;</span><span class="p">)</span>
@@ -406,13 +482,25 @@
 
 
 <div class="viewcode-block" id="clean_up"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.clean_up">[docs]</a><span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">remove_punct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Preprocess a list of words (or phrases).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      words: List of words</span>
+<span class="sd">      remove_punct: If True, removes trailing and leading punctuation. (Default value = True)</span>
+<span class="sd">      lower_case: If True, converts everything to lower case. (Default value = True)</span>
+<span class="sd">      lemmatize: If True, tries to convert each word to its dictionary-form. (Default value = True)</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        : List of processed words (or phrases).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">remove_punct</span><span class="p">:</span>
         <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;,.;:-–—!?¿¡</span><span class="se">\&quot;</span><span class="s2">&#39;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">lower_case</span><span class="p">:</span>
         <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">lemmatize</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">SPACY_IS_AVAILABLE</span><span class="p">:</span>
-            <span class="k">global</span> <span class="n">nlp</span>
+            <span class="k">global</span> <span class="n">nlp</span>  <span class="c1"># pylint: disable=global-statement,invalid-name</span>
             <span class="k">if</span> <span class="n">nlp</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;pt_core_news_sm&quot;</span><span class="p">)</span>
             <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">lemma</span><span class="o">.</span><span class="n">lemma_</span><span class="p">])</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">nlp</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
@@ -422,17 +510,43 @@
 
 
 <div class="viewcode-block" id="word_list_from_kindle"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.word_list_from_kindle">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_kindle</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uses :const:`MEANING2COLOR` `[&quot;words&quot;]` to extract the list of words highlighted in this specific color.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      path: Path to html-file exported by kindle.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      : List of highlighted words.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">color</span> <span class="o">=</span> <span class="n">MEANING2COLOR</span><span class="p">[</span><span class="s2">&quot;words&quot;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">dict_from_kindle_export</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="n">color</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="word_list_from_txt"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.word_list_from_txt">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_txt</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Args:</span>
+<span class="sd">      path: Path to txt-file. Each line should correspond to a word (or phrase).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      : List of words.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">words</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">words</span></div>
 
 
 <div class="viewcode-block" id="tag_word_in_sentence"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.tag_word_in_sentence">[docs]</a><span class="k">def</span> <span class="nf">tag_word_in_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">tag_word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uses regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      sentence: String containing of multiple words.</span>
+<span class="sd">      tag_word: Word that should be wrapped.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      : Sentence with replacements.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">words</span> <span class="o">=</span> <span class="n">sentence</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
     <span class="n">words</span> <span class="o">=</span> <span class="n">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="c1"># get unique, non-empty strings:</span>
@@ -460,6 +574,15 @@
 
 
 <div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../autoapi/utils/index.html#utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Uses the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.</span>
+
+<span class="sd">    If the image already has smaller width, nothing is done.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      path: Path to image-file.</span>
+<span class="sd">      width: New width of image (Default value = 512)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
         <span class="n">resize</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">width</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
