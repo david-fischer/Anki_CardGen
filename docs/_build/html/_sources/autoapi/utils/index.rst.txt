@@ -3,6 +3,11 @@
 
 .. py:module:: utils
 
+.. autoapi-nested-parse::
+
+   This module contains lots of helper functions.
+
+
 
 Module Contents
 ---------------
@@ -27,7 +32,6 @@ Functions
    utils.load_dicts_from_csv
    utils.make_screenshots
    utils.now_string
-   utils.save_card_htmls
    utils.save_card_pngs
    utils.save_dict_to_csv
    utils.screenshot
@@ -45,7 +49,9 @@ Functions
 .. data:: COLOR2MEANING
    
 
-   
+   Dictionary relating highlight colors to the things that are highlighted with them.
+   Currently only ``COLOR2MEANING["highlight_yellow"] = "words"`` is used.
+
 
 .. data:: MEANING2COLOR
    
@@ -55,7 +61,8 @@ Functions
 .. data:: SPACY_IS_AVAILABLE
    :annotation: = True
 
-   
+   ``True`` if spacy could be imported, else ``False``
+
 
 .. data:: nlp
    
@@ -69,7 +76,7 @@ Functions
 
 .. py:class:: CD(new_path)
 
-   Context manager for changing the current working directory
+   Context manager for changing the current working directory to :attr:`new_path`.
 
    .. method:: __enter__(self)
 
@@ -82,61 +89,155 @@ Functions
 
 .. function:: clean_up(words, remove_punct=True, lower_case=True, lemmatize=True)
 
+   Preprocess a list of words (or phrases).
+
+   :param words: List of words
+   :param remove_punct: If True, removes trailing and leading punctuation. (Default value = True)
+   :param lower_case: If True, converts everything to lower case. (Default value = True)
+   :param lemmatize: If True, tries to convert each word to its dictionary-form. (Default value = True)
+
+   :returns: List of processed words (or phrases).
+
 
 .. function:: compress_img(path, width=512)
+
+   Uses the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.
+
+   If the image already has smaller width, nothing is done.
+
+   :param path: Path to image-file.
+   :param width: New width of image (Default value = 512)
 
 
 .. function:: dict_from_kindle_export(file_path)
 
+   Extracts highlighted parts and sorts them by color in a dictionary.
+
+   :param file_path: Path to an html-file exported from kindle.
+
+   :returns: Dictionary `{"highlight_color_1" : ["list", "of" , "highlighted parts", ...],...}`
+
 
 .. function:: load_dicts_from_csv(path)
 
+   Loads csv. Has to have the keys as first line.
 
-.. function:: make_screenshots(window_size=[270 * 1.4, 480 * 1.4])
+   :returns: List of dictionaries.
+
+
+.. function:: make_screenshots(window_size=(270 * 1.4, 480 * 1.4))
+
+   Set the app in a number of predefined states and takes a screenshot of each.
 
 
 .. function:: now_string()
 
-
-.. function:: save_card_htmls(word='casa')
+   :returns: Current time in the format ``YYYY-MM-DD_HH:MM:SS``.
 
 
 .. function:: save_card_pngs(word='casa', size=(540, 960))
 
+   Saves pngs of the anki-cards for a given word, for which a card has to be generated earlier.
+
+   :param word: (Default value = "casa")
+   :param size: (Default value = (540,960))
+
 
 .. function:: save_dict_to_csv(some_dict, out_path)
+
+   Saves dictionary as row to csv.
 
 
 .. function:: screenshot(path)
 
+   Takes screenshot of the current state of the app and saves it under ``path``.
 
-.. function:: selection_helper(base, id=None, props=None)
+   The sleep- and mainthread-decorator ensure that the app shows the current state properly.
+
+
+.. function:: selection_helper(base, id_str=None, props=None)
+
+   :param base:
+   :param id_str: (Default value = None)
+   :param props: (Default value = None)
+
+   Returns:
 
 
 .. function:: set_screen(screen_name)
 
+   Sets current screen to the one with name ``screen_name``.
+
 
 .. function:: sleep_decorator(time)
+
+   Executes sleep(time) before and after decorated function.
 
 
 .. function:: smart_loader(path)
 
+   Uses file ending of path to determine which function to use to load file.
+
+   Supported file endings:
+       * .p (pickle)
+       * .csv
+       * .json
+
+   :param path: Path of file to load.
+
+   :returns: Loaded object.
+
 
 .. function:: smart_saver(obj, path)
+
+   Uses file ending of path to determine which function to use to save file.
+
+   Supported file endings:
+       * .p (pickle)
+       * .csv
+       * .json
+
+   :param obj: Object to save.
+   :param path: Path where object should be stored.
 
 
 .. function:: tag_word_in_sentence(sentence, tag_word)
 
+   Uses regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.
+
+   :param sentence: String containing of multiple words.
+   :param tag_word: Word that should be wrapped.
+
+   :returns: Sentence with replacements.
+
 
 .. function:: widget_by_id(string)
 
-   :arg string: "/edit_tab/word_prop/translation_chips
-   :returns widget root.ids.edit_tab.ids.word_prop ... usw
+   Get widget by string of ids, seperated by "/".
+
+   :param string: Stings of ids, seperated by "/". The first one can be a screen name.
+
+   :returns: widget
+
+   Examples
+     >>> widget_by_id("screen_single_word/edit_tab/word_prop")
+     MDApp.get_running_app().root.ids.screen_man.get_screen("screen_single_word").children[
+     0].ids.word_prop
 
 
 .. function:: word_list_from_kindle(path)
 
+   Uses :const:`MEANING2COLOR` `["words"]` to extract the list of words highlighted in this specific color.
+
+   :param path: Path to html-file exported by kindle.
+
+   :returns: List of highlighted words.
+
 
 .. function:: word_list_from_txt(path)
+
+   :param path: Path to txt-file. Each line should correspond to a word (or phrase).
+
+   :returns: List of words.
 
 
