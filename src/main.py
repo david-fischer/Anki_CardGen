@@ -32,7 +32,10 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
     """Test"""
 
     icon = StringProperty()
+    """:class:`~kivy.properties.StringProperty`"""
+
     screen_name = StringProperty("test")
+    """:class:`~kivy.properties.StringProperty`"""
 
     def __init__(self, **kwargs):
         super(DrawerItem, self).__init__(**kwargs)
@@ -58,6 +61,7 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
     check_one = True
     CheckElementObject = DrawerItem
     current = StringProperty("")
+    """:class:`~kivy.properties.StringProperty`"""
 
     def conditional_uncheck(self, instance, value):
         """changes color of clicked item and updates :attr:`current`"""
