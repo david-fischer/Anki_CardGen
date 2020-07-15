@@ -93,7 +93,7 @@ def get_selection_dict():
     out = {}
     for key, props in selections.items():
         new_key = key.split("_")[0]
-        out[new_key] = selection_helper(word_prop, id=key, props=props)
+        out[new_key] = selection_helper(word_prop, id_str=key, props=props)
     # print(out)
     # TODO: Deal with the case that either audio or image is not downloaded
     r_i.wait()
