@@ -59,7 +59,8 @@ autoapi_ignore = [
     ]
 ]
 autoapi_member_order = "groupwise"
-autoapi_generate_api_docs = True
+autoapi_generate_api_docs = False
+# autoapi_add_toctree_entry = False
 
 # autodoc_mock_imports = ["kivymd"]
 # autodoc_inherit_docstrings = True
