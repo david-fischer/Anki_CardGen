@@ -202,70 +202,125 @@
             
   <div class="section" id="module-screen_queue">
 <span id="my-kivy-screen-queue"></span><h1>my_kivy.screen_queue<a class="headerlink" href="#module-screen_queue" title="Permalink to this headline">¶</a></h1>
+<p>Contains the functions needed on the screen screen_queue.</p>
 <dl class="py function">
 <dt id="screen_queue.choose_file_to_import">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_file_to_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#choose_file_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_file_to_import" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Opens an instance of <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> so the user can choose a file to import.</p>
+<p>Binds function to clicking on file, so the import is started in separate thread.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.choose_replacements_dialog">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_replacements_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">replacements</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#choose_replacements_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_replacements_dialog" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Displays possible replacements.</p>
+<p>Opens an <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDDialog</span></code></a> to show possible suggestions for detected non-dictionary forms of
+words.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.click_on_done_item">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_done_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#click_on_done_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_done_item" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Placeholder for later implementation.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.click_on_error_item">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_error_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#click_on_error_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_error_item" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Placeholder for later implementation.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.click_on_queue_item">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_queue_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#click_on_queue_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_queue_item" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Switch to screen_single_word to generate a card for the clicked word.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.import_from">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">source</span><span class="o">=</span><span class="default_value">'kindle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.import_from" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Imports, processes and queues words from file.</p>
+<p>If non-dictionary forms are detected, prompts the user with suggestions for replacement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Path to file.</p></li>
+<li><p><strong>source</strong> – Type of source. Options=[“kindle”,”txt”] (Default value = “kindle”)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.is_duplicate">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.is_duplicate" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks if word is already queued, done or has caused an error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>word</strong> – Word to check.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">word</span></code> is already in app.queue_words, app.error_words or app.done_words.
+Else <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py data">
 <dt id="screen_queue.options_dict">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">options_dict</code><a class="reference internal" href="../_modules/screen_queue.html#options_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.options_dict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p><code class="code docutils literal notranslate"><span class="pre">{&quot;icon-name&quot;:&quot;hint</span> <span class="pre">text&quot;}</span></code> for the contents of
+<a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/button/index.html#kivymd.uix.button.MDFloatingActionButtonSpeedDial" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFloatingActionButtonSpeedDial</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.pause_downloading">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.pause_downloading" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Empties queue.</p>
+<p>This leads the download to stop after the current word is processed.</p>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.queue_word">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">queue_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#queue_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.queue_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Adds the word to the app.queue_words list and Queue and changes state to “queued”.
-If no worker is present starts a worker in a different thread.
-:param word:</p>
+Then calls <a class="reference internal" href="#screen_queue.start_downloading" title="screen_queue.start_downloading"><code class="xref py py-func docutils literal notranslate"><span class="pre">start_downloading()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>word</strong> – Word to add to queue.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.start_downloading">
 <code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#start_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_downloading" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Downloads data for queued words:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Sets up Queue</p></li>
+<li><p>If no worker is present, starts one.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
 
 <dl class="py function">
 <dt id="screen_queue.start_workers">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">worker</span></em>, <em class="sig-param"><span class="n">num</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#start_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_workers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts a number of workers in seperate threads
-:param worker: function to be started
-:param num:</p>
+<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">worker_fn</span></em>, <em class="sig-param"><span class="n">num</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#start_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a number of workers in separate threads</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>worker_fn</strong> – Function to be started</p></li>
+<li><p><strong>num</strong> – Number of threads/workers</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">

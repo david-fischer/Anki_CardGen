@@ -150,7 +150,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for screen_queue</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">threading</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contains the functions needed on the screen screen_queue.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">queue</span> <span class="kn">import</span> <span class="n">Queue</span>
 
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
@@ -170,11 +174,14 @@
     <span class="s2">&quot;script-text-outline&quot;</span><span class="p">:</span> <span class="s2">&quot;Import from Kindle&quot;</span><span class="p">,</span>
     <span class="s2">&quot;note-text&quot;</span><span class="p">:</span> <span class="s2">&quot;Import from Text File&quot;</span><span class="p">,</span></div>
 <span class="p">}</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">dict: :code:`{&quot;icon-name&quot;:&quot;hint text&quot;}` for the contents of</span>
+<span class="sd">:class:`~kivymd.uix.button.MDFloatingActionButtonSpeedDial`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
 
 
 <div class="viewcode-block" id="worker_single_word"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.worker_single_word">[docs]</a><span class="k">def</span> <span class="nf">worker_single_word</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    As long as the queue is not empty, tries to process a single word.</span>
+    <span class="sd">&quot;&quot;&quot;As long as the queue is not empty, tries to process a single word.</span>
 <span class="sd">    Changing the states accordingly to &quot;loading&quot; and &quot;ready&quot;</span>
 <span class="sd">    If it fails, it moves the word to the error_words list.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -191,23 +198,27 @@
             <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">error_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="start_workers"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.start_workers">[docs]</a><span class="k">def</span> <span class="nf">start_workers</span><span class="p">(</span><span class="n">worker</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Starts a number of workers in seperate threads</span>
-<span class="sd">    :param worker: function to be started</span>
-<span class="sd">    :param num:</span>
+<div class="viewcode-block" id="start_workers"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.start_workers">[docs]</a><span class="k">def</span> <span class="nf">start_workers</span><span class="p">(</span><span class="n">worker_fn</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Starts a number of workers in separate threads</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      worker_fn: Function to be started</span>
+<span class="sd">      num: Number of threads/workers</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">workers</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;worker&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">:</span>
-        <span class="n">w</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
+    <span class="n">workers</span> <span class="o">=</span> <span class="p">[</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">worker_fn</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;worker&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">worker</span> <span class="ow">in</span> <span class="n">workers</span><span class="p">:</span>
+        <span class="n">worker</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="queue_word"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.queue_word">[docs]</a><span class="k">def</span> <span class="nf">queue_word</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Adds the word to the app.queue_words list and Queue and changes state to &quot;queued&quot;.</span>
-<span class="sd">    If no worker is present starts a worker in a different thread.</span>
-<span class="sd">    :param word:</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Then calls :func:`start_downloading`.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      word: Word to add to queue.</span>
+<span class="sd">&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">is_duplicate</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
         <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">loading_state_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;queued&quot;</span>
         <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">queue_words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
@@ -216,6 +227,12 @@
 
 
 <div class="viewcode-block" id="start_downloading"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.start_downloading">[docs]</a><span class="k">def</span> <span class="nf">start_downloading</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Downloads data for queued words:</span>
+
+<span class="sd">      * Sets up Queue</span>
+<span class="sd">      * If no worker is present, starts one.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">setup_queue</span><span class="p">()</span>
     <span class="k">if</span> <span class="s2">&quot;worker&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="n">thread</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threading</span><span class="o">.</span><span class="n">enumerate</span><span class="p">()]:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;starting a worker&quot;</span><span class="p">)</span>
@@ -225,10 +242,25 @@
 
 
 <div class="viewcode-block" id="pause_downloading"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.pause_downloading">[docs]</a><span class="k">def</span> <span class="nf">pause_downloading</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Empties queue.</span>
+
+<span class="sd">    This leads the download to stop after the current word is processed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="is_duplicate"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.is_duplicate">[docs]</a><span class="k">def</span> <span class="nf">is_duplicate</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Checks if word is already queued, done or has caused an error.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      word: Word to check.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">      :``True`` if ``word`` is already in app.queue_words, app.error_words or app.done_words.</span>
+<span class="sd">      Else ``False``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">app</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span>
     <span class="n">list_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;queue_words&quot;</span><span class="p">,</span> <span class="s2">&quot;error_words&quot;</span><span class="p">,</span> <span class="s2">&quot;done_words&quot;</span><span class="p">]</span>
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">list_names</span><span class="p">:</span>
@@ -239,6 +271,11 @@
 
 
 <div class="viewcode-block" id="choose_file_to_import"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.choose_file_to_import">[docs]</a><span class="k">def</span> <span class="nf">choose_file_to_import</span><span class="p">(</span><span class="n">button</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Opens an instance of :class:`~kivymd.uix.filemanager.MDFileManager` so the user can choose a file to import.</span>
+
+<span class="sd">    Binds function to clicking on file, so the import is started in separate thread.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">button</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">close_stack</span><span class="p">()</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">options_dict</span><span class="p">[</span><span class="n">button</span><span class="o">.</span><span class="n">icon</span><span class="p">]</span>
     <span class="k">if</span> <span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;Import from Kindle&quot;</span><span class="p">:</span>
@@ -255,6 +292,7 @@
 
 
 <div class="viewcode-block" id="click_on_queue_item"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.click_on_queue_item">[docs]</a><span class="k">def</span> <span class="nf">click_on_queue_item</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Switch to screen_single_word to generate a card for the clicked word.&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
     <span class="c1"># MDApp.get_running_app().queue_words.remove(item.text)</span>
     <span class="n">set_screen</span><span class="p">(</span><span class="s2">&quot;screen_single_word&quot;</span><span class="p">)</span>
@@ -264,14 +302,25 @@
 
 
 <div class="viewcode-block" id="click_on_done_item"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.click_on_done_item">[docs]</a><span class="k">def</span> <span class="nf">click_on_done_item</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Placeholder for later implementation.&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="click_on_error_item"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.click_on_error_item">[docs]</a><span class="k">def</span> <span class="nf">click_on_error_item</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Placeholder for later implementation.&quot;&quot;&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="import_from"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.import_from">[docs]</a><span class="k">def</span> <span class="nf">import_from</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s2">&quot;kindle&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Imports, processes and queues words from file.</span>
+
+<span class="sd">    If non-dictionary forms are detected, prompts the user with suggestions for replacement.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      path: Path to file.</span>
+<span class="sd">      source: Type of source. Options=[&quot;kindle&quot;,&quot;txt&quot;] (Default value = &quot;kindle&quot;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
     <span class="n">import_function_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;kindle&quot;</span><span class="p">:</span> <span class="n">word_list_from_kindle</span><span class="p">,</span> <span class="s2">&quot;txt&quot;</span><span class="p">:</span> <span class="n">word_list_from_txt</span><span class="p">}</span>
     <span class="n">words</span> <span class="o">=</span> <span class="n">import_function_dict</span><span class="p">[</span><span class="n">source</span><span class="p">](</span><span class="n">path</span><span class="p">)</span>
@@ -287,6 +336,13 @@
 
 
 <div class="viewcode-block" id="choose_replacements_dialog"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_queue.choose_replacements_dialog">[docs]</a><span class="k">def</span> <span class="nf">choose_replacements_dialog</span><span class="p">(</span><span class="n">replacements</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays possible replacements.</span>
+
+<span class="sd">    Opens an :class:`~kivymd.uix.dialog.MDDialog` to show possible suggestions for detected non-dictionary forms of</span>
+<span class="sd">    words.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="nf">item_function</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; -&gt; &quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">queue_word</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
