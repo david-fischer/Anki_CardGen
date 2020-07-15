@@ -82,11 +82,10 @@
             
             
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../ACG.anki.html">ACG.anki</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ACG.my_kivy.html">ACG.my_kivy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ACG.word_requests.html">ACG.word_requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ACG.main.html">ACG.main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ACG.utils.html">ACG.utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
 </ul>
 
             
@@ -151,7 +150,11 @@
            <div itemprop="articleBody">
             
   <h1>Source code for scroll_list</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implements :class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
 <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
 
@@ -204,20 +207,29 @@
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">):</span>
-<div class="viewcode-block" id="ScrollList.item_type"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList.item_type">[docs]</a>    <span class="n">item_type</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">OneLineListItem</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.</span>
 
-<div class="viewcode-block" id="ScrollList.item_dicts"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList.item_dicts">[docs]</a>    <span class="n">item_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`&quot;&quot;&quot;</span>
+<span class="sd">    Automatically updates upon change of :attr:`item_dicts`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ScrollList.items"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList.items">[docs]</a>    <span class="n">items</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ScrollList.item_type"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList.item_type">[docs]</a>    <span class="n">item_type</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">OneLineListItem</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` constructor for items.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ScrollList.list"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList.list">[docs]</a>    <span class="nb">list</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">MDList</span><span class="p">())</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ScrollList.item_dicts"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList.item_dicts">[docs]</a>    <span class="n">item_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ScrollList.callback"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList.callback">[docs]</a>    <span class="n">callback</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="p">))</span></div>
+<div class="viewcode-block" id="ScrollList.items"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList.items">[docs]</a>    <span class="n">items</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the constructed items.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ScrollList.list"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList.list">[docs]</a>    <span class="nb">list</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">MDList</span><span class="p">())</span></div>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.MDList`.</span>
+<span class="sd">    Contains the items.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ScrollList.callback"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList.callback">[docs]</a>    <span class="n">callback</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">text</span><span class="p">))</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -225,7 +237,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">on_item_dicts</span><span class="p">()</span>
 
     <span class="nd">@mainthread</span>
-<div class="viewcode-block" id="ScrollList.on_item_dicts"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.ScrollList.on_item_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollList.on_item_dicts"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList.on_item_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construct items from :attr:`item_dicts` using :attr:`item_type`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">item_type</span><span class="p">(</span><span class="o">**</span><span class="n">item_dict</span><span class="p">,</span> <span class="n">on_press</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">item_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">item_dicts</span>
@@ -236,37 +251,51 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">item</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="LeftStatusIndicator"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.LeftStatusIndicator">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicator</span><span class="p">(</span><span class="n">ILeftBody</span><span class="p">,</span> <span class="n">AnchorLayout</span><span class="p">):</span>
-<div class="viewcode-block" id="LeftStatusIndicator.spinner"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.LeftStatusIndicator.spinner">[docs]</a>    <span class="n">spinner</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LeftStatusIndicator"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.LeftStatusIndicator">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicator</span><span class="p">(</span><span class="n">ILeftBody</span><span class="p">,</span> <span class="n">AnchorLayout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains :class:`~kivy.uix.spinner.MDSpinner` and :class:`~kivy.uix.label.MDIcon`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LeftStatusIndicator.icon"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.LeftStatusIndicator.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="LeftStatusIndicator.spinner"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.LeftStatusIndicator.spinner">[docs]</a>    <span class="n">spinner</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`.&quot;&quot;&quot;</span>
 
-
-<div class="viewcode-block" id="LeftStatusIndicatorListItem"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.LeftStatusIndicatorListItem">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicatorListItem</span><span class="p">(</span><span class="n">OneLineAvatarListItem</span><span class="p">):</span>
-<div class="viewcode-block" id="LeftStatusIndicatorListItem.loading_state"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.LeftStatusIndicatorListItem.loading_state">[docs]</a>    <span class="n">loading_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">])</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="LeftStatusIndicatorListItem.spinner"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.LeftStatusIndicatorListItem.spinner">[docs]</a>    <span class="n">spinner</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span></div>
+<div class="viewcode-block" id="LeftStatusIndicator.icon"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.LeftStatusIndicator.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.label.MDIcon`&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="schedule"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.schedule">[docs]</a><span class="k">def</span> <span class="nf">schedule</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="LeftStatusIndicatorListItem"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.LeftStatusIndicatorListItem">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicatorListItem</span><span class="p">(</span><span class="n">OneLineAvatarListItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Contains :class:`LeftStatusIndicator` as left element.</span>
+
+<span class="sd">    Depending on :attr:`loading_state`, either the spinner is active or an icon is shown.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LeftStatusIndicatorListItem.loading_state"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.LeftStatusIndicatorListItem.loading_state">[docs]</a>    <span class="n">loading_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">])</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty` with options ``[&quot;loading&quot;, &quot;queued&quot;, &quot;ready&quot;]``.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LeftStatusIndicatorListItem.spinner"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.LeftStatusIndicatorListItem.spinner">[docs]</a>    <span class="n">spinner</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :class:`~kivy.properties.ObjectProperty` reference to instance of :class:`~kivy.uix.spinner.MDSpinner` of</span>
+<span class="sd">    :class:`LeftStatusIndicator`.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+
+
+<span class="k">def</span> <span class="nf">_schedule</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">loading_state</span> <span class="o">==</span> <span class="s2">&quot;queued&quot;</span><span class="p">:</span>
         <span class="n">obj</span><span class="o">.</span><span class="n">loading_state</span> <span class="o">=</span> <span class="s2">&quot;loading&quot;</span>
         <span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;loading_state&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span></div>
+        <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;loading_state&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
 
 
+<span class="c1"># pylint: disable = W,C,R,I</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 
-<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
-<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../ACG.my_kivy.html#scroll_list.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">ScrollList</span><span class="p">(</span>
                 <span class="n">item_type</span><span class="o">=</span><span class="n">LeftStatusIndicatorListItem</span><span class="p">,</span>
                 <span class="n">item_dicts</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;test&quot;</span><span class="p">}]</span> <span class="o">*</span> <span class="mi">25</span><span class="p">,</span>
-                <span class="n">callback</span><span class="o">=</span><span class="k">lambda</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">schedule</span><span class="p">,</span> <span class="n">obj</span><span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span></div></div>
+                <span class="n">callback</span><span class="o">=</span><span class="k">lambda</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">_schedule</span><span class="p">,</span> <span class="n">obj</span><span class="p">))</span><span class="o">.</span><span class="n">start</span><span class="p">(),</span></div></div>
             <span class="p">)</span>
 
     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>

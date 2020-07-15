@@ -7,13 +7,12 @@ Welcome to ACG's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
-   ACG.anki
-   ACG.my_kivy
-   ACG.word_requests
-   ACG.main
-   ACG.utils
+   word_processing
+   ui
+   main
+   utils
 
 
 
