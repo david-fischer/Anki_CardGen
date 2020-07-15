@@ -87,7 +87,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../ACG.word_requests.html">ACG.word_requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ACG.main.html">ACG.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ACG.utils.html">ACG.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
 </ul>
 
             
@@ -176,8 +175,8 @@
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SSL_CERT_FILE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="WordProperties"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.WordProperties">[docs]</a><span class="k">class</span> <span class="nc">WordProperties</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
-<div class="viewcode-block" id="WordProperties.refresh_data"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.WordProperties.refresh_data">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.WordProperties">[docs]</a><span class="k">class</span> <span class="nc">WordProperties</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties.refresh_data"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.WordProperties.refresh_data">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">translation_chips</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">translations</span>
@@ -195,12 +194,12 @@
             <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">explanations</span></div>
         <span class="p">]</span>
 
-<div class="viewcode-block" id="WordProperties.accept_suggestion"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.WordProperties.accept_suggestion">[docs]</a>    <span class="k">def</span> <span class="nf">accept_suggestion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suggestion</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties.accept_suggestion"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.WordProperties.accept_suggestion">[docs]</a>    <span class="k">def</span> <span class="nf">accept_suggestion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suggestion</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">search_field</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">suggestion</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">load_or_search</span><span class="p">(</span><span class="n">suggestion</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">refresh_data</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="WordProperties.load_or_search"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.WordProperties.load_or_search">[docs]</a>    <span class="k">def</span> <span class="nf">load_or_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties.load_or_search"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.WordProperties.load_or_search">[docs]</a>    <span class="k">def</span> <span class="nf">load_or_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
             <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/image_tab/image_grid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_images</span><span class="p">()</span>
@@ -218,7 +217,7 @@
             <span class="p">)</span>
 
 
-<div class="viewcode-block" id="get_selection_dict"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.get_selection_dict">[docs]</a><span class="k">def</span> <span class="nf">get_selection_dict</span><span class="p">():</span>
+<div class="viewcode-block" id="get_selection_dict"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.get_selection_dict">[docs]</a><span class="k">def</span> <span class="nf">get_selection_dict</span><span class="p">():</span>
     <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
     <span class="n">word_prop</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/edit_tab/word_prop&quot;</span><span class="p">)</span>
     <span class="n">base_path</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span>
@@ -272,16 +271,21 @@
     <span class="p">}</span>
 
 
-<div class="viewcode-block" id="Tab"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.Tab">[docs]</a><span class="k">class</span> <span class="nc">Tab</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">MDTabsBase</span><span class="p">):</span>
+<div class="viewcode-block" id="Tab"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.Tab">[docs]</a><span class="k">class</span> <span class="nc">Tab</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">MDTabsBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class implementing content for a tab. &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Tab.id"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.Tab.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
-<div class="viewcode-block" id="Tab.text"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.Tab.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
-<div class="viewcode-block" id="Tab.icon"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.Tab.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div></div>
+<div class="viewcode-block" id="Tab.id"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.Tab.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Tab.text"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.Tab.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Tab.icon"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.Tab.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="ImageSearchResultGrid"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.ImageSearchResultGrid">[docs]</a><span class="k">class</span> <span class="nc">ImageSearchResultGrid</span><span class="p">(</span><span class="n">MyCheckImageGrid</span><span class="p">):</span>
-<div class="viewcode-block" id="ImageSearchResultGrid.get_images"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.ImageSearchResultGrid.get_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageSearchResultGrid"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.ImageSearchResultGrid">[docs]</a><span class="k">class</span> <span class="nc">ImageSearchResultGrid</span><span class="p">(</span><span class="n">MyCheckImageGrid</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageSearchResultGrid.get_images"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.ImageSearchResultGrid.get_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
         <span class="n">paths</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">word</span><span class="o">.</span><span class="n">image_urls</span>
@@ -291,7 +295,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">}</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span></div></div>
 
 
-<div class="viewcode-block" id="confirm_choice"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.confirm_choice">[docs]</a><span class="k">def</span> <span class="nf">confirm_choice</span><span class="p">():</span>
+<div class="viewcode-block" id="confirm_choice"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.confirm_choice">[docs]</a><span class="k">def</span> <span class="nf">confirm_choice</span><span class="p">():</span>
     <span class="n">result_dict</span> <span class="o">=</span> <span class="n">get_selection_dict</span><span class="p">()</span>
     <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">add_anki_card</span><span class="p">(</span><span class="n">result_dict</span><span class="p">)</span>
     <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/tabs/carousel&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
@@ -307,8 +311,8 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 
-<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
-<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../autoapi/screen_single_word/index.html#screen_single_word.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../ACG.my_kivy.html#screen_single_word.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;screen_single_word.kv&quot;</span><span class="p">)</span></div></div>
 
     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>

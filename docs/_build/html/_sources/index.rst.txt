@@ -7,7 +7,7 @@ Welcome to ACG's documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 2
 
    ACG.anki
    ACG.my_kivy

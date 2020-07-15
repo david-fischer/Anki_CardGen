@@ -87,7 +87,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../ACG.word_requests.html">ACG.word_requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ACG.main.html">ACG.main</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ACG.utils.html">ACG.utils</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
 </ul>
 
             
@@ -171,10 +170,10 @@
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">smart_loader</span><span class="p">,</span> <span class="n">smart_saver</span>
 
-<div class="viewcode-block" id="translator"><a class="viewcode-back" href="../autoapi/words/index.html#words.translator">[docs]</a><span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span></div>
+<div class="viewcode-block" id="translator"><a class="viewcode-back" href="../ACG.word_requests.html#words.translator">[docs]</a><span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="Word"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Word"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">class</span> <span class="nc">Word</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class that fetches and edits the words that makes up the choices, presented to the user in the card-generation</span>
@@ -184,25 +183,25 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># word properties</span>
-<div class="viewcode-block" id="Word.search_term"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.search_term">[docs]</a>    <span class="n">search_term</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
-<div class="viewcode-block" id="Word.word_type"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.word_type">[docs]</a>    <span class="n">word_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># verb noun etc</span></div>
-<div class="viewcode-block" id="Word.gender"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.gender">[docs]</a>    <span class="n">gender</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
-<div class="viewcode-block" id="Word.examples"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.examples">[docs]</a>    <span class="n">examples</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word.explanations"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.explanations">[docs]</a>    <span class="n">explanations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word.synonyms"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.synonyms">[docs]</a>    <span class="n">synonyms</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word.antonyms"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.antonyms">[docs]</a>    <span class="n">antonyms</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word.translations"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.translations">[docs]</a>    <span class="n">translations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word.trans_syns"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.trans_syns">[docs]</a>    <span class="n">trans_syns</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word.image_urls"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.image_urls">[docs]</a>    <span class="n">image_urls</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
-<div class="viewcode-block" id="Word._audio_url"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word._audio_url">[docs]</a>    <span class="n">_audio_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
-<div class="viewcode-block" id="Word.add_info_dict"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.add_info_dict">[docs]</a>    <span class="n">add_info_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span></div>
-<div class="viewcode-block" id="Word.conj_table_html"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.conj_table_html">[docs]</a>    <span class="n">conj_table_html</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+<div class="viewcode-block" id="Word.search_term"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.search_term">[docs]</a>    <span class="n">search_term</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+<div class="viewcode-block" id="Word.word_type"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.word_type">[docs]</a>    <span class="n">word_type</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>  <span class="c1"># verb noun etc</span></div>
+<div class="viewcode-block" id="Word.gender"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.gender">[docs]</a>    <span class="n">gender</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
+<div class="viewcode-block" id="Word.examples"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.examples">[docs]</a>    <span class="n">examples</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="Word.explanations"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.explanations">[docs]</a>    <span class="n">explanations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="Word.synonyms"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.synonyms">[docs]</a>    <span class="n">synonyms</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="Word.antonyms"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.antonyms">[docs]</a>    <span class="n">antonyms</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="Word.translations"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.translations">[docs]</a>    <span class="n">translations</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="Word.trans_syns"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.trans_syns">[docs]</a>    <span class="n">trans_syns</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+<div class="viewcode-block" id="Word.image_urls"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.image_urls">[docs]</a>    <span class="n">image_urls</span><span class="p">:</span> <span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span></div>
+    <span class="n">_audio_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<div class="viewcode-block" id="Word.add_info_dict"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.add_info_dict">[docs]</a>    <span class="n">add_info_dict</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="p">{}</span></div>
+<div class="viewcode-block" id="Word.conj_table_html"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.conj_table_html">[docs]</a>    <span class="n">conj_table_html</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
     <span class="c1"># query properties</span>
-<div class="viewcode-block" id="Word.data_dir"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.data_dir">[docs]</a>    <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;../app_data/words&quot;</span></div>
-<div class="viewcode-block" id="Word.from_lang"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.from_lang">[docs]</a>    <span class="n">from_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span></div>
-<div class="viewcode-block" id="Word.to_lang"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.to_lang">[docs]</a>    <span class="n">to_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;de&quot;</span></div>
+<div class="viewcode-block" id="Word.data_dir"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.data_dir">[docs]</a>    <span class="n">data_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;../app_data/words&quot;</span></div>
+<div class="viewcode-block" id="Word.from_lang"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.from_lang">[docs]</a>    <span class="n">from_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;pt&quot;</span></div>
+<div class="viewcode-block" id="Word.to_lang"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.to_lang">[docs]</a>    <span class="n">to_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;de&quot;</span></div>
 
-<div class="viewcode-block" id="Word.__attrs_post_init__"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.__attrs_post_init__">[docs]</a>    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">parser_attrs</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;phrase&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">,</span>
             <span class="s2">&quot;from_lang&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">,</span>
@@ -212,11 +211,11 @@
             <span class="s2">&quot;linguee&quot;</span><span class="p">:</span> <span class="n">LingueeParser</span><span class="p">(</span><span class="o">**</span><span class="n">parser_attrs</span><span class="p">),</span>
             <span class="s2">&quot;dicio&quot;</span><span class="p">:</span> <span class="n">DicioParser</span><span class="p">(</span><span class="o">**</span><span class="n">parser_attrs</span><span class="p">),</span>
             <span class="s2">&quot;reverso&quot;</span><span class="p">:</span> <span class="n">ReversoParser</span><span class="p">(</span><span class="o">**</span><span class="n">parser_attrs</span><span class="p">),</span>
-            <span class="s2">&quot;google_images&quot;</span><span class="p">:</span> <span class="n">GoogleImagesParser</span><span class="p">(</span><span class="o">**</span><span class="n">parser_attrs</span><span class="p">),</span></div>
+            <span class="s2">&quot;google_images&quot;</span><span class="p">:</span> <span class="n">GoogleImagesParser</span><span class="p">(</span><span class="o">**</span><span class="n">parser_attrs</span><span class="p">),</span>
         <span class="p">}</span>
 
     <span class="nd">@property</span>
-<div class="viewcode-block" id="Word.audio_url"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.audio_url">[docs]</a>    <span class="k">def</span> <span class="nf">audio_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.audio_url"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.audio_url">[docs]</a>    <span class="k">def</span> <span class="nf">audio_url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Getter function for :attr:`_audio_url`&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_audio_url</span></div>
 
@@ -235,14 +234,14 @@
             <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;audio download complete.&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Word.search_term_utf8"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.search_term_utf8">[docs]</a>    <span class="k">def</span> <span class="nf">search_term_utf8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.search_term_utf8"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.search_term_utf8">[docs]</a>    <span class="k">def</span> <span class="nf">search_term_utf8</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns:</span>
 <span class="sd">          : :attr:`search_term` with special characters replaced.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">unidecode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Word.folder"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.folder">[docs]</a>    <span class="k">def</span> <span class="nf">folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.folder"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.folder">[docs]</a>    <span class="k">def</span> <span class="nf">folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Used as folder name to save files to.</span>
 
@@ -251,7 +250,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term_utf8</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Word.base_path"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.base_path">[docs]</a>    <span class="k">def</span> <span class="nf">base_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.base_path"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.base_path">[docs]</a>    <span class="k">def</span> <span class="nf">base_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Used as base to save files.</span>
 
@@ -260,7 +259,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
-<div class="viewcode-block" id="Word.translate"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.translate"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Translates string from :attr:`from_lang` to :attr:`to_lang`.</span>
 
@@ -269,12 +268,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_lang</span><span class="p">)</span><span class="o">.</span><span class="n">text</span></div>
 
-<div class="viewcode-block" id="Word.request_data"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.request_data">[docs]</a>    <span class="k">def</span> <span class="nf">request_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.request_data"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.request_data">[docs]</a>    <span class="k">def</span> <span class="nf">request_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Iterates through parsers and passes results to :meth:`update_from_dict`&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">parser</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">update_from_dict</span><span class="p">(</span><span class="n">parser</span><span class="o">.</span><span class="n">result_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Word.update_from_dict"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.update_from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.update_from_dict"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.update_from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr_dict</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Iterates through attr_dict and updates :class:`Word` attributes.</span>
 
@@ -290,7 +289,7 @@
                 <span class="n">value</span> <span class="o">=</span> <span class="n">old_val</span> <span class="o">+</span> <span class="n">value</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Word.add_translations"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.add_translations">[docs]</a>    <span class="k">def</span> <span class="nf">add_translations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.add_translations"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.add_translations">[docs]</a>    <span class="k">def</span> <span class="nf">add_translations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        For the attributes [&quot;examples&quot;, &quot;synonyms&quot;, &quot;antonyms&quot;], it iterates to the corresponding lists and adds</span>
 <span class="sd">        translations, where none are already present.</span>
@@ -304,7 +303,7 @@
                     <span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Word.request_img_urls"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.request_img_urls">[docs]</a>    <span class="k">def</span> <span class="nf">request_img_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.request_img_urls"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.request_img_urls">[docs]</a>    <span class="k">def</span> <span class="nf">request_img_urls</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">        Args:</span>
@@ -318,7 +317,7 @@
             <span class="n">keywords</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="s2">&quot;google_images&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">result_dict</span><span class="p">(</span><span class="n">keywords</span><span class="p">)[</span><span class="s2">&quot;img_urls&quot;</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="Word.mark_examples"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.mark_examples">[docs]</a>    <span class="k">def</span> <span class="nf">mark_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.mark_examples"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.mark_examples">[docs]</a>    <span class="k">def</span> <span class="nf">mark_examples</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Highlights the search_word in the example sentences using css.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
@@ -327,13 +326,13 @@
             <span class="p">]</span>
 
     <span class="nd">@classmethod</span>
-<div class="viewcode-block" id="Word.from_json"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.from_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.from_json"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.from_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_json</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes :class:`Word` from dictionary saved as .json.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Word.save_as_json"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.save_as_json">[docs]</a>    <span class="k">def</span> <span class="nf">save_as_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.save_as_json"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.save_as_json">[docs]</a>    <span class="k">def</span> <span class="nf">save_as_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Saves class attributes as dictionary in a .json-file.</span>
 
@@ -353,7 +352,7 @@
         <span class="n">smart_saver</span><span class="p">(</span><span class="n">attribute_dict</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
     <span class="c1"># TODO: check if return value is important</span>
-<div class="viewcode-block" id="Word.search"><a class="viewcode-back" href="../autoapi/words/index.html#words.Word.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_search_term</span><span class="p">):</span>
+<div class="viewcode-block" id="Word.search"><a class="viewcode-back" href="../ACG.word_requests.html#words.Word.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_search_term</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If possible loads from previously saved search.</span>
 <span class="sd">        If not, uses the parsers to obtain info and adds translations, then saves the result for future searches.</span>
@@ -377,7 +376,7 @@
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<div class="viewcode-block" id="q"><a class="viewcode-back" href="../autoapi/words/index.html#words.q">[docs]</a>    <span class="n">q</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span><span class="s2">&quot;casa&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="q"><a class="viewcode-back" href="../ACG.word_requests.html#words.q">[docs]</a>    <span class="n">q</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span><span class="s2">&quot;casa&quot;</span><span class="p">)</span></div>
     <span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
     <span class="n">q</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;casa&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
