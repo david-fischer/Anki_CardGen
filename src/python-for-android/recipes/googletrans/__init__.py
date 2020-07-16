@@ -5,7 +5,7 @@ class GoogletransRecipe(PythonRecipe):
     version = "3.0.0"
     url = "https://files.pythonhosted.org/packages/71/3a/3b19effdd4c03958b90f40fe01c93de6d5280e03843cc5adf6956bfc9512/googletrans-{version}.tar.gz"
 
-    # call_hostpython_via_targetpython = True
+    call_hostpython_via_targetpython = False
     """If True, tries to install the module using the hostpython binary
     copied to the target (normally arm) python build dir. However, this
     will fail if the module tries to import e.g. _io.so. Set this to False
@@ -25,6 +25,7 @@ class GoogletransRecipe(PythonRecipe):
 
     # depends = ['httpx==0.13.3', 'certifi==2020.4.5.2', 'chardet==3.0.4', 'hstspreload==2020.6.30', 'httpcore==0.9.1', 'h11==0.9.0', 'h2==3.2.0', 'hpack==3.0.0', 'hyperframe==5.2.0', 'sniffio==1.1.0', 'idna==2.9', 'rfc3986==1.4.0', 'sniffio==1.1.0']
     depends = [
+        "setuptools",
         "httpx",
         "certifi",
         "chardet",
