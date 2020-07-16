@@ -13,7 +13,8 @@
 #        self.specific_secondary_text_color if self.theme_cls.theme_style == "Dark" else self.theme_cls.secondary_text_color
 
 <MDTabsCarousel>:
-    min_move: 0.07
+    min_move: 0.05
+    ignore_perpendicular_swipes: True
 
 <MyFloatingActionButtonSpeedDial@MDFloatingActionButtonSpeedDial+SpecificBackgroundColorBehavior>:
     label_text_color: self.specific_text_color
