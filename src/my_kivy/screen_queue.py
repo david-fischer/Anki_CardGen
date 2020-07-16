@@ -33,8 +33,8 @@ def worker_single_word():
     Changing the states accordingly to "loading" and "ready"
     If it fails, it moves the word to the error_words list.
     """
-    while not MDApp.get_running_app().q.empty():
-        word = MDApp.get_running_app().q.get()
+    while not MDApp.get_running_app().queue.empty():
+        word = MDApp.get_running_app().queue.get()
         MDApp.get_running_app().loading_state_dict[word] = "loading"
         try:
             local = threading.local()
@@ -70,7 +70,7 @@ def queue_word(word):
     if not is_duplicate(word):
         MDApp.get_running_app().loading_state_dict[word] = "queued"
         MDApp.get_running_app().queue_words.append(word)
-        MDApp.get_running_app().q.put(word)
+        MDApp.get_running_app().queue.put(word)
         start_downloading()
 
 
@@ -95,7 +95,7 @@ def pause_downloading():
 
     This leads the download to stop after the current word is processed.
     """
-    MDApp.get_running_app().q = Queue()
+    MDApp.get_running_app().queue = Queue()
 
 
 def is_duplicate(word):

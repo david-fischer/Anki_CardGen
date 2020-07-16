@@ -1,4 +1,4 @@
-my\_kivy.screen\_queue
+Queue Screen
 -------------------------------------------
 
 .. autoapimodule:: screen_queue
