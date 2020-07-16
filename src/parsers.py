@@ -304,7 +304,7 @@ class GoogleImagesParser(Parser):
             # "no_directory": True,
             "limit": 10,
             "format": "jpg",
-            "language": LANGUAGES[self.from_lang],
+            # "language": LANGUAGES[self.from_lang],
             "no_download": True,
             "print_urls": False,
             # "prefix": "img_",
