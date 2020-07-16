@@ -2,6 +2,7 @@
 
 <DrawerItem>:
     theme_text_color: "Custom"
+    text_color: app.theme_cls.text_color
 
     IconLeftWidget:
         id: icon
@@ -77,6 +78,6 @@
                     Rectangle:
                         size: self.size[0],self.ids.mail.pos[1]
                         pos: self.pos[0], self.ids.mail.pos[1]- self.ids.mail.height
-                ScrollView:
-                    DrawerList:
-                        id: drawer_list
+                DrawerList:
+                    id: drawer_list
+                    size_hint: 1,1
