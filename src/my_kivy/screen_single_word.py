@@ -1,3 +1,6 @@
+"""
+Contains the necessary functions and classes for the screen screen_single_word.
+"""
 import os
 
 import certifi
@@ -23,7 +26,13 @@ os.environ["SSL_CERT_FILE"] = certifi.where()
 
 
 class WordProperties(BoxLayout):
+    """
+    Consists of the UI-elements that display the data obtained by :class:`words.Word` and lets the user choose which
+    data to include on the card.
+    """
+
     def refresh_data(self):
+        """Refresh UI with the data from :class:`words.Word`."""
         word = MDApp.get_running_app().word
         self.ids.translation_chips.element_dicts = [
             {"text": string} for string in word.translations
@@ -42,11 +51,12 @@ class WordProperties(BoxLayout):
         ]
 
     def accept_suggestion(self, suggestion):
+        """Use Suggestion for new search."""
         self.ids.search_field.text = suggestion
         self.load_or_search(suggestion)
-        self.refresh_data()
 
     def load_or_search(self, search_term):
+        """Searches for word, suggests alternative if not found and shows images."""
         try:
             MDApp.get_running_app().word.search(search_term)
             widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
@@ -54,21 +64,42 @@ class WordProperties(BoxLayout):
                 "/screen_single_word/image_tab/img_search_field"
             ).text = search_term
             self.refresh_data()
-        except NoMatchError as e:
+        except NoMatchError as error:
             suggestions = linguee_did_you_mean(search_term)
-            message = f"{search_term} not found on {e.site}." + (
-                " Did you mean... ?" if suggestions else ""
-            )
             MDApp.get_running_app().show_dialog(
-                message, options=suggestions, callback=self.accept_suggestion
+                message=f"{search_term} not found on {error.site}."
+                + (" Did you mean... ?" if suggestions else ""),
+                options=suggestions,
+                callback=self.accept_suggestion,
             )
 
 
-def get_selection_dict():
-    word = MDApp.get_running_app().word
-    word_prop = widget_by_id("/screen_single_word/edit_tab/word_prop")
-    base_path = word.base_path()
-    # TODO: show spinner and cancel after certain time.
+class ImageSearchResultGrid(MyCheckImageGrid):
+    """Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method."""
+
+    def get_images(self, keywords=None):
+        """
+        Sets images displayed in :class:`ImageSearchResultGrid`.
+
+        Args:
+            keywords:
+                If None, uses :attr:`words.Word.img_urls`, else uses result of :meth:`words.Word.request_img_urls`
+                for given keywords. (Default = None)
+        """
+        word = MDApp.get_running_app().word
+        paths = (
+            word.image_urls
+            if keywords is None
+            else word.request_img_urls(keywords=keywords)
+        )
+        self.element_dicts = [{"source": url} for url in paths]
+
+
+def download_selected_image():
+    """Downloads the currently selected image to :meth:`words.Word.base_path`+".jpg" """
+    # TODO: show spinner and cancel after certain time
+    # TODO: Correct behavior on Error
+    out_path = MDApp.get_running_app().word.base_path() + ".jpg"
     try:
         img_url = widget_by_id("/screen_single_word/image_tab/image_grid/").get_checked(
             property_name="source"
@@ -76,12 +107,20 @@ def get_selection_dict():
         print(img_url)
         r_i = UrlRequest(
             img_url,
-            file_path=f"{base_path}.jpg",
-            on_success=lambda *args: compress_img(f"{base_path}.jpg"),
+            file_path=out_path,
+            on_success=lambda *args: compress_img(out_path),
         )
+        r_i.wait()
     except IndexError:
         # TODO: change to a popup
         print("Error with image download. Try different Image instead.")
+
+
+def get_selection_dict():
+    """Obtains Dictionary with all fields necessary for the Anki card from the current user selection."""
+    word = MDApp.get_running_app().word
+    word_prop = widget_by_id("/screen_single_word/edit_tab/word_prop")
+    base_path = word.base_path()
     selections = {
         "translation_chips": ["text"],
         "synonym_chips": ["text_orig", "text_trans"],
@@ -95,8 +134,6 @@ def get_selection_dict():
         out[new_key] = selection_helper(word_prop, id_str=key, props=props)
     # print(out)
     # TODO: Deal with the case that either audio or image is not downloaded
-    r_i.wait()
-    print("Finished downloading image.")
     return {
         "Word": word.search_term,
         "Translation": ", ".join(out["translation"]),
@@ -130,18 +167,14 @@ class Tab(FloatLayout, MDTabsBase):
     """:class:`~kivy.properties.StringProperty`"""
 
 
-class ImageSearchResultGrid(MyCheckImageGrid):
-    def get_images(self, keywords=None):
-        word = MDApp.get_running_app().word
-        paths = (
-            word.image_urls
-            if keywords is None
-            else word.request_img_urls(keywords=keywords)
-        )
-        self.element_dicts = [{"source": url} for url in paths]
+def complete_generation():
+    """
+    Generate Anki card from current user selection and changes screen.
 
-
-def confirm_choice():
+    If the word was in the queue, returns to screen_queue.
+    Else, resets the screen_single_word and changes to the edit_tab.
+    """
+    download_selected_image()
     result_dict = get_selection_dict()
     MDApp.get_running_app().add_anki_card(result_dict)
     widget_by_id("/screen_single_word/tabs/carousel").index = 0
@@ -155,6 +188,7 @@ def confirm_choice():
         MDApp.get_running_app().queue_words.remove(search_term)
 
 
+# pylint: disable = W,C,R,I
 if __name__ == "__main__":
 
     class TestApp(MDApp):
