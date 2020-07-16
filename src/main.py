@@ -1,3 +1,7 @@
+"""
+Contains the Main App :class:`AnkiCardGenApp`.
+"""
+
 import os
 import queue
 from functools import partial
@@ -29,13 +33,13 @@ Builder.load_file(f"{this_dir}my_kivy/fixes.kv")
 
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
-    """Test"""
+    """List item that changes color based on :attr:`current_state`."""
 
     icon = StringProperty()
-    """:class:`~kivy.properties.StringProperty`"""
+    """:class:`~kivy.properties.StringProperty`: name of icon."""
 
     screen_name = StringProperty("test")
-    """:class:`~kivy.properties.StringProperty`"""
+    """:class:`~kivy.properties.StringProperty`: name of the screen."""
 
     def __init__(self, **kwargs):
         super(DrawerItem, self).__init__(**kwargs)
@@ -50,18 +54,22 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
         super(DrawerItem, self).__post_init__()
 
     def on_release(self):
-        """ """
+        """Close drawer and sets :attr:`current_state` to ``True``."""
         self.current_state = True
         widget_by_id("nav_drawer").set_state("close")
 
 
 class DrawerList(ThemableBehavior, CheckContainer, MDList):
-    """Test"""
+    """
+    List containing :class:`DrawerItem`.
+
+    It has one active element at all times whose screen_name attribute is saved in :attr:`current`.
+    """
 
     check_one = True
     CheckElementObject = DrawerItem
     current = StringProperty("")
-    """:class:`~kivy.properties.StringProperty`"""
+    """:class:`~kivy.properties.StringProperty` of currently active :attr:`DrawerItem.screen_name`."""
 
     def conditional_uncheck(self, instance, value):
         """changes color of clicked item and updates :attr:`current`"""
@@ -70,7 +78,7 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
 
 
 class MainMenu(StackLayout):
-    """Test"""
+    """Contains everything related to the NavigationDrawer and the Screens."""
 
     screen_dicts = ListProperty(
         [
@@ -149,28 +157,18 @@ class AnkiCardGenApp(MDApp):
         self, message, options=None, callback=print, item_function=None, buttons=None
     ):
         """
+        Shows a customizable dialog.
 
         Args:
-          message:
-          options:  (Default value = None)
+          message: Message on top.
+          options:  List of strings, each representing an option for the user to choose.
           callback:  (Default value = print)
           item_function:  (Default value = None)
           buttons:  (Default value = None)
-
-        Returns:
-
         """
         if item_function is None:
 
             def item_function(obj):
-                """
-
-                Args:
-                  obj:
-
-                Returns:
-
-                """
                 self.dialog.dismiss()
                 callback(obj.text)
 
