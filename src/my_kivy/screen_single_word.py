@@ -77,6 +77,14 @@ class WordProperties(BoxLayout):
 class ImageSearchResultGrid(MyCheckImageGrid):
     """Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method."""
 
+    def on_element_dicts(self, *_):
+        if len(self.children) == len(self.element_dicts):
+            for image, elem_dict in zip(self.children, self.element_dicts):
+                image.source = elem_dict["source"]
+                # image._img_widget.container.image.bind(on_error=f)
+        else:
+            super(ImageSearchResultGrid, self).on_element_dicts(*_)
+
     def get_images(self, keywords=None):
         """
         Sets images displayed in :class:`ImageSearchResultGrid`.
