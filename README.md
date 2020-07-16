@@ -85,12 +85,19 @@ This allows quick generation of high-quality, personalized cards.
     * [x] Downloading image and audio files
     * [x] Building the Anki card from html-templates
 
+- [ ] Incremental saving of apkgs
+- [ ] Error handling for incomplete selection
+- [ ] Chaning of languages
+
 ## 🚧 Installing 
 
 ### Prerequisites
 
-Install requirements:
+Download repository and install requirements:
+
 ```
+git clone https://github.com/david-fischer/Anki_CardGen.git
+cd Anki_CardGen
 pip install -r requirements.txt
 ```
 
