@@ -162,7 +162,7 @@
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">OptionProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.anchorlayout</span> <span class="kn">import</span> <span class="n">AnchorLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.scrollview</span> <span class="kn">import</span> <span class="n">ScrollView</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.recycleview</span> <span class="kn">import</span> <span class="n">RecycleView</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">ILeftBody</span><span class="p">,</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineAvatarListItem</span><span class="p">,</span> <span class="n">OneLineListItem</span>
 
@@ -200,14 +200,14 @@
 
 <span class="sd">&lt;ScrollList&gt;:</span>
 <span class="sd">    list: md_list</span>
-<span class="sd">    ScrollView:</span>
-<span class="sd">        MDList:</span>
-<span class="sd">            id: md_list</span>
+
+<span class="sd">    MDList:</span>
+<span class="sd">        id: md_list</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">ScrollView</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../ui/scroll_list.html#scroll_list.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.</span>
 

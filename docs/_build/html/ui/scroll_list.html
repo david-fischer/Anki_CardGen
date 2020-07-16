@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>my_kivy.scroll_list &mdash; ACG 0.3.0 documentation</title>
+  <title>ScrollList &mdash; ACG 0.3.0 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="main" href="../main.html" />
-    <link rel="prev" title="my_kivy.screen_single_word" href="screen_single_word.html" /> 
+    <link rel="prev" title="Single Word Screen" href="screen_single_word.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,10 +86,11 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="mychooser.html">my_kivy.mychooser</a></li>
-<li class="toctree-l2"><a class="reference internal" href="screen_queue.html">my_kivy.screen_queue</a></li>
-<li class="toctree-l2"><a class="reference internal" href="screen_single_word.html">my_kivy.screen_single_word</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">my_kivy.scroll_list</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main_menu.html">Main Menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mychooser.html">mychooser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_queue.html">Queue Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_single_word.html">Single Word Screen</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">ScrollList</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#scroll_list.LeftStatusIndicator">LeftStatusIndicator</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#scroll_list.LeftStatusIndicator.icon">icon</a></li>
 </ul>
@@ -187,7 +188,7 @@
         
           <li><a href="../ui.html">UI</a> &raquo;</li>
         
-      <li>my_kivy.scroll_list</li>
+      <li>ScrollList</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -207,7 +208,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="module-scroll_list">
-<span id="my-kivy-scroll-list"></span><h1>my_kivy.scroll_list<a class="headerlink" href="#module-scroll_list" title="Permalink to this headline">¶</a></h1>
+<span id="scrolllist"></span><h1>ScrollList<a class="headerlink" href="#module-scroll_list" title="Permalink to this headline">¶</a></h1>
 <p>Implements <a class="reference internal" href="#scroll_list.ScrollList" title="scroll_list.ScrollList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollList</span></code></a> and <a class="reference internal" href="#scroll_list.LeftStatusIndicatorListItem" title="scroll_list.LeftStatusIndicatorListItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeftStatusIndicatorListItem</span></code></a>.</p>
 <dl class="py class">
 <dt id="scroll_list.LeftStatusIndicator">
@@ -252,7 +253,7 @@
 <dl class="py class">
 <dt id="scroll_list.ScrollList">
 <em class="property">class </em><code class="sig-prename descclassname">scroll_list.</code><code class="sig-name descname">ScrollList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/scroll_list.html#ScrollList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#scroll_list.ScrollList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.recycleview.RecycleView</span></code></a></p>
 <p>Scrollable List whose items are constructed as instances of <a class="reference internal" href="#scroll_list.ScrollList.item_type" title="scroll_list.ScrollList.item_type"><code class="xref py py-attr docutils literal notranslate"><span class="pre">item_type</span></code></a> from <a class="reference internal" href="#scroll_list.ScrollList.item_dicts" title="scroll_list.ScrollList.item_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">item_dicts</span></code></a>.</p>
 <p>Automatically updates upon change of <a class="reference internal" href="#scroll_list.ScrollList.item_dicts" title="scroll_list.ScrollList.item_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">item_dicts</span></code></a>.</p>
 <dl class="py attribute">
@@ -351,7 +352,7 @@ if no self.root exists.</p>
         <a href="../main.html" class="btn btn-neutral float-right" title="main" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="screen_single_word.html" class="btn btn-neutral float-left" title="my_kivy.screen_single_word" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="screen_single_word.html" class="btn btn-neutral float-left" title="Single Word Screen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

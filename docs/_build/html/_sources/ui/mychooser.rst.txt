@@ -1,4 +1,4 @@
-my\_kivy.mychooser
+mychooser
 ---------------------------------------
 
 .. autoapimodule:: mychooser
