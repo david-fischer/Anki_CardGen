@@ -1,7 +1,7 @@
-my\_kivy.screen\_queue
--------------------------------------------
+my\_kivy.screen\_single\_word
+--------------------------------------------------
 
-.. autoapimodule:: screen_queue
+.. autoapimodule:: screen_single_word
    :members:
    :undoc-members:
    :show-inheritance:

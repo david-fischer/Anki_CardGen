@@ -150,7 +150,18 @@
            <div itemprop="articleBody">
             
   <h1>Source code for generate_anki_card</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implements :class:`AnkiObject`.</span>
+
+<span class="sd">Relies heavily on `genanki &lt;https://github.com/kerrickstaley/genanki&gt;`_.</span>
+
+<span class="sd">Its purpose is to handle everything Anki-related:</span>
+<span class="sd">    * construct card template from html-, css-, and js-files</span>
+<span class="sd">    * generating and adding cards</span>
+<span class="sd">    * saving apgk-file</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">re</span>
 
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">bs4</span>
@@ -161,35 +172,68 @@
 
 <div class="viewcode-block" id="HtmlLoader"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span> <span class="nc">HtmlLoader</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loads and processes html.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="HtmlLoader.path"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader.path">[docs]</a>    <span class="n">path</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Path to load html-file from.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="HtmlLoader.string"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader.string">[docs]</a>    <span class="n">string</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">init</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Content of the file at :attr:`path`.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
 <div class="viewcode-block" id="HtmlLoader.set_of_fields"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader.set_of_fields">[docs]</a>    <span class="k">def</span> <span class="nf">set_of_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get names of fields (as recognized by Anki) in the content of the html-file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Set[str]: Field names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">set</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s2">&quot;{{([^}]*)}}&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="HtmlLoader.replace_includes_with_content"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader.replace_includes_with_content">[docs]</a>    <span class="k">def</span> <span class="nf">replace_includes_with_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Inserts content of js-source-files at appropriate places and returns body.</span>
+
+<span class="sd">            * Removes ``src`` attributes from &lt;script&gt;-tags and inserts the content of the files.</span>
+<span class="sd">            * ``&lt;script&gt;``-tags with &quot;defer&quot;-attribute are moved to the bottom of the body.</span>
+<span class="sd">            * ``&lt;script&gt;``-tags in the header are moved to the top of the body.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Body of processed html-file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">soup</span> <span class="o">=</span> <span class="n">bs4</span><span class="o">.</span><span class="n">BeautifulSoup</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">string</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
-        <span class="n">js_tags</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;script&quot;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">js_tags</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;script[src]&quot;</span><span class="p">):</span>
             <span class="n">src</span> <span class="o">=</span> <span class="n">tag</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
-            <span class="c1"># print(tag.attrs)</span>
-            <span class="n">defer</span> <span class="o">=</span> <span class="s2">&quot;defer&quot;</span> <span class="ow">in</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span>
-            <span class="k">del</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span>
+            <span class="k">del</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
                 <span class="n">tag</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">defer</span><span class="p">:</span>
-                <span class="n">tag</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
-                <span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
-        <span class="c1"># css_tags = soup.select(&quot;link[rel=stylesheet][href*=css]&quot;)</span>
-        <span class="c1"># for css in css_tags:</span>
-        <span class="c1">#     css.extract()</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;script[defer]&quot;</span><span class="p">):</span>
+            <span class="k">del</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s2">&quot;defer&quot;</span><span class="p">]</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">soup</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;head script&quot;</span><span class="p">):</span>
+            <span class="n">tag</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">tag</span><span class="p">)</span>
         <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">soup</span><span class="o">.</span><span class="n">body</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="model_from_html"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.model_from_html">[docs]</a><span class="k">def</span> <span class="nf">model_from_html</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">template_names</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">css_path</span><span class="p">):</span>
+<div class="viewcode-block" id="model_from_html"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.model_from_html">[docs]</a><span class="k">def</span> <span class="nf">model_from_html</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">template_names</span><span class="p">,</span> <span class="n">model_id</span><span class="p">,</span> <span class="n">css_path</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Construct Model from html- and css-files.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">      name: Model name.</span>
+<span class="sd">      template_names: List of html-paths.</span>
+<span class="sd">      model_id: Unique id-string for the model.</span>
+<span class="sd">      css_path: Path of css-file.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        constructed ``genanki.model``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">templates_html</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">template_name</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;front&quot;</span><span class="p">:</span> <span class="n">HtmlLoader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">template_name</span><span class="si">}</span><span class="s2">_front.html&quot;</span><span class="p">),</span>
@@ -216,23 +260,37 @@
         <span class="n">css</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
     <span class="k">return</span> <span class="n">genanki</span><span class="o">.</span><span class="n">Model</span><span class="p">(</span>
-        <span class="n">model_id</span><span class="o">=</span><span class="nb">id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">templates</span><span class="o">=</span><span class="n">templates</span><span class="p">,</span> <span class="n">css</span><span class="o">=</span><span class="n">css</span><span class="p">,</span></div>
+        <span class="n">model_id</span><span class="o">=</span><span class="n">model_id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">templates</span><span class="o">=</span><span class="n">templates</span><span class="p">,</span> <span class="n">css</span><span class="o">=</span><span class="n">css</span><span class="p">,</span></div>
     <span class="p">)</span>
 
 
 <div class="viewcode-block" id="AnkiObject"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span> <span class="nc">AnkiObject</span><span class="p">:</span>
-<div class="viewcode-block" id="AnkiObject.model_name"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.model_name">[docs]</a>    <span class="n">model_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;pt-word&quot;</span><span class="p">)</span></div>
-<div class="viewcode-block" id="AnkiObject.templates"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.templates">[docs]</a>    <span class="n">templates</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;meaning-pt&quot;</span><span class="p">,</span> <span class="s2">&quot;pt-meaning&quot;</span><span class="p">])</span></div>
-<div class="viewcode-block" id="AnkiObject.deck_name"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.deck_name">[docs]</a>    <span class="n">deck_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;Portuguese::Vocab&quot;</span><span class="p">)</span></div>
-<div class="viewcode-block" id="AnkiObject.css_path"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.css_path">[docs]</a>    <span class="n">css_path</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;css/pt.css&quot;</span><span class="p">)</span></div>
-<div class="viewcode-block" id="AnkiObject.root_dir"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.root_dir">[docs]</a>    <span class="n">root_dir</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span></div>
-<div class="viewcode-block" id="AnkiObject.id"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class containing all necessary objects from the `genanki &lt;https://github.com/kerrickstaley/genanki&gt;`_-module to</span>
+<span class="sd">    handle everything Anki-related.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        model: :class:`genanki.model`</span>
+<span class="sd">        deck: :class:`genanki.deck`</span>
+<span class="sd">        package: :class:`genanki.package`</span>
+<span class="sd">        fields: List of field-names on anki-card.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">model_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;pt-word&quot;</span><span class="p">)</span>
+    <span class="n">templates</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;meaning-pt&quot;</span><span class="p">,</span> <span class="s2">&quot;pt-meaning&quot;</span><span class="p">])</span>
+    <span class="n">deck_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;Portuguese::Vocab&quot;</span><span class="p">)</span>
+    <span class="n">css_path</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;css/pt.css&quot;</span><span class="p">)</span>
+    <span class="n">root_dir</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">12345</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_dir</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model_from_html</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">templates</span><span class="p">,</span> <span class="n">css_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">css_path</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model_name</span><span class="p">,</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">templates</span><span class="p">,</span>
+                <span class="n">css_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">css_path</span><span class="p">,</span>
+                <span class="n">model_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deck</span> <span class="o">=</span> <span class="n">genanki</span><span class="o">.</span><span class="n">Deck</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">deck_name</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">package</span> <span class="o">=</span> <span class="n">genanki</span><span class="o">.</span><span class="n">Package</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="p">)</span>
@@ -243,6 +301,14 @@
             <span class="p">]</span>
 
 <div class="viewcode-block" id="AnkiObject.add_card"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.add_card">[docs]</a>    <span class="k">def</span> <span class="nf">add_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_files</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add card constructed from ``**kwargs`` to :attr:`deck` and ``media_files`` to :attr:`package.media_files`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          media_files (List[str]): Media files used on card.  (Default value = None)</span>
+<span class="sd">          **kwargs: In the form: ``field_name=&quot;content&quot;``.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">media_files</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">media_files</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">{</span>
@@ -255,11 +321,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">add_note</span><span class="p">(</span><span class="n">new_note</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiObject.write_apkg"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.write_apkg">[docs]</a>    <span class="k">def</span> <span class="nf">write_apkg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Writes current :attr:`package`` as apkg-file to ``out_path``</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          out_path: Path wherer .apkg-file is saved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">write_to_file</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span></div></div>
 
 
+<span class="c1"># pylint: disable = W,C,R,I</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<div class="viewcode-block" id="ankiobject"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.ankiobject">[docs]</a>    <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span></div>
+    <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span>
     <span class="n">ankiobject</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span>
         <span class="o">**</span><span class="n">smart_loader</span><span class="p">(</span><span class="s2">&quot;../app_data/words/casa/casa_card.json&quot;</span><span class="p">)</span>
         <span class="c1"># Word=&quot;casa&quot;,</span>
@@ -268,7 +341,10 @@
         <span class="c1"># media_files=[&quot;../words/casa/casa.mp3&quot;, &quot;../words/casa/casa.jpg&quot;],</span>
     <span class="p">)</span>
     <span class="n">ankiobject</span><span class="o">.</span><span class="n">write_apkg</span><span class="p">(</span><span class="s2">&quot;output.apkg&quot;</span><span class="p">)</span>
-    <span class="c1"># HtmlLoader(&quot;meaning-pt_back.html&quot;).replace_includes_with_content()</span>
+    <span class="c1"># with CD(&quot;anki&quot;):</span>
+    <span class="c1">#     string = HtmlLoader(&quot;test.html&quot;).replace_includes_with_content()</span>
+    <span class="c1">#     with open(&quot;test_out.html&quot;, &quot;w&quot;) as file:</span>
+    <span class="c1">#         file.write(string)</span>
 </pre></div>
 
            </div>

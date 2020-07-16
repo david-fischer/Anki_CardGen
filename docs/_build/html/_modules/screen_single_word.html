@@ -150,7 +150,10 @@
            <div itemprop="articleBody">
             
   <h1>Source code for screen_single_word</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contains the necessary functions and classes for the screen screen_single_word.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">certifi</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
@@ -174,8 +177,14 @@
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SSL_CERT_FILE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="WordProperties"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.WordProperties">[docs]</a><span class="k">class</span> <span class="nc">WordProperties</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
-<div class="viewcode-block" id="WordProperties.refresh_data"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.WordProperties.refresh_data">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties">[docs]</a><span class="k">class</span> <span class="nc">WordProperties</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Consists of the UI-elements that display the data obtained by :class:`words.Word` and lets the user choose which</span>
+<span class="sd">    data to include on the card.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WordProperties.refresh_data"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.refresh_data">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Refresh UI with the data from :class:`words.Word`.&quot;&quot;&quot;</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">translation_chips</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">translations</span>
@@ -193,12 +202,13 @@
             <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">explanations</span></div>
         <span class="p">]</span>
 
-<div class="viewcode-block" id="WordProperties.accept_suggestion"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.WordProperties.accept_suggestion">[docs]</a>    <span class="k">def</span> <span class="nf">accept_suggestion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suggestion</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties.accept_suggestion"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.accept_suggestion">[docs]</a>    <span class="k">def</span> <span class="nf">accept_suggestion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">suggestion</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use Suggestion for new search.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">search_field</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">suggestion</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_or_search</span><span class="p">(</span><span class="n">suggestion</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">refresh_data</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">load_or_search</span><span class="p">(</span><span class="n">suggestion</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="WordProperties.load_or_search"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.WordProperties.load_or_search">[docs]</a>    <span class="k">def</span> <span class="nf">load_or_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
+<div class="viewcode-block" id="WordProperties.load_or_search"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.load_or_search">[docs]</a>    <span class="k">def</span> <span class="nf">load_or_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Searches for word, suggests alternative if not found and shows images.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
             <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/image_tab/image_grid&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_images</span><span class="p">()</span>
@@ -206,35 +216,63 @@
                 <span class="s2">&quot;/screen_single_word/image_tab/img_search_field&quot;</span>
             <span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">search_term</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">refresh_data</span><span class="p">()</span>
-        <span class="k">except</span> <span class="n">NoMatchError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">except</span> <span class="n">NoMatchError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="n">suggestions</span> <span class="o">=</span> <span class="n">linguee_did_you_mean</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">search_term</span><span class="si">}</span><span class="s2"> not found on </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">site</span><span class="si">}</span><span class="s2">.&quot;</span> <span class="o">+</span> <span class="p">(</span>
-                <span class="s2">&quot; Did you mean... ?&quot;</span> <span class="k">if</span> <span class="n">suggestions</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
-            <span class="p">)</span>
             <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">show_dialog</span><span class="p">(</span>
-                <span class="n">message</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">suggestions</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">accept_suggestion</span></div></div>
+                <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">search_term</span><span class="si">}</span><span class="s2"> not found on </span><span class="si">{</span><span class="n">error</span><span class="o">.</span><span class="n">site</span><span class="si">}</span><span class="s2">.&quot;</span>
+                <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; Did you mean... ?&quot;</span> <span class="k">if</span> <span class="n">suggestions</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+                <span class="n">options</span><span class="o">=</span><span class="n">suggestions</span><span class="p">,</span>
+                <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">accept_suggestion</span><span class="p">,</span></div></div>
             <span class="p">)</span>
 
 
-<div class="viewcode-block" id="get_selection_dict"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.get_selection_dict">[docs]</a><span class="k">def</span> <span class="nf">get_selection_dict</span><span class="p">():</span>
-    <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
-    <span class="n">word_prop</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/edit_tab/word_prop&quot;</span><span class="p">)</span>
-    <span class="n">base_path</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">img_url</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/image_tab/image_grid/&quot;</span><span class="p">)</span>
-            <span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">property_name</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;http:&quot;</span><span class="p">,</span> <span class="s2">&quot;https:&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="ImageSearchResultGrid"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.ImageSearchResultGrid">[docs]</a><span class="k">class</span> <span class="nc">ImageSearchResultGrid</span><span class="p">(</span><span class="n">MyCheckImageGrid</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ImageSearchResultGrid.get_images"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.ImageSearchResultGrid.get_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets images displayed in :class:`ImageSearchResultGrid`.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            keywords:</span>
+<span class="sd">                If None, uses :attr:`words.Word.img_urls`, else uses result of :meth:`words.Word.request_img_urls`</span>
+<span class="sd">                for given keywords. (Default = None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">word</span><span class="o">.</span><span class="n">image_urls</span>
+            <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="n">word</span><span class="o">.</span><span class="n">request_img_urls</span><span class="p">(</span><span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">)</span>
         <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">}</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span></div></div>
+
+
+<div class="viewcode-block" id="download_selected_image"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.download_selected_image">[docs]</a><span class="k">def</span> <span class="nf">download_selected_image</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Downloads the currently selected image to :meth:`words.Word.base_path`+&quot;.jpg&quot; &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: show spinner and cancel after certain time</span>
+    <span class="c1"># TODO: Correct behavior on Error</span>
+    <span class="n">out_path</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">img_url</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/image_tab/image_grid/&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span>
+            <span class="n">property_name</span><span class="o">=</span><span class="s2">&quot;source&quot;</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">img_url</span><span class="p">)</span>
         <span class="n">r_i</span> <span class="o">=</span> <span class="n">UrlRequest</span><span class="p">(</span>
             <span class="n">img_url</span><span class="p">,</span>
-            <span class="n">file_path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span>
-            <span class="n">on_success</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">compress_img</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_path</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">),</span>
+            <span class="n">file_path</span><span class="o">=</span><span class="n">out_path</span><span class="p">,</span>
+            <span class="n">on_success</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">compress_img</span><span class="p">(</span><span class="n">out_path</span><span class="p">),</span>
         <span class="p">)</span>
+        <span class="n">r_i</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
     <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
         <span class="c1"># TODO: change to a popup</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error with image download. Try different Image instead.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error with image download. Try different Image instead.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_selection_dict"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.get_selection_dict">[docs]</a><span class="k">def</span> <span class="nf">get_selection_dict</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Obtains Dictionary with all fields necessary for the Anki card from the current user selection.&quot;&quot;&quot;</span>
+    <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
+    <span class="n">word_prop</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/edit_tab/word_prop&quot;</span><span class="p">)</span>
+    <span class="n">base_path</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span>
     <span class="n">selections</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;translation_chips&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">],</span>
         <span class="s2">&quot;synonym_chips&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;text_orig&quot;</span><span class="p">,</span> <span class="s2">&quot;text_trans&quot;</span><span class="p">],</span>
@@ -248,8 +286,6 @@
         <span class="n">out</span><span class="p">[</span><span class="n">new_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">selection_helper</span><span class="p">(</span><span class="n">word_prop</span><span class="p">,</span> <span class="n">id_str</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="n">props</span><span class="p">)</span>
     <span class="c1"># print(out)</span>
     <span class="c1"># TODO: Deal with the case that either audio or image is not downloaded</span>
-    <span class="n">r_i</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Finished downloading image.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;Word&quot;</span><span class="p">:</span> <span class="n">word</span><span class="o">.</span><span class="n">search_term</span><span class="p">,</span>
         <span class="s2">&quot;Translation&quot;</span><span class="p">:</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="s2">&quot;translation&quot;</span><span class="p">]),</span>
@@ -270,31 +306,27 @@
     <span class="p">}</span>
 
 
-<div class="viewcode-block" id="Tab"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.Tab">[docs]</a><span class="k">class</span> <span class="nc">Tab</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">MDTabsBase</span><span class="p">):</span>
+<div class="viewcode-block" id="Tab"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab">[docs]</a><span class="k">class</span> <span class="nc">Tab</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">MDTabsBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class implementing content for a tab. &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Tab.id"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.Tab.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Tab.id"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Tab.text"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.Tab.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Tab.text"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Tab.icon"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.Tab.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="Tab.icon"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="ImageSearchResultGrid"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.ImageSearchResultGrid">[docs]</a><span class="k">class</span> <span class="nc">ImageSearchResultGrid</span><span class="p">(</span><span class="n">MyCheckImageGrid</span><span class="p">):</span>
-<div class="viewcode-block" id="ImageSearchResultGrid.get_images"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.ImageSearchResultGrid.get_images">[docs]</a>    <span class="k">def</span> <span class="nf">get_images</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">keywords</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="n">word</span><span class="o">.</span><span class="n">image_urls</span>
-            <span class="k">if</span> <span class="n">keywords</span> <span class="ow">is</span> <span class="kc">None</span>
-            <span class="k">else</span> <span class="n">word</span><span class="o">.</span><span class="n">request_img_urls</span><span class="p">(</span><span class="n">keywords</span><span class="o">=</span><span class="n">keywords</span><span class="p">)</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">url</span><span class="p">}</span> <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span></div></div>
+<div class="viewcode-block" id="complete_generation"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.complete_generation">[docs]</a><span class="k">def</span> <span class="nf">complete_generation</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generate Anki card from current user selection and changes screen.</span>
 
-
-<div class="viewcode-block" id="confirm_choice"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.confirm_choice">[docs]</a><span class="k">def</span> <span class="nf">confirm_choice</span><span class="p">():</span>
+<span class="sd">    If the word was in the queue, returns to screen_queue.</span>
+<span class="sd">    Else, resets the screen_single_word and changes to the edit_tab.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">download_selected_image</span><span class="p">()</span>
     <span class="n">result_dict</span> <span class="o">=</span> <span class="n">get_selection_dict</span><span class="p">()</span>
     <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">add_anki_card</span><span class="p">(</span><span class="n">result_dict</span><span class="p">)</span>
     <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;/screen_single_word/tabs/carousel&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
@@ -308,10 +340,11 @@
         <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">queue_words</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span></div>
 
 
+<span class="c1"># pylint: disable = W,C,R,I</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 
-<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
-<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../ui/screen_queue.html#screen_single_word.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;screen_single_word.kv&quot;</span><span class="p">)</span></div></div>
 
     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
