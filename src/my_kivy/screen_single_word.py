@@ -68,12 +68,11 @@ def get_selection_dict():
     word = MDApp.get_running_app().word
     word_prop = widget_by_id("/screen_single_word/edit_tab/word_prop")
     base_path = word.base_path()
+    # TODO: show spinner and cancel after certain time.
     try:
-        img_url = (
-            widget_by_id("/screen_single_word/image_tab/image_grid/")
-            .get_checked(property_name="source")[0]
-            .replace("http:", "https:")
-        )
+        img_url = widget_by_id("/screen_single_word/image_tab/image_grid/").get_checked(
+            property_name="source"
+        )[0]
         print(img_url)
         r_i = UrlRequest(
             img_url,
