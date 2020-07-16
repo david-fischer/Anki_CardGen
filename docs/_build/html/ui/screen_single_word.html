@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>my_kivy.screen_queue &mdash; ACG 0.3.0 documentation</title>
+  <title>my_kivy.screen_single_word &mdash; ACG 0.3.0 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="my_kivy.scroll_list" href="scroll_list.html" />
-    <link rel="prev" title="my_kivy.screen_single_word" href="screen_queue.html" /> 
+    <link rel="prev" title="my_kivy.screen_queue" href="screen_queue.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,45 +87,51 @@
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="mychooser.html">my_kivy.mychooser</a></li>
-<li class="toctree-l2"><a class="reference internal" href="screen_queue.html">my_kivy.screen_single_word</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">my_kivy.screen_queue</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.choose_file_to_import">choose_file_to_import</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_queue.html">my_kivy.screen_queue</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">my_kivy.screen_single_word</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.ImageSearchResultGrid">ImageSearchResultGrid</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.ImageSearchResultGrid.get_images">get_images</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.choose_replacements_dialog">choose_replacements_dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.Tab">Tab</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.icon">icon</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.click_on_done_item">click_on_done_item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.id">id</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.click_on_error_item">click_on_error_item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.text">text</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.click_on_queue_item">click_on_queue_item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.TestApp">TestApp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.TestApp.build">build</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.import_from">import_from</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.WordProperties">WordProperties</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.accept_suggestion">accept_suggestion</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.is_duplicate">is_duplicate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.load_or_search">load_or_search</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.options_dict">options_dict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.refresh_data">refresh_data</a></li>
+</ul>
+</li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.pause_downloading">pause_downloading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.complete_generation">complete_generation</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.queue_word">queue_word</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.download_selected_image">download_selected_image</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.start_downloading">start_downloading</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.start_workers">start_workers</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_queue.worker_single_word">worker_single_word</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.get_selection_dict">get_selection_dict</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="scroll_list.html">my_kivy.scroll_list</a></li>
@@ -181,7 +187,7 @@
         
           <li><a href="../ui.html">UI</a> &raquo;</li>
         
-      <li>my_kivy.screen_queue</li>
+      <li>my_kivy.screen_single_word</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -200,135 +206,141 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-screen_queue">
-<span id="my-kivy-screen-queue"></span><h1>my_kivy.screen_queue<a class="headerlink" href="#module-screen_queue" title="Permalink to this headline">¶</a></h1>
-<p>Contains the functions needed on the screen screen_queue.</p>
-<dl class="py function">
-<dt id="screen_queue.choose_file_to_import">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_file_to_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#choose_file_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_file_to_import" title="Permalink to this definition">¶</a></dt>
-<dd><p>Opens an instance of <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> so the user can choose a file to import.</p>
-<p>Binds function to clicking on file, so the import is started in separate thread.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.choose_replacements_dialog">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">choose_replacements_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">replacements</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#choose_replacements_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.choose_replacements_dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p>Displays possible replacements.</p>
-<p>Opens an <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDDialog</span></code></a> to show possible suggestions for detected non-dictionary forms of
-words.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.click_on_done_item">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_done_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#click_on_done_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_done_item" title="Permalink to this definition">¶</a></dt>
-<dd><p>Placeholder for later implementation.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.click_on_error_item">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_error_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#click_on_error_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_error_item" title="Permalink to this definition">¶</a></dt>
-<dd><p>Placeholder for later implementation.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.click_on_queue_item">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">click_on_queue_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#click_on_queue_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.click_on_queue_item" title="Permalink to this definition">¶</a></dt>
-<dd><p>Switch to screen_single_word to generate a card for the clicked word.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.import_from">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">source</span><span class="o">=</span><span class="default_value">'kindle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.import_from" title="Permalink to this definition">¶</a></dt>
-<dd><p>Imports, processes and queues words from file.</p>
-<p>If non-dictionary forms are detected, prompts the user with suggestions for replacement.</p>
+  <div class="section" id="module-screen_single_word">
+<span id="my-kivy-screen-single-word"></span><h1>my_kivy.screen_single_word<a class="headerlink" href="#module-screen_single_word" title="Permalink to this headline">¶</a></h1>
+<p>Contains the necessary functions and classes for the screen screen_single_word.</p>
+<dl class="py class">
+<dt id="screen_single_word.ImageSearchResultGrid">
+<em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">ImageSearchResultGrid</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#ImageSearchResultGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.ImageSearchResultGrid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.mychooser.MyCheckImageGrid</span></code></p>
+<p>Extends the <a class="reference internal" href="mychooser.html#mychooser.MyCheckImageGrid" title="mychooser.MyCheckImageGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MyCheckImageGrid</span></code></a> by the <a class="reference internal" href="#screen_single_word.ImageSearchResultGrid.get_images" title="screen_single_word.ImageSearchResultGrid.get_images"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_images()</span></code></a> method.</p>
+<dl class="py method">
+<dt id="screen_single_word.ImageSearchResultGrid.get_images">
+<code class="sig-name descname">get_images</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">keywords</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#ImageSearchResultGrid.get_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.ImageSearchResultGrid.get_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets images displayed in <a class="reference internal" href="#screen_single_word.ImageSearchResultGrid" title="screen_single_word.ImageSearchResultGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageSearchResultGrid</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> – Path to file.</p></li>
-<li><p><strong>source</strong> – Type of source. Options=[“kindle”,”txt”] (Default value = “kindle”)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>keywords</strong> – If None, uses <code class="xref py py-attr docutils literal notranslate"><span class="pre">words.Word.img_urls</span></code>, else uses result of <a class="reference internal" href="../word_processing/words.html#words.Word.request_img_urls" title="words.Word.request_img_urls"><code class="xref py py-meth docutils literal notranslate"><span class="pre">words.Word.request_img_urls()</span></code></a>
+for given keywords. (Default = None)</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="screen_queue.is_duplicate">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.is_duplicate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks if word is already queued, done or has caused an error.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="screen_single_word.Tab">
+<em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">Tab</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#Tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/tabs/index.html#kivymd.uix.tab.MDTabsBase" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.tab.MDTabsBase</span></code></a></p>
+<p>Class implementing content for a tab.</p>
+<dl class="py attribute">
+<dt id="screen_single_word.Tab.icon">
+<code class="sig-name descname">icon</code><a class="reference internal" href="../_modules/screen_single_word.html#Tab.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab.icon" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="screen_single_word.Tab.id">
+<code class="sig-name descname">id</code><a class="reference internal" href="../_modules/screen_single_word.html#Tab.id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab.id" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="screen_single_word.Tab.text">
+<code class="sig-name descname">text</code><a class="reference internal" href="../_modules/screen_single_word.html#Tab.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab.text" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="screen_single_word.TestApp">
+<em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">TestApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#TestApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.TestApp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/material-app/index.html#kivymd.app.MDApp" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.app.MDApp</span></code></a></p>
+<p>Application class, see module documentation for more information.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>word</strong> – Word to check.</p>
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>on_start</cite>:</dt><dd><p>Fired when the application is being started (before the
+<a class="reference external" href="https://kivy.org/doc/stable/api-kivy.base.html#kivy.base.runTouchApp" title="(in Kivy v1.11.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">runTouchApp()</span></code></a> call.</p>
 </dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if <code class="docutils literal notranslate"><span class="pre">word</span></code> is already in app.queue_words, app.error_words or app.done_words.
-Else <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dt><cite>on_stop</cite>:</dt><dd><p>Fired when the application stops.</p>
+</dd>
+<dt><cite>on_pause</cite>:</dt><dd><p>Fired when the application is paused by the OS.</p>
+</dd>
+<dt><cite>on_resume</cite>:</dt><dd><p>Fired when the application is resumed from pause by the OS. Beware:
+you have no guarantee that this event will be fired after the
+<cite>on_pause</cite> event has been called.</p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py data">
-<dt id="screen_queue.options_dict">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">options_dict</code><a class="reference internal" href="../_modules/screen_queue.html#options_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.options_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="code docutils literal notranslate"><span class="pre">{&quot;icon-name&quot;:&quot;hint</span> <span class="pre">text&quot;}</span></code> for the contents of
-<a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/button/index.html#kivymd.uix.button.MDFloatingActionButtonSpeedDial" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFloatingActionButtonSpeedDial</span></code></a>.</p>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.7.0: </span>Parameter <cite>kv_file</cite> added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.8.0: </span>Parameters <cite>kv_file</cite> and <cite>kv_directory</cite> are now properties of App.</p>
+</div>
+<dl class="py method">
+<dt id="screen_single_word.TestApp.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#TestApp.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.TestApp.build" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the application; it will be called only once.
+If this method returns a widget (tree), it will be used as the root
+widget and added to the window.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.8)">dict</a></p>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>None or a root <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.widget.html#kivy.uix.widget.Widget" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Widget</span></code></a> instance
+if no self.root exists.</p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="py function">
-<dt id="screen_queue.pause_downloading">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.pause_downloading" title="Permalink to this definition">¶</a></dt>
-<dd><p>Empties queue.</p>
-<p>This leads the download to stop after the current word is processed.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="screen_single_word.WordProperties">
+<em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">WordProperties</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<p>Consists of the UI-elements that display the data obtained by <a class="reference internal" href="../word_processing/words.html#words.Word" title="words.Word"><code class="xref py py-class docutils literal notranslate"><span class="pre">words.Word</span></code></a> and lets the user choose which
+data to include on the card.</p>
+<dl class="py method">
+<dt id="screen_single_word.WordProperties.accept_suggestion">
+<code class="sig-name descname">accept_suggestion</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">suggestion</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.accept_suggestion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.accept_suggestion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use Suggestion for new search.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="screen_single_word.WordProperties.load_or_search">
+<code class="sig-name descname">load_or_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.load_or_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.load_or_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches for word, suggests alternative if not found and shows images.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="screen_single_word.WordProperties.refresh_data">
+<code class="sig-name descname">refresh_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.refresh_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.refresh_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Refresh UI with the data from <a class="reference internal" href="../word_processing/words.html#words.Word" title="words.Word"><code class="xref py py-class docutils literal notranslate"><span class="pre">words.Word</span></code></a>.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.queue_word">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">queue_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#queue_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.queue_word" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adds the word to the app.queue_words list and Queue and changes state to “queued”.
-Then calls <a class="reference internal" href="#screen_queue.start_downloading" title="screen_queue.start_downloading"><code class="xref py py-func docutils literal notranslate"><span class="pre">start_downloading()</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>word</strong> – Word to add to queue.</p>
-</dd>
-</dl>
+<dt id="screen_single_word.complete_generation">
+<code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">complete_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#complete_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.complete_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate Anki card from current user selection and changes screen.</p>
+<p>If the word was in the queue, returns to screen_queue.
+Else, resets the screen_single_word and changes to the edit_tab.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.start_downloading">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_downloading</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#start_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_downloading" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads data for queued words:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Sets up Queue</p></li>
-<li><p>If no worker is present, starts one.</p></li>
-</ul>
-</div></blockquote>
+<dt id="screen_single_word.download_selected_image">
+<code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">download_selected_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#download_selected_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.download_selected_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads the currently selected image to :meth:<a href="#id1"><span class="problematic" id="id2">`</span></a>words.Word.base_path`+”.jpg”</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="screen_queue.start_workers">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">worker_fn</span></em>, <em class="sig-param"><span class="n">num</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#start_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.start_workers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Starts a number of workers in separate threads</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>worker_fn</strong> – Function to be started</p></li>
-<li><p><strong>num</strong> – Number of threads/workers</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_queue.worker_single_word">
-<code class="sig-prename descclassname">screen_queue.</code><code class="sig-name descname">worker_single_word</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_queue.html#worker_single_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_queue.worker_single_word" title="Permalink to this definition">¶</a></dt>
-<dd><p>As long as the queue is not empty, tries to process a single word.
-Changing the states accordingly to “loading” and “ready”
-If it fails, it moves the word to the error_words list.</p>
+<dt id="screen_single_word.get_selection_dict">
+<code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">get_selection_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#get_selection_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.get_selection_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Obtains Dictionary with all fields necessary for the Anki card from the current user selection.</p>
 </dd></dl>
 
 </div>
@@ -344,7 +356,7 @@ If it fails, it moves the word to the error_words list.</p>
         <a href="scroll_list.html" class="btn btn-neutral float-right" title="my_kivy.scroll_list" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="screen_queue.html" class="btn btn-neutral float-left" title="my_kivy.screen_single_word" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="screen_queue.html" class="btn btn-neutral float-left" title="my_kivy.screen_queue" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
