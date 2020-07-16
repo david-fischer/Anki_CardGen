@@ -20,20 +20,18 @@ class HtmlLoader:
 
     def replace_includes_with_content(self):
         soup = bs4.BeautifulSoup(self.string, "lxml")
-        js_tags = soup.select("script")
-        for tag in js_tags:
+        for tag in soup.select("script[src]"):
             src = tag["src"]
-            # print(tag.attrs)
-            defer = "defer" in tag.attrs
-            del tag.attrs
+            del tag.attrs["src"]
             with open(src, "r") as file:
                 tag.string = file.read()
-            if defer:
-                tag.extract()
-                soup.body.append(tag)
-        # css_tags = soup.select("link[rel=stylesheet][href*=css]")
-        # for css in css_tags:
-        #     css.extract()
+        for tag in soup.select("script[defer]"):
+            del tag.attrs["defer"]
+            tag.extract()
+            soup.body.append(tag)
+        for tag in soup.select("head script"):
+            tag.extract()
+            soup.body.insert(0, tag)
         return str(soup.body)
 
 
