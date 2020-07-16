@@ -1,3 +1,14 @@
+"""
+Implements :class:`AnkiObject`.
+
+Relies heavily on `genanki <https://github.com/kerrickstaley/genanki>`_.
+
+Its purpose is to handle everything Anki-related:
+    * construct card template from html-, css-, and js-files
+    * generating and adding cards
+    * saving apgk-file
+"""
+
 import re
 
 import attr
@@ -9,16 +20,39 @@ from utils import CD, smart_loader
 
 @attr.s
 class HtmlLoader:
+    """
+    Loads and processes html.
+    """
+
     path = attr.ib(default=None)
+    """Path to load html-file from."""
+    string = attr.ib(init=False)
+    """Content of the file at :attr:`path`."""
 
     def __attrs_post_init__(self):
         with open(self.path, "r") as file:
             self.string = file.read()
 
     def set_of_fields(self):
+        """
+        Get names of fields (as recognized by Anki) in the content of the html-file.
+
+        Returns:
+            Set[str]: Field names.
+        """
         return set(re.findall("{{([^}]*)}}", self.string))
 
     def replace_includes_with_content(self):
+        """
+        Inserts content of js-source-files at appropriate places and returns body.
+
+            * Removes ``src`` attributes from <script>-tags and inserts the content of the files.
+            * ``<script>``-tags with "defer"-attribute are moved to the bottom of the body.
+            * ``<script>``-tags in the header are moved to the top of the body.
+
+        Returns:
+            str: Body of processed html-file.
+        """
         soup = bs4.BeautifulSoup(self.string, "lxml")
         for tag in soup.select("script[src]"):
             src = tag["src"]
@@ -35,7 +69,19 @@ class HtmlLoader:
         return str(soup.body)
 
 
-def model_from_html(name, template_names, id, css_path):
+def model_from_html(name, template_names, model_id, css_path):
+    """
+    Construct Model from html- and css-files.
+
+    Args:
+      name: Model name.
+      template_names: List of html-paths.
+      model_id: Unique id-string for the model.
+      css_path: Path of css-file.
+
+    Returns:
+        constructed ``genanki.model``
+    """
     templates_html = {
         template_name: {
             "front": HtmlLoader(f"{template_name}_front.html"),
@@ -62,12 +108,23 @@ def model_from_html(name, template_names, id, css_path):
         css = file.read()
 
     return genanki.Model(
-        model_id=id, name=name, fields=fields, templates=templates, css=css,
+        model_id=model_id, name=name, fields=fields, templates=templates, css=css,
     )
 
 
 @attr.s
 class AnkiObject:
+    """
+    Class containing all necessary objects from the `genanki <https://github.com/kerrickstaley/genanki>`_-module to
+    handle everything Anki-related.
+
+    Attributes:
+        model: :class:`genanki.model`
+        deck: :class:`genanki.deck`
+        package: :class:`genanki.package`
+        fields: List of field-names on anki-card.
+    """
+
     model_name = attr.ib(default="pt-word")
     templates = attr.ib(default=["meaning-pt", "pt-meaning"])
     deck_name = attr.ib(default="Portuguese::Vocab")
@@ -78,7 +135,10 @@ class AnkiObject:
     def __attrs_post_init__(self):
         with CD(self.root_dir):
             self.model = model_from_html(
-                self.model_name, self.templates, css_path=self.css_path, id=self.id
+                self.model_name,
+                self.templates,
+                css_path=self.css_path,
+                model_id=self.id,
             )
             self.deck = genanki.Deck(self.id, name=self.deck_name)
             self.package = genanki.Package(self.deck)
@@ -89,6 +149,14 @@ class AnkiObject:
             ]
 
     def add_card(self, media_files=None, **kwargs):
+        """
+        Add card constructed from ``**kwargs`` to :attr:`deck` and ``media_files`` to :attr:`package.media_files`.
+
+        Args:
+          media_files (List[str]): Media files used on card.  (Default value = None)
+          **kwargs: In the form: ``field_name="content"``.
+
+        """
         if media_files is None:
             media_files = []
         fields = {
@@ -101,9 +169,16 @@ class AnkiObject:
         self.deck.add_note(new_note)
 
     def write_apkg(self, out_path):
+        """
+        Writes current :attr:`package` as apkg-file to ``out_path``
+
+        Args:
+          out_path: Path wherer .apkg-file is saved.
+        """
         self.package.write_to_file(out_path)
 
 
+# pylint: disable = W,C,R,I
 if __name__ == "__main__":
     ankiobject = AnkiObject(root_dir="anki")
     ankiobject.add_card(
@@ -113,5 +188,8 @@ if __name__ == "__main__":
         # Image='<img src="casa.jpg">',
         # media_files=["../words/casa/casa.mp3", "../words/casa/casa.jpg"],
     )
-    ankiobject.write_apkg("output.apkg")
-    # HtmlLoader("meaning-pt_back.html").replace_includes_with_content()
+    # ankiobject.write_apkg("output.apkg")
+    # with CD("anki"):
+    #     string = HtmlLoader("test.html").replace_includes_with_content()
+    #     with open("test_out.html", "w") as file:
+    #         file.write(string)
