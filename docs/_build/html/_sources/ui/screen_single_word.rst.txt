@@ -1,4 +1,4 @@
-my\_kivy.screen\_single\_word
+Single Word Screen
 --------------------------------------------------
 
 .. autoapimodule:: screen_single_word

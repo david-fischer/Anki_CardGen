@@ -1,4 +1,4 @@
-my\_kivy.scroll\_list
+ScrollList
 ------------------------------------------
 
 .. autoapimodule:: scroll_list

@@ -53,8 +53,9 @@ class MultiStateBehaviour:
         for key, val in self.state_dicts[self.current_state].items():
             if key not in self.animated_properties:
                 setattr(self, key, val)
-        anim = Animation(**animation_dict, duration=0.5, t="out_circ")
-        anim.start(self)
+        if animation_dict:
+            anim = Animation(**animation_dict, duration=0.5, t="out_circ")
+            anim.start(self)
 
     def __post_init__(self, *_):
         self.on_current_state()

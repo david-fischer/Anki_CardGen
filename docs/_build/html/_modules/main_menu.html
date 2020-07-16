@@ -1,0 +1,303 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>main_menu &mdash; ACG 0.3.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">UI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ACG</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>main_menu</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for main_menu</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implements :class:`MainMenu`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.screenmanager</span> <span class="kn">import</span> <span class="n">Screen</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.stacklayout</span> <span class="kn">import</span> <span class="n">StackLayout</span>
+<span class="kn">from</span> <span class="nn">kivymd.theming</span> <span class="kn">import</span> <span class="n">ThemableBehavior</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineIconListItem</span>
+
+<span class="kn">from</span> <span class="nn">my_kivy.mychooser</span> <span class="kn">import</span> <span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">CheckContainer</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">widget_by_id</span>
+
+
+<div class="viewcode-block" id="DrawerItem"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerItem">[docs]</a><span class="k">class</span> <span class="nc">DrawerItem</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">OneLineIconListItem</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;List item that changes color based on :attr:`current_state`.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DrawerItem.icon"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerItem.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`: name of icon.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DrawerItem.screen_name"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerItem.screen_name">[docs]</a>    <span class="n">screen_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`: name of the screen.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">theme_style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="kc">True</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_color</span><span class="p">},</span>
+            <span class="kc">False</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">text_color</span><span class="p">},</span>
+        <span class="p">}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="DrawerItem.on_release"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerItem.on_release">[docs]</a>    <span class="k">def</span> <span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Close drawer and sets :attr:`current_state` to ``True``.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DrawerList"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList">[docs]</a><span class="k">class</span> <span class="nc">DrawerList</span><span class="p">(</span><span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">CheckContainer</span><span class="p">,</span> <span class="n">MDList</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List containing :class:`DrawerItem`.</span>
+
+<span class="sd">    It has one active element at all times whose screen_name attribute is saved in :attr:`current`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DrawerList.check_one"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.check_one">[docs]</a>    <span class="n">check_one</span> <span class="o">=</span> <span class="kc">True</span></div>
+<div class="viewcode-block" id="DrawerList.CheckElementObject"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">DrawerItem</span></div>
+<div class="viewcode-block" id="DrawerList.current"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.current">[docs]</a>    <span class="n">current</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` of currently active :attr:`DrawerItem.screen_name`.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="DrawerList.conditional_uncheck"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;changes color of clicked item and updates :attr:`current`&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">screen_name</span></div></div>
+
+
+<div class="viewcode-block" id="MainMenu"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu">[docs]</a><span class="k">class</span> <span class="nc">MainMenu</span><span class="p">(</span><span class="n">StackLayout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains everything related to the NavigationDrawer and the Screens.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MainMenu.screen_dicts"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu.screen_dicts">[docs]</a>    <span class="n">screen_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;form-textbox&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Manual Input&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;screen_name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_single_word&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;format-list-checkbox&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Queue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;screen_name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_queue&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;cogs&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Settings&quot;</span><span class="p">,</span> <span class="s2">&quot;screen_name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_settings&quot;</span><span class="p">},</span></div>
+        <span class="p">]</span>
+    <span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MainMenu.on_parent"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu.on_parent">[docs]</a>    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This function sets up the screens using the words from :attr:`screen_dicts`.</span>
+
+<span class="sd">        The screens are added to the screen_man and corresponding entries to the drawer_list.</span>
+<span class="sd">        Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">screen_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">screen_dict</span><span class="p">[</span><span class="s2">&quot;screen_name&quot;</span><span class="p">]</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;my_kivy/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.kv&quot;</span>
+            <span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MDLabel:</span><span class="se">\n\t</span><span class="s1">text:&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+            <span class="n">screen</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

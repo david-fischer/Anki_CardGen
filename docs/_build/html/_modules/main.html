@@ -150,117 +150,36 @@
            <div itemprop="articleBody">
             
   <h1>Source code for main</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Contains the Main App :class:`AnkiCardGenApp`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">queue</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">mainthread</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.screenmanager</span> <span class="kn">import</span> <span class="n">Screen</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.stacklayout</span> <span class="kn">import</span> <span class="n">StackLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
-<span class="kn">from</span> <span class="nn">kivymd.theming</span> <span class="kn">import</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">ThemeManager</span>
+<span class="kn">from</span> <span class="nn">kivymd.theming</span> <span class="kn">import</span> <span class="n">ThemeManager</span>
 <span class="kn">from</span> <span class="nn">kivymd.toast</span> <span class="kn">import</span> <span class="n">toast</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.button</span> <span class="kn">import</span> <span class="n">MDFlatButton</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.dialog</span> <span class="kn">import</span> <span class="n">MDDialog</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.filemanager</span> <span class="kn">import</span> <span class="n">MDFileManager</span>
-<span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineIconListItem</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">OneLineIconListItem</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.picker</span> <span class="kn">import</span> <span class="n">MDThemePicker</span>
 
 <span class="kn">from</span> <span class="nn">generate_anki_card</span> <span class="kn">import</span> <span class="n">AnkiObject</span>
-<span class="kn">from</span> <span class="nn">my_kivy.mychooser</span> <span class="kn">import</span> <span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">CheckContainer</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">now_string</span><span class="p">,</span> <span class="n">smart_loader</span><span class="p">,</span> <span class="n">smart_saver</span><span class="p">,</span> <span class="n">widget_by_id</span>
+<span class="kn">from</span> <span class="nn">my_kivy.main_menu</span> <span class="kn">import</span> <span class="n">MainMenu</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">now_string</span><span class="p">,</span> <span class="n">smart_loader</span><span class="p">,</span> <span class="n">smart_saver</span>
 <span class="kn">from</span> <span class="nn">words</span> <span class="kn">import</span> <span class="n">Word</span>
 
 <span class="n">this_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">this_dir</span><span class="p">:</span>
 <div class="viewcode-block" id="this_dir"><a class="viewcode-back" href="../main.html#main.this_dir">[docs]</a>    <span class="n">this_dir</span> <span class="o">=</span> <span class="n">this_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span></div>
-<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">this_dir</span><span class="si">}</span><span class="s2">my_kivy/screens.kv&quot;</span><span class="p">)</span>
+<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">this_dir</span><span class="si">}</span><span class="s2">my_kivy/main_menu.kv&quot;</span><span class="p">)</span>
 <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">this_dir</span><span class="si">}</span><span class="s2">my_kivy/fixes.kv&quot;</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="DrawerItem"><a class="viewcode-back" href="../main.html#main.DrawerItem">[docs]</a><span class="k">class</span> <span class="nc">DrawerItem</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">OneLineIconListItem</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Test&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="DrawerItem.icon"><a class="viewcode-back" href="../main.html#main.DrawerItem.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="DrawerItem.screen_name"><a class="viewcode-back" href="../main.html#main.DrawerItem.screen_name">[docs]</a>    <span class="n">screen_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">theme_style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="kc">True</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_color</span><span class="p">},</span>
-            <span class="kc">False</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;text_color&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">text_color</span><span class="p">},</span>
-        <span class="p">}</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span>
-
-<div class="viewcode-block" id="DrawerItem.on_release"><a class="viewcode-back" href="../main.html#main.DrawerItem.on_release">[docs]</a>    <span class="k">def</span> <span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span></div></div>
-
-
-<div class="viewcode-block" id="DrawerList"><a class="viewcode-back" href="../main.html#main.DrawerList">[docs]</a><span class="k">class</span> <span class="nc">DrawerList</span><span class="p">(</span><span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">CheckContainer</span><span class="p">,</span> <span class="n">MDList</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Test&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="DrawerList.check_one"><a class="viewcode-back" href="../main.html#main.DrawerList.check_one">[docs]</a>    <span class="n">check_one</span> <span class="o">=</span> <span class="kc">True</span></div>
-<div class="viewcode-block" id="DrawerList.CheckElementObject"><a class="viewcode-back" href="../main.html#main.DrawerList.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">DrawerItem</span></div>
-<div class="viewcode-block" id="DrawerList.current"><a class="viewcode-back" href="../main.html#main.DrawerList.current">[docs]</a>    <span class="n">current</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="DrawerList.conditional_uncheck"><a class="viewcode-back" href="../main.html#main.DrawerList.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;changes color of clicked item and updates :attr:`current`&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">screen_name</span></div></div>
-
-
-<div class="viewcode-block" id="MainMenu"><a class="viewcode-back" href="../main.html#main.MainMenu">[docs]</a><span class="k">class</span> <span class="nc">MainMenu</span><span class="p">(</span><span class="n">StackLayout</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Test&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="MainMenu.screen_dicts"><a class="viewcode-back" href="../main.html#main.MainMenu.screen_dicts">[docs]</a>    <span class="n">screen_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;form-textbox&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Manual Input&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;screen_name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_single_word&quot;</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;format-list-checkbox&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Queue&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;screen_name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_queue&quot;</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="p">{</span><span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;cogs&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Settings&quot;</span><span class="p">,</span> <span class="s2">&quot;screen_name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_settings&quot;</span><span class="p">},</span></div>
-        <span class="p">]</span>
-    <span class="p">)</span>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="MainMenu.on_parent"><a class="viewcode-back" href="../main.html#main.MainMenu.on_parent">[docs]</a>    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This function sets up the screens using the words from :attr:`screen_dicts`.</span>
-
-<span class="sd">        The screens are added to the screen_man and corresponding entries to the drawer_list.</span>
-<span class="sd">        Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">screen_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span><span class="p">:</span>
-            <span class="n">name</span> <span class="o">=</span> <span class="n">screen_dict</span><span class="p">[</span><span class="s2">&quot;screen_name&quot;</span><span class="p">]</span>
-            <span class="n">path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;my_kivy/</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.kv&quot;</span>
-            <span class="n">screen</span> <span class="o">=</span> <span class="n">Screen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MDLabel:</span><span class="se">\n\t</span><span class="s1">text:&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
-            <span class="n">screen</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">element_dicts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span></div></div>
 
 
 <div class="viewcode-block" id="AnkiCardGenApp"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp">[docs]</a><span class="k">class</span> <span class="nc">AnkiCardGenApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
@@ -280,7 +199,7 @@
     <span class="sd">&quot;&quot;&quot;:class:`pt_word.Word` Object&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.anki"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.anki">[docs]</a>    <span class="n">anki</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`generate_anki_card.AnkiObject` Object&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="AnkiCardGenApp.q"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.q">[docs]</a>    <span class="n">q</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="AnkiCardGenApp.queue"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.queue">[docs]</a>    <span class="n">queue</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`queue.Queue` Object&quot;&quot;&quot;</span>
     <span class="c1"># Data</span>
 <div class="viewcode-block" id="AnkiCardGenApp.error_words"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.error_words">[docs]</a>    <span class="n">error_words</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
@@ -301,28 +220,18 @@
         <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span> <span class="n">item_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buttons</span><span class="o">=</span><span class="kc">None</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Shows a customizable dialog.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          message:</span>
-<span class="sd">          options:  (Default value = None)</span>
+<span class="sd">          message: Message on top.</span>
+<span class="sd">          options:  List of strings, each representing an option for the user to choose.</span>
 <span class="sd">          callback:  (Default value = print)</span>
 <span class="sd">          item_function:  (Default value = None)</span>
 <span class="sd">          buttons:  (Default value = None)</span>
-
-<span class="sd">        Returns:</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">item_function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 
             <span class="k">def</span> <span class="nf">item_function</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
-                <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">                Args:</span>
-<span class="sd">                  obj:</span>
-
-<span class="sd">                Returns:</span>
-
-<span class="sd">                &quot;&quot;&quot;</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
                 <span class="n">callback</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -402,18 +311,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_queue</span><span class="p">()</span>
         <span class="c1"># Kivy Objects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span> <span class="o">=</span> <span class="n">MDFileManager</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="s2">&quot;MainMenu:&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">MainMenu</span><span class="p">()</span></div>
 
     <span class="c1"># def on_start(self):</span>
     <span class="c1">#    threading.Thread(target=make_screenshots).start()</span>
 
 <div class="viewcode-block" id="AnkiCardGenApp.setup_queue"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.setup_queue">[docs]</a>    <span class="k">def</span> <span class="nf">setup_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">q</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_words</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loading_state_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">loading_state_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;queued&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.save_theme"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.save_theme">[docs]</a>    <span class="k">def</span> <span class="nf">save_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
