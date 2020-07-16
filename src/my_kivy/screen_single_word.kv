@@ -68,7 +68,7 @@
 <EditTab@BoxLayout+MDTabsBase>:
     orientation: "vertical"
 
-    ScrollView:
+    RecycleView:
         id: word_scroll
         do_scroll_x: False
         do_scroll_y: True
@@ -87,7 +87,7 @@
             on_text_validate: image_grid.get_images(self.text)
             #pos_hint: {"center_x":0.5,"center_y":0}
 
-        ScrollView:
+        RecycleView:
             do_scroll_x: False
             do_scroll_y: True
             size_hint: 1,1

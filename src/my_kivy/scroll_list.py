@@ -10,7 +10,7 @@ from kivy.clock import Clock, mainthread
 from kivy.lang import Builder
 from kivy.properties import ListProperty, ObjectProperty, OptionProperty
 from kivy.uix.anchorlayout import AnchorLayout
-from kivy.uix.scrollview import ScrollView
+from kivy.uix.recycleview import RecycleView
 from kivymd.app import MDApp
 from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem, OneLineListItem
 
@@ -48,14 +48,14 @@ Builder.load_string(
 
 <ScrollList>:
     list: md_list
-    ScrollView:
-        MDList:
-            id: md_list
+
+    MDList:
+        id: md_list
     """
 )
 
 
-class ScrollList(ScrollView):
+class ScrollList(RecycleView):
     """
     Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.
 
