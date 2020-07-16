@@ -217,7 +217,7 @@ class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
 if __name__ == "__main__":
     IMG_STRING = """
 FloatLayout:
-    ScrollView:
+    RecycleView:
         do_scroll_x: False
         do_scroll_y: True
         size_hint: 1,1
