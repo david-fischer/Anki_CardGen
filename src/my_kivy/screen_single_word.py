@@ -34,21 +34,22 @@ class WordProperties(BoxLayout):
     def refresh_data(self):
         """Refresh UI with the data from :class:`words.Word`."""
         word = MDApp.get_running_app().word
-        self.ids.translation_chips.element_dicts = [
+        self.ids.translation_chips.child_dicts = [
             {"text": string} for string in word.translations
         ]
-        self.ids.antonym_chips.element_dicts = [
+        self.ids.antonym_chips.child_dicts = [
             {"text_orig": ant[0], "text_trans": ant[1]} for ant in word.antonyms
         ]
-        self.ids.synonym_chips.element_dicts = [
+        self.ids.synonym_chips.child_dicts = [
             {"text_orig": syn[0], "text_trans": syn[1]} for syn in word.synonyms
         ]
-        self.ids.example_cards.element_dicts = [
+        self.ids.example_cards.child_dicts = [
             {"text_orig": ex[0], "text_trans": ex[1]} for ex in word.examples
         ]
-        self.ids.explanation_cards.element_dicts = [
-            {"text": string} for string in word.explanations
+        self.ids.explanation_cards.child_dicts = [
+            {"text_orig": expl[0], "text_trans": expl[1]} for expl in word.explanations
         ]
+        self.ids.images.child_dicts = [{"source": string} for string in word.image_urls]
 
     def accept_suggestion(self, suggestion):
         """Use Suggestion for new search."""
@@ -59,10 +60,10 @@ class WordProperties(BoxLayout):
         """Searches for word, suggests alternative if not found and shows images."""
         try:
             MDApp.get_running_app().word.search(search_term)
-            widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
-            widget_by_id(
-                "/screen_single_word/image_tab/img_search_field"
-            ).text = search_term
+            # widget_by_id("/screen_single_word/image_tab/image_grid").get_images()
+            # widget_by_id(
+            #     "/screen_single_word/image_tab/img_search_field"
+            # ).text = search_term
             self.refresh_data()
         except NoMatchError as error:
             suggestions = linguee_did_you_mean(search_term)
