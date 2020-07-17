@@ -138,10 +138,11 @@ class Word:
 
     def add_translations(self):
         """
-        For the attributes ["examples", "synonyms", "antonyms"], it iterates to the corresponding lists and adds
+        For the attributes ["examples","explanations", "synonyms", "antonyms"], it iterates to the corresponding lists
+        and adds
         translations, where none are already present.
         """
-        for key in ["examples", "synonyms", "antonyms"]:
+        for key in ["examples", "explanations", "synonyms", "antonyms"]:
             values = getattr(self, key)
             for i, val in enumerate(values):
                 if isinstance(val, str):
@@ -213,6 +214,8 @@ class Word:
             try:
                 attribute_dict = smart_loader(path)
                 self.__init__(**attribute_dict)
+                self.add_translations()
+                self.save_as_json()
                 return
             except (TypeError, AttributeError):
                 print("Could not load previously saved file. Fetching words again...")

@@ -1,12 +1,14 @@
 #:import WordProperties my_kivy.screen_single_word.WordProperties
 #:import complete_generation my_kivy.screen_single_word.complete_generation
+#:import md_card_constructor kivymd.uix.card.MDCard
+#:import Factory kivy.factory.Factory
 
 <MDTextField>:
     size: 200, 100
 
 <WordProperties>:
     orientation: "vertical"
-    padding: 30,40
+    padding: dp(20),0
     spacing: 20
 
     MDTextField:
@@ -17,6 +19,18 @@
         size_hint: 0.,None
         on_parent: self.focus = True
         pos_hint: {"center_x":0.5,"center_y":0}
+
+    MDLabel:
+        text: "Images"
+        color: self.theme_cls.disabled_hint_text_color
+        pos_hint: {"x":0,"y":0}
+
+    MyCarousel:
+        id: images
+        height: 200
+        element_constructor: Factory.LongPressImage
+        modal_content: Factory.ImgRecycleView
+
 
     MDLabel:
         text: "Translations"
@@ -50,87 +64,87 @@
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyCheckCardContainer:
+    MyCarousel:
         id: explanation_cards
-        check_one: True
+        element_constructor: Factory.TransCard
+        modal_content: Factory.TransCardRecycleView
 
     MDLabel:
         text: "Examples"
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyTransCardContainer:
+    MyCarousel:
         id: example_cards
-        check_one: True
+        element_constructor: Factory.TransCard
+        modal_content: Factory.TransCardRecycleView
 
 
 
-<EditTab@BoxLayout+MDTabsBase>:
-    orientation: "vertical"
+#<EditTab@BoxLayout+MDTabsBase>:
+#    orientation: "vertical"
 
-    RecycleView:
-        id: word_scroll
-        do_scroll_x: False
-        do_scroll_y: True
-        size_hint: 1,1
-        WordProperties:
-            id: word_prop
-            size_hint:1,None
-            height: self.minimum_height
+ScrollView:
+    id: word_scroll
+    do_scroll_x: False
+    do_scroll_y: True
+    size_hint: 1,0.9
+    WordProperties:
+        id: word_prop
+        size_hint:1,None
+        height: self.minimum_height
 
-<ImageTab@Tab>:
-    StackLayout:
-        MDTextField:
-            id: img_search_field
-            hint_text: "Image Search"
-            text: ""
-            on_text_validate: image_grid.get_images(self.text)
-            #pos_hint: {"center_x":0.5,"center_y":0}
+#<ImageTab@Tab>:
+#    StackLayout:
+#        MDTextField:
+#            id: img_search_field
+#            hint_text: "Image Search"
+#            text: ""
+#            on_text_validate: image_grid.get_images(self.text)
+#            #pos_hint: {"center_x":0.5,"center_y":0}
 
-        RecycleView:
-            do_scroll_x: False
-            do_scroll_y: True
-            size_hint: 1,1
-            ImageSearchResultGrid:
-                cols: 2
-                id: image_grid
-                row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
-                row_force_default: True
-                size_hint_y: None
-                height: self.minimum_height
-                padding: dp(4), dp(4)
-                spacing: dp(4)
-                check_one: True
+#        RecycleView:
+#            do_scroll_x: False
+#            do_scroll_y: True
+#            size_hint: 1,1
+#            ImageSearchResultGrid:
+#                cols: 2
+#                id: image_grid
+#                row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
+#                row_force_default: True
+#                size_hint_y: None
+#                height: self.minimum_height
+#                padding: dp(4), dp(4)
+#                spacing: dp(4)
+#                check_one: True
+#
+#        MDFloatingActionButton:
+#            pos_hint: {"center_x":0.5,"center_y":0.5}
+#            on_press: image_grid.element_dicts = [{"source":url} for url in app.word.image_urls]
 
-        MDFloatingActionButton:
-            pos_hint: {"center_x":0.5,"center_y":0.5}
-            on_press: image_grid.element_dicts = [{"source":url} for url in app.word.image_urls]
-
-
-
-BoxLayout:
-    orientation: "vertical"
-
-    FloatLayout:
-
-        MDTabs:
-            id: tabs
-            pos_hint: {"top":1.0}
-            EditTab:
-                id: edit_tab
-                text:"file-document-edit-outline"
-
-            ImageTab:
-                id: image_tab
-                text: "image-search-outline"
-
-            #PreviewTab:
-            #    text: "eye"
-
-        MDFloatingActionButton:
-            icon: "check-bold"
-            pos_hint: {"center_x":0.9, "center_y":0.1}
-            on_press: complete_generation()
-
-
-
+#BoxLayout:
+#    orientation: "vertical"
+#
+#    FloatLayout:
+#
+#        MDTabs:
+#            id: tabs
+#            pos_hint: {"top":1.0}
+#            EditTab:
+#                id: edit_tab
+#                text:"file-document-edit-outline"
+#
+#            ImageTab:
+#                id: image_tab
+#                text: "image-search-outline"
+#
+#            #PreviewTab:
+#            #    text: "eye"
+#
+#        MDFloatingActionButton:
+#            icon: "check-bold"
+#            pos_hint: {"center_x":0.9, "center_y":0.1}
+#            on_press: complete_generation()
+#
+#
+#

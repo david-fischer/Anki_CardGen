@@ -1,3 +1,4 @@
+#:import Factory kivy.factory.Factory
 <ThemableColorChangeBehavior>:
     canvas:
         Color:
@@ -93,3 +94,87 @@
             id: border_line
             width: self.border_width
             rectangle: self.x, self.y, self.width, self.height
+
+
+<RecycleViewGrid>:
+    size_hint: 1,1
+    pos_hint:{"y":"bottom"}
+    RecycleGridLayout:
+        cols: 2
+        row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols /4*3
+        row_force_default: True
+        size_hint_y: None
+        default_size_hint:1,1
+        height: self.minimum_height
+        padding: dp(4), dp(4)
+        spacing: dp(4)
+
+<RecycleViewBox>:
+    size_hint: 1,1
+    pos_hint:{"y":"bottom"}
+    RecycleBoxLayout:
+        size_hint: 1,None
+        default_size_hint: 1,None
+        default_size: None, None
+        height: self.minimum_height
+        orientation: 'vertical'
+        padding: 50,50
+        spacing: 25
+
+
+
+<MyCarousel>:
+    carousel: carousel
+    target: carousel
+    size_hint_y: None
+    recycle_view_name: "RecycleViewBox"
+    recycle_view_data_class: "TransCard"
+    Carousel:
+        id: carousel
+        pos: root.pos[0]+left_icon.width, root.pos[1]
+        size_hint_x: None
+        size: root.size[0]-left_icon.width-right_icon.width,root.size[1]
+
+    MDIconButton:
+        id: left_icon
+        pos_hint: {"center_y":0.5,"x":0}
+        icon: "" if not carousel.index else "chevron-left"
+        on_press: carousel.load_previous()
+
+    MDIconButton:
+        id: right_icon
+        pos_hint: {"center_y":0.5,"right":1}
+        icon: "" if carousel.index is None else "chevron-right" if carousel.index < len(carousel.slides) -1 else ""
+        on_press: carousel.load_next()
+
+
+
+<TransCard>:
+    orientation: "vertical"
+    padding: dp(8),dp(8)
+    spacing: dp(8)
+    size_hint: 0.95,None
+    pos_hint: {"center_x":0.5,"center_y":0.5}
+    border_radio: 20
+    height: self.minimum_height
+    #height: max(label_orig.texture_size[1],label_trans.texture_size[1])+2*self.padding[1]
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    MDLabel:
+        id: label_orig
+        size_hint: 1,None
+        size: self.texture_size
+        text: root.text_orig
+#        height: self.texture_size[1]
+
+    MDSeparator:
+        orientation: "horizontal"
+
+    MDLabel:
+        id: label_trans
+        size_hint: 1,None
+        size: self.texture_size
+        text: root.text_trans
