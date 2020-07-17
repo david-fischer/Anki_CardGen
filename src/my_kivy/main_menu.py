@@ -96,7 +96,7 @@ class MainMenu(StackLayout):
                     file.write(f'MDLabel:\n\ttext:"{name}"')
             screen.add_widget(Builder.load_file(path))
             self.ids.screen_man.add_widget(screen)
-        self.ids.drawer_list.element_dicts = self.screen_dicts
+        self.ids.drawer_list.child_dicts = self.screen_dicts
         self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
         self.ids.screen_man.bind(current=self.ids.drawer_list.setter("current"))
         self.ids.drawer_list.children[-1].on_release()
