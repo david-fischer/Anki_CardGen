@@ -3,6 +3,11 @@
 <DrawerItem>:
     theme_text_color: "Custom"
     text_color: app.theme_cls.text_color
+    state_dicts:
+        {\
+        True: {"text_color":self.theme_cls.primary_color},\
+        False: {"text_color":self.theme_cls.text_color} \
+        }
 
     IconLeftWidget:
         id: icon

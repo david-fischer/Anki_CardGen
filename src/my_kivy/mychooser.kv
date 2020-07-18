@@ -1,4 +1,3 @@
-#:import Factory kivy.factory.Factory
 <ThemableColorChangeBehavior>:
     canvas:
         Color:
@@ -57,23 +56,9 @@
         color: root.text_color
 
 
-<MyCheckCardContainer>:
-    orientation: "vertical"
-    padding: 20,20
-    spacing: 5
-    size_hint: 1,None
-    height: self.minimum_height
-    canvas:
-        Color:
-            rgba: self.theme_cls.divider_color
-        Line:
-            width: 1
-            rectangle: self.x, self.y, self.width, self.height
-
-
 <MyCheckChipContainer>:
     orientation: "lr-tb"
-    padding: 20,20
+    padding: 10,10
     spacing: 10,10
     size_hint:1, None
     height: self.minimum_height
@@ -82,7 +67,7 @@
             rgba: self.theme_cls.divider_color
         Line:
             width: 1
-            rectangle: self.x, self.y, self.width, self.height
+            rectangle: self.x, self.y+self.spacing[1]/2, self.width, self.height
 
 
 <MyCheckImageTile>:
@@ -121,10 +106,9 @@
         spacing: 25
 
 
-
 <MyCarousel>:
     carousel: carousel
-    parent_widget: carousel
+    root_for_children: carousel
     size_hint_y: None
     recycle_view_name: "RecycleViewBox"
     recycle_view_data_class: "TransCard"
@@ -134,12 +118,6 @@
         size:root.size
         on_current_slide: root.update_height()
         ignore_perpendicular_swipes: True
-#        canvas:
-#            Color:
-#                rgba: 0,0,0,0.5
-#            Rectangle:
-#                pos: self.pos
-#                size: self.size
         size_hint_x: 1
 
     MDIconButton:
@@ -155,16 +133,14 @@
         on_press: carousel.load_next()
 
 
-
 <TransCard>:
-    orientation: "vertical"
+    orientation: "horizontal"
     padding: dp(8),dp(8)
     spacing: dp(8)
     size_hint: None,None
     pos_hint: {"center_x":0.5,"center_y":0.5}
     border_radius: 20
     height: self.minimum_height
-    #height: max(label_orig.texture_size[1],label_trans.texture_size[1])+2*self.padding[1]
     canvas:
         Rectangle:
             pos: self.pos
@@ -175,21 +151,23 @@
         size_hint: 1,None
         size: self.texture_size
         text: root.text_orig
-#        height: self.texture_size[1]
+        pos_hint: {"top":1}
 
     MDSeparator:
-        orientation: "horizontal"
+        orientation: "vertical" if root.orientation == "horizontal" else "horizontal"
 
     MDLabel:
         id: label_trans
         size_hint: 1,None
         size: self.texture_size
         text: root.text_trans
+        pos_hint:{"top":1}
 
 <CardCarousel>:
     child_class_name: "TransCard"
     recycle_view_data_class: "TransCard"
     recycle_view_name: "ScrollBox"
+    pos_hint: {"center_x":0.5}
 
 <ImageCarousel>:
     child_class_name: "LongPressImage"
@@ -197,7 +175,7 @@
     recycle_view_name: "ScrollGrid"
 
 <ScrollBox>:
-    parent_widget: stack
+    root_for_children: stack
     do_scroll_x: False
     do_scroll_y: True
     size_hint: 1, 1
@@ -214,7 +192,7 @@
     do_scroll_x: False
     do_scroll_y: True
     size_hint: 1,1
-    parent_widget: grid
+    root_for_children: grid
     GridLayout:
         cols: 2
         id: grid

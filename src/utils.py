@@ -239,7 +239,7 @@ def make_screenshots(window_size=(270 * 1.4, 480 * 1.4)):
     Window.size = window_size
     for item in widget_by_id("drawer_list").children:
         item.on_release()
-        screenshot(f"screenshots/{item.screen_name}.png")
+        screenshot(f"screenshots/{item.name}.png")
     widget_by_id("nav_drawer").set_state("open")
     screenshot("../screenshots/nav_drawer_open.png")
     widget_by_id("nav_drawer").set_state("close")
