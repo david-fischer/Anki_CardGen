@@ -3,7 +3,9 @@ from functools import partial
 
 from kivy import clock
 from kivy.animation import Animation
+from kivy.clock import Clock
 from kivy.event import EventDispatcher
+from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
     BooleanProperty,
@@ -20,10 +22,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import AsyncImage
 from kivy.uix.modalview import ModalView
-from kivy.uix.recycleview import RecycleView
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.stacklayout import StackLayout
-from kivy.uix.widget import Widget
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import CircularRippleBehavior, RectangularRippleBehavior
@@ -35,21 +35,6 @@ try:
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
     Builder.load_file(os.path.join(this_directory, "mychooser.kv"))
-
-from kivy.clock import Clock
-from kivy.factory import Factory
-
-
-class RecycleViewGrid(RecycleView):
-    pass
-
-
-class RecycleViewBox(RecycleView):
-    pass
-
-
-Factory.register("ImgRecycleView", RecycleViewGrid)
-Factory.register("TransCardRecycleView", RecycleViewBox)
 
 
 class LongPressBehavior(EventDispatcher):
@@ -120,44 +105,43 @@ class CheckBehavior(MultiStateBehaviour):
 class ChildrenFromDictsBehavior:
     child_dicts = ListProperty([])
     child_class_name = StringProperty([])
-    parent_widget = ObjectProperty()
+    root_for_children = ObjectProperty()
     child_bindings = DictProperty()
     parent_bindings = DictProperty()
 
     def __init__(self, **kwargs):
         super(ChildrenFromDictsBehavior, self).__init__(**kwargs)
-        if self.parent_widget is None:
-            self.parent_widget = self
+        if self.root_for_children is None:
+            self.root_for_children = self
         self.on_child_dicts()
 
     def on_child_dicts(self, *_):
-        self.parent_widget.clear_widgets()
+        self.root_for_children.clear_widgets()
         for child_dict in self.child_dicts:
             child_cls = Factory.get(self.child_class_name)
             new_child = child_cls(**child_dict)
             if self.child_bindings:
                 new_child.bind(**self.child_bindings)
-            if self.parent_bindings:
-                self.parent_widget.bind(
-                    **{
-                        key: partial(value, new_child)
-                        for key, value in self.parent_bindings.items()
-                    }
-                )
-            self.parent_widget.add_widget(new_child)
+            self.before_add_child(new_child)
+            self.root_for_children.add_widget(new_child)
+            self.after_add_child(new_child)
+
+    def before_add_child(self, child):
+        """Function to be executed before child is added to :attr:`parent_widget`."""
+
+    def after_add_child(self, child):
+        """Function to be executed before child is added to :attr:`parent_widget`."""
 
 
-class CheckContainer(Widget):
+class CheckContainer(ChildrenFromDictsBehavior):
     """Test"""
 
     check_one = BooleanProperty(False)
     """:class:`~kivy.properties.BooleanProperty`"""
 
-    child_dicts = ListProperty([])
-    """:class:`~kivy.properties.ListProperty`"""
-
-    CheckElementObject = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty`"""
+    def __init__(self, **kwargs):
+        super(CheckContainer, self).__init__(**kwargs)
+        self.child_bindings["current_state"] = self.conditional_uncheck
 
     def conditional_uncheck(self, instance, value):
         if self.check_one:
@@ -174,15 +158,6 @@ class CheckContainer(Widget):
             return checked_elements
         return [getattr(element, property_name) for element in checked_elements]
 
-    def on_child_dicts(self, *_):
-        self.clear_widgets()
-        for child_dict in self.child_dicts:
-            new_check_element = self.CheckElementObject(**child_dict)
-            new_check_element.bind(current_state=self.conditional_uncheck)
-            self.add_widget(new_check_element)
-        # if self.check_one:
-        #     self.children[-1].checked = True
-
 
 class TranslationOnCheckBehavior:
     text_orig = StringProperty("orig")
@@ -194,7 +169,7 @@ class TranslationOnCheckBehavior:
     def __post_init__(self, *_):
         self.state_dicts[True]["text"] = self.text_orig
         self.state_dicts[False]["text"] = self.text_trans
-        super(TranslationOnCheckBehavior, self).__post_init__()
+        super(TranslationOnCheckBehavior, self).__post_init__(*_)
 
 
 class ThemableColorChangeBehavior:
@@ -257,20 +232,8 @@ class MyTransChip(TranslationOnCheckBehavior, MyCheckChip):
     pass
 
 
-class MyCheckCardContainer(CheckContainer, ThemableBehavior, BoxLayout):
-    CheckElementObject = MyCheckCard
-
-
-class MyTransCardContainer(MyCheckCardContainer):
-    CheckElementObject = MyTransCard
-
-
 class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
-    CheckElementObject = MyCheckChip
-
-
-class MyTransChipContainer(MyCheckChipContainer):
-    CheckElementObject = MyTransChip
+    child_class_name = "MyCheckChip"
 
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
@@ -330,8 +293,13 @@ class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
             "height": self.update_height,
             "on_press": self.open_menu,
         }
-        self.parent_bindings = {"width": self.set_child_width}
         self.on_child_dicts()
+
+    def before_add_child(self, child):
+        self.bind(width=lambda *_: self.set_child_width(child))
+
+    def after_add_child(self, child):
+        self.set_child_width(child)
 
     def set_child_width(self, child, *_):
         width = self.width - self.ids.left_icon.width - self.ids.right_icon.width
@@ -358,10 +326,6 @@ class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
     def on_child_dicts(self, *_):
         self.height_dict = {}
         super(MyCarousel, self).on_child_dicts(*_)
-        if self.carousel:
-            for child in self.carousel.slides:
-                print(child)
-                self.set_child_width(child)
 
     def get_checked(self, property_name=None):
         checked_elements = [self.carousel.current_slide]
@@ -396,65 +360,16 @@ class CardCarousel(MyCarousel):
 
 
 if __name__ == "__main__":
-    IMG_STRING = """
-FloatLayout:
-    RecycleView:
-        do_scroll_x: False
-        do_scroll_y: True
-        size_hint: 1,1
-        MyCheckImageGrid:
-            cols: 2
-            id: image_grid
-            row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
-            row_force_default: True
-            size_hint_y: None
-            height: self.minimum_height
-            padding: dp(4), dp(4)
-            spacing: dp(4)
-            check_one: True
-            child_dicts: [{"source":"../assets/AnkiCardGen.png"} for i in range(10)]
-
-    MDFloatingActionButton:
-        pos_hint: {"center_x":0.5,"center_y":0.5}
-        on_press: image_grid.child_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
-
-"""
-    TRANS_CARD_STRING = (
-        "BoxLayout:\n"
-        "    MyTransCardContainer:\n"
-        '        child_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
-        'i))*10,  "current_state": i%2==0} for i in range(10)]'
-    )
-
-    CHECK_CARD_STRING = (
-        "BoxLayout:\n"
-        "    MyCheckCardContainer:\n"
-        '        child_dicts: [{"text":("text_orig_"+str(i))*10, "current_state":True} for i in range(10)]'
-    )
-
-    TRANS_CHIP_STRING = (
-        "\n"
-        "BoxLayout:\n"
-        "    MyTransChipContainer:\n"
-        '        child_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
-        "i))*10} for i in range(10)]"
-    )
 
     CARD_CAROUSEL_STRING = (
         "BoxLayout:\n"
-        "    MyCarousel:\n"
-        '        child_class_name: "TransCard"\n'
-        '        child_dicts: [{"text_orig":str(i)*100,"text_trans":"Trans"} for i in range(10)]'
+        "    CardCarousel:\n"
+        '        child_dicts: [{"text_orig":str(i)*50*i,"text_trans":"Trans"} for i in range(10)]'
     )
 
     IMAGE_CAROUSEL_STRING = (
-        "#:import image kivy.uix.image.AsyncImage\n"
-        "#:import Factory kivy.factory.Factory\n"
         "BoxLayout:\n"
-        "    MyCarousel:\n"
-        '        child_class_name: "LongPressImage"\n'
-        '        recycle_view_data_class: "MyCheckImageTile"\n'
-        '        recycle_view_name: "RecycleViewGrid"\n'
+        "    ImageCarousel:\n"
         '        child_dicts: [{"source":"../assets/AnkiCardGen.png"} for _ in range(5)]'
     )
 
