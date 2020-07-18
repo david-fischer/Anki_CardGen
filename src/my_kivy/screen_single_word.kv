@@ -1,7 +1,4 @@
-#:import WordProperties my_kivy.screen_single_word.WordProperties
 #:import complete_generation my_kivy.screen_single_word.complete_generation
-#:import md_card_constructor kivymd.uix.card.MDCard
-#:import Factory kivy.factory.Factory
 
 <MDTextField>:
     size: 200, 100
@@ -44,17 +41,19 @@
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyTransChipContainer:
+    MyCheckChipContainer:
         id: synonym_chips
         check_one: True
+        child_class_name: "MyTransChip"
 
     MDLabel:
         text: "Antonyms"
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyTransChipContainer:
+    MyCheckChipContainer:
         id: antonym_chips
+        child_class_name: "MyTransChip"
         check_one: True
 
     MDLabel:
@@ -64,6 +63,9 @@
 
     CardCarousel:
         id: explanation_cards
+        size_hint_x: None
+        width: root.width
+
 
     MDLabel:
         text: "Examples"
@@ -72,23 +74,30 @@
 
     CardCarousel:
         id: example_cards
+        size_hint_x: None
+        width: root.width
+
+    Widget:
+        size_hint: None,None
+        height: dp(30)
 
 
+FloatLayout:
+    ScrollView:
+        id: word_scroll
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint: 1,1
+        WordProperties:
+            id: word_prop
+            size_hint:1,None
+            height: self.minimum_height
 
-#<EditTab@BoxLayout+MDTabsBase>:
-#    orientation: "vertical"
+    MDFloatingActionButton:
+        icon: "check-bold"
+        pos: (root.width-dp(16)-self.width,dp(10))
+        on_press: complete_generation()
 
-ScrollView:
-    id: word_scroll
-    do_scroll_x: False
-    do_scroll_y: True
-    size_hint: 1,1
-    WordProperties:
-        id: word_prop
-        size_hint:1,None
-        height: self.minimum_height
-
-#<ImageTab@Tab>:
 #    StackLayout:
 #        MDTextField:
 #            id: img_search_field
@@ -115,30 +124,3 @@ ScrollView:
 #        MDFloatingActionButton:
 #            pos_hint: {"center_x":0.5,"center_y":0.5}
 #            on_press: image_grid.element_dicts = [{"source":url} for url in app.word.image_urls]
-
-#BoxLayout:
-#    orientation: "vertical"
-#
-#    FloatLayout:
-#
-#        MDTabs:
-#            id: tabs
-#            pos_hint: {"top":1.0}
-#            EditTab:
-#                id: edit_tab
-#                text:"file-document-edit-outline"
-#
-#            ImageTab:
-#                id: image_tab
-#                text: "image-search-outline"
-#
-#            #PreviewTab:
-#            #    text: "eye"
-#
-#        MDFloatingActionButton:
-#            icon: "check-bold"
-#            pos_hint: {"center_x":0.9, "center_y":0.1}
-#            on_press: complete_generation()
-#
-#
-#
