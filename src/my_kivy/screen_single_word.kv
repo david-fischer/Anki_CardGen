@@ -8,7 +8,7 @@
 
 <WordProperties>:
     orientation: "vertical"
-    padding: dp(20),0
+    padding: dp(20),dp(20)
     spacing: 20
 
     MDTextField:
@@ -25,11 +25,9 @@
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyCarousel:
+    ImageCarousel:
         id: images
         height: 200
-        element_constructor: Factory.LongPressImage
-        modal_content: Factory.ImgRecycleView
 
 
     MDLabel:
@@ -64,20 +62,16 @@
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyCarousel:
+    CardCarousel:
         id: explanation_cards
-        element_constructor: Factory.TransCard
-        modal_content: Factory.TransCardRecycleView
 
     MDLabel:
         text: "Examples"
         color: self.theme_cls.disabled_hint_text_color
         pos_hint: {"x":0,"y":0}
 
-    MyCarousel:
+    CardCarousel:
         id: example_cards
-        element_constructor: Factory.TransCard
-        modal_content: Factory.TransCardRecycleView
 
 
 
@@ -88,7 +82,7 @@ ScrollView:
     id: word_scroll
     do_scroll_x: False
     do_scroll_y: True
-    size_hint: 1,0.9
+    size_hint: 1,1
     WordProperties:
         id: word_prop
         size_hint:1,None

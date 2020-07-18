@@ -1,14 +1,11 @@
 import os
-from copy import copy
 from functools import partial
 
 from kivy import clock
 from kivy.animation import Animation
-from kivy.clock import Clock
 from kivy.event import EventDispatcher
 from kivy.lang import Builder
 from kivy.properties import (
-    AliasProperty,
     BooleanProperty,
     DictProperty,
     ListProperty,
@@ -17,15 +14,14 @@ from kivy.properties import (
     Property,
     StringProperty,
 )
-from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.carousel import Carousel
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import AsyncImage
 from kivy.uix.modalview import ModalView
 from kivy.uix.recycleview import RecycleView
+from kivy.uix.scrollview import ScrollView
 from kivy.uix.stacklayout import StackLayout
 from kivy.uix.widget import Widget
 from kivymd.app import MDApp
@@ -125,22 +121,29 @@ class ChildrenFromDictsBehavior:
     child_dicts = ListProperty([])
     child_class_name = StringProperty([])
     parent_widget = ObjectProperty()
-    bindings = DictProperty()
+    child_bindings = DictProperty()
+    parent_bindings = DictProperty()
 
     def __init__(self, **kwargs):
         super(ChildrenFromDictsBehavior, self).__init__(**kwargs)
         if self.parent_widget is None:
             self.parent_widget = self
-        self.on_element_dicts()
+        self.on_child_dicts()
 
-    def on_element_dicts(self, *_):
+    def on_child_dicts(self, *_):
         self.parent_widget.clear_widgets()
         for child_dict in self.child_dicts:
             child_cls = Factory.get(self.child_class_name)
             new_child = child_cls(**child_dict)
-            print(new_child)
-            if self.bindings:
-                new_child.bind(**self.bindings)
+            if self.child_bindings:
+                new_child.bind(**self.child_bindings)
+            if self.parent_bindings:
+                self.parent_widget.bind(
+                    **{
+                        key: partial(value, new_child)
+                        for key, value in self.parent_bindings.items()
+                    }
+                )
             self.parent_widget.add_widget(new_child)
 
 
@@ -150,7 +153,7 @@ class CheckContainer(Widget):
     check_one = BooleanProperty(False)
     """:class:`~kivy.properties.BooleanProperty`"""
 
-    element_dicts = ListProperty([])
+    child_dicts = ListProperty([])
     """:class:`~kivy.properties.ListProperty`"""
 
     CheckElementObject = ObjectProperty()
@@ -171,10 +174,10 @@ class CheckContainer(Widget):
             return checked_elements
         return [getattr(element, property_name) for element in checked_elements]
 
-    def on_element_dicts(self, *_):
+    def on_child_dicts(self, *_):
         self.clear_widgets()
-        for elem_dict in self.element_dicts:
-            new_check_element = self.CheckElementObject(**elem_dict)
+        for child_dict in self.child_dicts:
+            new_check_element = self.CheckElementObject(**child_dict)
             new_check_element.bind(current_state=self.conditional_uncheck)
             self.add_widget(new_check_element)
         # if self.check_one:
@@ -302,49 +305,94 @@ Factory.register("LongPressImage", LongPressImage)
 Factory.register("TransCard", TransCard)
 
 
+class ScrollBox(ChildrenFromDictsBehavior, ScrollView):
+    pass
+
+
+class ScrollGrid(ChildrenFromDictsBehavior, ScrollView):
+    pass
+
+
+Factory.register("ScrollBox", ScrollBox)
+Factory.register("ScrollGrid", ScrollGrid)
+
+
 class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
     carousel = ObjectProperty()
     height_dict = DictProperty()
     recycle_view_name = StringProperty()
     recycle_view_data_class = StringProperty()
+    modal = ModalView()
 
     def __init__(self, **kwargs):
         super(MyCarousel, self).__init__(**kwargs)
-        self.bindings = {"height": self.update_height, "on_press": self.open_menu}
-        self.on_element_dicts()
+        self.child_bindings = {
+            "height": self.update_height,
+            "on_press": self.open_menu,
+        }
+        self.parent_bindings = {"width": self.set_child_width}
+        self.on_child_dicts()
 
-    def update_height(self, obj, value):
-        if value != self.height:
-            value += 48
-        self.height_dict[str(obj)] = value
-        self.height = max(100, *self.height_dict.values())
+    def set_child_width(self, child, *_):
+        width = self.width - self.ids.left_icon.width - self.ids.right_icon.width
+        setattr(child, "width", width)
 
-    def on_element_dicts(self, *_):
+    def update_height(self, *_):
+        pass
+
+    def get_modal_content(self, size_hint=(1, None)):
+        def f(i, *_):
+            self.carousel.index = i
+            self.modal.dismiss()
+
+        data_dicts = [
+            {**dict, "size_hint": size_hint, "on_press": partial(f, i)}
+            for i, dict in enumerate(self.child_dicts)
+        ]
+        recycle_view_cls = Factory.get(self.recycle_view_name)
+        recycle_view = recycle_view_cls()
+        recycle_view.child_class_name = self.recycle_view_data_class
+        recycle_view.child_dicts = data_dicts
+        return recycle_view
+
+    def on_child_dicts(self, *_):
         self.height_dict = {}
-        super(MyCarousel, self).on_element_dicts(*_)
+        super(MyCarousel, self).on_child_dicts(*_)
+        if self.carousel:
+            for child in self.carousel.slides:
+                print(child)
+                self.set_child_width(child)
 
     def get_checked(self, property_name=None):
-        checked_elements = [self.current_slide]
+        checked_elements = [self.carousel.current_slide]
         if property_name is None:
             return checked_elements
         return [getattr(element, property_name) for element in checked_elements]
 
     def open_menu(self, *_):
-        modal = ModalView()
+        self.modal = ModalView()
+        modal_content = self.get_modal_content()
+        self.modal.add_widget(modal_content)
+        self.modal.open()
 
-        def f(i):
-            self.carousel.index = i
-            modal.dismiss()
 
-        data_dicts = [
-            {**dict, "on_press": partial(f, i)}
-            for i, dict in enumerate(self.child_dicts)
-        ]
-        recycle_view = Factory.get(self.recycle_view_name)  #   RecycleView()
-        recycle_view.viewclass = self.recycle_view_data_class
-        recycle_view.data = data_dicts
-        modal.add_widget(recycle_view)
-        modal.open()
+class ImageCarousel(MyCarousel):
+    def get_modal_content(self, size_hint=(1, 1)):
+        return super(ImageCarousel, self).get_modal_content(size_hint=size_hint)
+
+
+class CardCarousel(MyCarousel):
+    def update_height(self, *_):
+        new_height = self.carousel.current_slide.height + 24
+        if self.height != new_height:
+            anim = Animation(height=new_height, duration=0.5)
+            anim.start(self)
+
+    def on_child_dicts(self, *_):
+        super(CardCarousel, self).on_child_dicts(*_)
+        if self.carousel:
+            self.carousel.index = 1
+            self.carousel.index = 0
 
 
 if __name__ == "__main__":
@@ -364,31 +412,31 @@ FloatLayout:
             padding: dp(4), dp(4)
             spacing: dp(4)
             check_one: True
-            element_dicts: [{"source":"../assets/AnkiCardGen.png"} for i in range(10)]
+            child_dicts: [{"source":"../assets/AnkiCardGen.png"} for i in range(10)]
 
     MDFloatingActionButton:
         pos_hint: {"center_x":0.5,"center_y":0.5}
-        on_press: image_grid.element_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
+        on_press: image_grid.child_dicts = [{"source":"../assets/Latte.jpg"} for i in range(10)]
 
 """
     TRANS_CARD_STRING = (
         "BoxLayout:\n"
         "    MyTransCardContainer:\n"
-        '        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
+        '        child_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
         'i))*10,  "current_state": i%2==0} for i in range(10)]'
     )
 
     CHECK_CARD_STRING = (
         "BoxLayout:\n"
         "    MyCheckCardContainer:\n"
-        '        element_dicts: [{"text":("text_orig_"+str(i))*10, "current_state":True} for i in range(10)]'
+        '        child_dicts: [{"text":("text_orig_"+str(i))*10, "current_state":True} for i in range(10)]'
     )
 
     TRANS_CHIP_STRING = (
         "\n"
         "BoxLayout:\n"
         "    MyTransChipContainer:\n"
-        '        element_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
+        '        child_dicts: [{"text_orig":("text_orig_"+str(i))*10,"text_trans": ("text_trans_"+str('
         "i))*10} for i in range(10)]"
     )
 
@@ -404,7 +452,10 @@ FloatLayout:
         "#:import Factory kivy.factory.Factory\n"
         "BoxLayout:\n"
         "    MyCarousel:\n"
-        '        element_dicts: [{"source":"../assets/AnkiCardGen.png"} for _ in range(5)]'
+        '        child_class_name: "LongPressImage"\n'
+        '        recycle_view_data_class: "MyCheckImageTile"\n'
+        '        recycle_view_name: "RecycleViewGrid"\n'
+        '        child_dicts: [{"source":"../assets/AnkiCardGen.png"} for _ in range(5)]'
     )
 
     class TestApp(MDApp):

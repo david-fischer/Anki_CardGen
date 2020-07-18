@@ -110,11 +110,10 @@
         spacing: dp(4)
 
 <RecycleViewBox>:
-    size_hint: 1,1
-    pos_hint:{"y":"bottom"}
+    size_hint: .9,.9
     RecycleBoxLayout:
         size_hint: 1,None
-        default_size_hint: 1,None
+        default_size_hint: 1, None
         default_size: None, None
         height: self.minimum_height
         orientation: 'vertical'
@@ -125,15 +124,23 @@
 
 <MyCarousel>:
     carousel: carousel
-    target: carousel
+    parent_widget: carousel
     size_hint_y: None
     recycle_view_name: "RecycleViewBox"
     recycle_view_data_class: "TransCard"
     Carousel:
         id: carousel
-        pos: root.pos[0]+left_icon.width, root.pos[1]
-        size_hint_x: None
-        size: root.size[0]-left_icon.width-right_icon.width,root.size[1]
+        pos: root.pos
+        size:root.size
+        on_current_slide: root.update_height()
+        ignore_perpendicular_swipes: True
+#        canvas:
+#            Color:
+#                rgba: 0,0,0,0.5
+#            Rectangle:
+#                pos: self.pos
+#                size: self.size
+        size_hint_x: 1
 
     MDIconButton:
         id: left_icon
@@ -153,9 +160,9 @@
     orientation: "vertical"
     padding: dp(8),dp(8)
     spacing: dp(8)
-    size_hint: 0.95,None
+    size_hint: None,None
     pos_hint: {"center_x":0.5,"center_y":0.5}
-    border_radio: 20
+    border_radius: 20
     height: self.minimum_height
     #height: max(label_orig.texture_size[1],label_trans.texture_size[1])+2*self.padding[1]
     canvas:
@@ -178,3 +185,43 @@
         size_hint: 1,None
         size: self.texture_size
         text: root.text_trans
+
+<CardCarousel>:
+    child_class_name: "TransCard"
+    recycle_view_data_class: "TransCard"
+    recycle_view_name: "ScrollBox"
+
+<ImageCarousel>:
+    child_class_name: "LongPressImage"
+    recycle_view_data_class: "MyCheckImageTile"
+    recycle_view_name: "ScrollGrid"
+
+<ScrollBox>:
+    parent_widget: stack
+    do_scroll_x: False
+    do_scroll_y: True
+    size_hint: 1, 1
+
+    BoxLayout:
+        id:stack
+        padding: dp(8),dp(8)
+        spacing: dp(8)
+        orientation: "vertical"
+        size_hint:1,None
+        height: self.minimum_height
+
+<ScrollGrid>:
+    do_scroll_x: False
+    do_scroll_y: True
+    size_hint: 1,1
+    parent_widget: grid
+    GridLayout:
+        cols: 2
+        id: grid
+        row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
+        row_force_default: True
+        size_hint_y: None
+        height: self.minimum_height
+        padding: dp(4), dp(4)
+        spacing: dp(4)
+        spacing: dp(4)
