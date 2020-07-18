@@ -78,13 +78,13 @@ class WordProperties(BoxLayout):
 class ImageSearchResultGrid(MyCheckImageGrid):
     """Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method."""
 
-    def on_element_dicts(self, *_):
-        if len(self.children) == len(self.element_dicts):
-            for image, elem_dict in zip(self.children, self.element_dicts):
-                image.source = elem_dict["source"]
+    def on_child_dicts(self, *_):
+        if len(self.children) == len(self.child_dicts):
+            for image, child_dict in zip(self.children, self.child_dicts):
+                image.source = child_dict["source"]
                 # image._img_widget.container.image.bind(on_error=f)
         else:
-            super(ImageSearchResultGrid, self).on_element_dicts(*_)
+            super(ImageSearchResultGrid, self).on_child_dicts(*_)
 
     def get_images(self, keywords=None):
         """
@@ -101,7 +101,7 @@ class ImageSearchResultGrid(MyCheckImageGrid):
             if keywords is None
             else word.request_img_urls(keywords=keywords)
         )
-        self.element_dicts = [{"source": url} for url in paths]
+        self.child_dicts = [{"source": url} for url in paths]
 
 
 def download_selected_image():
