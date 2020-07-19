@@ -86,19 +86,11 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="behaviors.html">mychooser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menu.html">Main Menu</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mychooser.html">mychooser</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_queue.html">Queue Screen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Single Word Screen</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.ImageSearchResultGrid">ImageSearchResultGrid</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.ImageSearchResultGrid.get_images">get_images</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.ImageSearchResultGrid.on_element_dicts">on_element_dicts</a></li>
-</ul>
-</li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#screen_single_word.Tab">Tab</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.icon">icon</a></li>
 </ul>
@@ -121,21 +113,21 @@
 <li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.accept_suggestion">accept_suggestion</a></li>
 </ul>
 <ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.complete_generation">complete_generation</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.download_selected_image">download_selected_image</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.get_user_selection_dict">get_user_selection_dict</a></li>
+</ul>
+<ul>
 <li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.load_or_search">load_or_search</a></li>
 </ul>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.refresh_data">refresh_data</a></li>
 </ul>
 </li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.complete_generation">complete_generation</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.download_selected_image">download_selected_image</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.get_selection_dict">get_selection_dict</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="scroll_list.html">ScrollList</a></li>
@@ -213,30 +205,6 @@
   <div class="section" id="module-screen_single_word">
 <span id="single-word-screen"></span><h1>Single Word Screen<a class="headerlink" href="#module-screen_single_word" title="Permalink to this headline">¶</a></h1>
 <p>Contains the necessary functions and classes for the screen screen_single_word.</p>
-<dl class="py class">
-<dt id="screen_single_word.ImageSearchResultGrid">
-<em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">ImageSearchResultGrid</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#ImageSearchResultGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.ImageSearchResultGrid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.mychooser.MyCheckImageGrid</span></code></p>
-<p>Extends the <a class="reference internal" href="mychooser.html#mychooser.MyCheckImageGrid" title="mychooser.MyCheckImageGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">mychooser.MyCheckImageGrid</span></code></a> by the <a class="reference internal" href="#screen_single_word.ImageSearchResultGrid.get_images" title="screen_single_word.ImageSearchResultGrid.get_images"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_images()</span></code></a> method.</p>
-<dl class="py method">
-<dt id="screen_single_word.ImageSearchResultGrid.get_images">
-<code class="sig-name descname">get_images</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">keywords</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#ImageSearchResultGrid.get_images"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.ImageSearchResultGrid.get_images" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets images displayed in <a class="reference internal" href="#screen_single_word.ImageSearchResultGrid" title="screen_single_word.ImageSearchResultGrid"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageSearchResultGrid</span></code></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>keywords</strong> – If None, uses <code class="xref py py-attr docutils literal notranslate"><span class="pre">words.Word.img_urls</span></code>, else uses result of <a class="reference internal" href="../word_processing/words.html#words.Word.request_img_urls" title="words.Word.request_img_urls"><code class="xref py py-meth docutils literal notranslate"><span class="pre">words.Word.request_img_urls()</span></code></a>
-for given keywords. (Default = None)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="screen_single_word.ImageSearchResultGrid.on_element_dicts">
-<code class="sig-name descname">on_element_dicts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#ImageSearchResultGrid.on_element_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.ImageSearchResultGrid.on_element_dicts" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
 <dl class="py class">
 <dt id="screen_single_word.Tab">
 <em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">Tab</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#Tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab" title="Permalink to this definition">¶</a></dt>
@@ -319,6 +287,27 @@ data to include on the card.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="screen_single_word.WordProperties.complete_generation">
+<code class="sig-name descname">complete_generation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.complete_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.complete_generation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate Anki card from current user selection and changes screen.</p>
+<p>If the word was in the queue, returns to screen_queue.
+Else, resets the screen_single_word and changes to the edit_tab.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="screen_single_word.WordProperties.download_selected_image">
+<code class="sig-name descname">download_selected_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.download_selected_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.download_selected_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Downloads the currently selected image to <a class="reference internal" href="../word_processing/words.html#words.Word.base_path" title="words.Word.base_path"><code class="xref py py-meth docutils literal notranslate"><span class="pre">words.Word.base_path()</span></code></a> + “.jpg”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="screen_single_word.WordProperties.get_user_selection_dict">
+<code class="sig-name descname">get_user_selection_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.get_user_selection_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.get_user_selection_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current user selection in the form needed by add_anki_card.</p>
+<p>Example and explanation strings are tagged using <a class="reference internal" href="../utils.html#utils.tag_word_in_sentence" title="utils.tag_word_in_sentence"><code class="xref py py-func docutils literal notranslate"><span class="pre">utils.tag_word_in_sentence()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="screen_single_word.WordProperties.load_or_search">
 <code class="sig-name descname">load_or_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.load_or_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.load_or_search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Searches for word, suggests alternative if not found and shows images.</p>
@@ -330,26 +319,6 @@ data to include on the card.</p>
 <dd><p>Refresh UI with the data from <a class="reference internal" href="../word_processing/words.html#words.Word" title="words.Word"><code class="xref py py-class docutils literal notranslate"><span class="pre">words.Word</span></code></a>.</p>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_single_word.complete_generation">
-<code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">complete_generation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#complete_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.complete_generation" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generate Anki card from current user selection and changes screen.</p>
-<p>If the word was in the queue, returns to screen_queue.
-Else, resets the screen_single_word and changes to the edit_tab.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_single_word.download_selected_image">
-<code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">download_selected_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#download_selected_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.download_selected_image" title="Permalink to this definition">¶</a></dt>
-<dd><p>Downloads the currently selected image to :meth:<a href="#id1"><span class="problematic" id="id2">`</span></a>words.Word.base_path`+”.jpg”</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="screen_single_word.get_selection_dict">
-<code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">get_selection_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#get_selection_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.get_selection_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>Obtains Dictionary with all fields necessary for the Anki card from the current user selection.</p>
 </dd></dl>
 
 </div>

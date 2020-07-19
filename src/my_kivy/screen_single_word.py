@@ -86,7 +86,7 @@ class WordProperties(BoxLayout):
         return result_dict
 
     def download_selected_image(self):
-        """Downloads the currently selected image to :meth:`words.Word.base_path`+".jpg" """
+        """Downloads the currently selected image to :meth:`words.Word.base_path` + ".jpg" """
         # TODO: show spinner and cancel after certain time
         # TODO: Correct behavior on Error
         out_path = MDApp.get_running_app().word.base_path() + ".jpg"

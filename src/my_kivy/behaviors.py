@@ -94,11 +94,13 @@ class MultiStateBehaviour:
 
     state_dicts = DictProperty(None)
     """
-    :class:`~kivy.properties.DictProperty` dictionary of the form
-    {
-      state_1 : {"some_property": some_value, ...},
-      ...
-    }
+    :class:`~kivy.properties.DictProperty`. E.g.,
+    ::
+
+        state_dicts = {
+                state_1 : {"some_property": some_value, ...},
+                ...
+            }
     """
 
     animated_properties = ListProperty()

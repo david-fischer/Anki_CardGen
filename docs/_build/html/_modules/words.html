@@ -245,7 +245,7 @@
 <span class="sd">        Used as folder name to save files to.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">          : :method:`search_term_utf8` with spaces replaced by underscores.</span>
+<span class="sd">          : :meth:`search_term_utf8` with spaces replaced by underscores.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term_utf8</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
 
@@ -254,7 +254,7 @@
 <span class="sd">        Used as base to save files.</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">            `f&quot;{self.data_dir}/{self.folder()}/{self.folder()}&quot;&#39;</span>
+<span class="sd">          :  ``f&quot;{self.data_dir}/{self.folder()}/{self.folder()}&quot;``</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span></div>
 
@@ -290,10 +290,11 @@
 
 <div class="viewcode-block" id="Word.add_translations"><a class="viewcode-back" href="../word_processing/words.html#words.Word.add_translations">[docs]</a>    <span class="k">def</span> <span class="nf">add_translations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        For the attributes [&quot;examples&quot;, &quot;synonyms&quot;, &quot;antonyms&quot;], it iterates to the corresponding lists and adds</span>
+<span class="sd">        For the attributes [&quot;examples&quot;,&quot;explanations&quot;, &quot;synonyms&quot;, &quot;antonyms&quot;], it iterates to the corresponding lists</span>
+<span class="sd">        and adds</span>
 <span class="sd">        translations, where none are already present.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="s2">&quot;synonyms&quot;</span><span class="p">,</span> <span class="s2">&quot;antonyms&quot;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="s2">&quot;explanations&quot;</span><span class="p">,</span> <span class="s2">&quot;synonyms&quot;</span><span class="p">,</span> <span class="s2">&quot;antonyms&quot;</span><span class="p">]:</span>
             <span class="n">values</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
                 <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -350,6 +351,19 @@
         <span class="p">}</span>
         <span class="n">smart_saver</span><span class="p">(</span><span class="n">attribute_dict</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="Word.get_fix_card_dict"><a class="viewcode-back" href="../word_processing/words.html#words.Word.get_fix_card_dict">[docs]</a>    <span class="k">def</span> <span class="nf">get_fix_card_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the part of the data for the anki-card, that does not depend on the user-choice.&quot;&quot;&quot;</span>
+        <span class="n">media_files</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">]]</span>
+        <span class="n">media_files</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">media_files</span> <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;Word&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">,</span>
+            <span class="s2">&quot;Image&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;&lt;img src=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s1">.jpg&quot;&gt;&#39;</span><span class="p">,</span>
+            <span class="s2">&quot;Audio&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;[sound:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">folder</span><span class="p">()</span><span class="si">}</span><span class="s2">.mp3]&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;AdditionalInfo&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">add_info_dict</span><span class="p">),</span>
+            <span class="s2">&quot;ConjugationTable&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">conj_table_html</span><span class="p">,</span>
+            <span class="s2">&quot;media_files&quot;</span><span class="p">:</span> <span class="n">media_files</span><span class="p">,</span></div>
+        <span class="p">}</span>
+
     <span class="c1"># TODO: check if return value is important</span>
 <div class="viewcode-block" id="Word.search"><a class="viewcode-back" href="../word_processing/words.html#words.Word.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_search_term</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -365,6 +379,8 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">attribute_dict</span> <span class="o">=</span> <span class="n">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">attribute_dict</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_translations</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_as_json</span><span class="p">()</span>
                 <span class="k">return</span>
             <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
                 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not load previously saved file. Fetching words again...&quot;</span><span class="p">)</span>
