@@ -347,10 +347,11 @@ class ImageCarousel(MyCarousel):
 
 class CardCarousel(MyCarousel):
     def update_height(self, *_):
-        new_height = self.carousel.current_slide.height + 24
-        if self.height != new_height:
-            anim = Animation(height=new_height, duration=0.5)
-            anim.start(self)
+        if self.carousel.current_slide:
+            new_height = self.carousel.current_slide.height + 24
+            if self.height != new_height:
+                anim = Animation(height=new_height, duration=0.5)
+                anim.start(self)
 
     def on_child_dicts(self, *_):
         super(CardCarousel, self).on_child_dicts(*_)
