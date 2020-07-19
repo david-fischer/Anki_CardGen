@@ -9,11 +9,9 @@ from threading import Thread
 from time import sleep
 
 from kivy.clock import Clock, mainthread
-from kivy.event import EventDispatcher
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
-    DictProperty,
     ListProperty,
     ObjectProperty,
     OptionProperty,
@@ -24,42 +22,13 @@ from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
 from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
 
-from my_kivy.mychooser import ChildrenFromDictsBehavior
+from my_kivy.behaviors import CallbackBehavior, ChildrenFromDictsBehavior
 
 try:
     Builder.load_file("my_kivy/scroll_list.kv")
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
     Builder.load_file(os.path.join(this_directory, "scroll_list.kv"))
-
-
-class CallbackBehavior(EventDispatcher):
-    """
-    Mixin Class to implement a number of callbacks.
-
-    Usefull e.g. in combination with :class:`~kivy.uix.recycleview.RecycleView`.
-    There, the content is generated dynamically from a dictionary such that this class can be used to bind multiple
-    callbacks to different events of the widgets.
-
-    Warnings:
-        Callbacks are not unbound by :meth:`on_callbacks`.
-        Does this pose a problem?
-    """
-
-    callbacks = DictProperty()
-    """:class:`~kivy.propterty.DictProperty` of the form {"on_event": callback_fn}.
-    callback_fn(self) -> Any
-    """
-
-    def on_callbacks(self, *_):
-        """Binds the callbacks to the specified events on definition."""
-        for event, callback_fn in self.callbacks.items():
-            self.bind(**{event: partial(self.callback_wrapper, callback_fn)})
-
-    def callback_wrapper(self, callback, *_):
-        """Wrapper to call callback in new thread."""
-        thread = Thread(target=partial(callback, self))
-        thread.start()
 
 
 class LeftStatusIndicator(ILeftBody, AnchorLayout):
