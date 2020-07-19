@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="mychooser" href="mychooser.html" />
-    <link rel="prev" title="UI" href="../ui.html" /> 
+    <link rel="prev" title="mychooser" href="behaviors.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -86,30 +86,49 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="behaviors.html">mychooser</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Main Menu</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#main_menu.DrawerItem">DrawerItem</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerItem.icon">icon</a></li>
 </ul>
 <ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerItem.name">name</a></li>
+</ul>
+<ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerItem.on_release">on_release</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerItem.screen_name">screen_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerItem.path">path</a></li>
 </ul>
 </li>
 </ul>
 <ul>
 <li class="toctree-l3"><a class="reference internal" href="#main_menu.DrawerList">DrawerList</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.CheckElementObject">CheckElementObject</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.check_one">check_one</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.check_one">check_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.child_class_name">child_class_name</a></li>
 </ul>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.conditional_uncheck">conditional_uncheck</a></li>
 </ul>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.current">current</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerList.on_current">on_current</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#main_menu.KvScreen">KvScreen</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.KvScreen.create_content_file">create_content_file</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.KvScreen.load_content">load_content</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.KvScreen.path">path</a></li>
 </ul>
 </li>
 </ul>
@@ -204,12 +223,23 @@
 <dl class="py class">
 <dt id="main_menu.DrawerItem">
 <em class="property">class </em><code class="sig-prename descclassname">main_menu.</code><code class="sig-name descname">DrawerItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#DrawerItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.mychooser.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineIconListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineIconListItem</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.behaviors.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineIconListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineIconListItem</span></code></a></p>
 <p>List item that changes color based on <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code>.</p>
 <dl class="py attribute">
 <dt id="main_menu.DrawerItem.icon">
 <code class="sig-name descname">icon</code><a class="reference internal" href="../_modules/main_menu.html#DrawerItem.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerItem.icon" title="Permalink to this definition">¶</a></dt>
 <dd><p>name of icon.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="main_menu.DrawerItem.name">
+<code class="sig-name descname">name</code><a class="reference internal" href="../_modules/main_menu.html#DrawerItem.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerItem.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the screen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
@@ -224,9 +254,9 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="main_menu.DrawerItem.screen_name">
-<code class="sig-name descname">screen_name</code><a class="reference internal" href="../_modules/main_menu.html#DrawerItem.screen_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerItem.screen_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>name of the screen.</p>
+<dt id="main_menu.DrawerItem.path">
+<code class="sig-name descname">path</code><a class="reference internal" href="../_modules/main_menu.html#DrawerItem.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerItem.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>path of the screens kv-file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
 <dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
@@ -243,13 +273,13 @@
 <p>List containing <a class="reference internal" href="#main_menu.DrawerItem" title="main_menu.DrawerItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawerItem</span></code></a>.</p>
 <p>It has one active element at all times whose screen_name attribute is saved in <a class="reference internal" href="#main_menu.DrawerList.current" title="main_menu.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current</span></code></a>.</p>
 <dl class="py attribute">
-<dt id="main_menu.DrawerList.CheckElementObject">
-<code class="sig-name descname">CheckElementObject</code><a class="reference internal" href="../_modules/main_menu.html#DrawerList.CheckElementObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerList.CheckElementObject" title="Permalink to this definition">¶</a></dt>
+<dt id="main_menu.DrawerList.check_one">
+<code class="sig-name descname">check_one</code><em class="property"> = True</em><a class="reference internal" href="../_modules/main_menu.html#DrawerList.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerList.check_one" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt id="main_menu.DrawerList.check_one">
-<code class="sig-name descname">check_one</code><em class="property"> = True</em><a class="reference internal" href="../_modules/main_menu.html#DrawerList.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerList.check_one" title="Permalink to this definition">¶</a></dt>
+<dt id="main_menu.DrawerList.child_class_name">
+<code class="sig-name descname">child_class_name</code><em class="property"> = DrawerItem</em><a class="reference internal" href="../_modules/main_menu.html#DrawerList.child_class_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerList.child_class_name" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -261,8 +291,58 @@
 <dl class="py attribute">
 <dt id="main_menu.DrawerList.current">
 <code class="sig-name descname">current</code><a class="reference internal" href="../_modules/main_menu.html#DrawerList.current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerList.current" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> of currently active <a class="reference internal" href="#main_menu.DrawerItem.screen_name" title="main_menu.DrawerItem.screen_name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerItem.screen_name</span></code></a>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> of currently active <code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerItem.screen_name</span></code>.</p>
 </dd></dl>
+
+<dl class="py method">
+<dt id="main_menu.DrawerList.on_current">
+<code class="sig-name descname">on_current</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#DrawerList.on_current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.DrawerList.on_current" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="main_menu.KvScreen">
+<em class="property">class </em><code class="sig-prename descclassname">main_menu.</code><code class="sig-name descname">KvScreen</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#KvScreen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.KvScreen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.Screen" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.screenmanager.Screen</span></code></a></p>
+<p>Screen is an element intended to be used with a <code class="xref py py-class docutils literal notranslate"><span class="pre">ScreenManager</span></code>.
+Check module documentation for more information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Events</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><cite>on_pre_enter</cite>: ()</dt><dd><p>Event fired when the screen is about to be used: the entering
+animation is started.</p>
+</dd>
+<dt><cite>on_enter</cite>: ()</dt><dd><p>Event fired when the screen is displayed: the entering animation is
+complete.</p>
+</dd>
+<dt><cite>on_pre_leave</cite>: ()</dt><dd><p>Event fired when the screen is about to be removed: the leaving
+animation is started.</p>
+</dd>
+<dt><cite>on_leave</cite>: ()</dt><dd><p>Event fired when the screen is removed: the leaving animation is
+finished.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 1.6.0: </span>Events <cite>on_pre_enter</cite>, <cite>on_enter</cite>, <cite>on_pre_leave</cite> and <cite>on_leave</cite> were
+added.</p>
+</div>
+<dl class="py method">
+<dt id="main_menu.KvScreen.create_content_file">
+<code class="sig-name descname">create_content_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#KvScreen.create_content_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.KvScreen.create_content_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="main_menu.KvScreen.load_content">
+<code class="sig-name descname">load_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#KvScreen.load_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.KvScreen.load_content" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="main_menu.KvScreen.path">
+<code class="sig-name descname">path</code><a class="reference internal" href="../_modules/main_menu.html#KvScreen.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.KvScreen.path" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -274,7 +354,7 @@
 <dl class="py method">
 <dt id="main_menu.MainMenu.on_parent">
 <code class="sig-name descname">on_parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#MainMenu.on_parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.MainMenu.on_parent" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function sets up the screens using the words from <a class="reference internal" href="#main_menu.MainMenu.screen_dicts" title="main_menu.MainMenu.screen_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_dicts</span></code></a>.</p>
+<dd><p>This function sets up the screens using <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">path</span></code> from <a class="reference internal" href="#main_menu.MainMenu.screen_dicts" title="main_menu.MainMenu.screen_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_dicts</span></code></a>.</p>
 <p>The screens are added to the screen_man and corresponding entries to the drawer_list.
 Then <a class="reference internal" href="#main_menu.DrawerList.current" title="main_menu.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerList.current</span></code></a> is bound to screen_man.current and vice-versa.</p>
 </dd></dl>
@@ -300,7 +380,7 @@ Then <a class="reference internal" href="#main_menu.DrawerList.current" title="m
         <a href="mychooser.html" class="btn btn-neutral float-right" title="mychooser" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../ui.html" class="btn btn-neutral float-left" title="UI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="behaviors.html" class="btn btn-neutral float-left" title="mychooser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

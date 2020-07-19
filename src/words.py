@@ -93,7 +93,7 @@ class Word:
         Used as folder name to save files to.
 
         Returns:
-          : :method:`search_term_utf8` with spaces replaced by underscores.
+          : :meth:`search_term_utf8` with spaces replaced by underscores.
         """
         return self.search_term_utf8().replace(" ", "_")
 
@@ -102,7 +102,7 @@ class Word:
         Used as base to save files.
 
         Returns:
-            `f"{self.data_dir}/{self.folder()}/{self.folder()}"'
+          :  ``f"{self.data_dir}/{self.folder()}/{self.folder()}"``
         """
         return f"{self.data_dir}/{self.folder()}/{self.folder()}"
 

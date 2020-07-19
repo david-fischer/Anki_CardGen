@@ -151,29 +151,39 @@
             
   <h1>Source code for mychooser</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
-<span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">clock</span>
 <span class="kn">from</span> <span class="nn">kivy.animation</span> <span class="kn">import</span> <span class="n">Animation</span>
+<span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">BooleanProperty</span><span class="p">,</span>
     <span class="n">DictProperty</span><span class="p">,</span>
-    <span class="n">ListProperty</span><span class="p">,</span>
     <span class="n">NumericProperty</span><span class="p">,</span>
     <span class="n">ObjectProperty</span><span class="p">,</span>
-    <span class="n">Property</span><span class="p">,</span>
     <span class="n">StringProperty</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">ButtonBehavior</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.gridlayout</span> <span class="kn">import</span> <span class="n">GridLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.floatlayout</span> <span class="kn">import</span> <span class="n">FloatLayout</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.image</span> <span class="kn">import</span> <span class="n">AsyncImage</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.modalview</span> <span class="kn">import</span> <span class="n">ModalView</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.recycleview</span> <span class="kn">import</span> <span class="n">RecycleView</span>
+<span class="kn">from</span> <span class="nn">kivy.uix.scrollview</span> <span class="kn">import</span> <span class="n">ScrollView</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.stacklayout</span> <span class="kn">import</span> <span class="n">StackLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.widget</span> <span class="kn">import</span> <span class="n">Widget</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">kivymd.theming</span> <span class="kn">import</span> <span class="n">ThemableBehavior</span>
-<span class="kn">from</span> <span class="nn">kivymd.uix.behaviors</span> <span class="kn">import</span> <span class="n">CircularRippleBehavior</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.behaviors</span> <span class="kn">import</span> <span class="n">CircularRippleBehavior</span><span class="p">,</span> <span class="n">RectangularRippleBehavior</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.card</span> <span class="kn">import</span> <span class="n">MDCard</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.imagelist</span> <span class="kn">import</span> <span class="n">SmartTile</span>
+
+<span class="kn">from</span> <span class="nn">my_kivy.behaviors</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CheckBehavior</span><span class="p">,</span>
+    <span class="n">ChildrenFromDictsBehavior</span><span class="p">,</span>
+    <span class="n">LongPressBehavior</span><span class="p">,</span>
+    <span class="n">ThemableColorChangeBehavior</span><span class="p">,</span>
+    <span class="n">TranslationOnCheckBehavior</span><span class="p">,</span>
+<span class="p">)</span>
 
 <span class="k">try</span><span class="p">:</span>
     <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;my_kivy/mychooser.kv&quot;</span><span class="p">)</span>
@@ -182,57 +192,15 @@
     <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_directory</span><span class="p">,</span> <span class="s2">&quot;mychooser.kv&quot;</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="MultiStateBehaviour"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MultiStateBehaviour">[docs]</a><span class="k">class</span> <span class="nc">MultiStateBehaviour</span><span class="p">:</span>
-<div class="viewcode-block" id="MultiStateBehaviour.current_state"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MultiStateBehaviour.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.Property`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="MultiStateBehaviour.state_dicts"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MultiStateBehaviour.state_dicts">[docs]</a>    <span class="n">state_dicts</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="MultiStateBehaviour.animated_properties"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MultiStateBehaviour.animated_properties">[docs]</a>    <span class="n">animated_properties</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MultiStateBehaviour</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="n">clock</span><span class="o">.</span><span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
-
-<div class="viewcode-block" id="MultiStateBehaviour.on_current_state"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MultiStateBehaviour.on_current_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="n">animation_dict</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">key</span><span class="p">:</span> <span class="n">val</span>
-            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animated_properties</span>
-        <span class="p">}</span>
-        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">current_state</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">animated_properties</span><span class="p">:</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">animation_dict</span><span class="p">:</span>
-            <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="o">**</span><span class="n">animation_dict</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="s2">&quot;out_circ&quot;</span><span class="p">)</span>
-            <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">(</span><span class="n">MultiStateBehaviour</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">{},</span> <span class="kc">False</span><span class="p">:</span> <span class="p">{}}</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span>
-        <span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="CheckContainer"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer">[docs]</a><span class="k">class</span> <span class="nc">CheckContainer</span><span class="p">(</span><span class="n">Widget</span><span class="p">):</span>
+<div class="viewcode-block" id="CheckContainer"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer">[docs]</a><span class="k">class</span> <span class="nc">CheckContainer</span><span class="p">(</span><span class="n">ChildrenFromDictsBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Test&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="CheckContainer.check_one"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer.check_one">[docs]</a>    <span class="n">check_one</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.BooleanProperty`&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CheckContainer.element_dicts"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer.element_dicts">[docs]</a>    <span class="n">element_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="CheckContainer.CheckElementObject"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;current_state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_uncheck</span>
 
 <div class="viewcode-block" id="CheckContainer.conditional_uncheck"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_one</span><span class="p">:</span>
@@ -247,55 +215,7 @@
         <span class="p">]</span>
         <span class="k">if</span> <span class="n">property_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">checked_elements</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">property_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">checked_elements</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="CheckContainer.on_element_dicts"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CheckContainer.on_element_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_element_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">elem_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">element_dicts</span><span class="p">:</span>
-            <span class="n">new_check_element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">CheckElementObject</span><span class="p">(</span><span class="o">**</span><span class="n">elem_dict</span><span class="p">)</span>
-            <span class="n">new_check_element</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current_state</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">new_check_element</span><span class="p">)</span></div></div>
-        <span class="c1"># if self.check_one:</span>
-        <span class="c1">#     self.children[-1].checked = True</span>
-
-
-<div class="viewcode-block" id="TranslationOnCheckBehavior"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.TranslationOnCheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">TranslationOnCheckBehavior</span><span class="p">:</span>
-<div class="viewcode-block" id="TranslationOnCheckBehavior.text_orig"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.TranslationOnCheckBehavior.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;orig&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="TranslationOnCheckBehavior.text_trans"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.TranslationOnCheckBehavior.text_trans">[docs]</a>    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;trans&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">True</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_orig</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">False</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_trans</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="ThemableColorChangeBehavior"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ThemableColorChangeBehavior">[docs]</a><span class="k">class</span> <span class="nc">ThemableColorChangeBehavior</span><span class="p">:</span>
-<div class="viewcode-block" id="ThemableColorChangeBehavior.text_color"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ThemableColorChangeBehavior.text_color">[docs]</a>    <span class="n">text_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="ThemableColorChangeBehavior.bg_color"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ThemableColorChangeBehavior.bg_color">[docs]</a>    <span class="n">bg_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="ThemableColorChangeBehavior.animated_properties"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ThemableColorChangeBehavior.animated_properties">[docs]</a>    <span class="n">animated_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bg_color&quot;</span><span class="p">,</span> <span class="s2">&quot;text_color&quot;</span><span class="p">]</span></div>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">theme_style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">True</span><span class="p">][</span><span class="s2">&quot;bg_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_color</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">False</span><span class="p">][</span><span class="s2">&quot;bg_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_darkest</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">theme_style</span> <span class="o">==</span> <span class="s2">&quot;Light&quot;</span>
-            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_light</span>
-        <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">True</span><span class="p">][</span><span class="s2">&quot;text_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">False</span><span class="p">][</span><span class="s2">&quot;text_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">secondary_text_color</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">property_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">checked_elements</span><span class="p">]</span></div></div>
 
 
 <div class="viewcode-block" id="MyCheckCard"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckCard">[docs]</a><span class="k">class</span> <span class="nc">MyCheckCard</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">):</span>
@@ -332,20 +252,8 @@
     <span class="k">pass</span></div>
 
 
-<div class="viewcode-block" id="MyCheckCardContainer"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckCardContainer">[docs]</a><span class="k">class</span> <span class="nc">MyCheckCardContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
-<div class="viewcode-block" id="MyCheckCardContainer.CheckElementObject"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckCardContainer.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyCheckCard</span></div></div>
-
-
-<div class="viewcode-block" id="MyTransCardContainer"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyTransCardContainer">[docs]</a><span class="k">class</span> <span class="nc">MyTransCardContainer</span><span class="p">(</span><span class="n">MyCheckCardContainer</span><span class="p">):</span>
-<div class="viewcode-block" id="MyTransCardContainer.CheckElementObject"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyTransCardContainer.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyTransCard</span></div></div>
-
-
 <div class="viewcode-block" id="MyCheckChipContainer"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckChipContainer">[docs]</a><span class="k">class</span> <span class="nc">MyCheckChipContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">StackLayout</span><span class="p">):</span>
-<div class="viewcode-block" id="MyCheckChipContainer.CheckElementObject"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckChipContainer.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyCheckChip</span></div></div>
-
-
-<div class="viewcode-block" id="MyTransChipContainer"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyTransChipContainer">[docs]</a><span class="k">class</span> <span class="nc">MyTransChipContainer</span><span class="p">(</span><span class="n">MyCheckChipContainer</span><span class="p">):</span>
-<div class="viewcode-block" id="MyTransChipContainer.CheckElementObject"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyTransChipContainer.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyTransChip</span></div></div>
+<div class="viewcode-block" id="MyCheckChipContainer.child_class_name"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckChipContainer.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;MyCheckChip&quot;</span></div></div>
 
 
 <div class="viewcode-block" id="MyCheckImageTile"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckImageTile">[docs]</a><span class="k">class</span> <span class="nc">MyCheckImageTile</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">SmartTile</span><span class="p">):</span>
@@ -363,60 +271,137 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span></div></div>
 
 
-<div class="viewcode-block" id="MyCheckImageGrid"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckImageGrid">[docs]</a><span class="k">class</span> <span class="nc">MyCheckImageGrid</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">GridLayout</span><span class="p">):</span>
-<div class="viewcode-block" id="MyCheckImageGrid.CheckElementObject"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCheckImageGrid.CheckElementObject">[docs]</a>    <span class="n">CheckElementObject</span> <span class="o">=</span> <span class="n">MyCheckImageTile</span></div></div>
+<div class="viewcode-block" id="TransCard"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.TransCard">[docs]</a><span class="k">class</span> <span class="nc">TransCard</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">,</span> <span class="n">RectangularRippleBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="TransCard.text_orig"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.TransCard.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TransCard.text_trans"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.TransCard.text_trans">[docs]</a>    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LongPressImage"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.LongPressImage">[docs]</a><span class="k">class</span> <span class="nc">LongPressImage</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">LongPressBehavior</span><span class="p">,</span> <span class="n">AsyncImage</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;LongPressImage&quot;</span><span class="p">,</span> <span class="n">LongPressImage</span><span class="p">)</span>
+<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;TransCard&quot;</span><span class="p">,</span> <span class="n">TransCard</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ScrollBox"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ScrollBox">[docs]</a><span class="k">class</span> <span class="nc">ScrollBox</span><span class="p">(</span><span class="n">ChildrenFromDictsBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="ScrollGrid"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ScrollGrid">[docs]</a><span class="k">class</span> <span class="nc">ScrollGrid</span><span class="p">(</span><span class="n">ChildrenFromDictsBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;ScrollBox&quot;</span><span class="p">,</span> <span class="n">ScrollBox</span><span class="p">)</span>
+<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;ScrollGrid&quot;</span><span class="p">,</span> <span class="n">ScrollGrid</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="RecycleViewBox"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.RecycleViewBox">[docs]</a><span class="k">class</span> <span class="nc">RecycleViewBox</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;RecycleViewBox&quot;</span><span class="p">,</span> <span class="n">RecycleViewBox</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="MyCarousel"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel">[docs]</a><span class="k">class</span> <span class="nc">MyCarousel</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">ChildrenFromDictsBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel.carousel"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.carousel">[docs]</a>    <span class="n">carousel</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.height_dict"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.height_dict">[docs]</a>    <span class="n">height_dict</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.recycle_view_name"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.recycle_view_name">[docs]</a>    <span class="n">recycle_view_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.recycle_view_data_class"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.recycle_view_data_class">[docs]</a>    <span class="n">recycle_view_data_class</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.modal"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.modal">[docs]</a>    <span class="n">modal</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">update_height</span><span class="p">,</span>
+            <span class="s2">&quot;on_press&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_menu</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_child_dicts</span><span class="p">()</span>
+
+<div class="viewcode-block" id="MyCarousel.before_add_child"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_child_width</span><span class="p">(</span><span class="n">child</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MyCarousel.after_add_child"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_child_width</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MyCarousel.set_child_width"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.set_child_width">[docs]</a>    <span class="k">def</span> <span class="nf">set_child_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">left_icon</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">right_icon</span><span class="o">.</span><span class="n">width</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MyCarousel.update_height"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="MyCarousel.get_modal_content"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.get_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+        <span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
+
+        <span class="n">data_dicts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">{</span><span class="o">**</span><span class="nb">dict</span><span class="p">,</span> <span class="s2">&quot;size_hint&quot;</span><span class="p">:</span> <span class="n">size_hint</span><span class="p">,</span> <span class="s2">&quot;on_press&quot;</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">i</span><span class="p">)}</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="nb">dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">child_dicts</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">recycle_view_cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">recycle_view_name</span><span class="p">)</span>
+        <span class="n">recycle_view</span> <span class="o">=</span> <span class="n">recycle_view_cls</span><span class="p">()</span>
+        <span class="n">recycle_view</span><span class="o">.</span><span class="n">child_class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">recycle_view_data_class</span>
+        <span class="n">recycle_view</span><span class="o">.</span><span class="n">child_dicts</span> <span class="o">=</span> <span class="n">data_dicts</span>
+        <span class="k">return</span> <span class="n">recycle_view</span></div>
+
+<div class="viewcode-block" id="MyCarousel.on_child_dicts"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.on_child_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_child_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_child_dicts</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MyCarousel.get_checked"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">property_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">checked_elements</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">property_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">checked_elements</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">property_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">checked_elements</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="MyCarousel.open_menu"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.MyCarousel.open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">open_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modal</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">()</span>
+        <span class="n">modal_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modal_content</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">modal_content</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="ImageCarousel"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ImageCarousel">[docs]</a><span class="k">class</span> <span class="nc">ImageCarousel</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageCarousel.get_modal_content"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.ImageCarousel.get_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ImageCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_modal_content</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="n">size_hint</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CardCarousel"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CardCarousel">[docs]</a><span class="k">class</span> <span class="nc">CardCarousel</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">):</span>
+<div class="viewcode-block" id="CardCarousel.update_height"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CardCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="p">:</span>
+            <span class="n">new_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">24</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">new_height</span><span class="p">:</span>
+                <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">new_height</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+                <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CardCarousel.on_child_dicts"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CardCarousel.on_child_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_child_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CardCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_child_dicts</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span></div></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
-<div class="viewcode-block" id="IMG_STRING"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.IMG_STRING">[docs]</a>    <span class="n">IMG_STRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">FloatLayout:</span>
-<span class="s2">    RecycleView:</span>
-<span class="s2">        do_scroll_x: False</span>
-<span class="s2">        do_scroll_y: True</span>
-<span class="s2">        size_hint: 1,1</span>
-<span class="s2">        MyCheckImageGrid:</span>
-<span class="s2">            cols: 2</span>
-<span class="s2">            id: image_grid</span>
-<span class="s2">            row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4</span>
-<span class="s2">            row_force_default: True</span>
-<span class="s2">            size_hint_y: None</span>
-<span class="s2">            height: self.minimum_height</span>
-<span class="s2">            padding: dp(4), dp(4)</span>
-<span class="s2">            spacing: dp(4)</span>
-<span class="s2">            check_one: True</span>
-<span class="s2">            element_dicts: [{&quot;source&quot;:&quot;../assets/AnkiCardGen.png&quot;} for i in range(10)]</span>
 
-<span class="s2">    MDFloatingActionButton:</span>
-<span class="s2">        pos_hint: {&quot;center_x&quot;:0.5,&quot;center_y&quot;:0.5}</span>
-<span class="s2">        on_press: image_grid.element_dicts = [{&quot;source&quot;:&quot;../assets/Latte.jpg&quot;} for i in range(10)]</span>
-
-<span class="s2">&quot;&quot;&quot;</span></div>
-    <span class="n">TRANS_CARD_STRING</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;BoxLayout:</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    MyTransCardContainer:</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s1">&#39;        element_dicts: [{&quot;text_orig&quot;:(&quot;text_orig_&quot;+str(i))*10,&quot;text_trans&quot;: (&quot;text_trans_&quot;+str(&#39;</span>
-        <span class="s1">&#39;i))*10,  &quot;current_state&quot;: i%2==0} for i in range(10)]&#39;</span>
+<div class="viewcode-block" id="CARD_CAROUSEL_STRING"><a class="viewcode-back" href="../ui/mychooser.html#mychooser.CARD_CAROUSEL_STRING">[docs]</a>    <span class="n">CARD_CAROUSEL_STRING</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;BoxLayout:</span><span class="se">\n</span><span class="s2">&quot;</span></div>
+        <span class="s2">&quot;    CardCarousel:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s1">&#39;        child_dicts: [{&quot;text_orig&quot;:str(i)*50*i,&quot;text_trans&quot;:&quot;Trans&quot;} for i in range(10)]&#39;</span>
     <span class="p">)</span>
 
-    <span class="n">CHECK_CARD_STRING</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">IMAGE_CAROUSEL_STRING</span> <span class="o">=</span> <span class="p">(</span>
         <span class="s2">&quot;BoxLayout:</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    MyCheckCardContainer:</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s1">&#39;        element_dicts: [{&quot;text&quot;:(&quot;text_orig_&quot;+str(i))*10, &quot;current_state&quot;:True} for i in range(10)]&#39;</span>
-    <span class="p">)</span>
-
-    <span class="n">TRANS_CHIP_STRING</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;BoxLayout:</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s2">&quot;    MyTransChipContainer:</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="s1">&#39;        element_dicts: [{&quot;text_orig&quot;:(&quot;text_orig_&quot;+str(i))*10,&quot;text_trans&quot;: (&quot;text_trans_&quot;+str(&#39;</span>
-        <span class="s2">&quot;i))*10} for i in range(10)]&quot;</span>
+        <span class="s2">&quot;    ImageCarousel:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="s1">&#39;        child_dicts: [{&quot;source&quot;:&quot;../assets/AnkiCardGen.png&quot;} for _ in range(5)]&#39;</span>
     <span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_palette</span> <span class="o">=</span> <span class="s2">&quot;Red&quot;</span>  <span class="c1"># &quot;Purple&quot;, &quot;Red&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">theme_style</span> <span class="o">=</span> <span class="s2">&quot;Light&quot;</span>  <span class="c1"># &quot;Purple&quot;, &quot;Red&quot;</span>
-            <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">TRANS_CHIP_STRING</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="n">CARD_CAROUSEL_STRING</span><span class="p">)</span>
 
     <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>

@@ -128,6 +128,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#words.Word.gender">gender</a></li>
 </ul>
 <ul>
+<li class="toctree-l4"><a class="reference internal" href="#words.Word.get_fix_card_dict">get_fix_card_dict</a></li>
+</ul>
+<ul>
 <li class="toctree-l4"><a class="reference internal" href="#words.Word.image_urls">image_urls</a></li>
 </ul>
 <ul>
@@ -270,7 +273,8 @@ process.</p>
 <dl class="py method">
 <dt id="words.Word.add_translations">
 <code class="sig-name descname">add_translations</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/words.html#Word.add_translations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word.add_translations" title="Permalink to this definition">¶</a></dt>
-<dd><p>For the attributes [“examples”, “synonyms”, “antonyms”], it iterates to the corresponding lists and adds
+<dd><p>For the attributes [“examples”,”explanations”, “synonyms”, “antonyms”], it iterates to the corresponding lists
+and adds
 translations, where none are already present.</p>
 </dd></dl>
 
@@ -291,7 +295,7 @@ translations, where none are already present.</p>
 <dd><p>Used as base to save files.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a href="#id1"><span class="problematic" id="id2">`</span></a>f”{self.data_dir}/{self.folder()}/{self.folder()}”’</p>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">f&quot;{self.data_dir}/{self.folder()}/{self.folder()}&quot;</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -322,7 +326,7 @@ translations, where none are already present.</p>
 <dd><p>Used as folder name to save files to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><a href="#id3"><span class="problematic" id="id4">:method:`search_term_utf8`</span></a> with spaces replaced by underscores.</p>
+<dd class="field-odd"><p><a class="reference internal" href="#words.Word.search_term_utf8" title="words.Word.search_term_utf8"><code class="xref py py-meth docutils literal notranslate"><span class="pre">search_term_utf8()</span></code></a> with spaces replaced by underscores.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -342,6 +346,12 @@ translations, where none are already present.</p>
 <dt id="words.Word.gender">
 <code class="sig-name descname">gender</code><em class="property"> = </em><a class="reference internal" href="../_modules/words.html#Word.gender"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word.gender" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="py method">
+<dt id="words.Word.get_fix_card_dict">
+<code class="sig-name descname">get_fix_card_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/words.html#Word.get_fix_card_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#words.Word.get_fix_card_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the part of the data for the anki-card, that does not depend on the user-choice.</p>
+</dd></dl>
 
 <dl class="py attribute">
 <dt id="words.Word.image_urls">
