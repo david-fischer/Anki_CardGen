@@ -1,102 +1,65 @@
 """
-Implements :class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.
-"""
+Implements Different classes to display elements in a scroll view.
 
+:class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.
+"""
+import os
 from functools import partial
 from threading import Thread
 from time import sleep
 
 from kivy.clock import Clock, mainthread
+from kivy.event import EventDispatcher
+from kivy.factory import Factory
 from kivy.lang import Builder
-from kivy.properties import ListProperty, ObjectProperty, OptionProperty
+from kivy.properties import (
+    DictProperty,
+    ListProperty,
+    ObjectProperty,
+    OptionProperty,
+)
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.recycleview import RecycleView
+from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
-from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem, OneLineListItem
+from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
 
-Builder.load_string(
+from my_kivy.mychooser import ChildrenFromDictsBehavior
+
+try:
+    Builder.load_file("my_kivy/scroll_list.kv")
+except FileNotFoundError:
+    this_directory = os.path.dirname(__file__)
+    Builder.load_file(os.path.join(this_directory, "scroll_list.kv"))
+
+
+class CallbackBehavior(EventDispatcher):
     """
-<LeftStatusIndicator>:
-    spinner: spinner
-    active: False
-    icon: ""
+    Mixin Class to implement a number of callbacks.
 
-    MDIcon:
-        id: _icon
-        icon: root.icon
-        color: (0,1,0 ,1 )
-        size_hint: 1,1
-        font_size: 30
-        texture_size: self.size
+    Usefull e.g. in combination with :class:`~kivy.uix.recycleview.RecycleView`.
+    There, the content is generated dynamically from a dictionary such that this class can be used to bind multiple
+    callbacks to different events of the widgets.
 
-    MDSpinner:
-        id: spinner
-        active: root.active
-        size_hint: 0.7,0.7
-        opacity: float(root.active)
-
-<LeftStatusIndicatorListItem>:
-    loading_state: "queued"
-    active: self.loading_state=="loading"
-    icon: "check-circle" if self.loading_state=="ready" else ""
-
-
-    LeftStatusIndicator:
-        active: root.active
-        icon: root.icon
-
-
-<ScrollList>:
-    list: md_list
-
-    MDList:
-        id: md_list
-    """
-)
-
-
-class ScrollList(RecycleView):
-    """
-    Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.
-
-    Automatically updates upon change of :attr:`item_dicts`.
+    Warnings:
+        Callbacks are not unbound by :meth:`on_callbacks`.
+        Does this pose a problem?
     """
 
-    item_type = ObjectProperty(OneLineListItem)
-    """:class:`~kivy.properties.ObjectProperty` constructor for items."""
-
-    item_dicts = ListProperty()
-    """:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed."""
-
-    items = ListProperty()
-    """:class:`~kivy.properties.ListProperty` containing the constructed items."""
-
-    list = ObjectProperty(MDList())
-    """
-    :class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.MDList`.
-    Contains the items.
+    callbacks = DictProperty()
+    """:class:`~kivy.propterty.DictProperty` of the form {"on_event": callback_fn}.
+    callback_fn(self) -> Any
     """
 
-    callback = ObjectProperty(lambda x: print(x.text))
-    """:class:`~kivy.properties.ObjectProperty`"""
+    def on_callbacks(self, *_):
+        """Binds the callbacks to the specified events on definition."""
+        for event, callback_fn in self.callbacks.items():
+            self.bind(**{event: partial(self.callback_wrapper, callback_fn)})
 
-    def __init__(self, **kwargs):
-        super(ScrollList, self).__init__(**kwargs)
-        self.on_item_dicts()
-
-    @mainthread
-    def on_item_dicts(self, *_):
-        """
-        Construct items from :attr:`item_dicts` using :attr:`item_type`.
-        """
-        items = [
-            self.item_type(**item_dict, on_press=self.callback)
-            for item_dict in self.item_dicts
-        ]
-        self.list.clear_widgets()
-        for item in items:
-            item.root = self
-            self.list.add_widget(item)
+    def callback_wrapper(self, callback, *_):
+        """Wrapper to call callback in new thread."""
+        thread = Thread(target=partial(callback, self))
+        thread.start()
 
 
 class LeftStatusIndicator(ILeftBody, AnchorLayout):
@@ -111,7 +74,7 @@ class LeftStatusIndicator(ILeftBody, AnchorLayout):
     """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.label.MDIcon`"""
 
 
-class LeftStatusIndicatorListItem(OneLineAvatarListItem):
+class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
     """
     Contains :class:`LeftStatusIndicator` as left element.
 
@@ -128,11 +91,58 @@ class LeftStatusIndicatorListItem(OneLineAvatarListItem):
     """
 
 
+Factory.register("LeftStatusIndicatorListItem", LeftStatusIndicatorListItem)
+
+
+class ScrollList(ChildrenFromDictsBehavior, ScrollView):
+    """
+    Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.
+
+    Automatically updates upon change of :attr:`item_dicts`.
+    """
+
+    # item_type = ObjectProperty(OneLineListItem)
+    # """:class:`~kivy.properties.ObjectProperty` constructor for items."""
+
+    child_dicts = ListProperty()
+    """:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed."""
+
+    list = ObjectProperty(MDList())
+    """
+    :class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.MDList`.
+    Contains the items.
+    """
+
+    callback = ObjectProperty(lambda self, obj: print(obj.text))
+
+    def __init__(self, **kwargs):
+        super(ScrollList, self).__init__(**kwargs)
+        self.child_bindings["on_press"] = self.callback_wrapper
+
+    # TODO: callback_wrapper correct? Check if this is the desired behavior.
+    def callback_wrapper(self, obj, *_):
+        """Wrapper to execute callback in new thread."""
+        thread = Thread(target=partial(self.callback, obj))
+        thread.start()
+
+    @mainthread
+    def on_child_dicts(self, *_):
+        """mainthread decorator ensures that changes are displayed correctly."""
+        super(ScrollList, self).on_child_dicts(*_)
+
+
 def _schedule(obj):
     if obj.loading_state == "queued":
         obj.loading_state = "loading"
-        sleep(10)
+        sleep(5)
         Clock.schedule_once(lambda dt: setattr(obj, "loading_state", "ready"), 5)
+
+
+class RecycleList(RecycleView):
+    """
+    :class:`~kivy.uix.recycleview.RecycleView` object containing a ``RecycleViewBoxLayout`` and some formatting
+    instructions.
+    """
 
 
 # pylint: disable = W,C,R,I
@@ -140,10 +150,17 @@ if __name__ == "__main__":
 
     class TestApp(MDApp):
         def build(self):
-            return ScrollList(
-                item_type=LeftStatusIndicatorListItem,
-                item_dicts=[{"text": "test"}] * 25,
-                callback=lambda obj: Thread(target=partial(_schedule, obj)).start(),
-            )
+            sl = RecycleList()  # , callback=_schedule
+            sl.viewclass = "LeftStatusIndicatorListItem"
+            sl.data = [
+                {
+                    "text": f"test_{i}",
+                    "callback": _schedule,
+                    "callback_binding": "on_press",
+                    "loading_state": "queued",
+                }
+                for i in range(10000)
+            ]
+            return sl
 
     TestApp().run()

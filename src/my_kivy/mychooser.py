@@ -19,9 +19,9 @@ from kivy.properties import (
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import AsyncImage
 from kivy.uix.modalview import ModalView
+from kivy.uix.recycleview import RecycleView
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
@@ -251,10 +251,6 @@ class MyCheckImageTile(CheckBehavior, SmartTile):
         self.current_state = not self.current_state
 
 
-class MyCheckImageGrid(CheckContainer, ThemableBehavior, GridLayout):
-    CheckElementObject = MyCheckImageTile
-
-
 class TransCard(LongPressBehavior, MDCard, RectangularRippleBehavior):
     text_orig = StringProperty("")
     text_trans = StringProperty("")
@@ -278,6 +274,13 @@ class ScrollGrid(ChildrenFromDictsBehavior, ScrollView):
 
 Factory.register("ScrollBox", ScrollBox)
 Factory.register("ScrollGrid", ScrollGrid)
+
+
+class RecycleViewBox(RecycleView):
+    pass
+
+
+Factory.register("RecycleViewBox", RecycleViewBox)
 
 
 class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
