@@ -144,8 +144,8 @@ def click_on_queue_item(item):
     print(item.text)
     # MDApp.get_running_app().queue_words.remove(item.text)
     set_screen("screen_single_word")
-    widget_by_id("screen_single_word/edit_tab/word_prop/search_field").text = item.text
-    widget_by_id("screen_single_word/edit_tab/word_prop").load_or_search(item.text)
+    widget_by_id("screen_single_word/word_prop/search_field").text = item.text
+    widget_by_id("screen_single_word/word_prop").load_or_search(item.text)
     # MDApp.get_running_app().done_words.append(item.text)
 
 

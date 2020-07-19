@@ -15,27 +15,24 @@ FloatLayout:
         Tab:
             id: queue_tab
             text:"format-list-checkbox"
-            ScrollList:
-                item_type: LeftStatusIndicatorListItem
-                callback: click_on_queue_item
-                item_dicts: [{"text": word, "loading_state": app.loading_state_dict[word]} for word in app.queue_words]
+            RecycleList:
+                viewclass: "LeftStatusIndicatorListItem"
+                data: [{"text": word, "loading_state": app.loading_state_dict[word], "callbacks": {"on_press":click_on_queue_item} } for word in app.queue_words]
 
         Tab:
             id: done_tab
             text: "checkbox-marked-circle"
-            ScrollList:
-                item_type: LeftStatusIndicatorListItem
-                callback: click_on_done_item
-                item_dicts: [{"text": word} for word in app.done_words]
+            RecycleList:
+                viewclass: "LeftStatusIndicatorListItem"
+                data: [{"text": word, "callbacks": {"on_press":click_on_done_item} } for word in app.done_words]
 
 
         Tab:
-            item_type: LeftStatusIndicatorListItem
             id: error_tab
             text: "close-circle"
-            ScrollList:
-                callback: click_on_error_item
-                item_dicts: [{"text": word} for word in app.error_words]
+            RecycleList:
+                viewclass: "LeftStatusIndicatorListItem"
+                data: [{"text": word, "callbacks": {"on_press":click_on_error_item}} for word in app.error_words]
 
 
     MyFloatingActionButtonSpeedDial:

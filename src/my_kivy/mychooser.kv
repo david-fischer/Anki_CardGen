@@ -81,31 +81,6 @@
             rectangle: self.x, self.y, self.width, self.height
 
 
-<RecycleViewGrid>:
-    size_hint: 1,1
-    pos_hint:{"y":"bottom"}
-    RecycleGridLayout:
-        cols: 2
-        row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols /4*3
-        row_force_default: True
-        size_hint_y: None
-        default_size_hint:1,1
-        height: self.minimum_height
-        padding: dp(4), dp(4)
-        spacing: dp(4)
-
-<RecycleViewBox>:
-    size_hint: .9,.9
-    RecycleBoxLayout:
-        size_hint: 1,None
-        default_size_hint: 1, None
-        default_size: None, None
-        height: self.minimum_height
-        orientation: 'vertical'
-        padding: 50,50
-        spacing: 25
-
-
 <MyCarousel>:
     carousel: carousel
     root_for_children: carousel
@@ -173,33 +148,3 @@
     child_class_name: "LongPressImage"
     recycle_view_data_class: "MyCheckImageTile"
     recycle_view_name: "ScrollGrid"
-
-<ScrollBox>:
-    root_for_children: stack
-    do_scroll_x: False
-    do_scroll_y: True
-    size_hint: 1, 1
-
-    BoxLayout:
-        id:stack
-        padding: dp(8),dp(8)
-        spacing: dp(8)
-        orientation: "vertical"
-        size_hint:1,None
-        height: self.minimum_height
-
-<ScrollGrid>:
-    do_scroll_x: False
-    do_scroll_y: True
-    size_hint: 1,1
-    root_for_children: grid
-    GridLayout:
-        cols: 2
-        id: grid
-        row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
-        row_force_default: True
-        size_hint_y: None
-        height: self.minimum_height
-        padding: dp(4), dp(4)
-        spacing: dp(4)
-        spacing: dp(4)

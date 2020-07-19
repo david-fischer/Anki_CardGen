@@ -12,7 +12,6 @@ from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from kivymd.uix.tab import MDTabsBase
 
-from my_kivy.mychooser import MyCheckImageGrid
 from parsers import linguee_did_you_mean, NoMatchError
 from utils import (
     compress_img,
@@ -52,6 +51,7 @@ class WordProperties(BoxLayout):
         try:
             MDApp.get_running_app().word.search(search_term)
             self.refresh_data()
+            self.parent.scroll_y = 1
         except NoMatchError as error:
             suggestions = linguee_did_you_mean(search_term)
             MDApp.get_running_app().show_dialog(
@@ -62,6 +62,11 @@ class WordProperties(BoxLayout):
             )
 
     def get_user_selection_dict(self):
+        """
+        Returns current user selection in the form needed by add_anki_card.
+
+        Example and explanation strings are tagged using :func:`utils.tag_word_in_sentence`.
+        """
         selections = [
             {"key": "Translation", "id": "translations", "attr": "text"},
             {"key": "Synonym", "id": "synonyms", "attr": "text_orig"},
@@ -119,33 +124,33 @@ class WordProperties(BoxLayout):
             MDApp.get_running_app().queue_words.remove(search_term)
 
 
-class ImageSearchResultGrid(MyCheckImageGrid):
-    """Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method."""
-
-    def on_child_dicts(self, *_):
-        if len(self.children) == len(self.child_dicts):
-            for image, child_dict in zip(self.children, self.child_dicts):
-                image.source = child_dict["source"]
-                # image._img_widget.container.image.bind(on_error=f)
-        else:
-            super(ImageSearchResultGrid, self).on_child_dicts(*_)
-
-    def get_images(self, keywords=None):
-        """
-        Sets images displayed in :class:`ImageSearchResultGrid`.
-
-        Args:
-            keywords:
-                If None, uses :attr:`words.Word.img_urls`, else uses result of :meth:`words.Word.request_img_urls`
-                for given keywords. (Default = None)
-        """
-        word = MDApp.get_running_app().word
-        paths = (
-            word.image_urls
-            if keywords is None
-            else word.request_img_urls(keywords=keywords)
-        )
-        self.child_dicts = [{"source": url} for url in paths]
+# class ImageSearchResultGrid(MyCheckImageGrid):
+#     """Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method."""
+#
+#     def on_child_dicts(self, *_):
+#         if len(self.children) == len(self.child_dicts):
+#             for image, child_dict in zip(self.children, self.child_dicts):
+#                 image.source = child_dict["source"]
+#                 # image._img_widget.container.image.bind(on_error=f)
+#         else:
+#             super(ImageSearchResultGrid, self).on_child_dicts(*_)
+#
+#     def get_images(self, keywords=None):
+#         """
+#         Sets images displayed in :class:`ImageSearchResultGrid`.
+#
+#         Args:
+#             keywords:
+#                 If None, uses :attr:`words.Word.img_urls`, else uses result of :meth:`words.Word.request_img_urls`
+#                 for given keywords. (Default = None)
+#         """
+#         word = MDApp.get_running_app().word
+#         paths = (
+#             word.image_urls
+#             if keywords is None
+#             else word.request_img_urls(keywords=keywords)
+#         )
+#         self.child_dicts = [{"source": url} for url in paths]
 
 
 # TODO: Move

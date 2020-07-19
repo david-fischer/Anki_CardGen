@@ -57,7 +57,17 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
     def conditional_uncheck(self, instance, value):
         """changes color of clicked item and updates :attr:`current`"""
         super(DrawerList, self).conditional_uncheck(instance, value)
-        self.current = instance.name
+        if value:
+            self.current = instance.name
+
+    def on_current(self, *_):
+        current_widget = [
+            child
+            for child in self.root_for_children.children
+            if child.name == self.current
+        ][0]
+        current_widget.current_state = True
+        self.conditional_uncheck(current_widget, False)
 
 
 class MainMenu(StackLayout):
