@@ -1,5 +1,4 @@
-#:import complete_generation my_kivy.screen_single_word.complete_generation
-
+#:import WordProperties my_kivy.screen_single_word.WordProperties
 <MDTextField>:
     size: 200, 100
 
@@ -33,7 +32,7 @@
         pos_hint: {"x":0,"y":0}
 
     MyCheckChipContainer:
-        id: translation_chips
+        id: translations
         check_one: False
 
     MDLabel:
@@ -42,7 +41,7 @@
         pos_hint: {"x":0,"y":0}
 
     MyCheckChipContainer:
-        id: synonym_chips
+        id: synonyms
         check_one: True
         child_class_name: "MyTransChip"
 
@@ -52,7 +51,7 @@
         pos_hint: {"x":0,"y":0}
 
     MyCheckChipContainer:
-        id: antonym_chips
+        id: antonyms
         child_class_name: "MyTransChip"
         check_one: True
 
@@ -62,7 +61,7 @@
         pos_hint: {"x":0,"y":0}
 
     CardCarousel:
-        id: explanation_cards
+        id: explanations
         size_hint_x: None
         width: root.width
 
@@ -73,7 +72,7 @@
         pos_hint: {"x":0,"y":0}
 
     CardCarousel:
-        id: example_cards
+        id: examples
         size_hint_x: None
         width: root.width
 
@@ -96,7 +95,7 @@ FloatLayout:
     MDFloatingActionButton:
         icon: "check-bold"
         pos: (root.width-dp(16)-self.width,dp(10))
-        on_press: complete_generation()
+        on_press: word_prop.complete_generation()
 
 #    StackLayout:
 #        MDTextField:

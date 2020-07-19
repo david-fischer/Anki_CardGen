@@ -199,6 +199,19 @@ class Word:
         }
         smart_saver(attribute_dict, path)
 
+    def get_fix_card_dict(self):
+        """Returns the part of the data for the anki-card, that does not depend on the user-choice."""
+        media_files = [f"{self.base_path()}.{ext}" for ext in ["jpg", "mp3"]]
+        media_files = [path for path in media_files if os.path.exists(path)]
+        return {
+            "Word": self.search_term,
+            "Image": f'<img src="{self.folder()}.jpg">',
+            "Audio": f"[sound:{self.folder()}.mp3]",
+            "AdditionalInfo": str(self.add_info_dict),
+            "ConjugationTable": self.conj_table_html,
+            "media_files": media_files,
+        }
+
     # TODO: check if return value is important
     def search(self, new_search_term):
         """
