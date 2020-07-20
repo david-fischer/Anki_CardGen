@@ -1,38 +1,41 @@
 <LeftStatusIndicator>:
-    spinner: spinner
-    active: False
+    spinner_active: False
     icon: ""
+    icon_color: app.theme_cls.text_color
+    state_dicts:
+        {\
+        "queued": {"icon":"pause", "icon_color":app.theme_cls.text_color, "spinner_active": False},\
+        "loading":{"icon":"", "icon_color":[0,0,0,0], "spinner_active": True },\
+        "done":{"icon":"check-circle", "icon_color":[0,1,0,1], "spinner_active": False},\
+        "ready":{"icon":"open-in-new", "icon_color":app.theme_cls.text_color, "spinner_active": False},\
+        "error":{"icon":"close-circle", "icon_color":[1,0,0,1], "spinner_active": False},\
+        }
+
 
     MDIcon:
         id: _icon
         icon: root.icon
-        color: (0,1,0 ,1 )
+        color: root.icon_color
         size_hint: 1,1
         font_size: 30
         texture_size: self.size
 
     MDSpinner:
         id: spinner
-        active: root.active
+        active: root.spinner_active
         size_hint: 0.7,0.7
-        opacity: float(root.active)
+        opacity: float(root.spinner_active)
 
 <LeftStatusIndicatorListItem>:
-    loading_state: "queued"
-    active: self.loading_state=="loading"
-    icon: "check-circle" if self.loading_state=="ready" else ""
-
 
     LeftStatusIndicator:
-        active: root.active
-        icon: root.icon
+        current_state: root.current_state
 
 
 <ScrollList>:
     list: list
     root_for_children:list
     children_class_name: "LeftStatusIndicatorListItem"
-
 
     MDList:
         id: list
