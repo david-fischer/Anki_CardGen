@@ -11,4 +11,3 @@ Word Processing
    :glob:
 
    word_processing/*
-
