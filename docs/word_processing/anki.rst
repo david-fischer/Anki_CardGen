@@ -5,4 +5,3 @@ generate\_anki\_card
    :members:
    :no-undoc-members:
    :show-inheritance:
-
