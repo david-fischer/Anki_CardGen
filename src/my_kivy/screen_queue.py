@@ -135,7 +135,7 @@ def choose_file_to_import(button):
         extensions = [".txt"]
         import_function = lambda path: start_workers(import_from(path, source="txt"), 1)
     MDApp.get_running_app().open_file_manager(
-        ext=extensions, path="./test/test_data/", select_path=import_function
+        ext=extensions, path="..", select_path=import_function
     )
 
 
@@ -210,7 +210,6 @@ def choose_replacements_dialog(replacements):
     MDApp.get_running_app().show_dialog(
         message="Some words are not in their dictionary form. The following replacements are suggested:",
         options=replacements,
-        callback=print,
-        item_function=item_function,
+        item_callback=item_function,
         buttons=[ok_button],
     )
