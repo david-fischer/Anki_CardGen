@@ -65,7 +65,12 @@ class AnkiCardGenApp(MDApp):
 
     @mainthread
     def show_dialog(
-        self, message, options=None, callback=print, item_function=None, buttons=None
+        self,
+        message,
+        options=None,
+        item_callback=None,
+        buttons=None,
+        close_on_item=False,
     ):
         """
         Shows a customizable dialog.
@@ -74,14 +79,14 @@ class AnkiCardGenApp(MDApp):
           message: Message on top.
           options:  List of strings, each representing an option for the user to choose.
           callback:  (Default value = print)
-          item_function:  (Default value = None)
+          item_callback:  (Default value = None)
           buttons:  (Default value = None)
         """
-        if item_function is None:
 
-            def item_function(obj):
+        def on_item_press(item):
+            item_callback(item)
+            if close_on_item:
                 self.dialog.dismiss()
-                callback(obj.text)
 
         if buttons is None:
             buttons = [
@@ -92,7 +97,7 @@ class AnkiCardGenApp(MDApp):
                 )
             ]
         items = [
-            OneLineIconListItem(text=option, on_press=item_function)
+            OneLineIconListItem(text=option, on_press=on_item_press)
             for option in options
         ]
         self.dialog = MDDialog(
