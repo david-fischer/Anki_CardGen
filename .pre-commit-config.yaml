@@ -10,18 +10,18 @@ repos:
     rev: 19.10b0
     hooks:
     -   id: black
--   repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.5.0
-    hooks:
-    -   id: pylint
-        args: [--rcfile=.custom_pylintrc]
-        files: src
-        exclude: (google_images_download|python-for-android)
--   repo: https://github.com/PyCQA/pydocstyle
-    rev: 5.0.2
-    hooks:
-        - id: pydocstyle
-          exclude: (google_images_download|python-for-android)
+#-   repo: https://github.com/PyCQA/pylint
+#    rev: pylint-2.5.0
+#    hooks:
+#    -   id: pylint
+#        args: [--rcfile=.custom_pylintrc]
+#        files: src
+#        exclude: (google_images_download|python-for-android)
+#-   repo: https://github.com/PyCQA/pydocstyle
+#    rev: 5.0.2
+#    hooks:
+#        - id: pydocstyle
+#          exclude: (google_images_download|python-for-android)
 -   repo: https://github.com/codespell-project/codespell
     rev: "v1.17.1"
     hooks:
