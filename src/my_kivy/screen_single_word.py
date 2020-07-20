@@ -58,7 +58,8 @@ class WordProperties(BoxLayout):
                 message=f"{search_term} not found on {error.site}."
                 + (" Did you mean... ?" if suggestions else ""),
                 options=suggestions,
-                callback=self.accept_suggestion,
+                item_callback=lambda obj: self.accept_suggestion(obj.text),
+                close_on_item=True,
             )
 
     def get_user_selection_dict(self):
