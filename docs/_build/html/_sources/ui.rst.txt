@@ -17,6 +17,3 @@ The user interface is based on :mod:`kivy` and :mod:`kivymd`.
    :glob:
 
    ui/*
-
-
-

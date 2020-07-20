@@ -5,5 +5,3 @@ Queue Screen
    :members:
    :undoc-members:
    :show-inheritance:
-
-

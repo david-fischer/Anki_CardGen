@@ -5,5 +5,3 @@ Single Word Screen
    :members:
    :undoc-members:
    :show-inheritance:
-
-
