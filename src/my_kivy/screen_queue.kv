@@ -17,7 +17,7 @@ FloatLayout:
             text:"format-list-checkbox"
             RecycleList:
                 viewclass: "LeftStatusIndicatorListItem"
-                data: [{"text": word, "loading_state": app.loading_state_dict[word], "callbacks": {"on_press":click_on_queue_item} } for word in app.queue_words]
+                data: [{"text": word, "current_state": app.loading_state_dict[word], "callbacks": {"on_press":click_on_queue_item} } for word in app.queue_words]
 
         Tab:
             id: done_tab
