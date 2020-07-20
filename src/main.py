@@ -1,6 +1,4 @@
-"""
-Contains the Main App :class:`AnkiCardGenApp`.
-"""
+"""Contains the Main App :class:`AnkiCardGenApp`."""
 
 import os
 import queue
@@ -31,24 +29,22 @@ Builder.load_file(f"{this_dir}my_kivy/fixes.kv")
 
 
 class AnkiCardGenApp(MDApp):
-    """
-    Main App.
-    """
+    """Main App."""
 
     # Kivy
     dialog = ObjectProperty()
-    """:class:`~kivymd.uix.dialog.MDDialog` Object"""
+    """:class:`~kivymd.uix.dialog.MDDialog` Object."""
     file_manager = ObjectProperty()
-    """:class:`~kivymd.uix.filemanager.MDFileManager` Object"""
+    """:class:`~kivymd.uix.filemanager.MDFileManager` Object."""
     theme_dialog = ObjectProperty()
-    """:class:`~kivymd.uix.picker.MDThemePicker` Object"""
+    """:class:`~kivymd.uix.picker.MDThemePicker` Object."""
     # Other Objects
     word = ObjectProperty()
-    """:class:`pt_word.Word` Object"""
+    """:class:`pt_word.Word` Object."""
     anki = ObjectProperty()
-    """:class:`generate_anki_card.AnkiObject` Object"""
+    """:class:`generate_anki_card.AnkiObject` Object."""
     queue = ObjectProperty()
-    """:class:`queue.Queue` Object"""
+    """:class:`queue.Queue` Object."""
     # Data
     error_words = ListProperty([])
     """:class:`~kivy.properties.ListProperty` containing all words that could not be processed by Queue."""
@@ -73,14 +69,14 @@ class AnkiCardGenApp(MDApp):
         close_on_item=False,
     ):
         """
-        Shows a customizable dialog.
+        Show customizable dialog.
 
         Args:
           message: Message on top.
           options:  List of strings, each representing an option for the user to choose.
-          callback:  (Default value = print)
           item_callback:  (Default value = None)
           buttons:  (Default value = None)
+          close_on_item: If ``True`` dismiss dialog after click on item. (Default = False)
         """
 
         def on_item_press(item):
@@ -111,14 +107,7 @@ class AnkiCardGenApp(MDApp):
         self.dialog.open()
 
     def build_config(self, config):
-        """
-
-        Args:
-          config:
-
-        Returns:
-
-        """
+        """If no config-file exists, sets the default."""
         config.setdefaults(
             "Theme",
             {
@@ -140,9 +129,10 @@ class AnkiCardGenApp(MDApp):
             },
         )
         os.makedirs("../app_data/", exist_ok=True)
+        os.makedirs("../app_data/apkgs/", exist_ok=True)
 
     def build(self):
-        """ """
+        """Set up App and return :class:`my_kivy.MainMenu` as root widget."""
         # Config and Theme
         self.theme_cls = ThemeManager(**self.config["Theme"])
         self.theme_dialog = MDThemePicker()
@@ -159,7 +149,7 @@ class AnkiCardGenApp(MDApp):
                 key: partial(self.save_by_config_key, key, obj=None)
                 for key in self.keys_to_save
             }
-        )  # partial(
+        )
         self.word = Word(data_dir="../app_data/words")
         self.setup_queue()
         # Kivy Objects
@@ -170,7 +160,7 @@ class AnkiCardGenApp(MDApp):
     #    threading.Thread(target=make_screenshots).start()
 
     def setup_queue(self):
-        """ """
+        """Set up :attr:`queue` from words in :attr:`queue_words`."""
         self.queue = queue.Queue()
         for word in self.queue_words:
             if self.loading_state_dict[word] in ["loading", "queued"]:
@@ -178,29 +168,13 @@ class AnkiCardGenApp(MDApp):
                 self.queue.put(word)
 
     def save_theme(self, *_):
-        """
-
-        Args:
-          *_:
-
-        Returns:
-
-        """
+        """Save current theme to config file."""
         for key in self.config["Theme"]:
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
 
     def open_file_manager(self, path="/", select_path=print, ext=None):
-        """
-
-        Args:
-          path:  (Default value = "/")
-          select_path:  (Default value = print)
-          ext:  (Default value = None)
-
-        Returns:
-
-        """
+        """Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file."""
         print("opening file manager...")
         if ext is None:
             ext = [".html"]
@@ -209,35 +183,23 @@ class AnkiCardGenApp(MDApp):
         self.file_manager.show(path)
 
     def load_by_config_key(self, key):
-        """
-
-        Args:
-          key:
-
-        Returns:
-
-        """
+        """Use :func:`utils.smart_loader` to load attribute from path in :attr:`config`[attribute]."""
         path = self.config["Paths"][key]
         setattr(self, key, smart_loader(path))
 
     def save_by_config_key(self, key, *_, obj=None):
-        """
-
-        Args:
-          key:
-          *_:
-          obj:  (Default value = None)
-
-        Returns:
-
-        """
+        """Use :func:`utils.smart_saver` to save current attribute to path in :attr:`config`[attribute]."""
         if obj is None:
             obj = getattr(self, key)
         path = self.config["Paths"][key]
         smart_saver(obj, path)
 
     def load_app_state(self):
-        """ """
+        """
+        Load all attributes specified in :attr:`keys_to_save` by :meth:`load_by_config_key`.
+
+        If the path does not exists (first run of app), sets them up for the next time.
+        """
         for key in self.keys_to_save:
             try:
                 self.load_by_config_key(key)
@@ -246,14 +208,7 @@ class AnkiCardGenApp(MDApp):
                 self.save_by_config_key(key)
 
     def add_anki_card(self, result_dict):
-        """
-
-        Args:
-          result_dict:
-
-        Returns:
-
-        """
+        """Write apkg, json-file of card content."""
         toast(f'Added card for "{result_dict["Word"]}" to Deck.', 10)
         smart_saver(
             result_dict,
