@@ -4,17 +4,18 @@ Implements Different classes to display elements in a scroll view.
 :class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.
 """
 import os
-from functools import partial
-from threading import Thread
-from time import sleep
+from random import choice
 
-from kivy.clock import Clock, mainthread
+import toolz
+from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
+    BooleanProperty,
     ListProperty,
     ObjectProperty,
     OptionProperty,
+    StringProperty,
 )
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.recycleview import RecycleView
@@ -22,7 +23,11 @@ from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
 from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
 
-from my_kivy.behaviors import CallbackBehavior, ChildrenFromDictsBehavior
+from my_kivy.behaviors import (
+    CallbackBehavior,
+    ChildrenFromDictsBehavior,
+    MultiStateBehavior,
+)
 
 try:
     Builder.load_file("my_kivy/scroll_list.kv")
@@ -31,33 +36,37 @@ except FileNotFoundError:
     Builder.load_file(os.path.join(this_directory, "scroll_list.kv"))
 
 
-class LeftStatusIndicator(ILeftBody, AnchorLayout):
+class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
     """
     Contains :class:`~kivy.uix.spinner.MDSpinner` and :class:`~kivy.uix.label.MDIcon`.
     """
 
-    spinner = ObjectProperty()
+    spinner_active = BooleanProperty()
     """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`."""
 
-    icon = ObjectProperty()
+    icon = StringProperty()
     """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.label.MDIcon`"""
+
+    icon_color = ListProperty()
+    """:class:`~kivy.properties.ListProperty` defaults to :attr:`main.AnkiCardGenApp.theme_cls.text_color`."""
+
+    current_state = OptionProperty(
+        "queued", options=["loading", "queued", "ready", "done", "error"]
+    )
+    """:class:`~kivy.properties.OptionProperty` with options ``["loading", "queued", "ready", "done", "error"]``."""
 
 
 class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
     """
     Contains :class:`LeftStatusIndicator` as left element.
 
-    Depending on :attr:`loading_state`, either the spinner is active or an icon is shown.
+    Depending on :attr:`current_state`, either the spinner is active or an icon is shown.
     """
 
-    loading_state = OptionProperty("queued", options=["loading", "queued", "ready"])
+    current_state = OptionProperty(
+        "queued", options=["loading", "queued", "ready", "done", "error"]
+    )
     """:class:`~kivy.properties.OptionProperty` with options ``["loading", "queued", "ready"]``."""
-
-    spinner = ObjectProperty()
-    """
-    :class:`~kivy.properties.ObjectProperty` reference to instance of :class:`~kivy.uix.spinner.MDSpinner` of
-    :class:`LeftStatusIndicator`.
-    """
 
 
 Factory.register("LeftStatusIndicatorListItem", LeftStatusIndicatorListItem)
@@ -70,9 +79,6 @@ class ScrollList(ChildrenFromDictsBehavior, ScrollView):
     Automatically updates upon change of :attr:`item_dicts`.
     """
 
-    # item_type = ObjectProperty(OneLineListItem)
-    # """:class:`~kivy.properties.ObjectProperty` constructor for items."""
-
     child_dicts = ListProperty()
     """:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed."""
 
@@ -82,30 +88,6 @@ class ScrollList(ChildrenFromDictsBehavior, ScrollView):
     Contains the items.
     """
 
-    callback = ObjectProperty(lambda self, obj: print(obj.text))
-
-    def __init__(self, **kwargs):
-        super(ScrollList, self).__init__(**kwargs)
-        self.child_bindings["on_press"] = self.callback_wrapper
-
-    # TODO: callback_wrapper correct? Check if this is the desired behavior.
-    def callback_wrapper(self, obj, *_):
-        """Wrapper to execute callback in new thread."""
-        thread = Thread(target=partial(self.callback, obj))
-        thread.start()
-
-    @mainthread
-    def on_child_dicts(self, *_):
-        """mainthread decorator ensures that changes are displayed correctly."""
-        super(ScrollList, self).on_child_dicts(*_)
-
-
-def _schedule(obj):
-    if obj.loading_state == "queued":
-        obj.loading_state = "loading"
-        sleep(5)
-        Clock.schedule_once(lambda dt: setattr(obj, "loading_state", "ready"), 5)
-
 
 class RecycleList(RecycleView):
     """
@@ -114,19 +96,39 @@ class RecycleList(RecycleView):
     """
 
 
-# pylint: disable = W,C,R,I
+# pylint: disable = W,C,R,I,E
 if __name__ == "__main__":
+
+    @toolz.curry
+    def _schedule(sl, obj):
+        if obj.current_state == "queued":
+            sl.data[obj.number]["current_state"] = "loading"
+            Clock.schedule_once(
+                lambda dt: sl.data[obj.number].__setitem__("current_state", "ready"), 5
+            )
+        elif obj.current_state == "ready":
+            sl.data[obj.number]["current_state"] = choice(["done", "error"])
+        names_by_state = toolz.reduceby(
+            "current_state", lambda x, y: x + [y["text"]], sl.data, list
+        )
+        obj.current_state = sl.data[obj.number]["current_state"]
+        print(toolz.keyfilter(lambda x: x != "queued", names_by_state))
 
     class TestApp(MDApp):
         def build(self):
+            # sl = ScrollList(child_class_name="LeftStatusIndicatorListItem")
+            # sl.child_dicts = [
+            #     {"text": f"test_{i}", "callbacks": {"on_press": _schedule}}
+            #     for i in range(100)
+            # ]
             sl = RecycleList()  # , callback=_schedule
             sl.viewclass = "LeftStatusIndicatorListItem"
             sl.data = [
                 {
                     "text": f"test_{i}",
-                    "callback": _schedule,
-                    "callback_binding": "on_press",
-                    "loading_state": "queued",
+                    "callbacks": {"on_press": _schedule(sl),},
+                    "current_state": "queued",
+                    "number": i,
                 }
                 for i in range(10000)
             ]
