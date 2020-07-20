@@ -24,7 +24,7 @@ class CallbackBehavior(EventDispatcher):
     """
     Mixin Class to implement a number of callbacks.
 
-    Usefull e.g. in combination with :class:`~kivy.uix.recycleview.RecycleView`.
+    Useful e.g. in combination with :class:`~kivy.uix.recycleview.RecycleView`.
     There, the content is generated dynamically from a dictionary such that this class can be used to bind multiple
     callbacks to different events of the widgets.
 
@@ -34,7 +34,7 @@ class CallbackBehavior(EventDispatcher):
     """
 
     callbacks = DictProperty()
-    """:class:`~kivy.propterty.DictProperty` of the form {"on_event": callback_fn}.
+    """:class:`~kivy.property.DictProperty` of the form {"on_event": callback_fn}.
     callback_fn(self) -> Any
     """
 
@@ -82,7 +82,7 @@ class LongPressBehavior(EventDispatcher):
         """Placeholder."""
 
 
-class MultiStateBehaviour:
+class MultiStateBehavior:
     """
     Changes properties of widget based on :attr:`current_state` and the corresponding entry in :attr:`state_dict`.
 
@@ -107,7 +107,7 @@ class MultiStateBehaviour:
     """:class:`~kivy.properties.ListProperty` containing the list of property-names that get changed via animation."""
 
     def __init__(self, **kwargs):
-        super(MultiStateBehaviour, self).__init__(**kwargs)
+        super(MultiStateBehavior, self).__init__(**kwargs)
         clock.Clock.schedule_once(self.__post_init__)
 
     def on_current_state(self, *_):
@@ -132,7 +132,7 @@ class MultiStateBehaviour:
         self.on_current_state()
 
 
-class CheckBehavior(MultiStateBehaviour):
+class CheckBehavior(MultiStateBehavior):
     """Two-State-Behavior with states ``True`` and ``False``."""
 
     def __init__(self, **kwargs):

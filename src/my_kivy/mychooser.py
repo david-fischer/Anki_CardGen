@@ -180,12 +180,12 @@ class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
         pass
 
     def get_modal_content(self, size_hint=(1, None)):
-        def f(i, *_):
+        def set_carousel_index(i, *_):
             self.carousel.index = i
             self.modal.dismiss()
 
         data_dicts = [
-            {**dict, "size_hint": size_hint, "on_press": partial(f, i)}
+            {**dict, "size_hint": size_hint, "on_press": partial(set_carousel_index, i)}
             for i, dict in enumerate(self.child_dicts)
         ]
         recycle_view_cls = Factory.get(self.recycle_view_name)
