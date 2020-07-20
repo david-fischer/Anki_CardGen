@@ -31,6 +31,7 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
 
     def __init__(self, **kwargs):
         super(DrawerItem, self).__init__(**kwargs)
+        self.current_state = False
         self.theme_cls.bind(theme_style=self.on_current_state)
         self.theme_cls.bind(primary_palette=self.on_current_state)
 
@@ -62,6 +63,7 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
             self.current = instance.name
 
     def on_current(self, *_):
+        """Changes the state of the children respectively to :attr:`current`."""
         current_widget = [
             child
             for child in self.root_for_children.children
@@ -115,18 +117,25 @@ class MainMenu(StackLayout):
 
 
 class KvScreen(Screen):
+    """
+    Screen that automatically adds content of kv-file at :attr:`path` as child.
+
+    If :attr:`path` does not exist, create file.
+    """
+
     path = StringProperty("my_kivy/screen_default.kv")
+    """:class:`~kivy.properties.StringProperty` defaults to ``"my_kivy/screen_default.kv"`` """
 
     def __init__(self, **kwargs):
         super(KvScreen, self).__init__(**kwargs)
         if not os.path.exists(self.path):
-            self.create_content_file()
-        self.load_content()
+            self._create_content_file()
+        self._load_content()
 
-    def load_content(self):
+    def _load_content(self):
         self.add_widget(Builder.load_file(self.path))
 
-    def create_content_file(self):
+    def _create_content_file(self):
         with open(self.path, "w") as file:
             file.write(f'MDLabel:\n\ttext:"{self.name}"')
 
