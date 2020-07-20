@@ -59,7 +59,7 @@
 Currently supported languages:
 * **Brazilian Portuguese**
 
-## ❓ About 
+## ❓ About
 
 Anki is a powerful tool for reviewing flash cards, in particular for language learning.
 
@@ -89,7 +89,7 @@ This allows quick generation of high-quality, personalized cards.
 - [ ] Error handling for incomplete selection
 - [ ] Chaning of languages
 
-## 🚧 Installing 
+## 🚧 Installing
 
 ### Prerequisites
 
@@ -101,7 +101,7 @@ cd Anki_CardGen
 pip install -r requirements.txt
 ```
 
-Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese: 
+Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese:
 
 ```
 pythn -m spacy download pt_core_news_sm
@@ -126,7 +126,7 @@ buildozer ios debug deploy
 
 * python3.8 not working -> change to 3.7
 
-## 🔧 Usage 
+## 🔧 Usage
 (add info)
 
 ## 🚀 Contribute
@@ -134,13 +134,13 @@ buildozer ios debug deploy
   Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
 * Unfortunately, I had problems building SpaCy (more precisely its dependency blis) on arm. I therefore removed it from the dependencies in buildozer.spec and built the code to work around it if the package is not present.make blis work on mobile
 
-## ✍️ Authors 
+## ✍️ Authors
 - [David Fischer](https://github.com/david-fischer) - Author
 
 <!--
 See also the list of [contributors](https://link/to/contributers) who participated in this project.
 -->
 
-## 🎉 Acknowledgements 
+## 🎉 Acknowledgements
 
 * [ ] List info here
