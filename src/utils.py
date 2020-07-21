@@ -1,11 +1,7 @@
-"""
-This module contains lots of helper functions.
-"""
+"""This module contains lots of helper functions."""
 
 import csv
-import functools
 import json
-import operator
 import os
 import pickle
 import re
@@ -73,9 +69,7 @@ class CD:
 
 
 def save_dict_to_csv(some_dict, out_path):
-    """
-    Saves dictionary as row to csv.
-    """
+    """Save dictionary as row to csv."""
     is_first_entry = not os.path.exists(out_path)
     with open(out_path, "a") as file:
         writer = csv.DictWriter(file, fieldnames=some_dict.keys())
@@ -86,7 +80,7 @@ def save_dict_to_csv(some_dict, out_path):
 
 def load_dicts_from_csv(path):
     """
-    Loads csv. Has to have the keys as first line.
+    Load csv. Has to have the keys as first line.
 
     Returns:
         : List of dictionaries.
@@ -97,7 +91,7 @@ def load_dicts_from_csv(path):
 
 def smart_loader(path):
     """
-    Uses file ending of path to determine which function to use to load file.
+    Use file ending of path to determine which function to use to load file.
 
     Supported file endings:
         * .p (pickle)
@@ -124,7 +118,7 @@ def smart_loader(path):
 
 def smart_saver(obj, path):
     """
-    Uses file ending of path to determine which function to use to save file.
+    Use file ending of path to determine which function to use to save file.
 
     Supported file endings:
         * .p (pickle)
@@ -148,11 +142,7 @@ def smart_saver(obj, path):
 
 
 def now_string():
-    """
-
-    Returns:
-      : Current time in the format ``YYYY-MM-DD_HH:MM:SS``.
-    """
+    """Return current time in the format ``YYYY-MM-DD_HH:MM:SS``."""
     return str(datetime.now()).split(".")[0].replace(" ", "_")
 
 
@@ -160,18 +150,16 @@ def now_string():
 
 
 def set_screen(screen_name):
-    """
-    Sets current screen to the one with name ``screen_name``.
-    """
+    """Set current screen to the one with name ``screen_name``."""
     widget_by_id("screen_man").current = screen_name
 
 
 def widget_by_id(string):
     """
-    Get widget by string of ids, seperated by "/".
+    Get widget by string of ids, separated by "/".
 
     Args:
-      string: Stings of ids, seperated by "/". The first one can be a screen name.
+      string: Strings of ids, separated by "/". The first one can be a screen name.
 
     Returns:
       : widget
@@ -192,13 +180,10 @@ def widget_by_id(string):
 
 
 def sleep_decorator(time):
-    """
-    Executes sleep(time) before and after decorated function.
-    """
+    """Execute sleep(time) before and after decorated function."""
 
     def the_real_decorator(function):
         def wrapper(*args, **kwargs):
-
             sleep(time)
             function(*args, **kwargs)
             sleep(time)
@@ -212,7 +197,7 @@ def sleep_decorator(time):
 @mainthread
 def screenshot(path):
     """
-    Takes screenshot of the current state of the app and saves it under ``path``.
+    Take screenshot of the current state of the app and save it under ``path``.
 
     The sleep- and mainthread-decorator ensure that the app shows the current state properly.
     """
@@ -259,7 +244,9 @@ rend = pystache.Renderer(escape=lambda s: s)
 
 def save_card_pngs(word="casa", size=(540, 960)):
     """
-    Saves pngs of the anki-cards for a given word, for which a card has to be generated earlier.
+    Save pngs of the anki-cards for a given word.
+
+    The fields need to be saved as json at ``../app_data/<word>/<word>_card.json``.
 
     Args:
       word:  (Default value = "casa")
@@ -282,27 +269,9 @@ def save_card_pngs(word="casa", size=(540, 960)):
             string = rend.render(string, **field_dict)
         imgkit.from_string(
             string,
-            f'../screenshots/{word}/{os.path.basename(path).replace(".html",".png")}',
+            f'../screenshots/{word}/{os.path.basename(path).replace(".html", ".png")}',
             options={"width": int(size[0]), "height": int(size[1]),},
         )
-
-
-def selection_helper(base, id_str=None, props=None):
-    """
-
-    Args:
-      base:
-      id_str:  (Default value = None)
-      props:  (Default value = None)
-
-    Returns:
-
-    """
-    if props is None:
-        props = ["text"]
-    base_obj = getattr(base.ids, id_str) if id_str is not None else base
-    out = [base_obj.get_checked(property_name=prop) for prop in props]
-    return functools.reduce(operator.iconcat, out, [])
 
 
 # KINDLE EXPORT PARSING
@@ -310,7 +279,7 @@ def selection_helper(base, id_str=None, props=None):
 
 def dict_from_kindle_export(file_path):
     """
-    Extracts highlighted parts and sorts them by color in a dictionary.
+    Extract highlighted parts and sorts them by color in a dictionary.
 
     Args:
       file_path: Path to an html-file exported from kindle.
@@ -351,13 +320,13 @@ def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
                 nlp = spacy.load("pt_core_news_sm")
             words = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
         else:
-            print("Lemmatization skipped. Spacy modul is not installed.")
+            print("Lemmatization skipped. Spacy module is not installed.")
     return words
 
 
 def word_list_from_kindle(path):
     """
-    Uses :const:`MEANING2COLOR` `["words"]` to extract the list of words highlighted in this specific color.
+    Use :const:`MEANING2COLOR` `["words"]` to extract the list of words highlighted in this specific color.
 
     Args:
       path: Path to html-file exported by kindle.
@@ -371,11 +340,10 @@ def word_list_from_kindle(path):
 
 def word_list_from_txt(path):
     """
+    Return list of words read as lines from txt-file.
+
     Args:
       path: Path to txt-file. Each line should correspond to a word (or phrase).
-
-    Returns:
-      : List of words.
     """
     with open(path, "r") as file:
         words = file.read().splitlines()
@@ -384,7 +352,7 @@ def word_list_from_txt(path):
 
 def tag_word_in_sentence(sentence, tag_word):
     """
-    Uses regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.
+    Use regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.
 
     Args:
       sentence: String containing of multiple words.
@@ -421,7 +389,7 @@ def tag_word_in_sentence(sentence, tag_word):
 
 def compress_img(path, width=512):
     """
-    Uses the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.
+    Use the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.
 
     If the image already has smaller width, nothing is done.
 
