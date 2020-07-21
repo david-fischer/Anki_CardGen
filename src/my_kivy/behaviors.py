@@ -1,8 +1,4 @@
-"""
-Provides various mixin-classes for kivy widgets.
-
-.. :autosummary:
-"""
+"""Provides various mixin-classes for kivy widgets."""
 from functools import partial
 from threading import Thread
 
@@ -12,6 +8,7 @@ from kivy.clock import Clock
 from kivy.event import EventDispatcher
 from kivy.factory import Factory
 from kivy.properties import (
+    BooleanProperty,
     DictProperty,
     ListProperty,
     ObjectProperty,
@@ -44,15 +41,13 @@ class CallbackBehavior(EventDispatcher):
             self.bind(**{event: partial(self.callback_wrapper, callback_fn)})
 
     def callback_wrapper(self, callback, *_):
-        """Wrapper to call callback in new thread."""
+        """Call ``callback`` with first argument as ``self`` in new thread."""
         thread = Thread(target=partial(callback, self))
         thread.start()
 
 
 class LongPressBehavior(EventDispatcher):
-    """
-    Dispatches "on_long_press" if pressed for longer than :attr:`long_press_time`.
-    """
+    """Dispatches "on_long_press" if pressed for longer than :attr:`long_press_time`."""
 
     long_press_time = Factory.NumericProperty(1)
     """:class:`~kivy.properties.NumericProperty`"""
@@ -75,11 +70,11 @@ class LongPressBehavior(EventDispatcher):
             self._clockev.cancel()
 
     def _do_long_press(self, _):
-        """Helper function."""
+        """Dispatch ``"on_long_press"`` event."""
         self.dispatch("on_long_press")
 
     def on_long_press(self, *largs):
-        """Placeholder."""
+        """Implement in inherited class. Placeholder."""
 
 
 class MultiStateBehavior:
@@ -112,7 +107,7 @@ class MultiStateBehavior:
 
     def on_current_state(self, *_):
         """
-        Changes widgets properties based on new :attr:`current_state`.
+        Change widgets properties based on new :attr:`current_state`.
 
         The properties whose names are in :attr:`animated_properties` are changed via animation.
         """
@@ -129,17 +124,21 @@ class MultiStateBehavior:
             anim.start(self)
 
     def __post_init__(self, *_):
+        """Do init after kv-file is applied."""
         self.on_current_state()
 
 
 class CheckBehavior(MultiStateBehavior):
     """Two-State-Behavior with states ``True`` and ``False``."""
 
+    current_state = BooleanProperty(False)
+    """:class:`~kivy.properties.BooleanProperty` defaults to ``False``. State of widget."""
+
     def __init__(self, **kwargs):
-        self.current_state = False
         self.state_dicts = (
             {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
         )
+        """:class:`~kivy.properties.DictProperty`, defaults to ``{False:{},True{}}``."""
         super(CheckBehavior, self).__init__(**kwargs)
 
 
@@ -177,7 +176,7 @@ class ChildrenFromDictsBehavior:
         self.on_child_dicts()
 
     def on_child_dicts(self, *_):
-        """Constructs children on change of :attr:`child_dicts`."""
+        """Construct children on change of :attr:`child_dicts`."""
         self.root_for_children.clear_widgets()
         for child_dict in self.child_dicts:
             child_cls = Factory.get(self.child_class_name)
@@ -189,18 +188,14 @@ class ChildrenFromDictsBehavior:
             self.after_add_child(new_child)
 
     def before_add_child(self, child):
-        """Function to be executed before child is added to :attr:`parent_widget`."""
+        """Do something before child is added to :attr:`parent_widget`. Placeholder."""
 
     def after_add_child(self, child):
-        """Function to be executed before child is added to :attr:`parent_widget`."""
+        """Do something after child is added to :attr:`parent_widget`. Placeholder."""
 
 
-class TranslationOnCheckBehavior:
-    """
-    Switches :attr:`text` between :attr:`text_orig` and :attr:`text_trans` depending on :attr:`current_state`.
-
-    Needs inheritance from :class:`CheckBehavior`.
-    """
+class TranslationOnCheckBehavior(CheckBehavior):
+    """Switches :attr:`text` between :attr:`text_orig` and :attr:`text_trans` depending on :attr:`current_state`."""
 
     text_orig = StringProperty("orig")
     """:class:`~kivy.properties.StringProperty`. Original Text."""
@@ -209,17 +204,14 @@ class TranslationOnCheckBehavior:
     """:class:`~kivy.properties.StringProperty`. Translated Text."""
 
     def __post_init__(self, *_):
+        """Initialize widget after kv-file is loaded."""
         self.state_dicts[True]["text"] = self.text_orig
         self.state_dicts[False]["text"] = self.text_trans
         super(TranslationOnCheckBehavior, self).__post_init__(*_)
 
 
-class ThemableColorChangeBehavior:
-    """
-    Changes :attr:`bg_color` :attr:`text_color` based on :attr:`current_state`.
-
-    Needs inheritance from :class:`CheckBehavior`.
-    """
+class ThemableColorChangeBehavior(CheckBehavior):
+    """Changes :attr:`bg_color` :attr:`text_color` based on :attr:`current_state`."""
 
     text_color = ListProperty([0, 0, 0, 1])
     """:class:`~kivy.properties.ListProperty`. Text color in rgba."""
