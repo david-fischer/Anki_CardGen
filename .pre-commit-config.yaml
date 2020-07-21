@@ -1,32 +1,33 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.1.0
     hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
-    -   id: requirements-txt-fixer
--   repo: https://github.com/psf/black
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: requirements-txt-fixer
+  - repo: https://github.com/psf/black
     rev: 19.10b0
     hooks:
-    -   id: black
-#-   repo: https://github.com/PyCQA/pylint
-#    rev: pylint-2.5.0
-#    hooks:
-#    -   id: pylint
-#        args: [--rcfile=.custom_pylintrc]
-#        files: src
-#        exclude: (google_images_download|python-for-android)
-#-   repo: https://github.com/PyCQA/pydocstyle
-#    rev: 5.0.2
-#    hooks:
-#        - id: pydocstyle
-#          exclude: (google_images_download|python-for-android)
--   repo: https://github.com/codespell-project/codespell
+      - id: black
+  - repo: https://github.com/PyCQA/pylint
+    rev: pylint-2.5.0
+    hooks:
+      - id: pylint
+        args: [--rcfile=.custom_pylintrc]
+        files: src
+        exclude: (google_images_download|python-for-android)
+  - repo: https://github.com/PyCQA/pydocstyle
+    rev: 5.0.2
+    hooks:
+      - id: pydocstyle
+        exclude: (google_images_download|python-for-android)
+        args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
+  - repo: https://github.com/codespell-project/codespell
     rev: "v1.17.1"
     hooks:
-        - id: codespell
-          files: src
-          exclude: google_images_download
-          types: [text]
-          args: [-q, "4",-D, -, -D, .dictionary.txt, -H]
+      - id: codespell
+        files: src
+        exclude: google_images_download
+        types: [text]
+        args: [-q, "4",-D, -, -D, .dictionary.txt, -H]
