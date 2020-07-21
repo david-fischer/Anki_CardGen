@@ -10,12 +10,15 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-  - repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.5.0
+  - repo: local
     hooks:
       - id: pylint
+        name: pylint
+        entry: pylint
+        language: system
         args: [--rcfile=.custom_pylintrc]
         files: src
+        types: [python]
         exclude: (google_images_download|python-for-android)
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 5.0.2
