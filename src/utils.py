@@ -13,6 +13,7 @@ from time import sleep
 
 import imgkit
 import pystache
+import toolz
 from bs4 import BeautifulSoup
 from kivy.clock import mainthread
 from kivy.core.image import Image as KivyImage
@@ -404,8 +405,13 @@ def compress_img(path, width=512):
     img.save(path, optimize=True)
 
 
+def pick_val(whitelist, dictionary):
+    """Return filtered dictionary, whose values are in ``whitelist``."""
+    return toolz.valfilter(lambda k: k in whitelist, dictionary)
+
+
 if __name__ == "__main__":
-    # pass
+    pass
     # out = word_list_from_kindle("test/test_data/kindle_export.html")
     # print(out)
     # with open("test/test_data/words.txt", "w") as file:
@@ -419,4 +425,22 @@ if __name__ == "__main__":
     # print(tag_word(expl, "casa"))
     # compress_img("screenshots/casa/casa.jpg")
     # save_card_htmls("casa")#
-    save_card_pngs("comecar", size=(270 * 1.4, 480 * 1.4))
+    # save_card_pngs("comecar", size=(270 * 1.4, 480 * 1.4))
+
+    #
+    # done, error, words, queue = [
+    #     smart_loader(path) for path in sorted(glob("../app_data/*.json"))
+    # ]
+    # all_words = set(done + error + queue + list(words.keys()))
+    # word_dict = {
+    #     word: "done"
+    #     if word in done
+    #     else "error"
+    #     if word in error
+    #     else "ready"
+    #     if word in queue
+    #     else None
+    #     for word in all_words
+    # }
+    # word_dict["cachorro"] = "queued"
+    # smart_saver(word_dict, "../app_data/word_state_dict.json")
