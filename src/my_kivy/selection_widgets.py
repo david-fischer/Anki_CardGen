@@ -36,10 +36,10 @@ from my_kivy.behaviors import (
 )
 
 try:
-    Builder.load_file("my_kivy/mychooser.kv")
+    Builder.load_file("my_kivy/selection_widgets.kv")
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
-    Builder.load_file(os.path.join(this_directory, "mychooser.kv"))
+    Builder.load_file(os.path.join(this_directory, "selection_widgets.kv"))
 
 
 class CheckContainer(ChildrenFromDictsBehavior):

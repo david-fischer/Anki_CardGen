@@ -126,7 +126,7 @@ class WordProperties(BoxLayout):
 
 
 # class ImageSearchResultGrid(MyCheckImageGrid):
-#     """Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method."""
+#     """Extends the :class:`selection_widgets.MyCheckImageGrid` by the :meth:`get_images` method."""
 #
 #     def on_child_dicts(self, *_):
 #         if len(self.children) == len(self.child_dicts):

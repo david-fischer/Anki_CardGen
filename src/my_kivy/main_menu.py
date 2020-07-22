@@ -11,7 +11,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 
 from my_kivy.behaviors import CheckBehavior
-from my_kivy.mychooser import CheckContainer
+from my_kivy.selection_widgets import CheckContainer
 from utils import widget_by_id
 
 
