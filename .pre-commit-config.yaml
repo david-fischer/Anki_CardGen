@@ -10,12 +10,14 @@ repos:
     rev: 19.10b0
     hooks:
       - id: black
-  - repo: local
+  - repo: https://github.com/PyCQA/pylint
+#  - repo: local
+    rev: pylint-2.5.0
     hooks:
       - id: pylint
-        name: pylint
-        entry: pylint
-        language: system
+#        name: pylint
+#        entry: pylint
+#        language: system
         args: [--rcfile=.custom_pylintrc]
         files: src
         types: [python]
