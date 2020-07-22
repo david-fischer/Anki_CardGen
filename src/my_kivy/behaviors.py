@@ -15,6 +15,7 @@ from kivy.properties import (
     Property,
     StringProperty,
 )
+from kivy.uix.behaviors import ButtonBehavior
 
 
 class CallbackBehavior(EventDispatcher):
@@ -46,16 +47,17 @@ class CallbackBehavior(EventDispatcher):
         thread.start()
 
 
-class LongPressBehavior(EventDispatcher):
-    """Dispatches "on_long_press" if pressed for longer than :attr:`long_press_time`."""
+class LongPressBehavior(ButtonBehavior):
+    """Dispatches "on_long_press" if pressed for longer than :attr:`long_press_time` else "on_short_press"."""
 
-    long_press_time = Factory.NumericProperty(1)
+    long_press_time = Factory.NumericProperty(0.4)
     """:class:`~kivy.properties.NumericProperty`"""
 
     def __init__(self, **kwargs):
         super(LongPressBehavior, self).__init__(**kwargs)
         self._clockev = None
         self.register_event_type("on_long_press")
+        self.register_event_type("on_short_press")
 
     def on_state(self, instance, value):
         """Dispatches ``on_long_press`` if the :attr:`state` stays down for longer than :attr:`long_press_time`."""
@@ -64,17 +66,23 @@ class LongPressBehavior(EventDispatcher):
         except AttributeError:
             pass
         if value == "down":
-            lpt = self.long_press_time
-            self._clockev = Clock.schedule_once(self._do_long_press, lpt)
+            self._clockev = Clock.schedule_once(
+                self._do_long_press, self.long_press_time
+            )
         else:
-            self._clockev.cancel()
+            if self._clockev in Clock.get_events():
+                self._clockev.cancel()
+                self.dispatch("on_short_press")
 
     def _do_long_press(self, _):
         """Dispatch ``"on_long_press"`` event."""
         self.dispatch("on_long_press")
 
     def on_long_press(self, *largs):
-        """Implement in inherited class. Placeholder."""
+        """Implement in sub class. Placeholder."""
+
+    def on_short_press(self, *largs):
+        """Implement in sub class. Placeholder."""
 
 
 class MultiStateBehavior:
