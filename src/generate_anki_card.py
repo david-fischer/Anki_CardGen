@@ -20,9 +20,7 @@ from utils import CD, smart_loader
 
 @attr.s
 class HtmlLoader:
-    """
-    Loads and processes html.
-    """
+    """Load and process html."""
 
     path = attr.ib(default=None)
     """Path to load html-file from."""
@@ -44,7 +42,7 @@ class HtmlLoader:
 
     def replace_includes_with_content(self):
         """
-        Inserts content of js-source-files at appropriate places and returns body.
+        Insert content of js-source-files at appropriate places and return body.
 
             * Removes ``src`` attributes from <script>-tags and inserts the content of the files.
             * ``<script>``-tags with "defer"-attribute are moved to the bottom of the body.
@@ -115,8 +113,7 @@ def model_from_html(name, template_names, model_id, css_path):
 @attr.s
 class AnkiObject:
     """
-    Class containing all necessary objects from the `genanki <https://github.com/kerrickstaley/genanki>`_-module to
-    handle everything Anki-related.
+    Class containing all necessary objects from the `genanki <https://github.com/kerrickstaley/genanki>`_-module.
 
     Attributes:
         model: :class:`genanki.model`
@@ -170,7 +167,7 @@ class AnkiObject:
 
     def write_apkg(self, out_path):
         """
-        Writes current :attr:`package` as apkg-file to ``out_path``
+        Write current :attr:`package` as apkg-file to ``out_path``.
 
         Args:
           out_path: Path wherer .apkg-file is saved.
