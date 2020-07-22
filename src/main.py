@@ -54,8 +54,17 @@ class AnkiCardGenApp(MDApp):
     """:class:`~kivy.properties.ListProperty` containing all words for which Anki-cards have been generated."""
     loading_state_dict = DictProperty({})
     """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
+    word_state_dict = DictProperty({})
+    """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
     keys_to_save = ListProperty(
-        ["queue_words", "done_words", "error_words", "loading_state_dict", "anki"]
+        [
+            "queue_words",
+            "done_words",
+            "error_words",
+            "loading_state_dict",
+            "anki",
+            "word_state_dict",
+        ]
     )
     """:class:`~kivy.properties.ListProperty` containing the name of all attributes that should be saved on change."""
 
@@ -126,6 +135,7 @@ class AnkiCardGenApp(MDApp):
                 "anki": "../app_data/anki.p",
                 "generated": "../app_data/generated_cards.csv",
                 "apkg": "../app_data/apkgs/portuguese_vocab.apkg",
+                "word_state_dict": "../app_data/word_state_dict.json",
             },
         )
         os.makedirs("../app_data/", exist_ok=True)

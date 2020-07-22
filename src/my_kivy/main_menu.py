@@ -89,6 +89,12 @@ class MainMenu(StackLayout):
                 "path": "my_kivy/screen_queue.kv",
             },
             {
+                "icon": "history",
+                "text": "History",
+                "name": "screen_history",
+                "path": "my_kivy/screen_history.kv",
+            },
+            {
                 "icon": "cogs",
                 "text": "Settings",
                 "name": "screen_settings",
