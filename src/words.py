@@ -1,6 +1,4 @@
-"""
-Implementation of :class:`Word`.
-"""
+"""Implementation of :class:`Word`."""
 import os
 import re
 
@@ -23,8 +21,7 @@ translator = Translator()
 @attr.s(auto_attribs=True)
 class Word:
     """
-    Class that fetches and edits the words that makes up the choices, presented to the user in the card-generation
-    process.
+    Class that fetches all data for a given search_term.
 
     Main function is :meth:`search` function.
     """
@@ -63,14 +60,12 @@ class Word:
 
     @property
     def audio_url(self):
-        """Getter function for :attr:`_audio_url`"""
+        """Getter function for :attr:`_audio_url`."""
         return self._audio_url
 
     @audio_url.setter
     def audio_url(self, value):
-        """
-        When the :attr:`_audio_url` is set, downloads the file.
-        """
+        """Set :attr:`_audio_url` and download file."""
         self._audio_url = value
         if not value:
             return
@@ -82,47 +77,29 @@ class Word:
         print("audio download complete.")
 
     def search_term_utf8(self):
-        """
-        Returns:
-          : :attr:`search_term` with special characters replaced.
-        """
+        """Return :attr:`search_term` in lower case and with special characters replaced."""
         return unidecode(self.search_term).lower()
 
     def folder(self):
-        """
-        Used as folder name to save files to.
-
-        Returns:
-          : :meth:`search_term_utf8` with spaces replaced by underscores.
-        """
+        """Return result from :meth:`search_term_utf8` with spaces replaced by underscores."""
         return self.search_term_utf8().replace(" ", "_")
 
     def base_path(self):
-        """
-        Used as base to save files.
-
-        Returns:
-          :  ``f"{self.data_dir}/{self.folder()}/{self.folder()}"``
-        """
+        """Return ``f"{self.data_dir}/{self.folder()}/{self.folder()}"``. Used as base to save files."""
         return f"{self.data_dir}/{self.folder()}/{self.folder()}"
 
     def translate(self, string):
-        """
-        Translates string from :attr:`from_lang` to :attr:`to_lang`.
-
-        Returns:
-            : Translated string.
-        """
+        """Translate string from :attr:`from_lang` to :attr:`to_lang`."""
         return translator.translate(string, src=self.from_lang, dest=self.to_lang).text
 
     def request_data(self):
-        """Iterates through parsers and passes results to :meth:`update_from_dict`"""
+        """Get result from parsers in :attr:`parsers` and pass results to :meth:`update_from_dict`."""
         for parser in self.parsers.values():
             self.update_from_dict(parser.result_dict(self.search_term))
 
     def update_from_dict(self, attr_dict):
         """
-        Iterates through attr_dict and updates :class:`Word` attributes.
+        Update :class:`Word`s attributes by iterating through ``attr_dict``.
 
         If the value is a list, it extends the original list, else the value is set to the value of attr_dict
 
@@ -137,11 +114,7 @@ class Word:
             setattr(self, key, value)
 
     def add_translations(self):
-        """
-        For the attributes ["examples","explanations", "synonyms", "antonyms"], it iterates to the corresponding lists
-        and adds
-        translations, where none are already present.
-        """
+        """Add translations to attributes ["examples", "explanations", "synonyms", "antonyms"], if necessary."""
         for key in ["examples", "explanations", "synonyms", "antonyms"]:
             values = getattr(self, key)
             for i, val in enumerate(values):
@@ -153,6 +126,7 @@ class Word:
 
     def request_img_urls(self, keywords=None):
         """
+        Use :class:`parsers.Parser` at :attr:`parsers`["google_image_parser"] to get image urls.
 
         Args:
             keywords:
@@ -175,14 +149,12 @@ class Word:
 
     @classmethod
     def from_json(cls, path):
-        """
-        Initializes :class:`Word` from dictionary saved as .json.
-        """
+        """Initialize :class:`Word` from dictionary saved as .json."""
         return cls(**smart_loader(path))
 
     def save_as_json(self, path=None):
         """
-        Saves class attributes as dictionary in a .json-file.
+        Save class attributes as dictionary in a .json-file.
 
         Args:
           path: If None, is set to f"words/{self.folder()}/{self.folder()}.json" (Default value = None)
@@ -200,7 +172,7 @@ class Word:
         smart_saver(attribute_dict, path)
 
     def get_fix_card_dict(self):
-        """Returns the part of the data for the anki-card, that does not depend on the user-choice."""
+        """Return the part of the data for the anki-card, that does not depend on the user-choice."""
         media_files = [f"{self.base_path()}.{ext}" for ext in ["jpg", "mp3"]]
         media_files = [path for path in media_files if os.path.exists(path)]
         return {
@@ -215,6 +187,8 @@ class Word:
     # TODO: check if return value is important
     def search(self, new_search_term):
         """
+        Load data for ``new_search_term``.
+
         If possible loads from previously saved search.
         If not, uses the parsers to obtain info and adds translations, then saves the result for future searches.
 
