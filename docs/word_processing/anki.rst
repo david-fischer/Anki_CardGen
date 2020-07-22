@@ -1,7 +1,6 @@
-generate\_anki\_card
+Generate Anki Cards
 ----------------------------------------------
 
 .. autoapimodule:: generate_anki_card
    :members:
-   :no-undoc-members:
    :show-inheritance:
