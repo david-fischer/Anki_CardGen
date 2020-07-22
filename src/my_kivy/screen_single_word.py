@@ -34,11 +34,13 @@ class WordProperties(BoxLayout):
         self.ids.translations.child_dicts = [
             {"text": string} for string in word.translations
         ]
-        self.ids.images.child_dicts = [{"source": string} for string in word.image_urls]
+        self.ids.images.child_dicts = [
+            {"source": string} for string in word.image_urls[:3]
+        ]
         for attribute in ["antonyms", "synonyms", "examples", "explanations"]:
             self.ids[attribute].child_dicts = [
                 {"text_orig": x[0], "text_trans": x[1]}
-                for x in getattr(word, attribute)
+                for x in getattr(word, attribute)[:3]
             ]
 
     def accept_suggestion(self, suggestion):
