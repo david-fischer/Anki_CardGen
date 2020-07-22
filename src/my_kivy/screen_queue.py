@@ -1,6 +1,4 @@
-"""
-Contains the functions needed on the screen screen_queue.
-"""
+"""Contains the functions needed on the screen screen_queue."""
 
 import threading
 from queue import Queue
@@ -29,9 +27,10 @@ dict: :code:`{"icon-name":"hint text"}` for the contents of
 
 
 def worker_single_word():
-    """As long as the queue is not empty, tries to process a single word.
-    Changing the states accordingly to "loading" and "ready"
-    If it fails, it moves the word to the error_words list.
+    """
+    Take a word from app.queue and process it, changing app.loading_state_dict accordingly.
+
+    Repeat as long as app.queue is not empty.
     """
     while not MDApp.get_running_app().queue.empty():
         word = MDApp.get_running_app().queue.get()
@@ -47,7 +46,7 @@ def worker_single_word():
 
 
 def start_workers(worker_fn, num):
-    """Starts a number of workers in separate threads
+    """Start a number of ``num`` workers in separate threads.
 
     Args:
       worker_fn: Function to be started
@@ -60,23 +59,16 @@ def start_workers(worker_fn, num):
 
 
 def queue_word(word):
-    """
-    Adds the word to the app.queue_words list and Queue and changes state to "queued".
-    Then calls :func:`start_downloading`.
-
-    Args:
-      word: Word to add to queue.
-"""
+    """Add ``word`` to the app.queue_words list and app.queue and changes state to "queued"."""
     if not is_duplicate(word):
         MDApp.get_running_app().loading_state_dict[word] = "queued"
         MDApp.get_running_app().queue_words.append(word)
         MDApp.get_running_app().queue.put(word)
-        start_downloading()
 
 
 def start_downloading():
     """
-    Downloads data for queued words:
+    Download data for queued words.
 
       * Sets up Queue
       * If no worker is present, starts one.
@@ -90,17 +82,13 @@ def start_downloading():
 
 
 def pause_downloading():
-    """
-    Empties queue.
-
-    This leads the download to stop after the current word is processed.
-    """
+    """Empty the queue. Worker stop after finishing current task."""
     MDApp.get_running_app().queue = Queue()
 
 
 def is_duplicate(word):
     """
-    Checks if word is already queued, done or has caused an error.
+    Check if word is already queued, done or has caused an error.
 
     Args:
       word: Word to check.
@@ -120,7 +108,7 @@ def is_duplicate(word):
 
 def choose_file_to_import(button):
     """
-    Opens an instance of :class:`~kivymd.uix.filemanager.MDFileManager` so the user can choose a file to import.
+    Open an instance of :class:`~kivymd.uix.filemanager.MDFileManager` to let user choose a file to import.
 
     Binds function to clicking on file, so the import is started in separate thread.
     """
@@ -150,18 +138,18 @@ def click_on_queue_item(item):
 
 
 def click_on_done_item(item):
-    """Placeholder for later implementation."""
+    """Placeholder-function for later implementation."""
     print(item.text)
 
 
 def click_on_error_item(item):
-    """Placeholder for later implementation."""
+    """Placeholder-function for later implementation."""
     print(item.text)
 
 
 def import_from(path, source="kindle"):
     """
-    Imports, processes and queues words from file.
+    Import, process and queue words from file.
 
     If non-dictionary forms are detected, prompts the user with suggestions for replacement.
 
@@ -185,7 +173,7 @@ def import_from(path, source="kindle"):
 
 def choose_replacements_dialog(replacements):
     """
-    Displays possible replacements.
+    Display possible replacements.
 
     Opens an :class:`~kivymd.uix.dialog.MDDialog` to show possible suggestions for detected non-dictionary forms of
     words.
@@ -200,6 +188,7 @@ def choose_replacements_dialog(replacements):
         for item in MDApp.get_running_app().dialog.ids.box_items.children:
             word = item.text.split(" -> ")[0]
             queue_word(word)
+            start_downloading()
         MDApp.get_running_app().dialog.dismiss()
 
     ok_button = MDFlatButton(

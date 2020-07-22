@@ -1,6 +1,4 @@
-"""
-Contains the necessary functions and classes for the screen screen_single_word.
-"""
+"""Contains the necessary functions and classes for the screen screen_single_word."""
 import os
 
 import certifi
@@ -24,6 +22,8 @@ os.environ["SSL_CERT_FILE"] = certifi.where()
 
 class WordProperties(BoxLayout):
     """
+    UI for picking content of Anki card.
+
     Consists of the UI-elements that display the data obtained by :class:`words.Word` and lets the user choose which
     data to include on the card.
     """
@@ -47,7 +47,7 @@ class WordProperties(BoxLayout):
         self.load_or_search(suggestion)
 
     def load_or_search(self, search_term):
-        """Searches for word, suggests alternative if not found and shows images."""
+        """Search for word, suggest alternative if not found and show images."""
         try:
             MDApp.get_running_app().word.search(search_term)
             self.refresh_data()
@@ -64,7 +64,7 @@ class WordProperties(BoxLayout):
 
     def get_user_selection_dict(self):
         """
-        Returns current user selection in the form needed by add_anki_card.
+        Return current user selection as dict (in the form needed by :attr:`main.AnkiCardGenApp.add_anki_card`).
 
         Example and explanation strings are tagged using :func:`utils.tag_word_in_sentence`.
         """
@@ -77,7 +77,7 @@ class WordProperties(BoxLayout):
             {"key": "ExampleTranslation", "id": "examples", "attr": "text_trans"},
         ]
         result_dict = {
-            d["key"]: ",".join(self.ids[d["id"]].get_checked(property_name=d["attr"]))
+            d["key"]: ",".join(self.ids[d["id"]].get_checked(attribute_name=d["attr"]))
             for d in selections
         }
         for key in ["Example", "Explanation"]:
@@ -87,11 +87,11 @@ class WordProperties(BoxLayout):
         return result_dict
 
     def download_selected_image(self):
-        """Downloads the currently selected image to :meth:`words.Word.base_path` + ".jpg" """
+        """Download the currently selected image to :meth:`words.Word.base_path` + ".jpg"."""
         # TODO: show spinner and cancel after certain time
         # TODO: Correct behavior on Error
         out_path = MDApp.get_running_app().word.base_path() + ".jpg"
-        img_url = self.ids.images.get_checked(property_name="source")[0]
+        img_url = self.ids.images.get_checked(attribute_name="source")[0]
         r_i = UrlRequest(
             img_url,
             file_path=out_path,
@@ -156,7 +156,7 @@ class WordProperties(BoxLayout):
 
 # TODO: Move
 class Tab(FloatLayout, MDTabsBase):
-    """Class implementing content for a tab. """
+    """Class implementing content for a tab."""
 
     id = StringProperty("")
     """:class:`~kivy.properties.StringProperty`"""
@@ -171,8 +171,8 @@ class Tab(FloatLayout, MDTabsBase):
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
 
-    class TestApp(MDApp):
+    class _TestApp(MDApp):
         def build(self):
             return Builder.load_file("screen_single_word.kv")
 
-    TestApp().run()
+    _TestApp().run()

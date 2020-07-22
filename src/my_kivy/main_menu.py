@@ -1,6 +1,4 @@
-"""
-Implements :class:`MainMenu`.
-"""
+"""Implements :class:`MainMenu`."""
 
 import os
 
@@ -57,13 +55,13 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
     """:class:`~kivy.properties.StringProperty` of currently active :attr:`DrawerItem.screen_name`."""
 
     def conditional_uncheck(self, instance, value):
-        """changes color of clicked item and updates :attr:`current`"""
+        """Change color of clicked item and updates :attr:`current`."""
         super(DrawerList, self).conditional_uncheck(instance, value)
         if value:
             self.current = instance.name
 
     def on_current(self, *_):
-        """Changes the state of the children respectively to :attr:`current`."""
+        """Change the state of the children respectively to :attr:`current`."""
         current_widget = [
             child
             for child in self.root_for_children.children
@@ -102,7 +100,7 @@ class MainMenu(StackLayout):
 
     def on_parent(self, *_):
         """
-        This function sets up the screens using ``name`` and ``path`` from :attr:`screen_dicts`.
+        Set up screen using ``name`` and ``path`` from :attr:`screen_dicts`.
 
         The screens are added to the screen_man and corresponding entries to the drawer_list.
         Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.
