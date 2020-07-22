@@ -30,10 +30,10 @@ from my_kivy.behaviors import (
 )
 
 try:
-    Builder.load_file("my_kivy/scroll_list.kv")
+    Builder.load_file("my_kivy/scroll_widgets.kv")
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
-    Builder.load_file(os.path.join(this_directory, "scroll_list.kv"))
+    Builder.load_file(os.path.join(this_directory, "scroll_widgets.kv"))
 
 
 class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
