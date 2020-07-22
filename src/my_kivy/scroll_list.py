@@ -37,9 +37,7 @@ except FileNotFoundError:
 
 
 class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
-    """
-    Contains :class:`~kivy.uix.spinner.MDSpinner` and :class:`~kivy.uix.label.MDIcon`.
-    """
+    """Contains :class:`~kivy.uix.spinner.MDSpinner` and :class:`~kivy.uix.label.MDIcon`."""
 
     spinner_active = BooleanProperty()
     """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`."""
@@ -69,9 +67,6 @@ class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
     """:class:`~kivy.properties.OptionProperty` with options ``["loading", "queued", "ready"]``."""
 
 
-Factory.register("LeftStatusIndicatorListItem", LeftStatusIndicatorListItem)
-
-
 class ScrollList(ChildrenFromDictsBehavior, ScrollView):
     """
     Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.
@@ -89,11 +84,34 @@ class ScrollList(ChildrenFromDictsBehavior, ScrollView):
     """
 
 
+class ScrollBox(ChildrenFromDictsBehavior, ScrollView):
+    """
+    :class:`~kivy.uix.scrollview.ScrollView` containing a :class:`~kivy.uix.boxlayout.BoxLayout`.
+
+    Children are constructed from :attr:`child_dict` and added to the BoxLayout.
+    """
+
+
+class ScrollGrid(ChildrenFromDictsBehavior, ScrollView):
+    """
+    :class:`~kivy.uix.scrollview.ScrollView` containing a :class:`~kivy.uix.gridlayout.GridLayout`.
+
+    Children are constructed from :attr:`child_dict` and added to the BoxLayout.
+    """
+
+
+class RecycleViewBox(RecycleView):
+    """:class:`~kivy.uix.recycleview.RecycleView` object containing a ``RecycleViewBoxLayout``."""
+
+
 class RecycleList(RecycleView):
-    """
-    :class:`~kivy.uix.recycleview.RecycleView` object containing a ``RecycleViewBoxLayout`` and some formatting
-    instructions.
-    """
+    """:class:`~kivy.uix.recycleview.RecycleView` object containing a ``RecycleViewBoxLayout``."""
+
+
+Factory.register("ScrollBox", ScrollBox)
+Factory.register("ScrollGrid", ScrollGrid)
+Factory.register("RecycleViewBox", RecycleViewBox)
+Factory.register("LeftStatusIndicatorListItem", LeftStatusIndicatorListItem)
 
 
 # pylint: disable = W,C,R,I,E
@@ -114,7 +132,7 @@ if __name__ == "__main__":
         obj.current_state = sl.data[obj.number]["current_state"]
         print(toolz.keyfilter(lambda x: x != "queued", names_by_state))
 
-    class TestApp(MDApp):
+    class _TestApp(MDApp):
         def build(self):
             # sl = ScrollList(child_class_name="LeftStatusIndicatorListItem")
             # sl.child_dicts = [
@@ -134,4 +152,4 @@ if __name__ == "__main__":
             ]
             return sl
 
-    TestApp().run()
+    _TestApp().run()
