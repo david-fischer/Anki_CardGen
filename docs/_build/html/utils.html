@@ -123,9 +123,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#utils.screenshot">screenshot</a></li>
 </ul>
 <ul>
-<li class="toctree-l2"><a class="reference internal" href="#utils.selection_helper">selection_helper</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.set_screen">set_screen</a></li>
 </ul>
 <ul>
@@ -259,7 +256,7 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.compress_img">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">compress_img</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#compress_img"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.compress_img" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses the <code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code> class to reduce the resolution of an image at <code class="docutils literal notranslate"><span class="pre">path</span></code> and overwrites it.</p>
+<dd><p>Use the <code class="xref py py-class docutils literal notranslate"><span class="pre">Image</span></code> class to reduce the resolution of an image at <code class="docutils literal notranslate"><span class="pre">path</span></code> and overwrites it.</p>
 <p>If the image already has smaller width, nothing is done.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -274,7 +271,7 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.dict_from_kindle_export">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">dict_from_kindle_export</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#dict_from_kindle_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.dict_from_kindle_export" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts highlighted parts and sorts them by color in a dictionary.</p>
+<dd><p>Extract highlighted parts and sorts them by color in a dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>file_path</strong> – Path to an html-file exported from kindle.</p>
@@ -288,7 +285,7 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.load_dicts_from_csv">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">load_dicts_from_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#load_dicts_from_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.load_dicts_from_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Loads csv. Has to have the keys as first line.</p>
+<dd><p>Load csv. Has to have the keys as first line.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
 <dd class="field-odd"><p>List of dictionaries.</p>
@@ -305,17 +302,14 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.now_string">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">now_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#now_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.now_string" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Current time in the format <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD_HH:MM:SS</span></code>.</p>
-</dd>
-</dl>
+<dd><p>Return current time in the format <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD_HH:MM:SS</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="utils.save_card_pngs">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_pngs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em>, <em class="sig-param"><span class="n">size</span><span class="o">=</span><span class="default_value">540, 960</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#save_card_pngs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_pngs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves pngs of the anki-cards for a given word, for which a card has to be generated earlier.</p>
+<dd><p>Save pngs of the anki-cards for a given word.</p>
+<p>The fields need to be saved as json at <code class="docutils literal notranslate"><span class="pre">../app_data/&lt;word&gt;/&lt;word&gt;_card.json</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -329,47 +323,32 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.save_dict_to_csv">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_dict_to_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_dict</span></em>, <em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#save_dict_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_dict_to_csv" title="Permalink to this definition">¶</a></dt>
-<dd><p>Saves dictionary as row to csv.</p>
+<dd><p>Save dictionary as row to csv.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="utils.screenshot">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.screenshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Takes screenshot of the current state of the app and saves it under <code class="docutils literal notranslate"><span class="pre">path</span></code>.</p>
+<dd><p>Take screenshot of the current state of the app and save it under <code class="docutils literal notranslate"><span class="pre">path</span></code>.</p>
 <p>The sleep- and mainthread-decorator ensure that the app shows the current state properly.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="utils.selection_helper">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">selection_helper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base</span></em>, <em class="sig-param"><span class="n">id_str</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">props</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#selection_helper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.selection_helper" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>base</strong> – </p></li>
-<li><p><strong>id_str</strong> – (Default value = None)</p></li>
-<li><p><strong>props</strong> – (Default value = None)</p></li>
-</ul>
-</dd>
-</dl>
-<p>Returns:</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="utils.set_screen">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.set_screen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets current screen to the one with name <code class="docutils literal notranslate"><span class="pre">screen_name</span></code>.</p>
+<dd><p>Set current screen to the one with name <code class="docutils literal notranslate"><span class="pre">screen_name</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="utils.sleep_decorator">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">sleep_decorator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#sleep_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.sleep_decorator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Executes sleep(time) before and after decorated function.</p>
+<dd><p>Execute sleep(time) before and after decorated function.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt id="utils.smart_loader">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">smart_loader</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#smart_loader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.smart_loader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses file ending of path to determine which function to use to load file.</p>
+<dd><p>Use file ending of path to determine which function to use to load file.</p>
 <dl class="simple">
 <dt>Supported file endings:</dt><dd><ul class="simple">
 <li><p>.p (pickle)</p></li>
@@ -391,7 +370,7 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.smart_saver">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">smart_saver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#smart_saver"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.smart_saver" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses file ending of path to determine which function to use to save file.</p>
+<dd><p>Use file ending of path to determine which function to use to save file.</p>
 <dl class="simple">
 <dt>Supported file endings:</dt><dd><ul class="simple">
 <li><p>.p (pickle)</p></li>
@@ -413,7 +392,7 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.tag_word_in_sentence">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">tag_word_in_sentence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sentence</span></em>, <em class="sig-param"><span class="n">tag_word</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#tag_word_in_sentence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.tag_word_in_sentence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses regex to wrap every derived form of a given <code class="docutils literal notranslate"><span class="pre">tag_word</span></code> in <code class="docutils literal notranslate"><span class="pre">sentence</span></code> in an html-tag.</p>
+<dd><p>Use regex to wrap every derived form of a given <code class="docutils literal notranslate"><span class="pre">tag_word</span></code> in <code class="docutils literal notranslate"><span class="pre">sentence</span></code> in an html-tag.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -430,10 +409,10 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.widget_by_id">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">widget_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#widget_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.widget_by_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get widget by string of ids, seperated by “/”.</p>
+<dd><p>Get widget by string of ids, separated by “/”.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>string</strong> – Stings of ids, seperated by “/”. The first one can be a screen name.</p>
+<dd class="field-odd"><p><strong>string</strong> – Strings of ids, separated by “/”. The first one can be a screen name.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>widget</p>
@@ -452,7 +431,7 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.word_list_from_kindle">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">word_list_from_kindle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#word_list_from_kindle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.word_list_from_kindle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses <code class="xref py py-const docutils literal notranslate"><span class="pre">MEANING2COLOR</span></code> <cite>[“words”]</cite> to extract the list of words highlighted in this specific color.</p>
+<dd><p>Use <code class="xref py py-const docutils literal notranslate"><span class="pre">MEANING2COLOR</span></code> <cite>[“words”]</cite> to extract the list of words highlighted in this specific color.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> – Path to html-file exported by kindle.</p>
@@ -466,12 +445,10 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="utils.word_list_from_txt">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">word_list_from_txt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#word_list_from_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.word_list_from_txt" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
+<dd><p>Return list of words read as lines from txt-file.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>path</strong> – Path to txt-file. Each line should correspond to a word (or phrase).</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of words.</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,7 +1,6 @@
-mychooser
+Behaviors
 ---------------------------------------
 
 .. autoapimodule:: behaviors
    :members:
-   :undoc-members:
    :show-inheritance:

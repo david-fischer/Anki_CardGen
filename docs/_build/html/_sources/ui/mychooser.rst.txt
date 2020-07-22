@@ -1,7 +1,6 @@
-mychooser
+Selection Widgets
 ---------------------------------------
 
 .. autoapimodule:: mychooser
    :members:
-   :undoc-members:
    :show-inheritance:

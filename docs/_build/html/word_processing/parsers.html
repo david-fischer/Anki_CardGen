@@ -38,7 +38,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Words" href="words.html" />
-    <link rel="prev" title="generate_anki_card" href="anki.html" />
+    <link rel="prev" title="Generate Anki Cards" href="anki.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,15 +85,12 @@
 
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../word_processing.html">Word Processing</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="anki.html">generate_anki_card</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anki.html">Generate Anki Cards</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Parsers</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#parsers.DEFAULT_HEADERS">DEFAULT_HEADERS</a></li>
 </ul>
 <ul>
 <li class="toctree-l3"><a class="reference internal" href="#parsers.DicioParser">DicioParser</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.DicioParser.base_url">base_url</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#parsers.DicioParser.parse_response">parse_response</a></li>
 </ul>
 <ul>
@@ -108,22 +105,7 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#parsers.LANGUAGES">LANGUAGES</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#parsers.LINGUEE_HEADERS">LINGUEE_HEADERS</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#parsers.LingueeParser">LingueeParser</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.LingueeParser.audio_base_url">audio_base_url</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.LingueeParser.base_url">base_url</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.LingueeParser.lang_dict">lang_dict</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#parsers.LingueeParser.parse_response">parse_response</a></li>
 </ul>
 </li>
@@ -165,22 +147,7 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#parsers.REVERSO_HEADERS">REVERSO_HEADERS</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#parsers.ReversoParser">ReversoParser</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.ReversoParser.base_url">base_url</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.ReversoParser.headers">headers</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.ReversoParser.lang_dict">lang_dict</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#parsers.ReversoParser.language_string">language_string</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#parsers.ReversoParser.parse_response">parse_response</a></li>
 </ul>
 <ul>
@@ -189,16 +156,13 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#parsers.TEST_WORD">TEST_WORD</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#parsers.get_element_after_regex">get_element_after_regex</a></li>
 </ul>
 <ul>
 <li class="toctree-l3"><a class="reference internal" href="#parsers.linguee_did_you_mean">linguee_did_you_mean</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#parsers.to_stripped_multiline_str">to_stripped_multiline_str</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parsers.strip_multiline_str">strip_multiline_str</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="words.html">Words</a></li>
@@ -276,8 +240,7 @@
 
   <div class="section" id="module-parsers">
 <span id="parsers"></span><h1>Parsers<a class="headerlink" href="#module-parsers" title="Permalink to this headline">¶</a></h1>
-<p>This module provides different parsers (children of <a class="reference internal" href="#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a>) to obtain the necessary words to fill the
-Anki-cards.</p>
+<p>This module provides different parsers (children of <a class="reference internal" href="#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">Parser</span></code></a>) to obtain the necessary data to fill Anki-Cards.</p>
 <p>Each parser returns a dict, that can directly be used by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">pt_word.Word.update_from_dict()</span></code> method of the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">pt_word.Word</span></code>
 class.</p>
@@ -291,22 +254,17 @@ class.</p>
 <dt id="parsers.DicioParser">
 <em class="property">class </em><code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">DicioParser</code><a class="reference internal" href="../_modules/parsers.html#DicioParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.DicioParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.Parser</span></code></a></p>
-<p>Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html</p>
-<dl class="py attribute">
-<dt id="parsers.DicioParser.base_url">
-<code class="sig-name descname">base_url</code><em class="property"> = https://www.dicio.com.br/pesquisa.php?q={phrase}/</em><a class="reference internal" href="../_modules/parsers.html#DicioParser.base_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.DicioParser.base_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html.</p>
 <dl class="py method">
 <dt id="parsers.DicioParser.parse_response">
 <code class="sig-name descname">parse_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">response</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#DicioParser.parse_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.DicioParser.parse_response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html</p>
+<dd><p>Extract: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="parsers.DicioParser.setup">
 <code class="sig-name descname">setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#DicioParser.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.DicioParser.setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stuff that needs to be executed before <code class="xref py py-meth docutils literal notranslate"><span class="pre">url()</span></code> is called.</p>
+<dd><p>Set up attributes.</p>
 </dd></dl>
 
 </dd></dl>
@@ -319,52 +277,20 @@ class.</p>
 <dl class="py method">
 <dt id="parsers.GoogleImagesParser.result_dict">
 <code class="sig-name descname">result_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">phrase</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#GoogleImagesParser.result_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.GoogleImagesParser.result_dict" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>phrase</strong> – If None, uses <code class="xref py py-attr docutils literal notranslate"><span class="pre">phrase</span></code>. (Default value = None)</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Result of <code class="xref py py-meth docutils literal notranslate"><span class="pre">parse_response()</span></code>.</p>
-</dd>
-</dl>
+<dd><p>Return dictionary of the form <code class="docutils literal notranslate"><span class="pre">{&quot;image_urls&quot;:[url0,url1,...]}}</span></code>.</p>
 </dd></dl>
 
 </dd></dl>
-
-<dl class="py data">
-<dt id="parsers.LANGUAGES">
-<code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">LANGUAGES</code><a class="reference internal" href="../_modules/parsers.html#LANGUAGES"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LANGUAGES" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py data">
-<dt id="parsers.LINGUEE_HEADERS">
-<code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">LINGUEE_HEADERS</code><a class="reference internal" href="../_modules/parsers.html#LINGUEE_HEADERS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LINGUEE_HEADERS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py class">
 <dt id="parsers.LingueeParser">
 <em class="property">class </em><code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">LingueeParser</code><a class="reference internal" href="../_modules/parsers.html#LingueeParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LingueeParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.Parser</span></code></a></p>
-<p>Uses Linguee to obtain: translation, word_type, gender and audio_url</p>
-<dl class="py attribute">
-<dt id="parsers.LingueeParser.audio_base_url">
-<code class="sig-name descname">audio_base_url</code><em class="property"> = https://www.linguee.de/mp3/%s.mp3</em><a class="reference internal" href="../_modules/parsers.html#LingueeParser.audio_base_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LingueeParser.audio_base_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="parsers.LingueeParser.base_url">
-<code class="sig-name descname">base_url</code><em class="property"> = https://linguee-api.herokuapp.com/api?q={phrase}&amp;src={from_lang}&amp;dst={to_lang}</em><a class="reference internal" href="../_modules/parsers.html#LingueeParser.base_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LingueeParser.base_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="parsers.LingueeParser.lang_dict">
-<code class="sig-name descname">lang_dict</code><a class="reference internal" href="../_modules/parsers.html#LingueeParser.lang_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LingueeParser.lang_dict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>Use Linguee to obtain: translation, word_type, gender and audio_url.</p>
 <dl class="py method">
 <dt id="parsers.LingueeParser.parse_response">
 <code class="sig-name descname">parse_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">response</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)">requests.Response</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#LingueeParser.parse_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.LingueeParser.parse_response" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extracts translation, word_type, gender, audio_url</p>
+<dd><p>Extract: translation, word_type, gender, audio_url.</p>
 </dd></dl>
 
 </dd></dl>
@@ -403,7 +329,7 @@ E.g. <a class="reference external" href="https://some.url">https://some.url</a>/
 <dl class="py method">
 <dt id="parsers.Parser.make_request">
 <code class="sig-name descname">make_request</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">url</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#Parser.make_request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.Parser.make_request" title="Permalink to this definition">¶</a></dt>
-<dd><p>Uses <a class="reference internal" href="#parsers.Parser.headers" title="parsers.Parser.headers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">headers</span></code></a> to make an http-request via <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code></p>
+<dd><p>Use <a class="reference internal" href="#parsers.Parser.headers" title="parsers.Parser.headers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">headers</span></code></a> to make an http-request via <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>url</strong> – If None, will be set to <a class="reference internal" href="#parsers.Parser.url" title="parsers.Parser.url"><code class="xref py py-meth docutils literal notranslate"><span class="pre">url()</span></code></a>. (Default value = None)</p>
@@ -417,14 +343,7 @@ E.g. <a class="reference external" href="https://some.url">https://some.url</a>/
 <dl class="py method">
 <dt id="parsers.Parser.parse_response">
 <code class="sig-name descname">parse_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">response</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)">requests.Response</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#Parser.parse_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.Parser.parse_response" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>response</strong> (<a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>) – Response to parse.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary with extracted information.</p>
-</dd>
-</dl>
+<dd><p>Parse <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.response</span></code> and return dict with result.</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -436,14 +355,7 @@ E.g. <a class="reference external" href="https://some.url">https://some.url</a>/
 <dl class="py method">
 <dt id="parsers.Parser.result_dict">
 <code class="sig-name descname">result_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">phrase</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#Parser.result_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.Parser.result_dict" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>phrase</strong> – If None, uses <a class="reference internal" href="#parsers.Parser.phrase" title="parsers.Parser.phrase"><code class="xref py py-attr docutils literal notranslate"><span class="pre">phrase</span></code></a>. (Default value = None)</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Result of <a class="reference internal" href="#parsers.Parser.parse_response" title="parsers.Parser.parse_response"><code class="xref py py-meth docutils literal notranslate"><span class="pre">parse_response()</span></code></a>.</p>
-</dd>
-</dl>
+<dd><p>Use <a class="reference internal" href="#parsers.Parser.make_request" title="parsers.Parser.make_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">make_request()</span></code></a> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">parse_request()</span></code> to return dict with result.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -471,61 +383,24 @@ E.g. <a class="reference external" href="https://some.url">https://some.url</a>/
 
 </dd></dl>
 
-<dl class="py data">
-<dt id="parsers.REVERSO_HEADERS">
-<code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">REVERSO_HEADERS</code><a class="reference internal" href="../_modules/parsers.html#REVERSO_HEADERS"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.REVERSO_HEADERS" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
 <dt id="parsers.ReversoParser">
 <em class="property">class </em><code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">ReversoParser</code><a class="reference internal" href="../_modules/parsers.html#ReversoParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.Parser</span></code></a></p>
-<p>Uses Reverso to obtain: examples</p>
-<dl class="py attribute">
-<dt id="parsers.ReversoParser.base_url">
-<code class="sig-name descname">base_url</code><em class="property"> = https://context.reverso.net/{language_string}/{phrase}</em><a class="reference internal" href="../_modules/parsers.html#ReversoParser.base_url"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser.base_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="parsers.ReversoParser.headers">
-<code class="sig-name descname">headers</code><a class="reference internal" href="../_modules/parsers.html#ReversoParser.headers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser.headers" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="parsers.ReversoParser.lang_dict">
-<code class="sig-name descname">lang_dict</code><a class="reference internal" href="../_modules/parsers.html#ReversoParser.lang_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser.lang_dict" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt id="parsers.ReversoParser.language_string">
-<code class="sig-name descname">language_string</code><a class="reference internal" href="../_modules/parsers.html#ReversoParser.language_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser.language_string" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>Use Reverso to obtain: examples.</p>
 <dl class="py method">
 <dt id="parsers.ReversoParser.parse_response">
 <code class="sig-name descname">parse_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">response</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)">requests.Response</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#ReversoParser.parse_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser.parse_response" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>response</strong> (<a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>) – </p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Dictionary {“examples”: [[ex_1_from_lang,ex_1_to_lang],…]}</p>
-</dd>
-</dl>
+<dd><p>Parse response and return dict of the form <code class="docutils literal notranslate"><span class="pre">{&quot;examples&quot;:[</span> <span class="pre">[ex_src_lang,</span> <span class="pre">ex_trg_lang],...]]}</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="parsers.ReversoParser.setup">
 <code class="sig-name descname">setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#ReversoParser.setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.ReversoParser.setup" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stuff that needs to be executed before <code class="xref py py-meth docutils literal notranslate"><span class="pre">url()</span></code> is called.</p>
+<dd><p>Set up attributes.</p>
 </dd></dl>
 
 </dd></dl>
-
-<dl class="py data">
-<dt id="parsers.TEST_WORD">
-<code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">TEST_WORD</code><em class="property"> = </em><a class="reference internal" href="../_modules/parsers.html#TEST_WORD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.TEST_WORD" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="py function">
 <dt id="parsers.get_element_after_regex">
@@ -548,9 +423,9 @@ E.g. <a class="reference external" href="https://some.url">https://some.url</a>/
 </dd></dl>
 
 <dl class="py function">
-<dt id="parsers.to_stripped_multiline_str">
-<code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">to_stripped_multiline_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bs_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#to_stripped_multiline_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.to_stripped_multiline_str" title="Permalink to this definition">¶</a></dt>
-<dd><p>Strips each line of a string of leading and trailing whitespace.</p>
+<dt id="parsers.strip_multiline_str">
+<code class="sig-prename descclassname">parsers.</code><code class="sig-name descname">strip_multiline_str</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bs_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/parsers.html#strip_multiline_str"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#parsers.strip_multiline_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Strip each line of a string of leading and trailing whitespace.</p>
 </dd></dl>
 
 </div>
@@ -566,7 +441,7 @@ E.g. <a class="reference external" href="https://some.url">https://some.url</a>/
         <a href="words.html" class="btn btn-neutral float-right" title="Words" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
 
-        <a href="anki.html" class="btn btn-neutral float-left" title="generate_anki_card" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="anki.html" class="btn btn-neutral float-left" title="Generate Anki Cards" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
 
     </div>
 

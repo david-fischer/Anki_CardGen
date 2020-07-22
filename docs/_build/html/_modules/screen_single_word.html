@@ -150,9 +150,7 @@
            <div itemprop="articleBody">
 
   <h1>Source code for screen_single_word</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Contains the necessary functions and classes for the screen screen_single_word.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Contains the necessary functions and classes for the screen screen_single_word.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">certifi</span>
@@ -176,6 +174,8 @@
 
 <div class="viewcode-block" id="WordProperties"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties">[docs]</a><span class="k">class</span> <span class="nc">WordProperties</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    UI for picking content of Anki card.</span>
+
 <span class="sd">    Consists of the UI-elements that display the data obtained by :class:`words.Word` and lets the user choose which</span>
 <span class="sd">    data to include on the card.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -199,7 +199,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">load_or_search</span><span class="p">(</span><span class="n">suggestion</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="WordProperties.load_or_search"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.load_or_search">[docs]</a>    <span class="k">def</span> <span class="nf">load_or_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Searches for word, suggests alternative if not found and shows images.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Search for word, suggest alternative if not found and show images.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">refresh_data</span><span class="p">()</span>
@@ -210,12 +210,13 @@
                 <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">search_term</span><span class="si">}</span><span class="s2"> not found on </span><span class="si">{</span><span class="n">error</span><span class="o">.</span><span class="n">site</span><span class="si">}</span><span class="s2">.&quot;</span>
                 <span class="o">+</span> <span class="p">(</span><span class="s2">&quot; Did you mean... ?&quot;</span> <span class="k">if</span> <span class="n">suggestions</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
                 <span class="n">options</span><span class="o">=</span><span class="n">suggestions</span><span class="p">,</span>
-                <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">accept_suggestion</span><span class="p">,</span></div>
+                <span class="n">item_callback</span><span class="o">=</span><span class="k">lambda</span> <span class="n">obj</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">accept_suggestion</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">text</span><span class="p">),</span>
+                <span class="n">close_on_item</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></div>
             <span class="p">)</span>
 
 <div class="viewcode-block" id="WordProperties.get_user_selection_dict"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.get_user_selection_dict">[docs]</a>    <span class="k">def</span> <span class="nf">get_user_selection_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns current user selection in the form needed by add_anki_card.</span>
+<span class="sd">        Return current user selection as dict (in the form needed by :attr:`main.AnkiCardGenApp.add_anki_card`).</span>
 
 <span class="sd">        Example and explanation strings are tagged using :func:`utils.tag_word_in_sentence`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -228,7 +229,7 @@
             <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;ExampleTranslation&quot;</span><span class="p">,</span> <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="s2">&quot;attr&quot;</span><span class="p">:</span> <span class="s2">&quot;text_trans&quot;</span><span class="p">},</span>
         <span class="p">]</span>
         <span class="n">result_dict</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]:</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">property_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;attr&quot;</span><span class="p">]))</span>
+            <span class="n">d</span><span class="p">[</span><span class="s2">&quot;key&quot;</span><span class="p">]:</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">attribute_name</span><span class="o">=</span><span class="n">d</span><span class="p">[</span><span class="s2">&quot;attr&quot;</span><span class="p">]))</span>
             <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">selections</span>
         <span class="p">}</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Example&quot;</span><span class="p">,</span> <span class="s2">&quot;Explanation&quot;</span><span class="p">]:</span>
@@ -238,11 +239,11 @@
         <span class="k">return</span> <span class="n">result_dict</span></div>
 
 <div class="viewcode-block" id="WordProperties.download_selected_image"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.download_selected_image">[docs]</a>    <span class="k">def</span> <span class="nf">download_selected_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Downloads the currently selected image to :meth:`words.Word.base_path` + &quot;.jpg&quot; &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Download the currently selected image to :meth:`words.Word.base_path` + &quot;.jpg&quot;.&quot;&quot;&quot;</span>
         <span class="c1"># TODO: show spinner and cancel after certain time</span>
         <span class="c1"># TODO: Correct behavior on Error</span>
         <span class="n">out_path</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span><span class="o">.</span><span class="n">base_path</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;.jpg&quot;</span>
-        <span class="n">img_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">property_name</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">img_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">attribute_name</span><span class="o">=</span><span class="s2">&quot;source&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">r_i</span> <span class="o">=</span> <span class="n">UrlRequest</span><span class="p">(</span>
             <span class="n">img_url</span><span class="p">,</span>
             <span class="n">file_path</span><span class="o">=</span><span class="n">out_path</span><span class="p">,</span>
@@ -277,7 +278,7 @@
 
 
 <span class="c1"># class ImageSearchResultGrid(MyCheckImageGrid):</span>
-<span class="c1">#     &quot;&quot;&quot;Extends the :class:`mychooser.MyCheckImageGrid` by the :meth:`get_images` method.&quot;&quot;&quot;</span>
+<span class="c1">#     &quot;&quot;&quot;Extends the :class:`selection_widgets.MyCheckImageGrid` by the :meth:`get_images` method.&quot;&quot;&quot;</span>
 <span class="c1">#</span>
 <span class="c1">#     def on_child_dicts(self, *_):</span>
 <span class="c1">#         if len(self.children) == len(self.child_dicts):</span>
@@ -307,7 +308,7 @@
 
 <span class="c1"># TODO: Move</span>
 <div class="viewcode-block" id="Tab"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab">[docs]</a><span class="k">class</span> <span class="nc">Tab</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">MDTabsBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class implementing content for a tab. &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Class implementing content for a tab.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Tab.id"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
@@ -322,11 +323,11 @@
 <span class="c1"># pylint: disable = W,C,R,I</span>
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
 
-<div class="viewcode-block" id="TestApp"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.TestApp">[docs]</a>    <span class="k">class</span> <span class="nc">TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
-<div class="viewcode-block" id="TestApp.build"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.TestApp.build">[docs]</a>        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;screen_single_word.kv&quot;</span><span class="p">)</span></div></div>
+    <span class="k">class</span> <span class="nc">_TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;screen_single_word.kv&quot;</span><span class="p">)</span>
 
-    <span class="n">TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+    <span class="n">_TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>
 
            </div>

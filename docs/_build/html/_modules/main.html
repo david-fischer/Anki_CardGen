@@ -150,9 +150,7 @@
            <div itemprop="articleBody">
 
   <h1>Source code for main</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Contains the Main App :class:`AnkiCardGenApp`.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Contains the Main App :class:`AnkiCardGenApp`.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">queue</span>
@@ -183,24 +181,22 @@
 
 
 <div class="viewcode-block" id="AnkiCardGenApp"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp">[docs]</a><span class="k">class</span> <span class="nc">AnkiCardGenApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main App.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Main App.&quot;&quot;&quot;</span>
 
     <span class="c1"># Kivy</span>
 <div class="viewcode-block" id="AnkiCardGenApp.dialog"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.dialog">[docs]</a>    <span class="n">dialog</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivymd.uix.dialog.MDDialog` Object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivymd.uix.dialog.MDDialog` Object.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.file_manager"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.file_manager">[docs]</a>    <span class="n">file_manager</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivymd.uix.filemanager.MDFileManager` Object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivymd.uix.filemanager.MDFileManager` Object.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.theme_dialog"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.theme_dialog">[docs]</a>    <span class="n">theme_dialog</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivymd.uix.picker.MDThemePicker` Object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivymd.uix.picker.MDThemePicker` Object.&quot;&quot;&quot;</span>
     <span class="c1"># Other Objects</span>
 <div class="viewcode-block" id="AnkiCardGenApp.word"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.word">[docs]</a>    <span class="n">word</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`pt_word.Word` Object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;:class:`pt_word.Word` Object.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.anki"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.anki">[docs]</a>    <span class="n">anki</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`generate_anki_card.AnkiObject` Object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;:class:`generate_anki_card.AnkiObject` Object.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.queue"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.queue">[docs]</a>    <span class="n">queue</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`queue.Queue` Object&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;:class:`queue.Queue` Object.&quot;&quot;&quot;</span>
     <span class="c1"># Data</span>
 <div class="viewcode-block" id="AnkiCardGenApp.error_words"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.error_words">[docs]</a>    <span class="n">error_words</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing all words that could not be processed by Queue.&quot;&quot;&quot;</span>
@@ -217,23 +213,28 @@
 
     <span class="nd">@mainthread</span>
 <div class="viewcode-block" id="AnkiCardGenApp.show_dialog"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.show_dialog">[docs]</a>    <span class="k">def</span> <span class="nf">show_dialog</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span> <span class="n">item_function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">buttons</span><span class="o">=</span><span class="kc">None</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">item_callback</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">buttons</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">close_on_item</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Shows a customizable dialog.</span>
+<span class="sd">        Show customizable dialog.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">          message: Message on top.</span>
 <span class="sd">          options:  List of strings, each representing an option for the user to choose.</span>
-<span class="sd">          callback:  (Default value = print)</span>
-<span class="sd">          item_function:  (Default value = None)</span>
+<span class="sd">          item_callback:  (Default value = None)</span>
 <span class="sd">          buttons:  (Default value = None)</span>
+<span class="sd">          close_on_item: If ``True`` dismiss dialog after click on item. (Default = False)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">item_function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
 
-            <span class="k">def</span> <span class="nf">item_function</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="n">item_callback</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">close_on_item</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
-                <span class="n">callback</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">buttons</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">buttons</span> <span class="o">=</span> <span class="p">[</span>
@@ -244,7 +245,7 @@
                 <span class="p">)</span>
             <span class="p">]</span>
         <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">OneLineIconListItem</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">on_press</span><span class="o">=</span><span class="n">item_function</span><span class="p">)</span>
+            <span class="n">OneLineIconListItem</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">on_press</span><span class="o">=</span><span class="n">on_item_press</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span>
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span> <span class="o">=</span> <span class="n">MDDialog</span><span class="p">(</span>
@@ -257,15 +258,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">text_color</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AnkiCardGenApp.build_config"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.build_config">[docs]</a>    <span class="k">def</span> <span class="nf">build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          config:</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AnkiCardGenApp.build_config"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.build_config">[docs]</a>    <span class="k">def</span> <span class="nf">build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
+        <span class="sd">&quot;&quot;&quot;If no config-file exists, sets the default.&quot;&quot;&quot;</span>
         <span class="n">config</span><span class="o">.</span><span class="n">setdefaults</span><span class="p">(</span>
             <span class="s2">&quot;Theme&quot;</span><span class="p">,</span>
             <span class="p">{</span>
@@ -286,12 +280,15 @@
                 <span class="s2">&quot;apkg&quot;</span><span class="p">:</span> <span class="s2">&quot;../app_data/apkgs/portuguese_vocab.apkg&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">)</span>
-        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;../app_data/&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;../app_data/&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;../app_data/apkgs/&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AnkiCardGenApp.build"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set up App and return :class:`my_kivy.MainMenu` as root widget.&quot;&quot;&quot;</span>
         <span class="c1"># Config and Theme</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span> <span class="o">=</span> <span class="n">ThemeManager</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span> <span class="o">=</span> <span class="n">ThemeManager</span><span class="p">(</span>  <span class="c1"># pylint: disable=attribute-defined-outside-init</span>
+            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">]</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_dialog</span> <span class="o">=</span> <span class="n">MDThemePicker</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_dialog</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">close_button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_press</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">save_theme</span><span class="p">)</span>
         <span class="c1"># Non Kivy Objects</span>
@@ -306,48 +303,32 @@
                 <span class="n">key</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">save_by_config_key</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_to_save</span>
             <span class="p">}</span>
-        <span class="p">)</span>  <span class="c1"># partial(</span>
+        <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">word</span> <span class="o">=</span> <span class="n">Word</span><span class="p">(</span><span class="n">data_dir</span><span class="o">=</span><span class="s2">&quot;../app_data/words&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_queue</span><span class="p">()</span>
         <span class="c1"># Kivy Objects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span> <span class="o">=</span> <span class="n">MDFileManager</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">MainMenu</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">MainMenu</span><span class="p">()</span></div>
 
     <span class="c1"># def on_start(self):</span>
     <span class="c1">#    threading.Thread(target=make_screenshots).start()</span>
 
-    <span class="k">def</span> <span class="nf">setup_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AnkiCardGenApp.setup_queue"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.setup_queue">[docs]</a>    <span class="k">def</span> <span class="nf">setup_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set up :attr:`queue` from words in :attr:`queue_words`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue_words</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">loading_state_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">]:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">loading_state_dict</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;queued&quot;</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">word</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.save_theme"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.save_theme">[docs]</a>    <span class="k">def</span> <span class="nf">save_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          *_:</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Save current theme to config file.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">]:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.open_file_manager"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.open_file_manager">[docs]</a>    <span class="k">def</span> <span class="nf">open_file_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;/&quot;</span><span class="p">,</span> <span class="n">select_path</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          path:  (Default value = &quot;/&quot;)</span>
-<span class="sd">          select_path:  (Default value = print)</span>
-<span class="sd">          ext:  (Default value = None)</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file.&quot;&quot;&quot;</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;opening file manager...&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">ext</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">ext</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;.html&quot;</span><span class="p">]</span>
@@ -356,51 +337,32 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.load_by_config_key"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.load_by_config_key">[docs]</a>    <span class="k">def</span> <span class="nf">load_by_config_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          key:</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Use :func:`utils.smart_loader` to load attribute from path in :attr:`config` [attribute].&quot;&quot;&quot;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Paths&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.save_by_config_key"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.save_by_config_key">[docs]</a>    <span class="k">def</span> <span class="nf">save_by_config_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          key:</span>
-<span class="sd">          *_:</span>
-<span class="sd">          obj:  (Default value = None)</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Use :func:`utils.smart_saver` to save current attribute to path in :attr:`config` [attribute].&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
         <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Paths&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
         <span class="n">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">load_app_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AnkiCardGenApp.load_app_state"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.load_app_state">[docs]</a>    <span class="k">def</span> <span class="nf">load_app_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load all attributes specified in :attr:`keys_to_save` by :meth:`load_by_config_key`.</span>
+
+<span class="sd">        If the path does not exists (first run of app), sets them up for the next time.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys_to_save</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">load_by_config_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
                 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No existing file for </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">. Created new one.&quot;</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">save_by_config_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_by_config_key</span><span class="p">(</span><span class="n">key</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.add_anki_card"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.add_anki_card">[docs]</a>    <span class="k">def</span> <span class="nf">add_anki_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result_dict</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">          result_dict:</span>
-
-<span class="sd">        Returns:</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Write apkg, json-file of card content.&quot;&quot;&quot;</span>
         <span class="n">toast</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Added card for &quot;</span><span class="si">{</span><span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;Word&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&quot; to Deck.&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
         <span class="n">smart_saver</span><span class="p">(</span>
             <span class="n">result_dict</span><span class="p">,</span>
