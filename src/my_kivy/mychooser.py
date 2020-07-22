@@ -69,7 +69,7 @@ class CheckContainer(ChildrenFromDictsBehavior):
 
         Returns:
             :* If ``attribute_name`` is None:  List of selected children
-            :* Else: List of attribute values
+            * Else: List of attribute values
         """
         checked_elements = [
             element for element in self.children[::-1] if element.current_state
@@ -131,7 +131,7 @@ class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
     """
-    Selectable :class:`~kivymd.uix.imagelist.SmartTile".
+    Selectable :class:`~kivymd.uix.imagelist.SmartTile`.
 
     Select by click. Changes :attr:`opacity` and :attr:`boarder_width` on selection.
     """

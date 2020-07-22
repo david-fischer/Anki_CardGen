@@ -1,6 +1,5 @@
 """
-This module provides different parsers (children of :class:`Parser`) to obtain the necessary words to fill the
-Anki-cards.
+This module provides different parsers (children of :class:`Parser`) to obtain the necessary data to fill Anki-Cards.
 
 Each parser returns a dict, that can directly be used by the :meth:`pt_word.Word.update_from_dict` method of the
 :class:`pt_word.Word`
@@ -83,7 +82,7 @@ class Parser:
         return self.base_url.format(**vars(self))
 
     def make_request(self, url=None):
-        """Uses :attr:`headers` to make an http-request via :meth:`~requests.get`
+        """Use :attr:`headers` to make an http-request via :meth:`~requests.get`.
 
         Args:
           url: If None, will be set to :meth:`url`. (Default value = None)
@@ -97,25 +96,10 @@ class Parser:
         return requests.get(url, headers=self.headers)
 
     def parse_response(self, response: requests.Response) -> Dict[str, Any]:
-        """
-
-
-        Args:
-          response (:class:`~requests.Response`): Response to parse.
-
-        Returns:
-          Dictionary with extracted information.
-        """
+        """Parse :class:`requests.response` and return dict with result."""
 
     def result_dict(self, phrase=None):
-        """
-
-        Args:
-          phrase: If None, uses :attr:`phrase`. (Default value = None)
-
-        Returns:
-            Result of :meth:`parse_response`.
-        """
+        """Use :meth:`make_request` and :meth:`parse_request` to return dict with result."""
         if phrase is not None:
             self.phrase = phrase
         self.setup()
@@ -126,7 +110,7 @@ class Parser:
 
 @attr.s(auto_attribs=True)
 class LingueeParser(Parser):
-    """Uses Linguee to obtain: translation, word_type, gender and audio_url"""
+    """Use Linguee to obtain: translation, word_type, gender and audio_url."""
 
     base_url = (
         "https://linguee-api.herokuapp.com/api?q={phrase}&src={from_lang}&dst={to_lang}"
@@ -135,7 +119,7 @@ class LingueeParser(Parser):
     audio_base_url = "https://www.linguee.de/mp3/%s.mp3"
 
     def parse_response(self, response: requests.Response) -> Dict[str, Any]:
-        """Extracts translation, word_type, gender, audio_url"""
+        """Extract: translation, word_type, gender, audio_url."""
         response = response.json()
         print(response)
         try:
@@ -168,17 +152,16 @@ class LingueeParser(Parser):
 
 @attr.s(auto_attribs=True)
 class DicioParser(Parser):
-    """Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html"""
+    """Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html."""
 
     base_url = "https://www.dicio.com.br/pesquisa.php?q={phrase}/"
 
     def setup(self):
+        """Set up attributes."""
         self.phrase = quote(self.phrase.replace(" ", "-"))
 
     def parse_response(self, response):
-        """
-        Extracts explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html
-        """
+        """Extract: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html."""
         bs = BeautifulSoup(response.content, "lxml")
         suggestion = bs.select("a._sugg")
         if suggestion:
@@ -197,9 +180,7 @@ class DicioParser(Parser):
         antonyms = [
             [element.text] for element in bs.select('p:contains("contr").sinonimos a')
         ]
-        add_info_dict = to_stripped_multiline_str(
-            get_element_after_regex(bs, "Definição.*")
-        )
+        add_info_dict = strip_multiline_str(get_element_after_regex(bs, "Definição.*"))
         conj_table_html = ""
         try:
             conj_table_df = self._conj_df(bs)
@@ -257,7 +238,7 @@ class DicioParser(Parser):
 
 @attr.s(auto_attribs=True)
 class ReversoParser(Parser):
-    """Uses Reverso to obtain: examples"""
+    """Use Reverso to obtain: examples."""
 
     base_url = "https://context.reverso.net/{language_string}/{phrase}"
     lang_dict = {"pt": {"de": "traducao/portugues-alemao"}}
@@ -265,21 +246,13 @@ class ReversoParser(Parser):
     headers = REVERSO_HEADERS
 
     def setup(self):
+        """Set up attributes."""
         self.phrase = quote(self.phrase)
         self.language_string = self.lang_dict[self.from_lang][self.to_lang]
 
     def parse_response(self, response: requests.Response) -> Dict[str, list]:
-        """
-
-        Args:
-            response (:class:`~requests.Response`):
-
-        Returns:
-            : Dictionary {"examples": [[ex_1_from_lang,ex_1_to_lang],...]}
-        """
+        """Parse response and return dict of the form ``{"examples":[ [ex_src_lang, ex_trg_lang],...]]}``."""
         bs = BeautifulSoup(response.content, features="lxml")
-        # test = bs.select_one("div.example")
-        # print(test.select_one("div.src").text.strip())
         return {
             "examples": [
                 [
@@ -295,6 +268,7 @@ class GoogleImagesParser(Parser):
     """Uses google_images_download to get img_urls."""
 
     def result_dict(self, phrase=None):
+        """Return dictionary of the form ``{"image_urls":[url0,url1,...]}}``."""
         if phrase is not None:
             self.phrase = phrase
         self.setup()
@@ -317,17 +291,15 @@ class GoogleImagesParser(Parser):
 
 
 def get_element_after_regex(bs_obj, regex):
-    """
-    Get bs_object after element which text-attribute matches a given regex.
-    """
+    """Get bs_object after element which text-attribute matches a given regex."""
     match = bs_obj.body.find(text=re.compile(regex))
     if match is None:
         return BeautifulSoup(features="lxml")
     return match.parent.find_next()
 
 
-def to_stripped_multiline_str(bs_obj):
-    """Strips each line of a string of leading and trailing whitespace."""
+def strip_multiline_str(bs_obj):
+    """Strip each line of a string of leading and trailing whitespace."""
     return "\n".join([line.strip() for line in bs_obj.text.strip().splitlines()])
 
 

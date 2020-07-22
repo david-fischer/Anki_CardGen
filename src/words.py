@@ -99,7 +99,7 @@ class Word:
 
     def update_from_dict(self, attr_dict):
         """
-        Update :class:`Word`s attributes by iterating through ``attr_dict``.
+        Update :class:`Word` s attributes by iterating through ``attr_dict``.
 
         If the value is a list, it extends the original list, else the value is set to the value of attr_dict
 
@@ -126,7 +126,7 @@ class Word:
 
     def request_img_urls(self, keywords=None):
         """
-        Use :class:`parsers.Parser` at :attr:`parsers`["google_image_parser"] to get image urls.
+        Use :class:`parsers.Parser` at :attr:`parsers` ["google_image_parser"] to get image urls.
 
         Args:
             keywords:

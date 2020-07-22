@@ -106,7 +106,7 @@ class AnkiCardGenApp(MDApp):
         self.dialog.ids.title.color = self.dialog.theme_cls.text_color
         self.dialog.open()
 
-    def build_config(self, config):
+    def build_config(self, config):  # pylint: disable=no-self-use
         """If no config-file exists, sets the default."""
         config.setdefaults(
             "Theme",
@@ -134,7 +134,9 @@ class AnkiCardGenApp(MDApp):
     def build(self):
         """Set up App and return :class:`my_kivy.MainMenu` as root widget."""
         # Config and Theme
-        self.theme_cls = ThemeManager(**self.config["Theme"])
+        self.theme_cls = ThemeManager(  # pylint: disable=attribute-defined-outside-init
+            **self.config["Theme"]
+        )
         self.theme_dialog = MDThemePicker()
         self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
         # Non Kivy Objects
@@ -183,12 +185,12 @@ class AnkiCardGenApp(MDApp):
         self.file_manager.show(path)
 
     def load_by_config_key(self, key):
-        """Use :func:`utils.smart_loader` to load attribute from path in :attr:`config`[attribute]."""
+        """Use :func:`utils.smart_loader` to load attribute from path in :attr:`config` [attribute]."""
         path = self.config["Paths"][key]
         setattr(self, key, smart_loader(path))
 
     def save_by_config_key(self, key, *_, obj=None):
-        """Use :func:`utils.smart_saver` to save current attribute to path in :attr:`config`[attribute]."""
+        """Use :func:`utils.smart_saver` to save current attribute to path in :attr:`config` [attribute]."""
         if obj is None:
             obj = getattr(self, key)
         path = self.config["Paths"][key]
