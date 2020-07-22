@@ -146,7 +146,7 @@ class CheckBehavior(MultiStateBehavior):
         self.state_dicts = (
             {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
         )
-        """:class:`~kivy.properties.DictProperty`, defaults to ``{False:{},True{}}``."""
+        """: : :class:`~kivy.properties.DictProperty`, defaults to ``{False:{}, True:{}}`` ."""
         super(CheckBehavior, self).__init__(**kwargs)
 
 
