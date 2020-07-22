@@ -27,6 +27,7 @@ repos:
     hooks:
       - id: pydocstyle
         exclude: (google_images_download|python-for-android)
+        files: src
         args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
   - repo: https://github.com/codespell-project/codespell
     rev: "v1.17.1"
