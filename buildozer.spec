@@ -36,7 +36,7 @@ version = 0.3.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,googletrans,pillow,cached_property,pystache,pyyaml,soupsieve,urllib3,chardet,idna,certifi,lxml,imgkit
+requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,googletrans,pillow,cached_property,pystache,pyyaml,soupsieve,urllib3,chardet,idna,certifi,lxml,imgkit,toolz
 #,spacy
 #,setuptools,preshed,thinc,blis,tqdm,murmurhash,numpy,wasabi,plac,catalogue,cymem,srsly,importlib_metadata,zipp
 
