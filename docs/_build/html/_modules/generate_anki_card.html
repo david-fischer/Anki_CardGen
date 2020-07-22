@@ -172,9 +172,7 @@
 
 <div class="viewcode-block" id="HtmlLoader"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span> <span class="nc">HtmlLoader</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Loads and processes html.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Load and process html.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="HtmlLoader.path"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader.path">[docs]</a>    <span class="n">path</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;Path to load html-file from.&quot;&quot;&quot;</span>
@@ -196,7 +194,7 @@
 
 <div class="viewcode-block" id="HtmlLoader.replace_includes_with_content"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.HtmlLoader.replace_includes_with_content">[docs]</a>    <span class="k">def</span> <span class="nf">replace_includes_with_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Inserts content of js-source-files at appropriate places and returns body.</span>
+<span class="sd">        Insert content of js-source-files at appropriate places and return body.</span>
 
 <span class="sd">            * Removes ``src`` attributes from &lt;script&gt;-tags and inserts the content of the files.</span>
 <span class="sd">            * ``&lt;script&gt;``-tags with &quot;defer&quot;-attribute are moved to the bottom of the body.</span>
@@ -267,8 +265,7 @@
 <div class="viewcode-block" id="AnkiObject"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
 <span class="k">class</span> <span class="nc">AnkiObject</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Class containing all necessary objects from the `genanki &lt;https://github.com/kerrickstaley/genanki&gt;`_-module to</span>
-<span class="sd">    handle everything Anki-related.</span>
+<span class="sd">    Class containing all necessary objects from the `genanki &lt;https://github.com/kerrickstaley/genanki&gt;`_-module.</span>
 
 <span class="sd">    Attributes:</span>
 <span class="sd">        model: :class:`genanki.model`</span>
@@ -322,7 +319,7 @@
 
 <div class="viewcode-block" id="AnkiObject.write_apkg"><a class="viewcode-back" href="../word_processing/anki.html#generate_anki_card.AnkiObject.write_apkg">[docs]</a>    <span class="k">def</span> <span class="nf">write_apkg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Writes current :attr:`package` as apkg-file to ``out_path``</span>
+<span class="sd">        Write current :attr:`package` as apkg-file to ``out_path``.</span>
 
 <span class="sd">        Args:</span>
 <span class="sd">          out_path: Path wherer .apkg-file is saved.</span>

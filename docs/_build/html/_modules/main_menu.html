@@ -150,9 +150,7 @@
            <div itemprop="articleBody">
 
   <h1>Source code for main_menu</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Implements :class:`MainMenu`.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Implements :class:`MainMenu`.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -165,7 +163,7 @@
 <span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineIconListItem</span>
 
 <span class="kn">from</span> <span class="nn">my_kivy.behaviors</span> <span class="kn">import</span> <span class="n">CheckBehavior</span>
-<span class="kn">from</span> <span class="nn">my_kivy.mychooser</span> <span class="kn">import</span> <span class="n">CheckContainer</span>
+<span class="kn">from</span> <span class="nn">my_kivy.selection_widgets</span> <span class="kn">import</span> <span class="n">CheckContainer</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">widget_by_id</span>
 
 
@@ -183,6 +181,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DrawerItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">theme_style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">)</span>
 
@@ -202,18 +201,19 @@
 <span class="sd">    It has one active element at all times whose screen_name attribute is saved in :attr:`current`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DrawerList.check_one"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.check_one">[docs]</a>    <span class="n">check_one</span> <span class="o">=</span> <span class="kc">True</span></div>
-<div class="viewcode-block" id="DrawerList.child_class_name"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;DrawerItem&quot;</span></div>
+    <span class="n">check_one</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;DrawerItem&quot;</span>
 <div class="viewcode-block" id="DrawerList.current"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.current">[docs]</a>    <span class="n">current</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` of currently active :attr:`DrawerItem.screen_name`.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="DrawerList.conditional_uncheck"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;changes color of clicked item and updates :attr:`current`&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Change color of clicked item and updates :attr:`current`.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DrawerList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">name</span></div>
 
 <div class="viewcode-block" id="DrawerList.on_current"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.DrawerList.on_current">[docs]</a>    <span class="k">def</span> <span class="nf">on_current</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change the state of the children respectively to :attr:`current`.&quot;&quot;&quot;</span>
         <span class="n">current_widget</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">child</span>
             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span>
@@ -252,7 +252,7 @@
 
 <div class="viewcode-block" id="MainMenu.on_parent"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu.on_parent">[docs]</a>    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        This function sets up the screens using ``name`` and ``path`` from :attr:`screen_dicts`.</span>
+<span class="sd">        Set up screen using ``name`` and ``path`` from :attr:`screen_dicts`.</span>
 
 <span class="sd">        The screens are added to the screen_man and corresponding entries to the drawer_list.</span>
 <span class="sd">        Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.</span>
@@ -267,20 +267,27 @@
 
 
 <div class="viewcode-block" id="KvScreen"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.KvScreen">[docs]</a><span class="k">class</span> <span class="nc">KvScreen</span><span class="p">(</span><span class="n">Screen</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Screen that automatically adds content of kv-file at :attr:`path` as child.</span>
+
+<span class="sd">    If :attr:`path` does not exist, create file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
 <div class="viewcode-block" id="KvScreen.path"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.KvScreen.path">[docs]</a>    <span class="n">path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;my_kivy/screen_default.kv&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;my_kivy/screen_default.kv&quot;`` &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">KvScreen</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">create_content_file</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">load_content</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_create_content_file</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_content</span><span class="p">()</span>
 
-<div class="viewcode-block" id="KvScreen.load_content"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.KvScreen.load_content">[docs]</a>    <span class="k">def</span> <span class="nf">load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span></div>
+    <span class="k">def</span> <span class="nf">_load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
 
-<div class="viewcode-block" id="KvScreen.create_content_file"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.KvScreen.create_content_file">[docs]</a>    <span class="k">def</span> <span class="nf">create_content_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_create_content_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MDLabel:</span><span class="se">\n\t</span><span class="s1">text:&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span></div></div>
+            <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MDLabel:</span><span class="se">\n\t</span><span class="s1">text:&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span></div>
 
 
 <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;KvScreen&quot;</span><span class="p">,</span> <span class="n">KvScreen</span><span class="p">)</span>

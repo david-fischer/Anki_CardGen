@@ -150,14 +150,10 @@
            <div itemprop="articleBody">
 
   <h1>Source code for utils</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">This module contains lots of helper functions.</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains lots of helper functions.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
-<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">operator</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -225,9 +221,7 @@
 
 
 <div class="viewcode-block" id="save_dict_to_csv"><a class="viewcode-back" href="../utils.html#utils.save_dict_to_csv">[docs]</a><span class="k">def</span> <span class="nf">save_dict_to_csv</span><span class="p">(</span><span class="n">some_dict</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Saves dictionary as row to csv.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Save dictionary as row to csv.&quot;&quot;&quot;</span>
     <span class="n">is_first_entry</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">DictWriter</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">fieldnames</span><span class="o">=</span><span class="n">some_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -238,7 +232,7 @@
 
 <div class="viewcode-block" id="load_dicts_from_csv"><a class="viewcode-back" href="../utils.html#utils.load_dicts_from_csv">[docs]</a><span class="k">def</span> <span class="nf">load_dicts_from_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Loads csv. Has to have the keys as first line.</span>
+<span class="sd">    Load csv. Has to have the keys as first line.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        : List of dictionaries.</span>
@@ -249,7 +243,7 @@
 
 <div class="viewcode-block" id="smart_loader"><a class="viewcode-back" href="../utils.html#utils.smart_loader">[docs]</a><span class="k">def</span> <span class="nf">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uses file ending of path to determine which function to use to load file.</span>
+<span class="sd">    Use file ending of path to determine which function to use to load file.</span>
 
 <span class="sd">    Supported file endings:</span>
 <span class="sd">        * .p (pickle)</span>
@@ -276,7 +270,7 @@
 
 <div class="viewcode-block" id="smart_saver"><a class="viewcode-back" href="../utils.html#utils.smart_saver">[docs]</a><span class="k">def</span> <span class="nf">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uses file ending of path to determine which function to use to save file.</span>
+<span class="sd">    Use file ending of path to determine which function to use to save file.</span>
 
 <span class="sd">    Supported file endings:</span>
 <span class="sd">        * .p (pickle)</span>
@@ -300,11 +294,7 @@
 
 
 <div class="viewcode-block" id="now_string"><a class="viewcode-back" href="../utils.html#utils.now_string">[docs]</a><span class="k">def</span> <span class="nf">now_string</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">      : Current time in the format ``YYYY-MM-DD_HH:MM:SS``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Return current time in the format ``YYYY-MM-DD_HH:MM:SS``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
 
 
@@ -312,18 +302,16 @@
 
 
 <div class="viewcode-block" id="set_screen"><a class="viewcode-back" href="../utils.html#utils.set_screen">[docs]</a><span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Sets current screen to the one with name ``screen_name``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Set current screen to the one with name ``screen_name``.&quot;&quot;&quot;</span>
     <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;screen_man&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">screen_name</span></div>
 
 
 <div class="viewcode-block" id="widget_by_id"><a class="viewcode-back" href="../utils.html#utils.widget_by_id">[docs]</a><span class="k">def</span> <span class="nf">widget_by_id</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Get widget by string of ids, seperated by &quot;/&quot;.</span>
+<span class="sd">    Get widget by string of ids, separated by &quot;/&quot;.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">      string: Stings of ids, seperated by &quot;/&quot;. The first one can be a screen name.</span>
+<span class="sd">      string: Strings of ids, separated by &quot;/&quot;. The first one can be a screen name.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">      : widget</span>
@@ -344,13 +332,10 @@
 
 
 <div class="viewcode-block" id="sleep_decorator"><a class="viewcode-back" href="../utils.html#utils.sleep_decorator">[docs]</a><span class="k">def</span> <span class="nf">sleep_decorator</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Executes sleep(time) before and after decorated function.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Execute sleep(time) before and after decorated function.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">the_real_decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
         <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-
             <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
             <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
             <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
@@ -364,7 +349,7 @@
 <span class="nd">@mainthread</span>
 <div class="viewcode-block" id="screenshot"><a class="viewcode-back" href="../utils.html#utils.screenshot">[docs]</a><span class="k">def</span> <span class="nf">screenshot</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Takes screenshot of the current state of the app and saves it under ``path``.</span>
+<span class="sd">    Take screenshot of the current state of the app and save it under ``path``.</span>
 
 <span class="sd">    The sleep- and mainthread-decorator ensure that the app shows the current state properly.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -411,7 +396,9 @@
 
 <div class="viewcode-block" id="save_card_pngs"><a class="viewcode-back" href="../utils.html#utils.save_card_pngs">[docs]</a><span class="k">def</span> <span class="nf">save_card_pngs</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">540</span><span class="p">,</span> <span class="mi">960</span><span class="p">)):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Saves pngs of the anki-cards for a given word, for which a card has to be generated earlier.</span>
+<span class="sd">    Save pngs of the anki-cards for a given word.</span>
+
+<span class="sd">    The fields need to be saved as json at ``../app_data/&lt;word&gt;/&lt;word&gt;_card.json``.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      word:  (Default value = &quot;casa&quot;)</span>
@@ -434,27 +421,9 @@
             <span class="n">string</span> <span class="o">=</span> <span class="n">rend</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">**</span><span class="n">field_dict</span><span class="p">)</span>
         <span class="n">imgkit</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span>
             <span class="n">string</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s1">&#39;../screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span><span class="s2">&quot;.png&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s1">&#39;../screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
             <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),},</span></div>
         <span class="p">)</span>
-
-
-<div class="viewcode-block" id="selection_helper"><a class="viewcode-back" href="../utils.html#utils.selection_helper">[docs]</a><span class="k">def</span> <span class="nf">selection_helper</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">id_str</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">props</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">      base:</span>
-<span class="sd">      id_str:  (Default value = None)</span>
-<span class="sd">      props:  (Default value = None)</span>
-
-<span class="sd">    Returns:</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">props</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">props</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;text&quot;</span><span class="p">]</span>
-    <span class="n">base_obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">base</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="n">id_str</span><span class="p">)</span> <span class="k">if</span> <span class="n">id_str</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">base</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_obj</span><span class="o">.</span><span class="n">get_checked</span><span class="p">(</span><span class="n">property_name</span><span class="o">=</span><span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">props</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">functools</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">iconcat</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="p">[])</span></div>
 
 
 <span class="c1"># KINDLE EXPORT PARSING</span>
@@ -462,7 +431,7 @@
 
 <div class="viewcode-block" id="dict_from_kindle_export"><a class="viewcode-back" href="../utils.html#utils.dict_from_kindle_export">[docs]</a><span class="k">def</span> <span class="nf">dict_from_kindle_export</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Extracts highlighted parts and sorts them by color in a dictionary.</span>
+<span class="sd">    Extract highlighted parts and sorts them by color in a dictionary.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      file_path: Path to an html-file exported from kindle.</span>
@@ -503,13 +472,13 @@
                 <span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;pt_core_news_sm&quot;</span><span class="p">)</span>
             <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">lemma</span><span class="o">.</span><span class="n">lemma_</span><span class="p">])</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span> <span class="k">for</span> <span class="n">lemma</span> <span class="ow">in</span> <span class="n">nlp</span><span class="p">(</span><span class="n">word</span><span class="p">)]</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lemmatization skipped. Spacy modul is not installed.&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lemmatization skipped. Spacy module is not installed.&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">words</span></div>
 
 
 <div class="viewcode-block" id="word_list_from_kindle"><a class="viewcode-back" href="../utils.html#utils.word_list_from_kindle">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_kindle</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uses :const:`MEANING2COLOR` `[&quot;words&quot;]` to extract the list of words highlighted in this specific color.</span>
+<span class="sd">    Use :const:`MEANING2COLOR` `[&quot;words&quot;]` to extract the list of words highlighted in this specific color.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      path: Path to html-file exported by kindle.</span>
@@ -523,11 +492,10 @@
 
 <div class="viewcode-block" id="word_list_from_txt"><a class="viewcode-back" href="../utils.html#utils.word_list_from_txt">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_txt</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return list of words read as lines from txt-file.</span>
+
 <span class="sd">    Args:</span>
 <span class="sd">      path: Path to txt-file. Each line should correspond to a word (or phrase).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">      : List of words.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">words</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
@@ -536,7 +504,7 @@
 
 <div class="viewcode-block" id="tag_word_in_sentence"><a class="viewcode-back" href="../utils.html#utils.tag_word_in_sentence">[docs]</a><span class="k">def</span> <span class="nf">tag_word_in_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">tag_word</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uses regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.</span>
+<span class="sd">    Use regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">      sentence: String containing of multiple words.</span>
@@ -573,7 +541,7 @@
 
 <div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../utils.html#utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Uses the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.</span>
+<span class="sd">    Use the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.</span>
 
 <span class="sd">    If the image already has smaller width, nothing is done.</span>
 
