@@ -4,11 +4,8 @@ import os
 import certifi
 from kivy.lang import Builder
 from kivy.network.urlrequest import UrlRequest
-from kivy.properties import StringProperty
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
-from kivymd.uix.tab import MDTabsBase
 
 from parsers import linguee_did_you_mean, NoMatchError
 from utils import (
@@ -154,20 +151,6 @@ class WordProperties(BoxLayout):
 #             else word.request_img_urls(keywords=keywords)
 #         )
 #         self.child_dicts = [{"source": url} for url in paths]
-
-
-# TODO: Move
-class Tab(FloatLayout, MDTabsBase):
-    """Class implementing content for a tab."""
-
-    id = StringProperty("")
-    """:class:`~kivy.properties.StringProperty`"""
-
-    text = StringProperty("")
-    """:class:`~kivy.properties.StringProperty`"""
-
-    icon = StringProperty("")
-    """:class:`~kivy.properties.StringProperty`"""
 
 
 # pylint: disable = W,C,R,I

@@ -7,44 +7,21 @@
 #:import click_on_done_item my_kivy.screen_queue.click_on_done_item
 #:import start_downloading my_kivy.screen_queue.start_downloading
 #:import pause_downloading my_kivy.screen_queue.pause_downloading
+#:import pick_val utils.pick_val
+#:import toolz toolz
 FloatLayout:
 
-    MDTabs:
-        id: queue_tabs
-        pos_hint: {"top":1.0}
-        Tab:
-            id: queue_tab
-            text:"format-list-checkbox"
-            RecycleList:
-                viewclass: "LeftStatusIndicatorListItem"
-                data: [{"text": word, "current_state": app.loading_state_dict[word], "callbacks": {"on_press":click_on_queue_item} } for word in app.queue_words]
-
-        Tab:
-            id: done_tab
-            text: "checkbox-marked-circle"
-            RecycleList:
-                viewclass: "LeftStatusIndicatorListItem"
-                data: [{"text": word, "callbacks": {"on_press":click_on_done_item} } for word in app.done_words]
-
-
-        Tab:
-            id: error_tab
-            text: "close-circle"
-            RecycleList:
-                viewclass: "LeftStatusIndicatorListItem"
-                data: [{"text": word, "callbacks": {"on_press":click_on_error_item}} for word in app.error_words]
+    RecycleList:
+        id: queue_list
+        viewclass: "LeftStatusIndicatorListItem"
+        data:
+            [\
+            {"text": word, "current_state":word_state} for word, word_state in\
+            pick_val(["queued","ready","loading"],app.word_state_dict).items()\
+            ]
 
 
     MyFloatingActionButtonSpeedDial:
         id: speed_dial
         data: options_dict
         callback: choose_file_to_import
-
-    MDFloatingActionButton:
-        id: start_pause_button
-        icon: "pause" if self.active else "play"
-        active: False
-        pos: 24,24
-        pos_hint: {"center_x":0.5}
-        #pos_hint: {"x": 0.8, "y": 0.5}
-        on_press:start_downloading() if not self.active else pause_downloading(); self.active = not self.active
