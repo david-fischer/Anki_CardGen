@@ -98,6 +98,8 @@ class MainMenu(StackLayout):
     )
     """:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens."""
 
+    screens = ListProperty()
+
     def on_parent(self, *_):
         """
         Set up screen using ``name`` and ``path`` from :attr:`screen_dicts`.
@@ -105,13 +107,25 @@ class MainMenu(StackLayout):
         The screens are added to the screen_man and corresponding entries to the drawer_list.
         Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.
         """
-        for screen_dict in self.screen_dicts:
-            screen = KvScreen(**{key: screen_dict[key] for key in ["name", "path"]})
-            self.ids.screen_man.add_widget(screen)
+        # for screen_dict in self.screen_dicts:
+        self.screens = [
+            KvScreen(**{key: screen_dict[key] for key in ["name", "path"]})
+            for screen_dict in self.screen_dicts
+        ]
+        # self.ids.screen_man.add_widget(screen)
         self.ids.drawer_list.child_dicts = self.screen_dicts
-        self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
+        self.ids.drawer_list.bind(current=self.set_screen)
+        # self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
         self.ids.screen_man.bind(current=self.ids.drawer_list.setter("current"))
         self.ids.drawer_list.children[-1].on_release()
+
+    def set_screen(self, _, screen_name):
+        """Switch screens dynamically."""
+        self.ids.screen_man.switch_to(self.get_screen(screen_name))
+
+    def get_screen(self, screen_name):
+        """Return screen by name."""
+        return [screen for screen in self.screens if screen.name == screen_name][0]
 
 
 class KvScreen(Screen):
