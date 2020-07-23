@@ -25,7 +25,7 @@ from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
 
 from my_kivy.behaviors import (
     CallbackBehavior,
-    ChildrenFromDictsBehavior,
+    ChildrenFromDataBehavior,
     MultiStateBehavior,
 )
 
@@ -67,14 +67,14 @@ class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
     """:class:`~kivy.properties.OptionProperty` with options ``["loading", "queued", "ready"]``."""
 
 
-class ScrollList(ChildrenFromDictsBehavior, ScrollView):
+class ScrollList(ChildrenFromDataBehavior, ScrollView):
     """
     Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.
 
     Automatically updates upon change of :attr:`item_dicts`.
     """
 
-    child_dicts = ListProperty()
+    data = ListProperty()
     """:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed."""
 
     list = ObjectProperty(MDList())
@@ -84,7 +84,7 @@ class ScrollList(ChildrenFromDictsBehavior, ScrollView):
     """
 
 
-class ScrollBox(ChildrenFromDictsBehavior, ScrollView):
+class ScrollBox(ChildrenFromDataBehavior, ScrollView):
     """
     :class:`~kivy.uix.scrollview.ScrollView` containing a :class:`~kivy.uix.boxlayout.BoxLayout`.
 
@@ -92,7 +92,7 @@ class ScrollBox(ChildrenFromDictsBehavior, ScrollView):
     """
 
 
-class ScrollGrid(ChildrenFromDictsBehavior, ScrollView):
+class ScrollGrid(ChildrenFromDataBehavior, ScrollView):
     """
     :class:`~kivy.uix.scrollview.ScrollView` containing a :class:`~kivy.uix.gridlayout.GridLayout`.
 
@@ -122,7 +122,7 @@ if __name__ == "__main__":
         if obj.current_state == "queued":
             sl.data[obj.number]["current_state"] = "loading"
             Clock.schedule_once(
-                lambda dt: sl.data[obj.number].__setitem__("current_state", "ready"), 5
+                lambda dt: sl.data[obj.number].__setitem__("current_state", "ready"), 5,
             )
         elif obj.current_state == "ready":
             sl.data[obj.number]["current_state"] = choice(["done", "error"])
@@ -135,7 +135,7 @@ if __name__ == "__main__":
     class _TestApp(MDApp):
         def build(self):
             # sl = ScrollList(child_class_name="LeftStatusIndicatorListItem")
-            # sl.child_dicts = [
+            # sl.data = [
             #     {"text": f"test_{i}", "callbacks": {"on_press": _schedule}}
             #     for i in range(100)
             # ]

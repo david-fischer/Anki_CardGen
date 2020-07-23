@@ -150,15 +150,15 @@ class CheckBehavior(MultiStateBehavior):
         super(CheckBehavior, self).__init__(**kwargs)
 
 
-class ChildrenFromDictsBehavior:
+class ChildrenFromDataBehavior:
     """
-    Generates widgets dynamically from :attr:`child_dicts` and adds them to :attr:`root_for_children`.
+    Generates widgets dynamically from :attr:`data` and adds them to :attr:`root_for_children`.
 
     Bindings can be applied and other functions executed by the definition of :meth:`before_add_child` and
     :meth:`after_add_child`.
     """
 
-    child_dicts = ListProperty([])
+    data = ListProperty([])
     """
     :class:`~kivy.properties.ListProperty` containing the dictionaries from which the child-widgets are
     constructed.
@@ -178,15 +178,15 @@ class ChildrenFromDictsBehavior:
     """:class:`~kivy.properties.DictProperty` of the form {"on_event": binding_fn}."""
 
     def __init__(self, **kwargs):
-        super(ChildrenFromDictsBehavior, self).__init__(**kwargs)
+        super(ChildrenFromDataBehavior, self).__init__(**kwargs)
         if self.root_for_children is None:
             self.root_for_children = self
-        self.on_child_dicts()
+        self.on_data()
 
-    def on_child_dicts(self, *_):
-        """Construct children on change of :attr:`child_dicts`."""
+    def on_data(self, *_):
+        """Construct children on change of :attr:`data`."""
         self.root_for_children.clear_widgets()
-        for child_dict in self.child_dicts:
+        for child_dict in self.data:
             child_cls = Factory.get(self.child_class_name)
             new_child = child_cls(**child_dict)
             if self.child_bindings:
