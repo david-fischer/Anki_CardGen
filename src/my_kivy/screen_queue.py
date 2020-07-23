@@ -1,4 +1,4 @@
-"""Contains the functions needed on the screen screen_queue."""
+"""Contains the functions needed on the screen queue."""
 
 import threading
 from queue import Queue
@@ -128,12 +128,12 @@ def choose_file_to_import(button):
 
 
 def click_on_queue_item(item):
-    """Switch to screen_single_word to generate a card for the clicked word."""
+    """Switch to single_word to generate a card for the clicked word."""
     print(item.text)
     # MDApp.get_running_app().queue_words.remove(item.text)
-    set_screen("screen_single_word")
-    widget_by_id("screen_single_word/word_prop/search_field").text = item.text
-    widget_by_id("screen_single_word/word_prop").load_or_search(item.text)
+    set_screen("single_word")
+    widget_by_id("single_word/word_prop/search_field").text = item.text
+    widget_by_id("single_word/word_prop").load_or_search(item.text)
     # MDApp.get_running_app().done_words.append(item.text)
 
 
