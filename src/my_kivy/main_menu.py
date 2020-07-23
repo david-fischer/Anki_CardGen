@@ -79,25 +79,25 @@ class MainMenu(StackLayout):
             {
                 "icon": "form-textbox",
                 "text": "Manual Input",
-                "name": "screen_single_word",
+                "name": "single_word",
                 "path": "my_kivy/screen_single_word.kv",
             },
             {
                 "icon": "format-list-checkbox",
                 "text": "Queue",
-                "name": "screen_queue",
+                "name": "queue",
                 "path": "my_kivy/screen_queue.kv",
             },
             {
                 "icon": "history",
                 "text": "History",
-                "name": "screen_history",
+                "name": "history",
                 "path": "my_kivy/screen_history.kv",
             },
             {
                 "icon": "cogs",
                 "text": "Settings",
-                "name": "screen_settings",
+                "name": "settings",
                 "path": "my_kivy/screen_settings.kv",
             },
         ]

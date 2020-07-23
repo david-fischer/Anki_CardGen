@@ -152,7 +152,7 @@ def now_string():
 
 def set_screen(screen_name):
     """Set current screen to the one with name ``screen_name``."""
-    widget_by_id("screen_man").current = screen_name
+    MDApp.get_running_app().root.set_screen(None, screen_name)
 
 
 def widget_by_id(string):
@@ -166,8 +166,8 @@ def widget_by_id(string):
       : widget
 
     Examples
-      >>> widget_by_id("screen_single_word/edit_tab/word_prop")
-      MDApp.get_running_app().root.ids.screen_man.get_screen("screen_single_word").children[
+      >>> widget_by_id("single_word/edit_tab/word_prop")
+      MDApp.get_running_app().root.ids.screen_man.get_screen("single_word").children[
       0].ids.word_prop
     """
     id_list = string.split("/")
@@ -230,11 +230,11 @@ def make_screenshots(window_size=(270 * 1.4, 480 * 1.4)):
     screenshot("../screenshots/nav_drawer_open.png")
     widget_by_id("nav_drawer").set_state("close")
     # Word
-    word_prop = widget_by_id("screen_single_word/edit_tab/word_prop/")
+    word_prop = widget_by_id("single_word/edit_tab/word_prop/")
     word_prop.ids.search_field.text = "casa"
     word_prop.load_or_search("casa")
     screenshot("../screenshots/example_word_text.png")
-    tabs = widget_by_id("screen_single_word/tabs")
+    tabs = widget_by_id("single_word/tabs")
     tabs.carousel.index = 1  # (tabs.carousel, 1)
     screenshot("../screenshots/example_word_images.png")
     Window.size = old_size

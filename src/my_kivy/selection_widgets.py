@@ -234,12 +234,12 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
         recycle_view.data = data_dicts
         return recycle_view
 
-    def get_checked(self, property_name=None):
+    def get_checked(self, attribute_name=None):
         """If ``attribute_name`` is ``None``, return currently selected widget, else return a property thereof."""
         checked_elements = [self.carousel.current_slide]
-        if property_name is None:
+        if attribute_name is None:
             return checked_elements
-        return [getattr(element, property_name) for element in checked_elements]
+        return [getattr(element, attribute_name) for element in checked_elements]
 
     def open_menu(self, *_):
         """Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`get_modal_content`."""
@@ -351,12 +351,12 @@ class RecycleCarousel(FloatLayout):
         self.modal.children[0].child_class_name = self.modal_data_cls_name
         self.modal.children[0].data = data_dicts
 
-    def get_checked(self, property_name=None):
+    def get_checked(self, attribute_name=None):
         """If ``attribute_name`` is ``None``, return currently selected widget, else return a property thereof."""
         checked_elements = [self.carousel.current_slide]
-        if property_name is None:
+        if attribute_name is None:
             return checked_elements
-        return [getattr(element, property_name) for element in checked_elements]
+        return [getattr(element, attribute_name) for element in checked_elements]
 
     def open_menu(self, *_):
         """Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`setup_modal`."""
