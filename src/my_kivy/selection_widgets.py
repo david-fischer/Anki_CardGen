@@ -7,6 +7,7 @@ from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
     BooleanProperty,
+    ListProperty,
     NumericProperty,
     ObjectProperty,
     OptionProperty,
@@ -29,7 +30,7 @@ from kivymd.uix.imagelist import SmartTile
 
 from my_kivy.behaviors import (
     CheckBehavior,
-    ChildrenFromDictsBehavior,
+    ChildrenFromDataBehavior,
     LongPressBehavior,
     ThemableColorChangeBehavior,
     TranslationOnCheckBehavior,
@@ -42,7 +43,7 @@ except FileNotFoundError:
     Builder.load_file(os.path.join(this_directory, "selection_widgets.kv"))
 
 
-class CheckContainer(ChildrenFromDictsBehavior):
+class CheckContainer(ChildrenFromDataBehavior):
     """Container for widgets with :class:`~my_kivy.behaviors.CheckBehavior`."""
 
     check_one = BooleanProperty(False)
@@ -174,9 +175,9 @@ Factory.register("LongPressImage", LongPressImage)
 Factory.register("TransCard", TransCard)
 
 
-class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
+class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
     """
-    Carousel that constructs contents from child_dicts.
+    Carousel that constructs contents from :attr:`data`.
 
     On click, opens a modal with list of content.
     """
@@ -184,10 +185,10 @@ class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
     carousel = ObjectProperty()
     """:class:`~kivy.properties.ObjectProperty`"""
 
-    recycle_view_name = StringProperty()
+    modal_layout_name = StringProperty()
     """:class:`~kivy.properties.StringProperty`"""
 
-    recycle_view_data_class = StringProperty()
+    modal_data_cls_name = StringProperty()
     """:class:`~kivy.properties.StringProperty`"""
 
     modal = ModalView()
@@ -198,7 +199,7 @@ class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
             "height": self.update_height,
             "on_press": self.open_menu,
         }
-        self.on_child_dicts()
+        self.on_data()
 
     def before_add_child(self, child):
         """Bind :meth:`set_child_width` to change of :attr:`width`."""
@@ -225,12 +226,12 @@ class MyCarousel(FloatLayout, ChildrenFromDictsBehavior):
 
         data_dicts = [
             {**dict, "size_hint": size_hint, "on_press": partial(set_carousel_index, i)}
-            for i, dict in enumerate(self.child_dicts)
+            for i, dict in enumerate(self.data)
         ]
-        recycle_view_cls = Factory.get(self.recycle_view_name)
+        recycle_view_cls = Factory.get(self.modal_layout_name)
         recycle_view = recycle_view_cls()
-        recycle_view.child_class_name = self.recycle_view_data_class
-        recycle_view.child_dicts = data_dicts
+        recycle_view.child_class_name = self.modal_data_cls_name
+        recycle_view.data = data_dicts
         return recycle_view
 
     def get_checked(self, property_name=None):
@@ -260,7 +261,7 @@ class CardCarousel(MyCarousel):
     """
     Carousel of :class:`TransCard`.
 
-    To use it with different objects, change :attr:`child_class_name` and :attr:`recycle_view_data_class`.
+    To use it with different objects, change :attr:`viewclass` and :attr:`modal_data_cls_name`.
     """
 
     def update_height(self, *_):
@@ -271,32 +272,161 @@ class CardCarousel(MyCarousel):
                 anim = Animation(height=new_height, duration=0.5)
                 anim.start(self)
 
-    def on_child_dicts(self, *_):
+    def on_data(self, *_):
         """Fix size-issue on first init."""
-        super(CardCarousel, self).on_child_dicts(*_)
+        super(CardCarousel, self).on_data(*_)
         if self.carousel:
             self.carousel.index = 1
             self.carousel.index = 0
 
 
+class RecycleCarousel(FloatLayout):
+    """
+    Wrapper class for a :class:`~kivy.uix.carousel.Carousel` that uses only 3 slides to update content dynamically.
+
+    The :attr:`index` is updated according to the change of the carousel index and each time one of the slides is
+    updated with data from :attr:`data`. The content of the slides is constructed as instances of :attr:`viewclass`.
+    """
+
+    carousel = ObjectProperty()
+    """:class:`kivy.properties.ObjectProperty` defaults to ``None``."""
+    viewclass = StringProperty("TransCard")
+    """:class:`kivy.properties.StringProperty` defaults to ``"TransCard"``. Class name of the widgets that are added
+    to the carousel."""
+    data = ListProperty()
+    """:class:`kivy.properties.ListProperty` defaults to ``None``. List of dictionaries from which the content is
+    generated."""
+    slide_width = NumericProperty()
+    """:class:`kivy.properties.NumericProperty` defaults to ``None``. Width that the content of the slides should
+    have."""
+    dynamic_height = BooleanProperty(False)
+    """:class:`kivy.properties.BooleanProperty` defaults to ``False``. If ``True`` updates the height of the root
+    widget to the height of the object on the current slide + 24. Only possible if size_hint_y of the widget on the
+    slide is not set."""
+    index = NumericProperty(0)
+    """:class:`kivy.properties.NumericProperty` defaults to ``0``. Current (virtual) index."""
+    last_carousel_index = NumericProperty(0)
+    """:class:`kivy.properties.NumericProperty` defaults to ``0``. Last index that the :attr:`carousel` had. Used to
+    determine whether the user did slide right or left."""
+    current_slide = ObjectProperty()
+    """:class:`kivy.properties.ObjectProperty`. Reference to :attr:`carousel`.current_slide."""
+
+    modal_layout_name = StringProperty()
+    """:class:`kivy.properties.StringProperty` defaults to ``None``. Class name for root widget of :attr:`modal`."""
+    modal_data_cls_name = StringProperty()
+    """:class:`kivy.properties.StringProperty` defaults to ``None``. Class name for children of :attr:`modal`."""
+    modal = ObjectProperty(ModalView())
+    """:class:`kivy.properties.ObjectProperty` defaults to ``ModalView()``."""
+    default_modal_size_hint = ListProperty([1, None])
+
+    def update_height(self, *_):
+        """Update height via animation, so that Widget has height of currently displayed card."""
+        if self.dynamic_height:
+            new_height = self.carousel.current_slide.height + 24
+            if self.height != new_height:
+                anim = Animation(height=new_height, duration=0.3)
+                anim.start(self)
+
+    def setup_modal(self):
+        """Return root widget to display on the modal."""
+        self.modal = ModalView()
+        modal_root_cls = Factory.get(self.modal_layout_name)
+        modal_root = modal_root_cls()
+        self.modal.add_widget(modal_root)
+
+    def _modal_child_callback(self, i, *_):
+        self.set_index(i)
+        self.modal.dismiss()
+
+    def update_modal_content(self):
+        """Update content of modal."""
+        data_dicts = [
+            {
+                **dict,
+                "size_hint": self.default_modal_size_hint,
+                "on_press": partial(self._modal_child_callback, i),
+            }
+            for i, dict in enumerate(self.data)
+        ]
+        self.modal.children[0].child_class_name = self.modal_data_cls_name
+        self.modal.children[0].data = data_dicts
+
+    def get_checked(self, property_name=None):
+        """If ``attribute_name`` is ``None``, return currently selected widget, else return a property thereof."""
+        checked_elements = [self.carousel.current_slide]
+        if property_name is None:
+            return checked_elements
+        return [getattr(element, property_name) for element in checked_elements]
+
+    def open_menu(self, *_):
+        """Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`setup_modal`."""
+        if not self.modal.children:
+            self.setup_modal()
+        self.update_modal_content()
+        self.modal.open()
+
+    def on_data(self, *_):
+        """Set up :attr:`carousel` by initializing 3 widgets, adding them and binding some Properties."""
+        self.carousel.clear_widgets()
+        for i in [0, 1, -1]:
+            widget = Factory.get(self.viewclass)(**self.data[i])
+            self.carousel.add_widget(widget)
+            self.bind(slide_width=widget.setter("width"))
+            widget.bind(on_press=self.open_menu)
+            widget.width = self.slide_width
+        self.carousel.register_event_type("on_index")
+        self.carousel.bind(index=self.update_index)
+        self.carousel.bind(current_slide=self.update_height)
+        self.carousel.current_slide.bind(height=self.update_height)
+
+    def update_index(self, _, carousel_index):
+        """Change :attr:`index` according to change in ``carousel_index`` and update one of the three slides."""
+        diff = carousel_index - self.last_carousel_index
+        diff = -1 if diff == 2 else 1 if diff == -2 else diff
+        self.last_carousel_index = carousel_index
+        self.index = (self.index + diff) % len(self.data)
+        self.update_slide(carousel_index + diff, self.index + diff)
+
+    def update_slide(self, carousel_index, index):
+        """
+        Update slide with index ``carousel_index`` by content from :attr:`data` [index].
+
+        Modulo function applied to indices guarantees values to be in the correct range.
+        """
+        carousel_index %= 3
+        index %= len(self.data)
+        for name, val in self.data[index].items():
+            setattr(self.carousel.slides[carousel_index], name, val)
+
+    def set_index(self, index):
+        """Set :attr:`index` to ``index`` and updates carousel accordingly."""
+        self.index = index
+        self.update_height()
+        for i in [0, 1, -1]:
+            self.update_slide((self.last_carousel_index + i) % 3, self.index + i)
+
+
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
     CARD_CAROUSEL_STRING = (
-        "BoxLayout:\n"
-        "    CardCarousel:\n"
-        '        child_dicts: [{"text_orig":str(i)*50*i,"text_trans":"Trans"} for i in range(10)]'
+        "CardCarousel:\n"
+        '    data: [{"text_orig":str(i)*50*i,"text_trans":"Trans"} for i in range(10)]'
+    )
+
+    RECYCLE_CAROUSEL_STRING = (
+        "RecycleCardCarousel:\n"  # some comment
+        '    data: [{"text_orig":str(i)*50*i,"text_trans":"Trans"} for i in range(10)]'
     )
 
     IMAGE_CAROUSEL_STRING = (
-        "BoxLayout:\n"
-        "    ImageCarousel:\n"
-        '        child_dicts: [{"source":"../assets/AnkiCardGen.png"} for _ in range(5)]'
+        "ImageCarousel:\n"
+        '    data: [{"source":"../assets/AnkiCardGen.png"} for _ in range(5)]'
     )
 
     class _TestApp(MDApp):
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
-            return Builder.load_string(CARD_CAROUSEL_STRING)
+            return Builder.load_string(RECYCLE_CAROUSEL_STRING)
 
     _TestApp().run()

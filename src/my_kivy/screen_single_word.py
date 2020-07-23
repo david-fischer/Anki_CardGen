@@ -28,16 +28,12 @@ class WordProperties(BoxLayout):
     def refresh_data(self):
         """Refresh UI with the data from :class:`words.Word`."""
         word = MDApp.get_running_app().word
-        self.ids.translations.child_dicts = [
-            {"text": string} for string in word.translations
-        ]
-        self.ids.images.child_dicts = [
-            {"source": string} for string in word.image_urls[:3]
-        ]
+        self.ids.translations.data = [{"text": string} for string in word.translations]
+        self.ids.images.data = [{"source": string} for string in word.image_urls]
         for attribute in ["antonyms", "synonyms", "examples", "explanations"]:
-            self.ids[attribute].child_dicts = [
+            self.ids[attribute].data = [
                 {"text_orig": x[0], "text_trans": x[1]}
-                for x in getattr(word, attribute)[:3]
+                for x in getattr(word, attribute)
             ]
 
     def accept_suggestion(self, suggestion):
@@ -127,13 +123,13 @@ class WordProperties(BoxLayout):
 # class ImageSearchResultGrid(MyCheckImageGrid):
 #     """Extends the :class:`selection_widgets.MyCheckImageGrid` by the :meth:`get_images` method."""
 #
-#     def on_child_dicts(self, *_):
-#         if len(self.children) == len(self.child_dicts):
-#             for image, child_dict in zip(self.children, self.child_dicts):
+#     def on_data(self, *_):
+#         if len(self.children) == len(self.data):
+#             for image, child_dict in zip(self.children, self.data):
 #                 image.source = child_dict["source"]
 #                 # image._img_widget.container.image.bind(on_error=f)
 #         else:
-#             super(ImageSearchResultGrid, self).on_child_dicts(*_)
+#             super(ImageSearchResultGrid, self).on_data(*_)
 #
 #     def get_images(self, keywords=None):
 #         """
@@ -150,7 +146,7 @@ class WordProperties(BoxLayout):
 #             if keywords is None
 #             else word.request_img_urls(keywords=keywords)
 #         )
-#         self.child_dicts = [{"source": url} for url in paths]
+#         self.data = [{"source": url} for url in paths]
 
 
 # pylint: disable = W,C,R,I
