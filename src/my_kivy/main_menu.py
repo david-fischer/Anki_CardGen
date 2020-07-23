@@ -119,7 +119,7 @@ class MainMenu(StackLayout):
             for screen_dict in self.screen_dicts
         ]
         # self.ids.screen_man.add_widget(screen)
-        self.ids.drawer_list.child_dicts = self.screen_dicts
+        self.ids.drawer_list.data = self.screen_dicts
         self.ids.drawer_list.bind(current=self.set_screen)
         # self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
         self.ids.screen_man.bind(current=self.ids.drawer_list.setter("current"))
