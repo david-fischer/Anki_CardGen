@@ -139,11 +139,56 @@
 
 <CardCarousel>:
     child_class_name: "TransCard"
-    recycle_view_data_class: "TransCard"
-    recycle_view_name: "ScrollBox"
+    modal_data_cls_name: "TransCard"
+    modal_layout_name: "ScrollBox"
     pos_hint: {"center_x":0.5}
 
 <ImageCarousel>:
     child_class_name: "LongPressImage"
-    recycle_view_data_class: "MyCheckImageTile"
-    recycle_view_name: "ScrollGrid"
+    modal_data_cls_name: "MyCheckImageTile"
+    modal_layout_name: "ScrollGrid"
+
+<RecycleCarousel>:
+    carousel: carousel
+    slide_width: self.width-left_icon.width -right_icon.width
+    current_slide: carousel.current_slide
+    size_hint_y: None
+    size_hint_x: 1
+    modal_layout_name: "ScrollBox"
+    modal_data_cls_name: "TransCard"
+    Carousel:
+        id: carousel
+        loop: True
+        pos: root.pos
+        size:root.size
+#        on_current_slide: root.update_height()
+        ignore_perpendicular_swipes: True
+        size_hint_x: 1
+
+    MDIconButton:
+        id: left_icon
+        pos_hint: {"center_y":0.5,"x":0}
+        icon: "chevron-left"
+        on_press: carousel.load_previous()
+
+    MDIconButton:
+        id: right_icon
+        pos_hint: {"center_y":0.5,"right":1}
+        icon: "chevron-right"
+        on_press: carousel.load_next()
+
+<RecycleCardCarousel@RecycleCarousel>:
+    dynamic_height: True
+    viewclass: "TransCard"
+    modal_layout_name: "ScrollBox"
+    modal_data_cls_name: self.viewclass
+    default_modal_size_hint: 1,None
+    pos_hint: {"center_x":0.5}
+
+
+<RecycleImageCarousel@RecycleCarousel>:
+    dynamic_height: False
+    viewclass: "LongPressImage"
+    modal_layout_name: "ScrollGrid"
+    modal_data_cls_name: "MyCheckImageTile"
+    default_modal_size_hint: 1,1
