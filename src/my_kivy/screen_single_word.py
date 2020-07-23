@@ -1,4 +1,4 @@
-"""Contains the necessary functions and classes for the screen screen_single_word."""
+"""Contains the necessary functions and classes for the screen single_word."""
 import os
 
 import certifi
@@ -98,8 +98,8 @@ class WordProperties(BoxLayout):
         """
         Generate Anki card from current user selection and changes screen.
 
-        If the word was in the queue, returns to screen_queue.
-        Else, resets the screen_single_word and changes to the edit_tab.
+        If the word was in the queue, returns to queue.
+        Else, resets the single_word and changes to the edit_tab.
         """
         self.download_selected_image()
         word = MDApp.get_running_app().word
@@ -116,7 +116,7 @@ class WordProperties(BoxLayout):
         self.parent.scroll_y = 1
         search_term = result_dict["Word"]
         if search_term in MDApp.get_running_app().queue_words:
-            set_screen("screen_queue")
+            set_screen("queue")
             MDApp.get_running_app().queue_words.remove(search_term)
 
 
