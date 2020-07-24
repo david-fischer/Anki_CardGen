@@ -1,13 +1,16 @@
 """This module contains lots of helper functions."""
 
 import csv
+import inspect
 import json
 import os
 import pickle
 import re
 import shutil
+import threading
 from collections import defaultdict
 from datetime import datetime
+from functools import partial
 from glob import glob
 from time import sleep
 
@@ -166,9 +169,9 @@ def widget_by_id(string):
       : widget
 
     Examples
-      >>> widget_by_id("single_word/edit_tab/word_prop")
-      MDApp.get_running_app().root.ids.screen_man.get_screen("single_word").children[
-      0].ids.word_prop
+      # >>> widget_by_id("single_word/edit_tab/word_prop")
+      # MDApp.get_running_app().root.ids.screen_man.get_screen("single_word").children[
+      # 0].ids.word_prop
     """
     id_list = string.split("/")
     id_list = [id_str for id_str in id_list if id_str != ""]
@@ -411,8 +414,57 @@ def pick_val(whitelist, dictionary):
     return toolz.valfilter(lambda k: k in whitelist, dictionary)
 
 
+# Threading
+
+
+def start_workers(worker_fn, num):
+    """Start a number of ``num`` workers in separate threads.
+
+    Args:
+      worker_fn: Function to be started
+      num: Number of threads/workers
+
+    """
+    workers = [threading.Thread(target=worker_fn, name="worker") for _ in range(num)]
+    for worker in workers:
+        worker.start()
+
+
+@toolz.curry
+def start_thread(func, fn_arg, **kwargs):
+    """
+    Wrapper-function to call ``func`` in new thread.
+
+    Every kwarg that fits the signature of ``func`` is plugged into ``func``, the others are used in the constructor of
+    :class:`threading.Thread`.
+
+    Note:
+        The :meth:`toolz.curry` decorator enables partial evaluation without extra use of partial.
+
+    Examples:
+        >>> def f(x,y="y",z="z"):
+        ...     print("Hello from",threading.current_thread().name)
+        ...     print(x,y,z)
+        >>> callback = start_thread(f,z="non_default_z",name="print_thread")
+        >>> callback(2)
+        Hello from print_thread
+        2 y non_default_z
+    """
+    sig = inspect.signature(func)
+    fn_parameters = sig.parameters
+    fn_kwargs = toolz.keyfilter(lambda k: k in fn_parameters, kwargs)
+    thread_kwargs = toolz.keyfilter(lambda k: k not in fn_parameters, kwargs)
+    print(kwargs, fn_kwargs, thread_kwargs)
+    thread = threading.Thread(
+        target=partial(func, fn_arg, **fn_kwargs), **thread_kwargs
+    )
+    thread.start()
+
+
 if __name__ == "__main__":
     pass
+    #
+    # doctest.run_docstring_examples(start_thread)
     # out = word_list_from_kindle("test/test_data/kindle_export.html")
     # print(out)
     # with open("test/test_data/words.txt", "w") as file:
