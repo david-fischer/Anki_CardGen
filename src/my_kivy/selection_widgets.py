@@ -368,16 +368,18 @@ class RecycleCarousel(FloatLayout):
     def on_data(self, *_):
         """Set up :attr:`carousel` by initializing 3 widgets, adding them and binding some Properties."""
         self.carousel.clear_widgets()
-        for i in [0, 1, -1]:
-            widget = Factory.get(self.viewclass)(**self.data[i])
-            self.carousel.add_widget(widget)
-            self.bind(slide_width=widget.setter("width"))
-            widget.bind(on_press=self.open_menu)
-            widget.width = self.slide_width
-        self.carousel.register_event_type("on_index")
-        self.carousel.bind(index=self.update_index)
-        self.carousel.bind(current_slide=self.update_height)
-        self.carousel.current_slide.bind(height=self.update_height)
+        if len(self.data) >= 3:
+            for i in [0, 1, -1]:
+                widget = Factory.get(self.viewclass)(**self.data[i])
+                self.carousel.add_widget(widget)
+                self.bind(slide_width=widget.setter("width"))
+                widget.bind(on_press=self.open_menu)
+                widget.width = self.slide_width
+            self.carousel.register_event_type("on_index")
+            self.carousel.bind(index=self.update_index)
+            self.carousel.bind(current_slide=self.update_height)
+            self.carousel.current_slide.bind(height=self.update_height)
+        print("RecylceCarousel needs at least 3 elements to be displayed correctly.")
 
     def update_index(self, _, carousel_index):
         """Change :attr:`index` according to change in ``carousel_index`` and update one of the three slides."""
