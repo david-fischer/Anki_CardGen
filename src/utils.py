@@ -319,7 +319,8 @@ def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
             global nlp  # pylint: disable=global-statement,invalid-name
             if nlp is None:
                 nlp = spacy.load("pt_core_news_sm")
-            words = [" ".join([lemma.lemma_]) for word in words for lemma in nlp(word)]
+            words = [" ".join([lemma.lemma_ for lemma in nlp(word)]) for word in words]
+            print(words)
         else:
             print("Lemmatization skipped. Spacy module is not installed.")
     return words
