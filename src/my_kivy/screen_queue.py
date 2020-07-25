@@ -3,202 +3,219 @@
 import threading
 from queue import Queue
 
+from kivy.clock import Clock
+from kivy.properties import DictProperty, ObjectProperty
+from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
-from kivymd.uix.button import MDFlatButton
 
+from my_kivy.dialogs import CustomDialog, ReplacementContent
 from parsers import NoMatchError
 from utils import (
     clean_up,
     set_screen,
+    start_thread,
+    start_workers,
     widget_by_id,
     word_list_from_kindle,
     word_list_from_txt,
 )
 from words import Word
 
-options_dict = {
-    "script-text-outline": "Import from Kindle",
-    "note-text": "Import from Text File",
-}
-"""
-dict: :code:`{"icon-name":"hint text"}` for the contents of
-:class:`~kivymd.uix.button.MDFloatingActionButtonSpeedDial`.
-"""
+
+class CheckableQueue(Queue):
+    """Queue with additional :meth:`__contains__` method, so one can check if item is already in queue."""
+
+    def __contains__(self, item):
+        with self.mutex:
+            return item in self.queue
 
 
-def worker_single_word():
-    """
-    Take a word from app.queue and process it, changing app.loading_state_dict accordingly.
+class QueueScreen(FloatLayout):
+    """Root widget for the queue-screen."""
 
-    Repeat as long as app.queue is not empty.
-    """
-    while not MDApp.get_running_app().queue.empty():
-        word = MDApp.get_running_app().queue.get()
-        MDApp.get_running_app().loading_state_dict[word] = "loading"
-        try:
-            local = threading.local()
-            local.word = Word()
-            local.word.search(word)
-            MDApp.get_running_app().loading_state_dict[word] = "ready"
-        except (NoMatchError, KeyError):
-            MDApp.get_running_app().queue_words.remove(word)
-            MDApp.get_running_app().error_words.append(word)
+    recycle_list = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty contains reference to :class:`my_kivy.scroll_widgets.RecycleList`."""
+    speed_dial = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty` contains reference to
+    :class:`~kivymd.uix.button.MDFloatingActionButtonSpeedDial`."""
+    queue = CheckableQueue()
+    """:class:`CheckableQueue` object."""
+    stale = set()
+    """Set of stale words, i.e. words that have been dequeued and will be skipped if appearing in the queue."""
+    import_options = DictProperty(
+        {
+            "script-text-outline": "Import from Kindle",
+            "note-text": "Import from Text File",
+        }
+    )
+    """: : :class:`~kivy.properties.DictProperty` of the form ``{"icon_name":"Help text"}``."""
+    dialog = ObjectProperty()
+    """:class:`~kivy.properties.ObjectProperty` containing an instance of :class:`my_kivy.dialogs.CustomDialog`."""
 
+    def __init__(self, **kwargs):
+        super(QueueScreen, self).__init__(**kwargs)
+        self._init_queue()
+        self._init_dialog()
 
-def start_workers(worker_fn, num):
-    """Start a number of ``num`` workers in separate threads.
+    def _init_queue(self):
+        """Queue all words in ``"queued"`` and ``"loading"`` state."""
+        for word, state in MDApp.get_running_app().word_state_dict.items():
+            if state in ["queued", "loading"]:
+                self.queue_word(word)
 
-    Args:
-      worker_fn: Function to be started
-      num: Number of threads/workers
+    def _init_dialog(self):
+        """Initialize :attr:`dialog` as instance of :class:`my_kivy.dialogs.CustomDialog`."""
+        content = ReplacementContent()
+        self.dialog = CustomDialog(
+            title="Some words are not in their dictionary form. The following replacements are suggested:",
+            content_cls=content,
+            callback=self.dialog_callback,
+        )
 
-    """
-    workers = [threading.Thread(target=worker_fn, name="worker") for _ in range(num)]
-    for worker in workers:
-        worker.start()
+    def dialog_callback(self, btn_txt, words):
+        """Add ``words`` to :attr:`queue` if ``"OK"``-button was pressed."""
+        if btn_txt == "OK":
+            for word in words:
+                self.queue_word(word)
 
+    @staticmethod
+    def is_duplicate(word):
+        """Check if word is ``app.word_state_dict``."""
+        return word in MDApp.get_running_app().word_state_dict
 
-def queue_word(word):
-    """Add ``word`` to the app.queue_words list and app.queue and changes state to "queued"."""
-    if not is_duplicate(word):
-        MDApp.get_running_app().loading_state_dict[word] = "queued"
-        MDApp.get_running_app().queue_words.append(word)
-        MDApp.get_running_app().queue.put(word)
+    def is_queued(self, word):
+        """Check if word is in :attr:`queue`."""
+        return word in self.queue
 
+    def worker_single_word(self):
+        """
+        Take a word from app.queue and process it, changing app.loading_state_dict accordingly.
 
-def start_downloading():
-    """
-    Download data for queued words.
+        Repeat as long as app.queue is not empty.
+        """
+        while not self.queue.empty():
+            word = self.queue.get()
+            if word not in self.stale:
+                MDApp.get_running_app().word_state_dict[word] = "loading"
+                try:
+                    local = threading.local()
+                    local.word = Word()
+                    local.word.search(word)
+                    MDApp.get_running_app().word_state_dict[word] = "ready"
+                except (NoMatchError, KeyError):
+                    MDApp.get_running_app().word_state_dict[word] = "error"
+                    # MDApp.get_running_app().queue_words.remove(word)
+                    # MDApp.get_running_app().error_words.append(word)
+            else:
+                self.stale.remove(word)
 
-      * Sets up Queue
-      * If no worker is present, starts one.
-    """
-    MDApp.get_running_app().setup_queue()
-    if "worker" not in [thread.name for thread in threading.enumerate()]:
-        print("starting a worker")
-        start_workers(worker_single_word, 1)
-    else:
+    def add_waiting(self, word):
+        """Add word in ``"waiting"`` state, waiting to be queued."""
+        if not self.is_duplicate(word):
+            MDApp.get_running_app().word_state_dict[word] = "waiting"
+
+    def queue_word(self, word):
+        """Queue word for downloading."""
+        MDApp.get_running_app().word_state_dict[word] = "queued"
+        if not self.is_queued(word):
+            self.queue.put(word)
+        if word in self.stale:
+            self.stale.remove(word)
+        self.start_downloading()
+
+    def dequeue_word(self, word):
+        """Change state to ``"waiting"`` and adds ``word`` to :attr:`stale` so it will be skipped in :attr:`queue`."""
+        MDApp.get_running_app().word_state_dict[word] = "waiting"
+        if self.is_queued(word):
+            self.stale.add(word)
+
+    def start_downloading(self, *_):
+        """If no worker is present, start a new one to download data."""
+        if "worker" not in [thread.name for thread in threading.enumerate()]:
+            print("starting a worker")
+            start_workers(self.worker_single_word, 1)
         print(threading.enumerate())
 
+    def pause_downloading(self):
+        """Empty the queue. Worker stop after finishing current task."""
+        while not self.queue.empty():
+            word = self.queue.get()
+            MDApp.get_running_app().word_state_dict[word] = "waiting"
 
-def pause_downloading():
-    """Empty the queue. Worker stop after finishing current task."""
-    MDApp.get_running_app().queue = Queue()
-
-
-def is_duplicate(word):
-    """
-    Check if word is already queued, done or has caused an error.
-
-    Args:
-      word: Word to check.
-
-    Returns:
-      :``True`` if ``word`` is already in app.queue_words, app.error_words or app.done_words.
-      Else ``False``.
-    """
-    app = MDApp.get_running_app()
-    list_names = ["queue_words", "error_words", "done_words"]
-    for name in list_names:
-        if word in getattr(app, name):
-            print(f'"{word}" is already in {name}. Skipping.')
-            return True
-    return False
-
-
-def choose_file_to_import(button):
-    """
-    Open an instance of :class:`~kivymd.uix.filemanager.MDFileManager` to let user choose a file to import.
-
-    Binds function to clicking on file, so the import is started in separate thread.
-    """
-    button.parent.close_stack()
-    text = options_dict[button.icon]
-    if text == "Import from Kindle":
-        extensions = [".html"]
-        import_function = lambda path: start_workers(
-            import_from(path, source="kindle"), 1
+    @staticmethod
+    def switch_to_single_word_screen(word):
+        """Switch to single_word to generate a card for the clicked word."""
+        set_screen("single_word")
+        widget_by_id("single_word/word_prop/search_field").text = word
+        Clock.schedule_once(
+            lambda t: widget_by_id("single_word/word_prop").load_or_search(word)
         )
-    else:  # elif text == "Import from Text File":
-        extensions = [".txt"]
-        import_function = lambda path: start_workers(import_from(path, source="txt"), 1)
-    MDApp.get_running_app().open_file_manager(
-        ext=extensions, path="..", select_path=import_function
-    )
 
+    def click_on_item(self, item):
+        """Dependent of the ``current_state`` of the ``item`` performs appropriate action."""
+        if item.current_state == "queued":
+            self.dequeue_word(item.text)
+        elif item.current_state == "ready":
+            self.switch_to_single_word_screen(item.text)
+        elif item.current_state == "waiting":
+            self.queue_word(item.text)
 
-def click_on_queue_item(item):
-    """Switch to single_word to generate a card for the clicked word."""
-    print(item.text)
-    # MDApp.get_running_app().queue_words.remove(item.text)
-    set_screen("single_word")
-    widget_by_id("single_word/word_prop/search_field").text = item.text
-    widget_by_id("single_word/word_prop").load_or_search(item.text)
-    # MDApp.get_running_app().done_words.append(item.text)
+    def choose_file_to_import(self, button):
+        """
+        Open an instance of :class:`~kivymd.uix.filemanager.MDFileManager` to let user choose a file to import.
 
+        Binds function to clicking on file, so the import is started in separate thread.
+        """
+        self.speed_dial.close_stack()
+        text = self.import_options[button.icon]
+        if text == "Import from Kindle":
+            extensions = [".html"]
+            source = "kindle"
+        else:  # elif text == "Import from Text File":
+            extensions = [".txt"]
+            source = "txt"
+        import_function = start_thread(  # pylint: disable=no-value-for-parameter
+            self.import_from, source=source, name="import_thread"
+        )
+        MDApp.get_running_app().open_file_manager(
+            ext=extensions, path="..", select_path=import_function
+        )
 
-def click_on_done_item(item):
-    """Placeholder-function for later implementation."""
-    print(item.text)
+    def import_from(self, path, source="kindle"):
+        """
+        Import, process and queue words from file.
 
+        If non-dictionary forms are detected, prompts the user with suggestions for replacement.
 
-def click_on_error_item(item):
-    """Placeholder-function for later implementation."""
-    print(item.text)
+        Args:
+          path: Path to file.
+          source: Type of source. Options=["kindle","txt"] (Default value = "kindle")
+        """
+        MDApp.get_running_app().file_manager.close()
+        import_function_dict = {
+            "kindle": word_list_from_kindle,
+            "txt": word_list_from_txt,
+        }
+        words = import_function_dict[source](path)
+        words = clean_up(words, lemmatize=False, remove_punct=True, lower_case=True)
+        lemmas = clean_up(words, lemmatize=True, remove_punct=False, lower_case=False)
+        new_pairs = [
+            (word, lemma)
+            for word, lemma in zip(words, lemmas)
+            if not (self.is_duplicate(word) or self.is_duplicate(lemma))
+        ]
+        suggested_replacements = [
+            {"word": word, "lemma": lemma} for word, lemma in new_pairs if word != lemma
+        ]
+        unchanged_words = [word for word, lemma in new_pairs if word == lemma]
+        print(unchanged_words, suggested_replacements)
+        self.show_replacements_dialog(replacements=suggested_replacements)
+        for word in unchanged_words:
+            self.add_waiting(word)
 
-
-def import_from(path, source="kindle"):
-    """
-    Import, process and queue words from file.
-
-    If non-dictionary forms are detected, prompts the user with suggestions for replacement.
-
-    Args:
-      path: Path to file.
-      source: Type of source. Options=["kindle","txt"] (Default value = "kindle")
-    """
-    MDApp.get_running_app().file_manager.close()
-    import_function_dict = {"kindle": word_list_from_kindle, "txt": word_list_from_txt}
-    words = import_function_dict[source](path)
-    words = clean_up(words, lemmatize=False, remove_punct=True, lower_case=True)
-    lemmas = clean_up(words, lemmatize=True, remove_punct=False, lower_case=False)
-    suggested_replacements = [
-        f"{old} -> {new}" for old, new in zip(words, lemmas) if old != new
-    ]
-    unchanged_words = [word for word, lemma in zip(words, lemmas) if word == lemma]
-    choose_replacements_dialog(replacements=suggested_replacements)
-    for word in unchanged_words:
-        queue_word(word)
-
-
-def choose_replacements_dialog(replacements):
-    """
-    Display possible replacements.
-
-    Opens an :class:`~kivymd.uix.dialog.MDDialog` to show possible suggestions for detected non-dictionary forms of
-    words.
-    """
-
-    def item_function(obj):
-        word = obj.text.split(" -> ")[-1]
-        queue_word(word)
-        obj.parent.remove_widget(obj)
-
-    def button_function(_):
-        for item in MDApp.get_running_app().dialog.ids.box_items.children:
-            word = item.text.split(" -> ")[0]
-            queue_word(word)
-            start_downloading()
-        MDApp.get_running_app().dialog.dismiss()
-
-    ok_button = MDFlatButton(
-        text="OK",
-        text_color=MDApp.get_running_app().theme_cls.primary_color,
-        on_press=button_function,
-    )
-    MDApp.get_running_app().show_dialog(
-        message="Some words are not in their dictionary form. The following replacements are suggested:",
-        options=replacements,
-        item_callback=item_function,
-        buttons=[ok_button],
-    )
+    def show_replacements_dialog(self, replacements):
+        """Open dialog to show user possible corrections for the imported words."""
+        self.dialog.content_cls.data = [
+            {**rep_dict, "height": 45} for rep_dict in replacements
+        ]
+        self.dialog.open()
