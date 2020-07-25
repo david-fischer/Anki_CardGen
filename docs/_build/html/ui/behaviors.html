@@ -37,7 +37,7 @@
 
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Main Menu" href="main_menu.html" />
+    <link rel="next" title="Dialogs" href="dialogs.html" />
     <link rel="prev" title="UI" href="../ui.html" />
 </head>
 
@@ -108,26 +108,26 @@
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior">ChildrenFromDictsBehavior</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.after_add_child">after_add_child</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior">ChildrenFromDataBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.after_add_child">after_add_child</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.before_add_child">before_add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.before_add_child">before_add_child</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.child_bindings">child_bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.child_bindings">child_bindings</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.child_class_name">child_class_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.child_class_name">child_class_name</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.child_dicts">child_dicts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.data">data</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.on_child_dicts">on_child_dicts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.on_data">on_data</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.root_for_children">root_for_children</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.root_for_children">root_for_children</a></li>
 </ul>
 </li>
 </ul>
@@ -180,11 +180,13 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="dialogs.html">Dialogs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menu.html">Main Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mychooser.html">Selection Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_history.html">History Screen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_queue.html">Queue Screen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_single_word.html">Single Word Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scroll_list.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scroll_widgets.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_widget.html">Selection Widgets</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
@@ -318,26 +320,26 @@ callback_fn(self) -&gt; Any</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="behaviors.ChildrenFromDictsBehavior">
-<em class="property">class </em><code class="sig-prename descclassname">behaviors.</code><code class="sig-name descname">ChildrenFromDictsBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates widgets dynamically from <a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.child_dicts" title="behaviors.ChildrenFromDictsBehavior.child_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">child_dicts</span></code></a> and adds them to <a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.root_for_children" title="behaviors.ChildrenFromDictsBehavior.root_for_children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">root_for_children</span></code></a>.</p>
-<p>Bindings can be applied and other functions executed by the definition of <a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.before_add_child" title="behaviors.ChildrenFromDictsBehavior.before_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">before_add_child()</span></code></a> and
-<a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.after_add_child" title="behaviors.ChildrenFromDictsBehavior.after_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">after_add_child()</span></code></a>.</p>
+<dt id="behaviors.ChildrenFromDataBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">behaviors.</code><code class="sig-name descname">ChildrenFromDataBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates widgets dynamically from <a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.data" title="behaviors.ChildrenFromDataBehavior.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> and adds them to <a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.root_for_children" title="behaviors.ChildrenFromDataBehavior.root_for_children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">root_for_children</span></code></a>.</p>
+<p>Bindings can be applied and other functions executed by the definition of <a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.before_add_child" title="behaviors.ChildrenFromDataBehavior.before_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">before_add_child()</span></code></a> and
+<a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.after_add_child" title="behaviors.ChildrenFromDataBehavior.after_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">after_add_child()</span></code></a>.</p>
 <dl class="py method">
-<dt id="behaviors.ChildrenFromDictsBehavior.after_add_child">
-<code class="sig-name descname">after_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.after_add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.after_add_child" title="Permalink to this definition">¶</a></dt>
+<dt id="behaviors.ChildrenFromDataBehavior.after_add_child">
+<code class="sig-name descname">after_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.after_add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.after_add_child" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do something after child is added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_widget</span></code>. Placeholder.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="behaviors.ChildrenFromDictsBehavior.before_add_child">
-<code class="sig-name descname">before_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.before_add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.before_add_child" title="Permalink to this definition">¶</a></dt>
+<dt id="behaviors.ChildrenFromDataBehavior.before_add_child">
+<code class="sig-name descname">before_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.before_add_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.before_add_child" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do something before child is added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_widget</span></code>. Placeholder.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="behaviors.ChildrenFromDictsBehavior.child_bindings">
-<code class="sig-name descname">child_bindings</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.child_bindings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.child_bindings" title="Permalink to this definition">¶</a></dt>
+<dt id="behaviors.ChildrenFromDataBehavior.child_bindings">
+<code class="sig-name descname">child_bindings</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.child_bindings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.child_bindings" title="Permalink to this definition">¶</a></dt>
 <dd><p>binding_fn}.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -347,28 +349,28 @@ callback_fn(self) -&gt; Any</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="behaviors.ChildrenFromDictsBehavior.child_class_name">
-<code class="sig-name descname">child_class_name</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.child_class_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.child_class_name" title="Permalink to this definition">¶</a></dt>
+<dt id="behaviors.ChildrenFromDataBehavior.child_class_name">
+<code class="sig-name descname">child_class_name</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.child_class_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.child_class_name" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> class name for children. Needs to be available via
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="behaviors.ChildrenFromDictsBehavior.child_dicts">
-<code class="sig-name descname">child_dicts</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.child_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.child_dicts" title="Permalink to this definition">¶</a></dt>
+<dt id="behaviors.ChildrenFromDataBehavior.data">
+<code class="sig-name descname">data</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.data" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries from which the child-widgets are
 constructed.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="behaviors.ChildrenFromDictsBehavior.on_child_dicts">
-<code class="sig-name descname">on_child_dicts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.on_child_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.on_child_dicts" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct children on change of <a class="reference internal" href="#behaviors.ChildrenFromDictsBehavior.child_dicts" title="behaviors.ChildrenFromDictsBehavior.child_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">child_dicts</span></code></a>.</p>
+<dt id="behaviors.ChildrenFromDataBehavior.on_data">
+<code class="sig-name descname">on_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.on_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.on_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct children on change of <a class="reference internal" href="#behaviors.ChildrenFromDataBehavior.data" title="behaviors.ChildrenFromDataBehavior.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="behaviors.ChildrenFromDictsBehavior.root_for_children">
-<code class="sig-name descname">root_for_children</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDictsBehavior.root_for_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDictsBehavior.root_for_children" title="Permalink to this definition">¶</a></dt>
+<dt id="behaviors.ChildrenFromDataBehavior.root_for_children">
+<code class="sig-name descname">root_for_children</code><a class="reference internal" href="../_modules/behaviors.html#ChildrenFromDataBehavior.root_for_children"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#behaviors.ChildrenFromDataBehavior.root_for_children" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> the widget, where the children should be added to
 Defaults to self.</p>
 </dd></dl>
@@ -492,7 +494,7 @@ Defaults to self.</p>
 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
 
-        <a href="main_menu.html" class="btn btn-neutral float-right" title="Main Menu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="dialogs.html" class="btn btn-neutral float-right" title="Dialogs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
 
         <a href="../ui.html" class="btn btn-neutral float-left" title="UI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

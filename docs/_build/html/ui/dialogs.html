@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Dialogs &mdash; ACG 0.3.0 documentation</title>
+
+
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Main Menu" href="main_menu.html" />
+    <link rel="prev" title="Behaviors" href="behaviors.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="behaviors.html">Behaviors</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Dialogs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dialogs.CustomDialog">CustomDialog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.CustomDialog.auto_dismiss">auto_dismiss</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.CustomDialog.button_cls_name">button_cls_name</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.CustomDialog.button_texts">button_texts</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.CustomDialog.callback">callback</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.CustomDialog.on_button_press">on_button_press</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.CustomDialog.on_item_press">on_item_press</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#dialogs.DialogContent">DialogContent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.DialogContent.data">data</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.DialogContent.get_result">get_result</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.DialogContent.on_item_press">on_item_press</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#dialogs.ReplacementContent">ReplacementContent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementContent.child_class_name">child_class_name</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementContent.get_result">get_result</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#dialogs.ReplacementItem">ReplacementItem</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementItem.edit">edit</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementItem.lemma">lemma</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementItem.on_press">on_press</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementItem.take_lemma">take_lemma</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#dialogs.ReplacementItem.word">word</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="main_menu.html">Main Menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_history.html">History Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_queue.html">Queue Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_single_word.html">Single Word Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scroll_widgets.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_widget.html">Selection Widgets</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ACG</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+
+          <li><a href="../ui.html">UI</a> &raquo;</li>
+
+      <li>Dialogs</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+            <a href="../_sources/ui/dialogs.rst.txt" rel="nofollow"> View page source</a>
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="module-dialogs">
+<span id="dialogs"></span><h1>Dialogs<a class="headerlink" href="#module-dialogs" title="Permalink to this headline">¶</a></h1>
+<p>Provides <a class="reference internal" href="#dialogs.CustomDialog" title="dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomDialog</span></code></a> and <a class="reference internal" href="#dialogs.ReplacementContent" title="dialogs.ReplacementContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReplacementContent</span></code></a>.</p>
+<dl class="py class">
+<dt id="dialogs.CustomDialog">
+<em class="property">class </em><code class="sig-prename descclassname">dialogs.</code><code class="sig-name descname">CustomDialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#CustomDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.dialog.MDDialog</span></code></a></p>
+<p>Custom dialog.</p>
+<dl class="py attribute">
+<dt id="dialogs.CustomDialog.auto_dismiss">
+<code class="sig-name descname">auto_dismiss</code><em class="property"> = False</em><a class="reference internal" href="../_modules/dialogs.html#CustomDialog.auto_dismiss"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog.auto_dismiss" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not dismiss on click outside the dialog.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dialogs.CustomDialog.button_cls_name">
+<code class="sig-name descname">button_cls_name</code><a class="reference internal" href="../_modules/dialogs.html#CustomDialog.button_cls_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog.button_cls_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;DialogButton&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dialogs.CustomDialog.button_texts">
+<code class="sig-name descname">button_texts</code><a class="reference internal" href="../_modules/dialogs.html#CustomDialog.button_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog.button_texts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">[&quot;OK&quot;,</span> <span class="pre">&quot;CANCEL&quot;]</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dialogs.CustomDialog.callback">
+<code class="sig-name descname">callback</code><a class="reference internal" href="../_modules/dialogs.html#CustomDialog.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> defaults to <a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">``</span></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dialogs.CustomDialog.on_button_press">
+<code class="sig-name descname">on_button_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#CustomDialog.on_button_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog.on_button_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dialogs.CustomDialog.on_item_press">
+<code class="sig-name descname">on_item_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#CustomDialog.on_item_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.CustomDialog.on_item_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dialogs.DialogContent">
+<em class="property">class </em><code class="sig-prename descclassname">dialogs.</code><code class="sig-name descname">DialogContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#DialogContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.DialogContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">my_kivy.scroll_widgets.ScrollList</span></code></p>
+<p>Content for the <a class="reference internal" href="#dialogs.CustomDialog" title="dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomDialog</span></code></a> class.</p>
+<dl class="py attribute">
+<dt id="dialogs.DialogContent.data">
+<code class="sig-name descname">data</code><a class="reference internal" href="../_modules/dialogs.html#DialogContent.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.DialogContent.data" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a>.``</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dialogs.DialogContent.get_result">
+<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#DialogContent.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.DialogContent.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dialogs.DialogContent.on_item_press">
+<code class="sig-name descname">on_item_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#DialogContent.on_item_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.DialogContent.on_item_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dialogs.ReplacementContent">
+<em class="property">class </em><code class="sig-prename descclassname">dialogs.</code><code class="sig-name descname">ReplacementContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#ReplacementContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dialogs.DialogContent" title="dialogs.DialogContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">dialogs.DialogContent</span></code></a></p>
+<p>Content for the ReplacementDialog.</p>
+<dl class="py attribute">
+<dt id="dialogs.ReplacementContent.child_class_name">
+<code class="sig-name descname">child_class_name</code><a class="reference internal" href="../_modules/dialogs.html#ReplacementContent.child_class_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementContent.child_class_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;ReplacementItem&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dialogs.ReplacementContent.get_result">
+<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#ReplacementContent.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementContent.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get user selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="dialogs.ReplacementItem">
+<em class="property">class </em><code class="sig-prename descclassname">dialogs.</code><code class="sig-name descname">ReplacementItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#ReplacementItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<p>Item displaying a word (<a class="reference internal" href="#dialogs.ReplacementItem.word" title="dialogs.ReplacementItem.word"><code class="xref py py-attr docutils literal notranslate"><span class="pre">word</span></code></a>) and a possible replacement (<a class="reference internal" href="#dialogs.ReplacementItem.lemma" title="dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a>).</p>
+<p><a class="reference internal" href="#dialogs.ReplacementItem.lemma" title="dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a> can be edited and the selection of word vs replacement switches on click.</p>
+<dl class="py attribute">
+<dt id="dialogs.ReplacementItem.edit">
+<code class="sig-name descname">edit</code><a class="reference internal" href="../_modules/dialogs.html#ReplacementItem.edit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementItem.edit" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. While <code class="docutils literal notranslate"><span class="pre">True</span></code> the <a class="reference internal" href="#dialogs.ReplacementItem.lemma" title="dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a> can be
+edited.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dialogs.ReplacementItem.lemma">
+<code class="sig-name descname">lemma</code><a class="reference internal" href="../_modules/dialogs.html#ReplacementItem.lemma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementItem.lemma" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="dialogs.ReplacementItem.on_press">
+<code class="sig-name descname">on_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/dialogs.html#ReplacementItem.on_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementItem.on_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dialogs.ReplacementItem.take_lemma">
+<code class="sig-name descname">take_lemma</code><a class="reference internal" href="../_modules/dialogs.html#ReplacementItem.take_lemma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementItem.take_lemma" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. Indicates user choice.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="dialogs.ReplacementItem.word">
+<code class="sig-name descname">word</code><a class="reference internal" href="../_modules/dialogs.html#ReplacementItem.word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dialogs.ReplacementItem.word" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+        <a href="main_menu.html" class="btn btn-neutral float-right" title="Main Menu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+
+
+        <a href="behaviors.html" class="btn btn-neutral float-left" title="Behaviors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+
+    </div>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

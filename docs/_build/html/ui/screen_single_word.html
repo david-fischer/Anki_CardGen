@@ -37,7 +37,7 @@
 
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Scroll Widgets" href="scroll_list.html" />
+    <link rel="next" title="Scroll Widgets" href="scroll_widgets.html" />
     <link rel="prev" title="Queue Screen" href="screen_queue.html" />
 </head>
 
@@ -87,22 +87,11 @@
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="behaviors.html">Behaviors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialogs.html">Dialogs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menu.html">Main Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mychooser.html">Selection Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_history.html">History Screen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_queue.html">Queue Screen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Single Word Screen</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#screen_single_word.Tab">Tab</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.icon">icon</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.id">id</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#screen_single_word.Tab.text">text</a></li>
-</ul>
-</li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#screen_single_word.WordProperties">WordProperties</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#screen_single_word.WordProperties.accept_suggestion">accept_suggestion</a></li>
 </ul>
@@ -124,7 +113,8 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="scroll_list.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scroll_widgets.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_widget.html">Selection Widgets</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
@@ -198,32 +188,7 @@
 
   <div class="section" id="module-screen_single_word">
 <span id="single-word-screen"></span><h1>Single Word Screen<a class="headerlink" href="#module-screen_single_word" title="Permalink to this headline">¶</a></h1>
-<p>Contains the necessary functions and classes for the screen screen_single_word.</p>
-<dl class="py class">
-<dt id="screen_single_word.Tab">
-<em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">Tab</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#Tab"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/tabs/index.html#kivymd.uix.tab.MDTabsBase" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.tab.MDTabsBase</span></code></a></p>
-<p>Class implementing content for a tab.</p>
-<dl class="py attribute">
-<dt id="screen_single_word.Tab.icon">
-<code class="sig-name descname">icon</code><a class="reference internal" href="../_modules/screen_single_word.html#Tab.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab.icon" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="screen_single_word.Tab.id">
-<code class="sig-name descname">id</code><a class="reference internal" href="../_modules/screen_single_word.html#Tab.id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab.id" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="screen_single_word.Tab.text">
-<code class="sig-name descname">text</code><a class="reference internal" href="../_modules/screen_single_word.html#Tab.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.Tab.text" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
-</dd></dl>
-
-</dd></dl>
-
+<p>Contains the necessary functions and classes for the screen single_word.</p>
 <dl class="py class">
 <dt id="screen_single_word.WordProperties">
 <em class="property">class </em><code class="sig-prename descclassname">screen_single_word.</code><code class="sig-name descname">WordProperties</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties" title="Permalink to this definition">¶</a></dt>
@@ -241,8 +206,8 @@ data to include on the card.</p>
 <dt id="screen_single_word.WordProperties.complete_generation">
 <code class="sig-name descname">complete_generation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/screen_single_word.html#WordProperties.complete_generation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#screen_single_word.WordProperties.complete_generation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate Anki card from current user selection and changes screen.</p>
-<p>If the word was in the queue, returns to screen_queue.
-Else, resets the screen_single_word and changes to the edit_tab.</p>
+<p>If the word was in the queue, returns to queue.
+Else, resets the single_word and changes to the edit_tab.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -282,7 +247,7 @@ Else, resets the screen_single_word and changes to the edit_tab.</p>
 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
 
-        <a href="scroll_list.html" class="btn btn-neutral float-right" title="Scroll Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="scroll_widgets.html" class="btn btn-neutral float-right" title="Scroll Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
 
         <a href="screen_queue.html" class="btn btn-neutral float-left" title="Queue Screen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
