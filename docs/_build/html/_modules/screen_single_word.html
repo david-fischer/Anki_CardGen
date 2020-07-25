@@ -150,17 +150,14 @@
            <div itemprop="articleBody">
 
   <h1>Source code for screen_single_word</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Contains the necessary functions and classes for the screen screen_single_word.&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Contains the necessary functions and classes for the screen single_word.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">certifi</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.network.urlrequest</span> <span class="kn">import</span> <span class="n">UrlRequest</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">StringProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
-<span class="kn">from</span> <span class="nn">kivy.uix.floatlayout</span> <span class="kn">import</span> <span class="n">FloatLayout</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
-<span class="kn">from</span> <span class="nn">kivymd.uix.tab</span> <span class="kn">import</span> <span class="n">MDTabsBase</span>
 
 <span class="kn">from</span> <span class="nn">parsers</span> <span class="kn">import</span> <span class="n">linguee_did_you_mean</span><span class="p">,</span> <span class="n">NoMatchError</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="p">(</span>
@@ -183,12 +180,10 @@
 <div class="viewcode-block" id="WordProperties.refresh_data"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.WordProperties.refresh_data">[docs]</a>    <span class="k">def</span> <span class="nf">refresh_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Refresh UI with the data from :class:`words.Word`.&quot;&quot;&quot;</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">translations</span><span class="o">.</span><span class="n">child_dicts</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">translations</span>
-        <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">child_dicts</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">image_urls</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">translations</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">translations</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">images</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">&quot;source&quot;</span><span class="p">:</span> <span class="n">string</span><span class="p">}</span> <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="n">word</span><span class="o">.</span><span class="n">image_urls</span><span class="p">]</span>
         <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;antonyms&quot;</span><span class="p">,</span> <span class="s2">&quot;synonyms&quot;</span><span class="p">,</span> <span class="s2">&quot;examples&quot;</span><span class="p">,</span> <span class="s2">&quot;explanations&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">child_dicts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">[</span><span class="n">attribute</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="p">{</span><span class="s2">&quot;text_orig&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;text_trans&quot;</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
                 <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">word</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span></div>
             <span class="p">]</span>
@@ -255,8 +250,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generate Anki card from current user selection and changes screen.</span>
 
-<span class="sd">        If the word was in the queue, returns to screen_queue.</span>
-<span class="sd">        Else, resets the screen_single_word and changes to the edit_tab.</span>
+<span class="sd">        If the word was in the queue, returns to queue.</span>
+<span class="sd">        Else, resets the single_word and changes to the edit_tab.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">download_selected_image</span><span class="p">()</span>
         <span class="n">word</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word</span>
@@ -273,20 +268,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">scroll_y</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="n">search_term</span> <span class="o">=</span> <span class="n">result_dict</span><span class="p">[</span><span class="s2">&quot;Word&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">search_term</span> <span class="ow">in</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">queue_words</span><span class="p">:</span>
-            <span class="n">set_screen</span><span class="p">(</span><span class="s2">&quot;screen_queue&quot;</span><span class="p">)</span>
+            <span class="n">set_screen</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">)</span>
             <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">queue_words</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span></div></div>
 
 
 <span class="c1"># class ImageSearchResultGrid(MyCheckImageGrid):</span>
 <span class="c1">#     &quot;&quot;&quot;Extends the :class:`selection_widgets.MyCheckImageGrid` by the :meth:`get_images` method.&quot;&quot;&quot;</span>
 <span class="c1">#</span>
-<span class="c1">#     def on_child_dicts(self, *_):</span>
-<span class="c1">#         if len(self.children) == len(self.child_dicts):</span>
-<span class="c1">#             for image, child_dict in zip(self.children, self.child_dicts):</span>
+<span class="c1">#     def on_data(self, *_):</span>
+<span class="c1">#         if len(self.children) == len(self.data):</span>
+<span class="c1">#             for image, child_dict in zip(self.children, self.data):</span>
 <span class="c1">#                 image.source = child_dict[&quot;source&quot;]</span>
 <span class="c1">#                 # image._img_widget.container.image.bind(on_error=f)</span>
 <span class="c1">#         else:</span>
-<span class="c1">#             super(ImageSearchResultGrid, self).on_child_dicts(*_)</span>
+<span class="c1">#             super(ImageSearchResultGrid, self).on_data(*_)</span>
 <span class="c1">#</span>
 <span class="c1">#     def get_images(self, keywords=None):</span>
 <span class="c1">#         &quot;&quot;&quot;</span>
@@ -303,21 +298,7 @@
 <span class="c1">#             if keywords is None</span>
 <span class="c1">#             else word.request_img_urls(keywords=keywords)</span>
 <span class="c1">#         )</span>
-<span class="c1">#         self.child_dicts = [{&quot;source&quot;: url} for url in paths]</span>
-
-
-<span class="c1"># TODO: Move</span>
-<div class="viewcode-block" id="Tab"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab">[docs]</a><span class="k">class</span> <span class="nc">Tab</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">MDTabsBase</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Class implementing content for a tab.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="Tab.id"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="Tab.text"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="Tab.icon"><a class="viewcode-back" href="../ui/screen_single_word.html#screen_single_word.Tab.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span></div>
+<span class="c1">#         self.data = [{&quot;source&quot;: url} for url in paths]</span>
 
 
 <span class="c1"># pylint: disable = W,C,R,I</span>

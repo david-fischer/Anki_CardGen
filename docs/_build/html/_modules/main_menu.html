@@ -231,24 +231,32 @@
             <span class="p">{</span>
                 <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;form-textbox&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Manual Input&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_single_word&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;single_word&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;my_kivy/screen_single_word.kv&quot;</span><span class="p">,</span>
             <span class="p">},</span>
             <span class="p">{</span>
                 <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;format-list-checkbox&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Queue&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_queue&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;queue&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;my_kivy/screen_queue.kv&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;history&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;History&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;history&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;my_kivy/screen_history.kv&quot;</span><span class="p">,</span>
             <span class="p">},</span>
             <span class="p">{</span>
                 <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;cogs&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Settings&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;screen_settings&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;settings&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;path&quot;</span><span class="p">:</span> <span class="s2">&quot;my_kivy/screen_settings.kv&quot;</span><span class="p">,</span></div>
             <span class="p">},</span>
         <span class="p">]</span>
     <span class="p">)</span>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens.&quot;&quot;&quot;</span>
+
+    <span class="n">screens</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span>
 
 <div class="viewcode-block" id="MainMenu.on_parent"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu.on_parent">[docs]</a>    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -257,13 +265,25 @@
 <span class="sd">        The screens are added to the screen_man and corresponding entries to the drawer_list.</span>
 <span class="sd">        Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">screen_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span><span class="p">:</span>
-            <span class="n">screen</span> <span class="o">=</span> <span class="n">KvScreen</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">screen_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">]})</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">screen</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">child_dicts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
+        <span class="c1"># for screen_dict in self.screen_dicts:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">KvScreen</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">screen_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;path&quot;</span><span class="p">]})</span>
+            <span class="k">for</span> <span class="n">screen_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
+        <span class="p">]</span>
+        <span class="c1"># self.ids.screen_man.add_widget(screen)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">set_screen</span><span class="p">)</span>
+        <span class="c1"># self.ids.drawer_list.bind(current=self.ids.screen_man.setter(&quot;current&quot;))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainMenu.set_screen"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu.set_screen">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Switch screens dynamically.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">switch_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="MainMenu.get_screen"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.MainMenu.get_screen">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return screen by name.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">screen</span> <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="k">if</span> <span class="n">screen</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">screen_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div></div>
 
 
 <div class="viewcode-block" id="KvScreen"><a class="viewcode-back" href="../ui/main_menu.html#main_menu.KvScreen">[docs]</a><span class="k">class</span> <span class="nc">KvScreen</span><span class="p">(</span><span class="n">Screen</span><span class="p">):</span>

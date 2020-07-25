@@ -114,6 +114,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#utils.now_string">now_string</a></li>
 </ul>
 <ul>
+<li class="toctree-l2"><a class="reference internal" href="#utils.pick_val">pick_val</a></li>
+</ul>
+<ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.save_card_pngs">save_card_pngs</a></li>
 </ul>
 <ul>
@@ -133,6 +136,12 @@
 </ul>
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.smart_saver">smart_saver</a></li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#utils.start_thread">start_thread</a></li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#utils.start_workers">start_workers</a></li>
 </ul>
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.tag_word_in_sentence">tag_word_in_sentence</a></li>
@@ -306,6 +315,12 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
+<dt id="utils.pick_val">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">pick_val</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">whitelist</span></em>, <em class="sig-param"><span class="n">dictionary</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#pick_val"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.pick_val" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return filtered dictionary, whose values are in <code class="docutils literal notranslate"><span class="pre">whitelist</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="utils.save_card_pngs">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_pngs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em>, <em class="sig-param"><span class="n">size</span><span class="o">=</span><span class="default_value">540, 960</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#save_card_pngs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_pngs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save pngs of the anki-cards for a given word.</p>
@@ -390,6 +405,42 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
+<dt id="utils.start_thread">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">start_thread</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">fn_arg</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#start_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.start_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper-function to call <code class="docutils literal notranslate"><span class="pre">func</span></code> in new thread.</p>
+<p>Every kwarg that fits the signature of <code class="docutils literal notranslate"><span class="pre">func</span></code> is plugged into <code class="docutils literal notranslate"><span class="pre">func</span></code>, the others are used in the constructor of
+<a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">toolz.curry()</span></code> decorator enables partial evaluation without extra use of partial.</p>
+</div>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="s2">&quot;z&quot;</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello from&quot;</span><span class="p">,</span><span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">callback</span> <span class="o">=</span> <span class="n">start_thread</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">z</span><span class="o">=</span><span class="s2">&quot;non_default_z&quot;</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;print_thread&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">callback</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">Hello from print_thread</span>
+<span class="go">2 y non_default_z</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt id="utils.start_workers">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">start_workers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">worker_fn</span></em>, <em class="sig-param"><span class="n">num</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#start_workers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.start_workers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a number of <code class="docutils literal notranslate"><span class="pre">num</span></code> workers in separate threads.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>worker_fn</strong> – Function to be started</p></li>
+<li><p><strong>num</strong> – Number of threads/workers</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt id="utils.tag_word_in_sentence">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">tag_word_in_sentence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sentence</span></em>, <em class="sig-param"><span class="n">tag_word</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#tag_word_in_sentence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.tag_word_in_sentence" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use regex to wrap every derived form of a given <code class="docutils literal notranslate"><span class="pre">tag_word</span></code> in <code class="docutils literal notranslate"><span class="pre">sentence</span></code> in an html-tag.</p>
@@ -418,12 +469,10 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dd class="field-even"><p>widget</p>
 </dd>
 </dl>
-<dl>
-<dt>Examples</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;screen_single_word/edit_tab/word_prop&quot;</span><span class="p">)</span>
-<span class="go">MDApp.get_running_app().root.ids.screen_man.get_screen(&quot;screen_single_word&quot;).children[</span>
-<span class="go">0].ids.word_prop</span>
-</pre></div>
-</div>
+<dl class="simple">
+<dt>Examples</dt><dd><p># &gt;&gt;&gt; widget_by_id(“single_word/edit_tab/word_prop”)
+# MDApp.get_running_app().root.ids.screen_man.get_screen(“single_word”).children[
+# 0].ids.word_prop</p>
 </dd>
 </dl>
 </dd></dl>

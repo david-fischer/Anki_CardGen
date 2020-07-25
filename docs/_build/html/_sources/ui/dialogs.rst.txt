@@ -1,6 +1,6 @@
-Scroll Widgets
+Dialogs
 ------------------------------------------
 
-.. autoapimodule:: scroll_list
+.. autoapimodule:: dialogs
    :members:
    :show-inheritance:
