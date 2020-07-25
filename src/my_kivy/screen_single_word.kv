@@ -1,7 +1,4 @@
 #:import WordProperties my_kivy.screen_single_word.WordProperties
-<MDTextField>:
-    size: 200, 100
-
 <WordProperties>:
     orientation: "vertical"
     padding: dp(20),dp(20)
@@ -9,6 +6,7 @@
 
     MDTextField:
         id: search_field
+        size: 200,50
         hint_text: "Search Term"
         text: ""
         on_text_validate: root.load_or_search(self.text)
