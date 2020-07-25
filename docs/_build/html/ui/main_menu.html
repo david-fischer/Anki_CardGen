@@ -37,8 +37,8 @@
 
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Selection Widgets" href="mychooser.html" />
-    <link rel="prev" title="Behaviors" href="behaviors.html" />
+    <link rel="next" title="History Screen" href="screen_history.html" />
+    <link rel="prev" title="Dialogs" href="dialogs.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">UI</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="behaviors.html">Behaviors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dialogs.html">Dialogs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Main Menu</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#main_menu.DrawerItem">DrawerItem</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.DrawerItem.icon">icon</a></li>
@@ -122,18 +123,25 @@
 </ul>
 <ul>
 <li class="toctree-l3"><a class="reference internal" href="#main_menu.MainMenu">MainMenu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.MainMenu.get_screen">get_screen</a></li>
+</ul>
+<ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.MainMenu.on_parent">on_parent</a></li>
 </ul>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#main_menu.MainMenu.screen_dicts">screen_dicts</a></li>
 </ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.MainMenu.set_screen">set_screen</a></li>
+</ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="mychooser.html">Selection Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screen_history.html">History Screen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_queue.html">Queue Screen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="screen_single_word.html">Single Word Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="scroll_list.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scroll_widgets.html">Scroll Widgets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="selection_widget.html">Selection Widgets</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
@@ -300,6 +308,12 @@
 <dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
 <p>Contains everything related to the NavigationDrawer and the Screens.</p>
 <dl class="py method">
+<dt id="main_menu.MainMenu.get_screen">
+<code class="sig-name descname">get_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#MainMenu.get_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.MainMenu.get_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return screen by name.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="main_menu.MainMenu.on_parent">
 <code class="sig-name descname">on_parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#MainMenu.on_parent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.MainMenu.on_parent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up screen using <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">path</span></code> from <a class="reference internal" href="#main_menu.MainMenu.screen_dicts" title="main_menu.MainMenu.screen_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_dicts</span></code></a>.</p>
@@ -311,6 +325,12 @@ Then <a class="reference internal" href="#main_menu.DrawerList.current" title="m
 <dt id="main_menu.MainMenu.screen_dicts">
 <code class="sig-name descname">screen_dicts</code><a class="reference internal" href="../_modules/main_menu.html#MainMenu.screen_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.MainMenu.screen_dicts" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries describing all screens.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="main_menu.MainMenu.set_screen">
+<code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/main_menu.html#MainMenu.set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main_menu.MainMenu.set_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch screens dynamically.</p>
 </dd></dl>
 
 </dd></dl>
@@ -325,10 +345,10 @@ Then <a class="reference internal" href="#main_menu.DrawerList.current" title="m
 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
 
-        <a href="mychooser.html" class="btn btn-neutral float-right" title="Selection Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="screen_history.html" class="btn btn-neutral float-right" title="History Screen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
 
-        <a href="behaviors.html" class="btn btn-neutral float-left" title="Behaviors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="dialogs.html" class="btn btn-neutral float-left" title="Dialogs" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
 
     </div>
 

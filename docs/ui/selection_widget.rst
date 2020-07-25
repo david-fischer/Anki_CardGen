@@ -1,6 +1,6 @@
 Selection Widgets
 ---------------------------------------
 
-.. autoapimodule:: mychooser
+.. autoapimodule:: selection_widgets
    :members:
    :show-inheritance:

@@ -302,43 +302,43 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior">[docs]</a><span class="k">class</span> <span class="nc">ChildrenFromDictsBehavior</span><span class="p">:</span>
+<div class="viewcode-block" id="ChildrenFromDataBehavior"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior">[docs]</a><span class="k">class</span> <span class="nc">ChildrenFromDataBehavior</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Generates widgets dynamically from :attr:`child_dicts` and adds them to :attr:`root_for_children`.</span>
+<span class="sd">    Generates widgets dynamically from :attr:`data` and adds them to :attr:`root_for_children`.</span>
 
 <span class="sd">    Bindings can be applied and other functions executed by the definition of :meth:`before_add_child` and</span>
 <span class="sd">    :meth:`after_add_child`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.child_dicts"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.child_dicts">[docs]</a>    <span class="n">child_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.data"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.properties.ListProperty` containing the dictionaries from which the child-widgets are</span>
 <span class="sd">    constructed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.child_class_name"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">([])</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.child_class_name"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">([])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` class name for children. Needs to be available via</span>
 <span class="sd">    :meth:`~kivy.factory.Factory.get`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.root_for_children"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.root_for_children">[docs]</a>    <span class="n">root_for_children</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.root_for_children"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.root_for_children">[docs]</a>    <span class="n">root_for_children</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.properties.ObjectProperty` the widget, where the children should be added to</span>
 <span class="sd">    Defaults to self.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.child_bindings"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.child_bindings">[docs]</a>    <span class="n">child_bindings</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.child_bindings"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.child_bindings">[docs]</a>    <span class="n">child_bindings</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty` of the form {&quot;on_event&quot;: binding_fn}.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ChildrenFromDictsBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span> <span class="o">=</span> <span class="bp">self</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">on_child_dicts</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_data</span><span class="p">()</span>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.on_child_dicts"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.on_child_dicts">[docs]</a>    <span class="k">def</span> <span class="nf">on_child_dicts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Construct children on change of :attr:`child_dicts`.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.on_data"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct children on change of :attr:`data`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">child_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_dicts</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">child_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
             <span class="n">child_cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">child_class_name</span><span class="p">)</span>
             <span class="n">new_child</span> <span class="o">=</span> <span class="n">child_cls</span><span class="p">(</span><span class="o">**</span><span class="n">child_dict</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">:</span>
@@ -347,10 +347,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">after_add_child</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.before_add_child"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.before_add_child"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Do something before child is added to :attr:`parent_widget`. Placeholder.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDictsBehavior.after_add_child"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDictsBehavior.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.after_add_child"><a class="viewcode-back" href="../ui/behaviors.html#behaviors.ChildrenFromDataBehavior.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div></div>
         <span class="sd">&quot;&quot;&quot;Do something after child is added to :attr:`parent_widget`. Placeholder.&quot;&quot;&quot;</span>
 
 

@@ -206,8 +206,17 @@
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing all words for which Anki-cards have been generated.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.loading_state_dict"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.loading_state_dict">[docs]</a>    <span class="n">loading_state_dict</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AnkiCardGenApp.word_state_dict"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.word_state_dict">[docs]</a>    <span class="n">word_state_dict</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="AnkiCardGenApp.keys_to_save"><a class="viewcode-back" href="../main.html#main.AnkiCardGenApp.keys_to_save">[docs]</a>    <span class="n">keys_to_save</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
-        <span class="p">[</span><span class="s2">&quot;queue_words&quot;</span><span class="p">,</span> <span class="s2">&quot;done_words&quot;</span><span class="p">,</span> <span class="s2">&quot;error_words&quot;</span><span class="p">,</span> <span class="s2">&quot;loading_state_dict&quot;</span><span class="p">,</span> <span class="s2">&quot;anki&quot;</span><span class="p">]</span></div>
+        <span class="p">[</span>
+            <span class="s2">&quot;queue_words&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;done_words&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;error_words&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;loading_state_dict&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;anki&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;word_state_dict&quot;</span><span class="p">,</span></div>
+        <span class="p">]</span>
     <span class="p">)</span>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the name of all attributes that should be saved on change.&quot;&quot;&quot;</span>
 
@@ -278,6 +287,7 @@
                 <span class="s2">&quot;anki&quot;</span><span class="p">:</span> <span class="s2">&quot;../app_data/anki.p&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;generated&quot;</span><span class="p">:</span> <span class="s2">&quot;../app_data/generated_cards.csv&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;apkg&quot;</span><span class="p">:</span> <span class="s2">&quot;../app_data/apkgs/portuguese_vocab.apkg&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;word_state_dict&quot;</span><span class="p">:</span> <span class="s2">&quot;../app_data/word_state_dict.json&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;../app_data/&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
