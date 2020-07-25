@@ -1,0 +1,75 @@
+#:import Clock kivy.clock.Clock
+<DialogButton@MDFlatButton>:
+    text_color: self.theme_cls.primary_color
+
+<ReplacementItem>:
+    orientation: "vertical"
+    size_hint: 1, None
+    height: 45
+    spacing: 0
+    padding: 0
+    on_press: self.take_lemma = not self.take_lemma
+
+    MDSeparator:
+
+    BoxLayout:
+        id: hbox
+        orientation: "horizontal"
+        size_hint: .99,.99
+        # height: root.height-1
+        spacing: dp(10)
+
+        MDLabel:
+            id: word
+            text: root.word
+            theme_text_color: "Secondary" if root.take_lemma else "Custom"
+            font_style: "H6" if not root.take_lemma else "Body1"
+            text_color: app.theme_cls.primary_color
+            halign:"right"
+        #
+        #
+        MDIconButton:
+            id: arrow_icon
+            icon: "arrow-right"
+            on_press: root.take_lemma = not root.take_lemma
+
+        MDLabel:
+            id: lemma
+            text: root.lemma
+            theme_text_color: "Secondary" if not root.take_lemma else "Custom"
+            font_style: "H6" if root.take_lemma else "Body1"
+            text_color: app.theme_cls.primary_color
+            size_hint_x: None if root.edit else 1
+            width: 0 if root.edit else 100
+            # height: root.height if not root.edit else 0
+            opacity: float(not root.edit)
+            halign: "left"
+            # pos_hint: {"left":1.0}
+
+        MDTextField:
+            id: lemma_text_field
+            text: root.lemma
+            width: 0 if not root.edit else 100
+            size_hint_x: 1 if root.edit else None
+            on_focus:
+                if not self.focus:\
+                root.edit = False;\
+                root.lemma = self.text
+            on_text_validate: root.take_lemma = True
+
+        MDIconButton:
+            id: edit_icon
+            icon: "pencil" if not root.edit else ""
+            pos_hint: {"left":0.0}
+            on_press:
+                if not root.edit:\
+                root.edit = True;\
+                Clock.schedule_once(lambda t: setattr(lemma_text_field,"focus",True))
+
+<ReplacementContent>:
+    height: 300
+
+<CustomDialog>:
+    size_hint_x: 0.8
+    size_hint_y: 0.8
+#     size: 500,500
