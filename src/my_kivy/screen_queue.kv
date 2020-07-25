@@ -1,27 +1,22 @@
-#:import ScrollList my_kivy.scroll_widgets.ScrollList
-#:import LeftStatusIndicatorListItem my_kivy.scroll_widgets.LeftStatusIndicatorListItem
-#:import options_dict my_kivy.screen_queue.options_dict
-#:import choose_file_to_import my_kivy.screen_queue.choose_file_to_import
-#:import click_on_queue_item my_kivy.screen_queue.click_on_queue_item
-#:import click_on_error_item my_kivy.screen_queue.click_on_error_item
-#:import click_on_done_item my_kivy.screen_queue.click_on_done_item
-#:import start_downloading my_kivy.screen_queue.start_downloading
-#:import pause_downloading my_kivy.screen_queue.pause_downloading
 #:import pick_val utils.pick_val
-#:import toolz toolz
-FloatLayout:
+#:import QueueScreen my_kivy.screen_queue.QueueScreen
+#:import RecycleList my_kivy.scroll_widgets.RecycleList
+QueueScreen:
+    id: queue_screen_root
+    recycle_list: recycle_list
+    speed_dial: speed_dial
 
     RecycleList:
-        id: queue_list
+        id: recycle_list
         viewclass: "LeftStatusIndicatorListItem"
         data:
             [\
-            {"text": word, "current_state":word_state} for word, word_state in\
-            pick_val(["queued","ready","loading"],app.word_state_dict).items()\
+            {"text": word, "current_state":word_state, "callbacks":{"on_press": root.click_on_item}} for word, word_state in\
+            pick_val(["waiting","queued","ready","loading"],app.word_state_dict).items()\
             ]
 
 
     MyFloatingActionButtonSpeedDial:
         id: speed_dial
-        data: options_dict
-        callback: choose_file_to_import
+        data: root.import_options
+        callback: root.choose_file_to_import
