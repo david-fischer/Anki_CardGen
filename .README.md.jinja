@@ -8,24 +8,26 @@
 
 #### Screenshots
 
-<img src="screenshots/import.png" width=270><img src="screenshots/nav_drawer_open.png" width=270><img src="screenshots/word_1.png" width=270><!--  -->
+$ for file in img_files
+$ if loop.index ==4
+<!--  -->
 <details>
 <summary>More screenshots</summary>
-<img src="screenshots/word_2.png" width=270><img src="screenshots/word_images.png" width=270></details>
+$ endif
+<img src="{{ file }}" width=270> {#- this comment removes whitespace (because of the - sign) #}
+$ if loop.last and loop.length >=4
+</details>
+$ endif
+$ endfor
+
 <details>
 <summary>Example Cards</summary>
-<h3>casa</h3>
-    <img src="screenshots/casa/meaning-pt_back.png" width=270>
-    <img src="screenshots/casa/meaning-pt_front.png" width=270>
-    <img src="screenshots/casa/pt-meaning_front.png" width=270>
-<h3>comecar</h3>
-    <img src="screenshots/comecar/meaning-pt_back.png" width=270>
-    <img src="screenshots/comecar/meaning-pt_front.png" width=270>
-    <img src="screenshots/comecar/pt-meaning_front.png" width=270>
-<h3>convite</h3>
-    <img src="screenshots/convite/meaning-pt_back.png" width=270>
-    <img src="screenshots/convite/meaning-pt_front.png" width=270>
-    <img src="screenshots/convite/pt-meaning_front.png" width=270>
+$for word in words
+<h3>{{ word.name }}</h3>
+$for side in word.sides
+    <img src="{{ side }}" width=270>
+$ endfor
+$ endfor
 </details>
 
 
