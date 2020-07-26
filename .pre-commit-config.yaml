@@ -45,7 +45,6 @@ repos:
         entry: .pre-commits/screenshots.py
         stages: [push]
         language: system
-        files: .*\.jinja
         pass_filenames: False
         always_run: True
       - id: render_readme
