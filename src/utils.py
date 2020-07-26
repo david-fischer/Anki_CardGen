@@ -6,24 +6,13 @@ import json
 import os
 import pickle
 import re
-import shutil
 import threading
 from collections import defaultdict
 from datetime import datetime
 from functools import partial
-from glob import glob
-from time import sleep
 
-import imgkit
-import pystache
 import toolz
 from bs4 import BeautifulSoup
-from kivy.clock import mainthread
-from kivy.core.image import Image as KivyImage
-from kivy.core.window import Window
-from kivy.graphics.context_instructions import Scale, Translate
-from kivy.graphics.fbo import Fbo
-from kivy.graphics.gl_instructions import ClearBuffers, ClearColor
 from kivymd.app import MDApp
 from PIL import Image
 
@@ -169,113 +158,22 @@ def widget_by_id(string):
       : widget
 
     Examples
-      # >>> widget_by_id("single_word/edit_tab/word_prop")
-      # MDApp.get_running_app().root.ids.screen_man.get_screen("single_word").children[
-      # 0].ids.word_prop
+      >>> print(widget_by_id("single_word/word_prop").__name__)
+      MDApp.get_running_app().root.get_screen("single_word").children[
+      0].ids.word_prop
     """
     id_list = string.split("/")
     id_list = [id_str for id_str in id_list if id_str != ""]
     obj = MDApp.get_running_app().root
-    if id_list[0] in obj.ids.screen_man.screen_names:
-        obj = obj.ids.screen_man.get_screen(id_list.pop(0)).children[0]
-    for id_str in id_list:
-        obj = getattr(obj.ids, id_str)
+    if id_list:
+        first_id = id_list.pop(0)
+        if first_id in obj.get_screen_names():
+            obj = obj.get_screen(first_id).children[0]
+        else:
+            obj = getattr(obj.ids, first_id)
+        for id_str in id_list:
+            obj = getattr(obj.ids, id_str)
     return obj
-
-
-def sleep_decorator(time):
-    """Execute sleep(time) before and after decorated function."""
-
-    def the_real_decorator(function):
-        def wrapper(*args, **kwargs):
-            sleep(time)
-            function(*args, **kwargs)
-            sleep(time)
-
-        return wrapper
-
-    return the_real_decorator
-
-
-@sleep_decorator(1)
-@mainthread
-def screenshot(path):
-    """
-    Take screenshot of the current state of the app and save it under ``path``.
-
-    The sleep- and mainthread-decorator ensure that the app shows the current state properly.
-    """
-    root_widget = MDApp.get_running_app().root
-
-    fbo = Fbo(size=(root_widget.width, root_widget.height), with_stencilbuffer=True,)
-
-    with fbo:
-        ClearColor(*MDApp.get_running_app().theme_cls.bg_normal)
-        ClearBuffers()
-        Scale(1, -1, 1)
-        Translate(-root_widget.x, -root_widget.y - root_widget.height, 0)
-
-    fbo.add(root_widget.canvas)
-    fbo.draw()
-    img = KivyImage(fbo.texture)
-
-    img.save(path)
-
-
-def make_screenshots(window_size=(270 * 1.4, 480 * 1.4)):
-    """Set the app in a number of predefined states and takes a screenshot of each."""
-    old_size = Window.size
-    Window.size = window_size
-    for item in widget_by_id("drawer_list").children:
-        item.on_release()
-        screenshot(f"screenshots/{item.name}.png")
-    widget_by_id("nav_drawer").set_state("open")
-    screenshot("../screenshots/nav_drawer_open.png")
-    widget_by_id("nav_drawer").set_state("close")
-    # Word
-    word_prop = widget_by_id("single_word/edit_tab/word_prop/")
-    word_prop.ids.search_field.text = "casa"
-    word_prop.load_or_search("casa")
-    screenshot("../screenshots/example_word_text.png")
-    tabs = widget_by_id("single_word/tabs")
-    tabs.carousel.index = 1  # (tabs.carousel, 1)
-    screenshot("../screenshots/example_word_images.png")
-    Window.size = old_size
-
-
-rend = pystache.Renderer(escape=lambda s: s)
-
-
-def save_card_pngs(word="casa", size=(540, 960)):
-    """
-    Save pngs of the anki-cards for a given word.
-
-    The fields need to be saved as json at ``../app_data/<word>/<word>_card.json``.
-
-    Args:
-      word:  (Default value = "casa")
-      size:  (Default value = (540,960))
-    """
-    paths = glob("anki/*.html")
-    field_dict = smart_loader(f"../app_data/words/{word}/{word}_card.json")
-    field_dict["Audio"] = "&#9658;"
-    try:
-        shutil.copytree("anki/js", "/tmp/js/")
-        shutil.copytree("anki/css", "/tmp/css/")
-    except FileExistsError:
-        print("JS AND CSS FOLDER ALREADY EXIST IN /tmp/ skip copying.")
-    shutil.copy2(f"../app_data/words/{word}/{word}.jpg", f"/tmp/{word}.jpg")
-    compress_img(f"/tmp/{word}.jpg", width=int(size[0]) - 12)
-    os.makedirs(f"../screenshots/{word}", exist_ok=True)
-    for path in paths:
-        with open(path, "r") as file:
-            string = file.read()
-            string = rend.render(string, **field_dict)
-        imgkit.from_string(
-            string,
-            f'../screenshots/{word}/{os.path.basename(path).replace(".html", ".png")}',
-            options={"width": int(size[0]), "height": int(size[1]),},
-        )
 
 
 # KINDLE EXPORT PARSING
@@ -454,7 +352,6 @@ def start_thread(func, fn_arg, **kwargs):
     fn_parameters = sig.parameters
     fn_kwargs = toolz.keyfilter(lambda k: k in fn_parameters, kwargs)
     thread_kwargs = toolz.keyfilter(lambda k: k not in fn_parameters, kwargs)
-    print(kwargs, fn_kwargs, thread_kwargs)
     thread = threading.Thread(
         target=partial(func, fn_arg, **fn_kwargs), **thread_kwargs
     )
