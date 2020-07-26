@@ -168,9 +168,6 @@ class AnkiCardGenApp(MDApp):
         self.file_manager = MDFileManager()
         return MainMenu()
 
-    # def on_start(self):
-    #    threading.Thread(target=make_screenshots).start()
-
     def setup_queue(self):
         """Set up :attr:`queue` from words in :attr:`queue_words`."""
         self.queue = queue.Queue()
