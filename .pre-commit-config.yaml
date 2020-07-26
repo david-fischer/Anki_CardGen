@@ -34,6 +34,25 @@ repos:
     hooks:
       - id: codespell
         files: src
+        verbose: True
         exclude: google_images_download
         types: [text]
         args: [-q, "4",-D, -, -D, .dictionary.txt, -H]
+  - repo: local
+    hooks:
+      - id: take_screenshots
+        name: screenshots
+        entry: .pre-commits/screenshots.py
+        stages: [push]
+        language: system
+        files: .*\.jinja
+        pass_filenames: False
+        always_run: True
+      - id: render_readme
+        name: render_readme.py
+        entry: .pre-commits/render_readme.py
+        language: system
+        stages: [push]
+        files: .*\.jinja
+        args: [-o," ",]
+        pass_filenames: True
