@@ -133,6 +133,10 @@ class MainMenu(StackLayout):
         """Return screen by name."""
         return [screen for screen in self.screens if screen.name == screen_name][0]
 
+    def get_screen_names(self):
+        """Return screen names."""
+        return [screen.name for screen in self.screens]
+
 
 class KvScreen(Screen):
     """
