@@ -3,7 +3,6 @@
 import glob
 import os
 
-import fire
 import jinja2
 
 
@@ -28,8 +27,8 @@ def main(path, overwrite=False):
     ]
     rendered = template.render(words=words, img_files=img_files)
 
-    # remove leading "." and ".jinja" extension
-    out_path = os.path.splitext(path)[0][1:]
+    # remove ".pre-commit/" and ".jinja" extension from path
+    out_path = os.path.basename(os.path.splitext(path)[0])
     if not os.path.exists(out_path) or overwrite:
         with open(out_path, "w") as file:
             file.write(rendered)
@@ -37,4 +36,5 @@ def main(path, overwrite=False):
         raise os.error("File exists. To overwrite, set -o flag.")
 
 
-fire.Fire(main)
+for file in glob.glob(".pre-commit/*.jinja"):
+    main(file, overwrite=True)
