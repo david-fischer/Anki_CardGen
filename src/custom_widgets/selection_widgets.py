@@ -28,7 +28,7 @@ from kivymd.uix.behaviors import (
 from kivymd.uix.card import MDCard
 from kivymd.uix.imagelist import SmartTile
 
-from my_kivy.behaviors import (
+from custom_widgets.behaviors import (
     CheckBehavior,
     ChildrenFromDataBehavior,
     LongPressBehavior,
@@ -37,14 +37,14 @@ from my_kivy.behaviors import (
 )
 
 try:
-    Builder.load_file("my_kivy/selection_widgets.kv")
+    Builder.load_file("custom_widgets/selection_widgets.kv")
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
     Builder.load_file(os.path.join(this_directory, "selection_widgets.kv"))
 
 
 class CheckContainer(ChildrenFromDataBehavior):
-    """Container for widgets with :class:`~my_kivy.behaviors.CheckBehavior`."""
+    """Container for widgets with :class:`~custom_widgets.behaviors.CheckBehavior`."""
 
     check_one = BooleanProperty(False)
     """:class:`~kivy.properties.BooleanProperty` defaults to ``False``. If ``True`` only one child can be selected."""

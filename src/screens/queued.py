@@ -8,7 +8,7 @@ from kivy.properties import DictProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 
-from my_kivy.dialogs import CustomDialog, ReplacementContent
+from custom_widgets.dialogs import CustomDialog, ReplacementContent
 from parsers import NoMatchError
 from utils import (
     clean_up,
@@ -34,7 +34,7 @@ class QueueScreen(FloatLayout):
     """Root widget for the queue-screen."""
 
     recycle_list = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty contains reference to :class:`my_kivy.scroll_widgets.RecycleList`."""
+    """:class:`~kivy.properties.ObjectProperty with reference to :class:`custom_widgets.scroll_widgets.RecycleList`."""
     speed_dial = ObjectProperty()
     """:class:`~kivy.properties.ObjectProperty` contains reference to
     :class:`~kivymd.uix.button.MDFloatingActionButtonSpeedDial`."""
@@ -50,7 +50,7 @@ class QueueScreen(FloatLayout):
     )
     """: : :class:`~kivy.properties.DictProperty` of the form ``{"icon_name":"Help text"}``."""
     dialog = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty` containing an instance of :class:`my_kivy.dialogs.CustomDialog`."""
+    """:class:`~kivy.properties.ObjectProperty`. Instance of :class:`custom_widgets.dialogs.CustomDialog`."""
 
     def __init__(self, **kwargs):
         super(QueueScreen, self).__init__(**kwargs)
@@ -64,7 +64,7 @@ class QueueScreen(FloatLayout):
                 self.queue_word(word)
 
     def _init_dialog(self):
-        """Initialize :attr:`dialog` as instance of :class:`my_kivy.dialogs.CustomDialog`."""
+        """Initialize :attr:`dialog` as instance of :class:`custom_widgets.dialogs.CustomDialog`."""
         content = ReplacementContent()
         self.dialog = CustomDialog(
             title="Some words are not in their dictionary form. The following replacements are suggested:",
@@ -146,10 +146,8 @@ class QueueScreen(FloatLayout):
     def switch_to_single_word_screen(word):
         """Switch to single_word to generate a card for the clicked word."""
         set_screen("single_word")
-        widget_by_id("single_word/word_prop/search_field").text = word
-        Clock.schedule_once(
-            lambda t: widget_by_id("single_word/word_prop").load_or_search(word)
-        )
+        widget_by_id("single_word/search_field").text = word
+        Clock.schedule_once(lambda t: widget_by_id("single_word").load_or_search(word))
 
     def click_on_item(self, item):
         """Dependent of the ``current_state`` of the ``item`` performs appropriate action."""

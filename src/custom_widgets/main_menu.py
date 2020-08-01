@@ -10,8 +10,8 @@ from kivy.uix.stacklayout import StackLayout
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 
-from my_kivy.behaviors import CheckBehavior
-from my_kivy.selection_widgets import CheckContainer
+from custom_widgets.behaviors import CheckBehavior
+from custom_widgets.selection_widgets import CheckContainer
 from utils import widget_by_id
 
 
@@ -80,25 +80,25 @@ class MainMenu(StackLayout):
                 "icon": "form-textbox",
                 "text": "Manual Input",
                 "name": "single_word",
-                "path": "my_kivy/screen_single_word.kv",
+                "path": "screens/single_word.kv",
             },
             {
                 "icon": "format-list-checkbox",
                 "text": "Queue",
                 "name": "queue",
-                "path": "my_kivy/screen_queue.kv",
+                "path": "screens/queued.kv",
             },
             {
                 "icon": "history",
                 "text": "History",
                 "name": "history",
-                "path": "my_kivy/screen_history.kv",
+                "path": "screens/history.kv",
             },
             {
                 "icon": "cogs",
                 "text": "Settings",
                 "name": "settings",
-                "path": "my_kivy/screen_settings.kv",
+                "path": "screens/settings.kv",
             },
         ]
     )
@@ -145,8 +145,8 @@ class KvScreen(Screen):
     If :attr:`path` does not exist, create file.
     """
 
-    path = StringProperty("my_kivy/screen_default.kv")
-    """:class:`~kivy.properties.StringProperty` defaults to ``"my_kivy/screen_default.kv"`` """
+    path = StringProperty("screens/screen_default.kv")
+    """:class:`~kivy.properties.StringProperty` defaults to ``"screens/screen_default.kv"`` """
 
     def __init__(self, **kwargs):
         super(KvScreen, self).__init__(**kwargs)

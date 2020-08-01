@@ -16,16 +16,16 @@ from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.list import OneLineIconListItem
 from kivymd.uix.picker import MDThemePicker
 
+from custom_widgets.main_menu import MainMenu
 from generate_anki_card import AnkiObject
-from my_kivy.main_menu import MainMenu
 from utils import now_string, smart_loader, smart_saver
 from words import Word
 
 this_dir = os.path.dirname(__file__)
 if this_dir:
     this_dir = this_dir + "/"
-Builder.load_file(f"{this_dir}my_kivy/main_menu.kv")
-Builder.load_file(f"{this_dir}my_kivy/fixes.kv")
+Builder.load_file(f"{this_dir}custom_widgets/main_menu.kv")
+Builder.load_file(f"{this_dir}custom_widgets/fixes.kv")
 
 
 class AnkiCardGenApp(MDApp):
@@ -142,7 +142,7 @@ class AnkiCardGenApp(MDApp):
         os.makedirs("../app_data/apkgs/", exist_ok=True)
 
     def build(self):
-        """Set up App and return :class:`my_kivy.MainMenu` as root widget."""
+        """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         # Config and Theme
         self.theme_cls = ThemeManager(  # pylint: disable=attribute-defined-outside-init
             **self.config["Theme"]

@@ -23,14 +23,14 @@ from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
 from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
 
-from my_kivy.behaviors import (
+from custom_widgets.behaviors import (
     CallbackBehavior,
     ChildrenFromDataBehavior,
     MultiStateBehavior,
 )
 
 try:
-    Builder.load_file("my_kivy/scroll_widgets.kv")
+    Builder.load_file("custom_widgets/scroll_widgets.kv")
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
     Builder.load_file(os.path.join(this_directory, "scroll_widgets.kv"))
