@@ -15,10 +15,10 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 
-from my_kivy.scroll_widgets import ScrollList
+from custom_widgets.scroll_widgets import ScrollList
 
 try:
-    Builder.load_file("my_kivy/dialogs.kv")
+    Builder.load_file("custom_widgets/dialogs.kv")
 except FileNotFoundError:
     this_directory = os.path.dirname(__file__)
     Builder.load_file(os.path.join(this_directory, "dialogs.kv"))
