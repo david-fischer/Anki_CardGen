@@ -16,7 +16,7 @@ test:
 
 docs:
 	$(MAKE) -C docs html
-	xdg-open docs/build/html/index.html
+	xdg-open docs/_build/html/index.html
 
 apk:
 	buildozer -v android debug
