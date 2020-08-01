@@ -4,7 +4,7 @@ import os
 import certifi
 from kivy.lang import Builder
 from kivy.network.urlrequest import UrlRequest
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 
 from parsers import linguee_did_you_mean, NoMatchError
@@ -17,7 +17,7 @@ from utils import (
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
 
-class WordProperties(BoxLayout):
+class WordProperties(FloatLayout):
     """
     UI for picking content of Anki card.
 
@@ -27,6 +27,7 @@ class WordProperties(BoxLayout):
 
     def refresh_data(self):
         """Refresh UI with the data from :class:`words.Word`."""
+        print(self.parent.parent.ids)
         word = MDApp.get_running_app().word
         self.ids.translations.data = [{"text": string} for string in word.translations]
         self.ids.images.data = [{"source": string} for string in word.image_urls]
@@ -111,13 +112,13 @@ class WordProperties(BoxLayout):
         self.ids.search_field.text = ""
         word.__init__()
         self.refresh_data()
-        # TODO: Why does the focussing not work anymore?
+        # TODO: Why does the focussing not work anymore? -> Clock.schedule_once
         self.ids.search_field.focus = True
         self.parent.scroll_y = 1
         search_term = result_dict["Word"]
-        if search_term in MDApp.get_running_app().queue_words:
+        if search_term in MDApp.get_running_app().word_state_dict:
             set_screen("queue")
-            MDApp.get_running_app().queue_words.remove(search_term)
+            MDApp.get_running_app().word_state_dict[search_term] = "done"
 
 
 # class ImageSearchResultGrid(MyCheckImageGrid):
@@ -154,6 +155,6 @@ if __name__ == "__main__":
 
     class _TestApp(MDApp):
         def build(self):
-            return Builder.load_file("screen_single_word.kv")
+            return Builder.load_file("single_word.kv")
 
     _TestApp().run()
