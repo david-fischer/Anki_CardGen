@@ -7,12 +7,14 @@ class.
 """
 import re
 from collections import defaultdict
+from pprint import pprint
 from typing import Any, Dict
 from urllib.parse import quote
 
 import attr
 import pandas as pd
 import requests
+import toolz
 from bs4 import BeautifulSoup
 from google_images_download import google_images_download
 
@@ -70,29 +72,30 @@ class Parser:
     """Headers for the request. Defaults to :const:`DEFAULT_HEADERS`."""
 
     def setup(self):
-        """Stuff that needs to be executed before :meth:`url` is called."""
+        """Stuff that needs to be executed before :meth:`format_url_with_attribs` is called."""
         self.phrase = quote(self.phrase.replace(" ", "+"))
 
-    def url(self):
-        """Get url for http-request.
+    def format_url_with_attribs(self, url=None):
+        # TODO: Rewrite Doc-string
+        """Get format_url_with_attribs for http-request.
 
         Returns:
           :  :attr:`base_url` formatted with all class attributes.
         """
-        return self.base_url.format(**vars(self))
+        url = url or self.base_url
+        return url.format(**vars(self))
 
     def make_request(self, url=None):
         """Use :attr:`headers` to make an http-request via :meth:`~requests.get`.
 
         Args:
-          url: If None, will be set to :meth:`url`. (Default value = None)
+          url: If None, will be set to :meth:`format_url_with_attribs`. (Default value = None)
 
         Returns:
           : :class:`~requests.Response` object
 
         """
-        if url is None:
-            url = self.url()
+        url = self.format_url_with_attribs(url)
         return requests.get(url, headers=self.headers)
 
     def parse_response(self, response: requests.Response) -> Dict[str, Any]:
@@ -287,6 +290,77 @@ class GoogleImagesParser(Parser):
         return {"image_urls": paths}
 
 
+# @attr.s(auto_attribs=True)
+# class WikiParser(Parser):
+#     base_url = "https://en.wikipedia.org/api/rest_v1/page/random/summary"
+#     media_url = (
+#         "https://en.wikipedia.org/api/rest_v1/page/media-list/{title}?redirect=true"
+#     )
+#     title = ""
+#
+#     def parse_response(self, response: requests.Response) -> Dict[str, Any]:
+#         json_resp = response.json()
+#         title = json_resp["title"]
+#         summary = json_resp["extract"]
+#         self.title = json_resp["titles"]["canonical"]
+#         media_json_resp = self.make_request(self.media_url).json()
+#         image_urls = [
+#             "https:" + item["srcset"][0]["src"]
+#             for item in media_json_resp["items"]
+#             if item["type"] == "image"
+#         ]
+#         return {"title": title, "summary": summary, "img_urls": image_urls}
+
+
+@attr.s(auto_attribs=True)
+class RandTopicWikiParser(Parser):
+    """Get title, summary and a list of image-urls for given random topic."""
+
+    base_url = "https://en.wikipedia.org/api/rest_v1/page/summary/{page}"
+    media_url = (
+        "https://en.wikipedia.org/api/rest_v1/page/media-list/{title}?redirect=true"
+    )
+    page = ""
+    title = ""
+
+    def make_request(  # pylint: disable=arguments-differ
+        self, url=None, tries=10, category=None
+    ):
+        """
+        Call base method if url is set. Else obtain response from random wiki page.
+
+        Because we only use content-pages and not category-pages ``try`` specifies how often we draw a random page.
+        """
+        if url:
+            return super(RandTopicWikiParser, self).make_request(url=url)
+        category = category or self.phrase
+        for _ in range(tries):
+            self.page = get_random_wiki_topic(category)
+            resp = super(RandTopicWikiParser, self).make_request()
+            if resp.status_code == 200:
+                return resp
+            print(resp.status_code, resp.content)
+            # TODO: Error handling.
+        raise NoMatchError(site="Wiki")
+
+    def parse_response(self, response: requests.Response) -> Dict[str, Any]:
+        """Extract title, summary, image_urls and return in dict."""
+        json_resp = response.json()
+        title = json_resp["title"]
+        summary = json_resp["extract"]
+        self.title = json_resp["titles"]["canonical"]
+        media_json_resp = self.make_request(url=self.media_url).json()
+        if media_json_resp["items"]:
+            image_urls = [
+                "https:" + item["srcset"][0]["src"]
+                for item in media_json_resp["items"]
+                if item["type"] == "image"
+            ]
+        else:
+            image_urls = []
+        return {"title": title, "summary": summary, "img_urls": image_urls}
+
+
 # BS4 Helper Functions
 
 
@@ -332,6 +406,29 @@ def linguee_did_you_mean(search_term):
     return [element.text for element in bs.select("span.corrected")]
 
 
+def star(func):
+    """Wrapper-function. Call a function with unpacked arguments."""
+    return lambda args: func(*args)
+
+
+def json2list(filter_fn, map_fn, dictionary):
+    """Filter and map dictionary in succession to obtain list."""
+    filtered = toolz.itemfilter(star(filter_fn), dictionary)
+    return toolz.itemmap(star(map_fn), filtered, factory=list)
+
+
+def get_random_wiki_topic(category):
+    """Return page-string for a random page in a category."""
+    print(category)
+    resp = requests.get(
+        f"https://en.wikipedia.org/wiki/Special:RandomInCategory/{category}",
+        allow_redirects=False,
+    )
+    page_string = resp.headers["Location"].split("/wiki/")[-1]
+    page_string = re.sub("Category:", "", page_string)
+    return page_string
+
+
 if __name__ == "__main__":
     TEST_WORD = ""
     # print(linguee_did_you_mean("comecar"))
@@ -339,4 +436,6 @@ if __name__ == "__main__":
     RP = ReversoParser(phrase=PHRASE, from_lang="pt", to_lang="de")
     DP = DicioParser(phrase=PHRASE, from_lang="pt", to_lang="de")
     LP = LingueeParser(phrase=PHRASE, from_lang="pt", to_lang="de")
+    WP = RandTopicWikiParser(phrase="animal_rights", from_lang="xx", to_lang="xx")
+    pprint(WP.result_dict())
     # pprint(LP.result_dict())
