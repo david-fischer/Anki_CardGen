@@ -8,39 +8,39 @@
 <card>
     <div>
         <button class="open-button" data-modal-target="#modal2">
-            <blockquote class="example">{{Example}}</blockquote>
+            <blockquote class="example">{{example}}</blockquote>
         </button>
-        {{Image}}
+        {{image}}
         <p>
-            <span class="synonym">{{Synonym}} ~</span>
+            <span class="synonym">{{synonym}} ~</span>
             <button class="open-button" data-modal-target="#modal">
-                <div class="word">{{Word}}</div>
+                <div class="word">{{word}}</div>
             </button>
-            {{Audio}}
-            <span class="antonym"> &harr; {{Antonym}}</span>
+            {{audio}}
+            <span class="antonym"> &harr; {{antonym}}</span>
         </p>
-        <p class="explanation">{{Explanation}}</p>
+        <p class="explanation">{{explanation}}</p>
     </div>
 </card>
 
 <div class="modal" id="modal">
     <div class="modal-header">
-        <div class="title">D: {{Translation}}</div>
+        <div class="title">D: {{translation}}</div>
         <button class="close-button" data-close-button>&times;</button>
     </div>
     <div class="modal-body">
-        <p class="add-info">{{AdditionalInfo}}
-        <div class="gridwrapper">{{ConjugationTable}}</div>
+        <p class="add-info">{{additional_info}}
+        <div class="gridwrapper">{{conjugation_table}}</div>
         </p>
     </div>
 </div>
 <div class="modal" id="modal2">
     <div class="modal-header">
-        <div class="title">Translation:</div>
+        <div class="title">translation:</div>
         <button class="close-button" data-close-button>&times;</button>
     </div>
     <div class="modal-body">
-        <p class="add-info">{{ExampleTranslation}}</p>
+        <p class="add-info">{{example_translation}}</p>
     </div>
 </div>
 <div id="overlay"></div>

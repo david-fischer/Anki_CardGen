@@ -176,11 +176,11 @@ class Word:
         media_files = [f"{self.base_path()}.{ext}" for ext in ["jpg", "mp3"]]
         media_files = [path for path in media_files if os.path.exists(path)]
         return {
-            "Word": self.search_term,
-            "Image": f'<img src="{self.folder()}.jpg">',
-            "Audio": f"[sound:{self.folder()}.mp3]",
-            "AdditionalInfo": str(self.add_info_dict),
-            "ConjugationTable": self.conj_table_html,
+            "word": self.search_term,
+            "image": f'<img src="{self.folder()}.jpg">',
+            "audio": f"[sound:{self.folder()}.mp3]",
+            "additional_info": str(self.add_info_dict),
+            "conjugation_table": self.conj_table_html,
             "media_files": media_files,
         }
 

@@ -57,11 +57,11 @@ class Parser:
     Main functionality is the result_dict function.
     """
 
-    phrase: str
+    phrase: str = ""
     """The word or phrase to search the site for."""
-    from_lang: str
+    from_lang: str = ""
     """Target language."""
-    to_lang: str
+    to_lang: str = ""
     """Source Language."""
     base_url = ""
     """
@@ -358,7 +358,7 @@ class RandTopicWikiParser(Parser):
             ]
         else:
             image_urls = []
-        return {"title": title, "summary": summary, "img_urls": image_urls}
+        return {"title": title, "summary": summary, "image": image_urls}
 
 
 # BS4 Helper Functions

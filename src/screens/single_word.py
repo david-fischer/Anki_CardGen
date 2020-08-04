@@ -65,18 +65,18 @@ class WordProperties(FloatLayout):
         Example and explanation strings are tagged using :func:`utils.tag_word_in_sentence`.
         """
         selections = [
-            {"key": "Translation", "id": "translations", "attr": "text"},
-            {"key": "Synonym", "id": "synonyms", "attr": "text_orig"},
-            {"key": "Antonym", "id": "antonyms", "attr": "text_orig"},
-            {"key": "Explanation", "id": "explanations", "attr": "text_orig"},
-            {"key": "Example", "id": "examples", "attr": "text_orig"},
-            {"key": "ExampleTranslation", "id": "examples", "attr": "text_trans"},
+            {"key": "translation", "id": "translations", "attr": "text"},
+            {"key": "synonym", "id": "synonyms", "attr": "text_orig"},
+            {"key": "antonym", "id": "antonyms", "attr": "text_orig"},
+            {"key": "explanation", "id": "explanations", "attr": "text_orig"},
+            {"key": "example", "id": "examples", "attr": "text_orig"},
+            {"key": "example_translation", "id": "examples", "attr": "text_trans"},
         ]
         result_dict = {
             d["key"]: ",".join(self.ids[d["id"]].get_checked(attribute_name=d["attr"]))
             for d in selections
         }
-        for key in ["Example", "Explanation"]:
+        for key in ["example", "explanation"]:
             result_dict[key] = tag_word_in_sentence(
                 result_dict[key], MDApp.get_running_app().word.search_term
             )
@@ -115,7 +115,7 @@ class WordProperties(FloatLayout):
         # TODO: Why does the focussing not work anymore? -> Clock.schedule_once
         self.ids.search_field.focus = True
         self.parent.scroll_y = 1
-        search_term = result_dict["Word"]
+        search_term = result_dict["word"]
         if search_term in MDApp.get_running_app().word_state_dict:
             set_screen("queue")
             MDApp.get_running_app().word_state_dict[search_term] = "done"
