@@ -146,10 +146,10 @@ class LingueeParser(Parser):
             for entry in match["translations"]
         ]
         return {
-            "translations": translations,
+            "translation": translations,
             "word_type": word_type,
             "gender": gender,
-            "audio_url": audio_url,
+            "audio": audio_url,
         }
 
 
@@ -191,10 +191,10 @@ class DicioParser(Parser):
         except KeyError:
             print("no conjugation table obtained :(")
         return {
-            "explanations": explanations,
-            "synonyms": synonyms,
-            "antonyms": antonyms,
-            "examples": examples,
+            "explanation": explanations,
+            "synonym": synonyms,
+            "antonym": antonyms,
+            "example": examples,
             "add_info_dict": add_info_dict,
             "conj_table_html": conj_table_html,
         }
@@ -257,7 +257,7 @@ class ReversoParser(Parser):
         """Parse response and return dict of the form ``{"examples":[ [ex_src_lang, ex_trg_lang],...]]}``."""
         bs = BeautifulSoup(response.content, features="lxml")
         return {
-            "examples": [
+            "example": [
                 [
                     x.select_one("div.src").text.strip(),
                     x.select_one("div.trg").text.strip(),
@@ -271,7 +271,7 @@ class GoogleImagesParser(Parser):
     """Uses google_images_download to get img_urls."""
 
     def result_dict(self, phrase=None):
-        """Return dictionary of the form ``{"image_urls":[url0,url1,...]}}``."""
+        """Return dictionary of the form ``{"image":[url0,url1,...]}}``."""
         if phrase is not None:
             self.phrase = phrase
         self.setup()
@@ -287,7 +287,7 @@ class GoogleImagesParser(Parser):
             # "prefix": "img_",
         }
         paths = gid.download(arguments)[0][self.phrase]
-        return {"image_urls": paths}
+        return {"image": paths}
 
 
 # @attr.s(auto_attribs=True)
@@ -304,12 +304,12 @@ class GoogleImagesParser(Parser):
 #         summary = json_resp["extract"]
 #         self.title = json_resp["titles"]["canonical"]
 #         media_json_resp = self.make_request(self.media_url).json()
-#         image_urls = [
+#         image = [
 #             "https:" + item["srcset"][0]["src"]
 #             for item in media_json_resp["items"]
 #             if item["type"] == "image"
 #         ]
-#         return {"title": title, "summary": summary, "img_urls": image_urls}
+#         return {"title": title, "summary": summary, "img_urls": image}
 
 
 @attr.s(auto_attribs=True)
@@ -351,14 +351,14 @@ class RandTopicWikiParser(Parser):
         self.title = json_resp["titles"]["canonical"]
         media_json_resp = self.make_request(url=self.media_url).json()
         if media_json_resp["items"]:
-            image_urls = [
+            image = [
                 "https:" + item["srcset"][0]["src"]
                 for item in media_json_resp["items"]
                 if item["type"] == "image"
             ]
         else:
-            image_urls = []
-        return {"title": title, "summary": summary, "image": image_urls}
+            image = []
+        return {"title": title, "summary": summary, "image": image}
 
 
 # BS4 Helper Functions

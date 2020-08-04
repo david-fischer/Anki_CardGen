@@ -30,14 +30,14 @@ class Word:
     search_term: str = ""
     word_type: str = ""  # verb noun etc
     gender: str = ""
-    examples: list = []
-    explanations: list = []
-    synonyms: list = []
-    antonyms: list = []
-    translations: list = []
+    example: list = []
+    explanation: list = []
+    synonym: list = []
+    antonym: list = []
+    translation: list = []
     trans_syns: list = []
-    image_urls: list = []
-    _audio_url: str = ""
+    image: list = []
+    _audio: str = ""
     add_info_dict: dict = {}
     conj_table_html: str = ""
     # query properties
@@ -59,14 +59,14 @@ class Word:
         }
 
     @property
-    def audio_url(self):
+    def audio(self):
         """Getter function for :attr:`_audio_url`."""
-        return self._audio_url
+        return self._audio
 
-    @audio_url.setter
-    def audio_url(self, value):
+    @audio.setter
+    def audio(self, value):
         """Set :attr:`_audio_url` and download file."""
-        self._audio_url = value
+        self._audio = value
         if not value:
             return
         print(f"start downloading audio from {value}...")
@@ -114,8 +114,8 @@ class Word:
             setattr(self, key, value)
 
     def add_translations(self):
-        """Add translations to attributes ["examples", "explanations", "synonyms", "antonyms"], if necessary."""
-        for key in ["examples", "explanations", "synonyms", "antonyms"]:
+        """Add translations to attributes ["example", "explanation", "synonym", "antonym"], if necessary."""
+        for key in ["example", "explanation", "synonym", "antonym"]:
             values = getattr(self, key)
             for i, val in enumerate(values):
                 if isinstance(val, str):
@@ -137,14 +137,14 @@ class Word:
         """
         if keywords is None:
             keywords = self.search_term
-        return self.parsers["google_images"].result_dict(keywords)["image_urls"]
+        return self.parsers["google_images"].result_dict(keywords)["image"]
 
     def mark_examples(self):
         """Highlights the search_word in the example sentences using css."""
         for word in self.search_term.split(" "):
-            self.examples = [
+            self.example = [
                 re.sub(r"((?i)%s)" % word, r"<font color=red><b>\1</font></b>", ex)
-                for ex in self.examples
+                for ex in self.example
             ]
 
     @classmethod
