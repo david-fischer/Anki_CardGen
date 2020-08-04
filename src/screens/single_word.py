@@ -29,9 +29,9 @@ class WordProperties(FloatLayout):
         """Refresh UI with the data from :class:`words.Word`."""
         print(self.parent.parent.ids)
         word = MDApp.get_running_app().word
-        self.ids.translations.data = [{"text": string} for string in word.translations]
-        self.ids.images.data = [{"source": string} for string in word.image_urls]
-        for attribute in ["antonyms", "synonyms", "examples", "explanations"]:
+        self.ids.translation.data = [{"text": string} for string in word.translation]
+        self.ids.image.data = [{"source": string} for string in word.image]
+        for attribute in ["antonym", "synonym", "example", "explanation"]:
             self.ids[attribute].data = [
                 {"text_orig": x[0], "text_trans": x[1]}
                 for x in getattr(word, attribute)
@@ -65,12 +65,12 @@ class WordProperties(FloatLayout):
         Example and explanation strings are tagged using :func:`utils.tag_word_in_sentence`.
         """
         selections = [
-            {"key": "translation", "id": "translations", "attr": "text"},
-            {"key": "synonym", "id": "synonyms", "attr": "text_orig"},
-            {"key": "antonym", "id": "antonyms", "attr": "text_orig"},
-            {"key": "explanation", "id": "explanations", "attr": "text_orig"},
-            {"key": "example", "id": "examples", "attr": "text_orig"},
-            {"key": "example_translation", "id": "examples", "attr": "text_trans"},
+            {"key": "translation", "id": "translation", "attr": "text"},
+            {"key": "synonym", "id": "synonym", "attr": "text_orig"},
+            {"key": "antonym", "id": "antonym", "attr": "text_orig"},
+            {"key": "explanation", "id": "explanation", "attr": "text_orig"},
+            {"key": "example", "id": "example", "attr": "text_orig"},
+            {"key": "example_translation", "id": "example", "attr": "text_trans"},
         ]
         result_dict = {
             d["key"]: ",".join(self.ids[d["id"]].get_checked(attribute_name=d["attr"]))
@@ -80,6 +80,7 @@ class WordProperties(FloatLayout):
             result_dict[key] = tag_word_in_sentence(
                 result_dict[key], MDApp.get_running_app().word.search_term
             )
+        print(result_dict)
         return result_dict
 
     def download_selected_image(self):
@@ -87,7 +88,7 @@ class WordProperties(FloatLayout):
         # TODO: show spinner and cancel after certain time
         # TODO: Correct behavior on Error
         out_path = MDApp.get_running_app().word.base_path() + ".jpg"
-        img_url = self.ids.images.get_checked(attribute_name="source")[0]
+        img_url = self.ids.image.get_checked(attribute_name="source")[0]
         r_i = UrlRequest(
             img_url,
             file_path=out_path,
