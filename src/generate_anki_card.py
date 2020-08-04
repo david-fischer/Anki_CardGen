@@ -160,7 +160,7 @@ class AnkiObject:
             field: (kwargs[field] if field in kwargs else "") for field in self.fields
         }
         fields = [fields[key] for key in sorted(fields, reverse=True)]
-        new_note = genanki.Note(model=self.model, fields=fields, sort_field="Word")
+        new_note = genanki.Note(model=self.model, fields=fields, sort_field="word")
         for file in media_files:
             self.package.media_files.append(file)
         self.deck.add_note(new_note)
@@ -180,9 +180,9 @@ if __name__ == "__main__":
     ankiobject = AnkiObject(root_dir="anki")
     ankiobject.add_card(
         **smart_loader("../app_data/words/casa/casa_card.json")
-        # Word="casa",
-        # Audio="[sound:casa.mp3]",
-        # Image='<img src="casa.jpg">',
+        # word="casa",
+        # audio="[sound:casa.mp3]",
+        # image='<img src="casa.jpg">',
         # media_files=["../words/casa/casa.mp3", "../words/casa/casa.jpg"],
     )
     # ankiobject.write_apkg("output.apkg")

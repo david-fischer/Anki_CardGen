@@ -4,7 +4,6 @@ import attr
 import requests
 from bidict import bidict
 
-from custom_widgets.scroll_widgets import *
 from custom_widgets.selection_widgets import *
 from db import get_template, new_template
 from parsers import (
@@ -35,16 +34,25 @@ def route_calls_to_member(member, calls):
     return decorator_func
 
 
-@attr.s(auto_attribs=True)
+@attr.s
 class Field:
     """
     Implementation of Field.
     """
 
-    option_dict: Dict[str, Any] = {"field1": "value1"}
-    kv_dict: dict or bidict = None
-    widget: object = None
-    widget_kv: str = None
+    field_name = attr.ib(default="default_field")
+    widget = attr.ib(type=object, default=None)
+    widget_kv = attr.ib(type=str, default=None)
+    option_dict = attr.ib()
+    kv_dict = attr.ib()
+
+    @option_dict.default
+    def _default_option_dict(self):
+        return {self.field_name: ""}
+
+    @kv_dict.default
+    def _default_kv_dict(self):
+        return bidict({self.field_name: "text"})
 
     def __attrs_post_init__(self):
         self.kv_dict = bidict(self.kv_dict)
@@ -92,14 +100,14 @@ MDLabel:
 """
 
 
-@attr.s(auto_attribs=True)
+@attr.s
 class TextInputField(Field):
-    widget_kv: str = "MDTextField"
-    callback: Callable = None
+    callback = attr.ib(default=None, type=Callable)
+    widget_kv = attr.ib(default="MDTextField")
 
     def construct_widget(self):
         super(TextInputField, self).construct_widget()
-        self.widget.hint_text = toolz.first(self.option_dict.keys())
+        self.widget.hint_text = self.field_name
         self.widget.bind(on_text_validate=self.on_text_validate)
 
     def on_text_validate(self, widget):
@@ -109,21 +117,23 @@ class TextInputField(Field):
             self.callback(text)
 
 
-@attr.s(auto_attribs=True)
+@attr.s
 class OptionsField(Field):
     """
     Implementation of Field.
     """
 
-    option_dict: Dict[str, Any] = {"field1": ["op1", "op2"]}
-    kv_dict: dict or bidict = None
-    widget: object = None
-    widget_kv: str = None
-    selection_callback: Callable = None
+    option_dict = attr.ib()
+    get_selection = attr.ib(default=None, type=Callable)
+
+    @option_dict.default
+    def _get_option_dict_default(self):
+        return {self.field_name: []}
 
     def get_data(self):
         """Get dictionary to construct child of :attr:`widget`."""
         l = min(len(x) for x in self.option_dict.values())
+        print(self.option_dict)
         return [
             {value: self.option_dict[key][i] for key, value in self.kv_dict.items()}
             for i in range(l)
@@ -141,8 +151,8 @@ class OptionsField(Field):
                 )
                 for field, kv_attr in self.kv_dict.items()
             }
-        elif self.selection_callback:
-            content = self.selection_callback()
+        elif self.get_selection:
+            content = self.get_selection()
         else:
             content = {
                 field: (
@@ -156,8 +166,13 @@ class OptionsField(Field):
 
 
 @attr.s(auto_attribs=True)
+class CheckChipOptionsField(OptionsField):
+    widget_kv = "MyCheckChipContainer"
+
+
+@attr.s(auto_attribs=True)
 class ImgField(OptionsField):
-    option_dict = {"image": []}
+    option_dict: Dict[str, Any] = {"image": []}
     kv_dict: dict or bidict = {"image": "source"}
     widget_kv: str = "ImageCarousel"
 
@@ -187,7 +202,6 @@ Builder.load_string(
 )
 
 
-@attr.s(auto_attribs=True)
 class Template(BoxLayout):
     fields: List[Field] = None
     parsers: Dict[str, Parser] = None
@@ -256,12 +270,12 @@ class Template(BoxLayout):
     #         return template
 
 
-@attr.s(auto_attribs=True)
 class PtTemplate(Template):
     from_lang: str = "pt"
     to_lang: str = "de"
 
-    def __attrs_post_init__(self):
+    def __init__(self, **kwargs):
+        super(PtTemplate, self).__init__(**kwargs)
         parser_attrs = {
             "from_lang": self.from_lang,
             "to_lang": self.to_lang,
@@ -272,7 +286,19 @@ class PtTemplate(Template):
             "reverso": ReversoParser(**parser_attrs),
             "google_images": GoogleImagesParser(**parser_attrs),
         }
-        self.fields = [ImgField()]
+        self.fields = [
+            TextInputField(field_name="word", callback=self.search),
+            CheckChipOptionsField(field_name="translation"),
+            OptionsField(
+                option_dict={"synonym": [], "synonymTrans": []},
+                kv_dict={"synonym": "text_orig", "synonymTrans": "text_trans"},
+                widget_kv="""
+MyCheckChipContainer
+    child_class_name: "MyTransChip"
+    check_one: True""",
+            ),
+            ImgField(),
+        ]
 
 
 if __name__ == "__main__":
@@ -286,15 +312,14 @@ if __name__ == "__main__":
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
             # template = Template.from_db("Random Wiki Template")
             template = Builder.load_string(
-                """
-RandWikiTemplate:
+                """#
+PtTemplate:
     MDFlatButton:
         text: "Get Results"
         on_press: app.root.get_results()"""
             )
-
-            template.add_field_widgets()
             print(template.fields)
+            template.add_field_widgets()
             return template
 
     _TestApp().run()

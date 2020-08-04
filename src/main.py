@@ -23,7 +23,7 @@ from words import Word
 
 this_dir = os.path.dirname(__file__)
 if this_dir:
-    this_dir = this_dir + "/"
+    this_dir += "/"
 Builder.load_file(f"{this_dir}custom_widgets/main_menu.kv")
 Builder.load_file(f"{this_dir}custom_widgets/fixes.kv")
 
@@ -218,7 +218,7 @@ class AnkiCardGenApp(MDApp):
 
     def add_anki_card(self, result_dict):
         """Write apkg, json-file of card content."""
-        toast(f'Added card for "{result_dict["Word"]}" to Deck.', 10)
+        toast(f'Added card for "{result_dict["word"]}" to Deck.', 10)
         smart_saver(
             result_dict,
             f"../app_data/words/{self.word.folder()}/{self.word.folder()}_card.json",
@@ -230,7 +230,7 @@ class AnkiCardGenApp(MDApp):
         self.anki.write_apkg(apkg_path)
         self.anki.write_apkg(apkg_bkp_path)
         self.save_by_config_key("anki")
-        self.done_words.append(result_dict["Word"])
+        self.done_words.append(result_dict["word"])
 
 
 if __name__ == "__main__":
