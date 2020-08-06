@@ -174,14 +174,14 @@ class DicioParser(Parser):
             bs = BeautifulSoup(response.content, "lxml")
         explanations = [e.text for e in bs.select(".significado > span:not(.cl)")]
         examples = [
-            [phrase.text.strip()]
+            phrase.text.strip()
             for phrase in bs.select(".tit-frases + .frases div.frase")
         ]
         synonyms = [
-            [element.text] for element in bs.select('p:contains("sin").sinonimos a')
+            element.text for element in bs.select('p:contains("sin").sinonimos a')
         ]
         antonyms = [
-            [element.text] for element in bs.select('p:contains("contr").sinonimos a')
+            element.text for element in bs.select('p:contains("contr").sinonimos a')
         ]
         add_info_dict = strip_multiline_str(get_element_after_regex(bs, "Definição.*"))
         conj_table_html = ""
@@ -192,9 +192,13 @@ class DicioParser(Parser):
             print("no conjugation table obtained :(")
         return {
             "explanation": explanations,
+            "explanation_trans": [None for _ in explanations],
             "synonym": synonyms,
+            "synonym_trans": [None for _ in synonyms],
             "antonym": antonyms,
+            "antonym_trans": [None for _ in antonyms],
             "example": examples,
+            "example_trans": [None for _ in examples],
             "add_info_dict": add_info_dict,
             "conj_table_html": conj_table_html,
         }
@@ -256,14 +260,10 @@ class ReversoParser(Parser):
     def parse_response(self, response: requests.Response) -> Dict[str, list]:
         """Parse response and return dict of the form ``{"examples":[ [ex_src_lang, ex_trg_lang],...]]}``."""
         bs = BeautifulSoup(response.content, features="lxml")
+        examples = bs.select("div.example")
         return {
-            "example": [
-                [
-                    x.select_one("div.src").text.strip(),
-                    x.select_one("div.trg").text.strip(),
-                ]
-                for x in bs.select("div.example")
-            ]
+            "example": [x.select_one("div.src").text.strip() for x in examples],
+            "example_trans": [x.select_one("div.trg").text.strip() for x in examples],
         }
 
 
