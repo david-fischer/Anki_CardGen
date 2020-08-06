@@ -77,7 +77,9 @@ class CheckContainer(ChildrenFromDataBehavior):
         ]
         if attribute_name is None:
             return checked_elements
-        return [getattr(element, attribute_name) for element in checked_elements]
+        return [
+            getattr(element, attribute_name) for element in checked_elements if element
+        ]
 
 
 class MyCheckCard(ThemableColorChangeBehavior, CheckBehavior, MDCard):
@@ -239,7 +241,9 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
         checked_elements = [self.carousel.current_slide]
         if attribute_name is None:
             return checked_elements
-        return [getattr(element, attribute_name) for element in checked_elements]
+        return [
+            getattr(element, attribute_name) for element in checked_elements if element
+        ]
 
     def open_menu(self, *_):
         """Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`get_modal_content`."""
@@ -356,7 +360,9 @@ class RecycleCarousel(FloatLayout):
         checked_elements = [self.carousel.current_slide]
         if attribute_name is None:
             return checked_elements
-        return [getattr(element, attribute_name) for element in checked_elements]
+        return [
+            getattr(element, attribute_name) for element in checked_elements if element
+        ]
 
     def open_menu(self, *_):
         """Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`setup_modal`."""

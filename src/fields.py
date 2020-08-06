@@ -1,8 +1,12 @@
+import re
+from pprint import pprint
 from typing import Any, Callable, Dict, List
 
 import attr
 import requests
 from bidict import bidict
+from googletrans import Translator
+from pony.orm import db_session
 
 from custom_widgets.selection_widgets import *
 from db import get_template, new_template
@@ -13,6 +17,8 @@ from parsers import (
     Parser,
     ReversoParser,
 )
+
+translator = Translator()
 
 
 def route_call_to_member(cls, member, method):
@@ -74,6 +80,10 @@ class Field:
     def construct_widget(self):
         """Constructs widget that is used for the selection of :attr:`content`."""
         self.widget = Builder.load_string(self.widget_kv)
+        self.update_widget_data()
+
+    def update(self):
+        self.pre_process()
         self.update_widget_data()
 
     def update_widget_data(self):
@@ -167,28 +177,46 @@ class OptionsField(Field):
 
 @attr.s(auto_attribs=True)
 class CheckChipOptionsField(OptionsField):
-    widget_kv = "MyCheckChipContainer"
+    widget_kv: str = "MyCheckChipContainer"
+
+
+@attr.s(auto_attribs=True)
+class TransChipOptionsField(OptionsField):
+    widget_kv: str = """
+MyCheckChipContainer
+    child_class_name: "MyTransChip"
+    check_one: True"""
+
+
+@attr.s(auto_attribs=True)
+class DualLongTextField(OptionsField):
+    widget_kv: str = "CardCarousel"
 
 
 @attr.s(auto_attribs=True)
 class ImgField(OptionsField):
-    option_dict: Dict[str, Any] = {"image": []}
+    option_dict: Dict[str, Any] = {"image": [], "word": ""}
     kv_dict: dict or bidict = {"image": "source"}
     widget_kv: str = "ImageCarousel"
 
     def post_process(self, content):
         field_name = self.kv_dict.inverse["source"]
-        try:
-            print("downloading image...")
-            url = content[field_name]
-            resp = requests.get(url)
-            with open("out.png", "wb") as file:
-                file.write(resp.content)
-            content[field_name] = '<img src="out.png">'
-        except:
-            print("download failed...")
-            content[field_name] = ""
+        print("downloading image...")
+        url = content[field_name]
+        resp = requests.get(url)
+        content[field_name] = resp.content if resp.ok else None
+        print("done.")
         return content
+
+
+class MediaField(Field):
+    def pre_process(self):
+        url = self.option_dict[self.field_name]
+        print(f"downloading file from {url}...")
+        response = requests.get(url)
+        media_file = response.content if response.ok else None
+        self.option_dict[self.field_name] = media_file
+        print("done.")
 
 
 Builder.load_string(
@@ -209,26 +237,39 @@ class Template(BoxLayout):
     content: Dict = None
     search_term: str = None
     name: str = None
-    db_template: object = None
     sort_field: str = None
-    db_current_card: object = None
 
-    def __attrs_post_init__(self):
-        self.db_template = get_template(self.name) or new_template(self.name)
+    def __init__(self, **kwargs):
+        super(Template, self).__init__(**kwargs)
+
+    def template_db(self):
+        return get_template(self.name) or new_template(self)
+
+    def current_card_db(self):
+        t_db = self.template_db()
+        return t_db.get_card(self.search_term) or t_db.add_card(self)
 
     def set_data_from_parsers(self):
         self.data = {}
         for parser in self.parsers.values():
             parser_res_dict = parser.result_dict(self.search_term)
-            self.data.update(parser_res_dict)
-        print(self.data)
+            for key, value in parser_res_dict.items():
+                if (
+                    key in self.data
+                    and isinstance(self.data[key], list)
+                    and isinstance(parser_res_dict[key], list)
+                ):
+                    self.data[key] += value
+                else:
+                    self.data[key] = value
+        pprint(self.data)
 
     def update_fields(self):
         for field in self.fields:
             for key in field.option_dict:
                 if key in self.data:
                     field.option_dict[key] = self.data[key]
-            field.update_widget_data()
+            field.update()
 
     def add_field_widgets(self):
         for field in self.fields:
@@ -248,12 +289,31 @@ class Template(BoxLayout):
     def get_results(self):
         self.get_content_from_fields()
         self.post_process()
-        print(self.content)
+        pprint(self.content)
+        with db_session:
+            current_card = self.current_card_db()
+            media_files = (
+                self.content["media_files"] if "media_files" in self.content else []
+            )
+            for file_type, file in media_files.items():
+                current_card.add_media_file(type=file_type, file=file)
+            current_card.fields = {
+                key: val for key, val in self.content if key != "media_files"
+            }
         return self.content
 
     def search(self, search_term):
         self.search_term = search_term
-        self.set_data_from_parsers()
+        self.db_current_card = self.template_db().get_card(search_term)
+        with db_session:
+            if self.db_current_card and self.db_current_card.base_data:
+                self.data = self.db_current_card.base_data
+            else:
+                self.db_current_card = self.db_current_card or get_template(
+                    self.name
+                ).add_card(search_term)
+                self.set_data_from_parsers()
+                self.db_current_card.base_data = self.data
         self.update_fields()
 
     # @classmethod
@@ -271,6 +331,7 @@ class Template(BoxLayout):
 
 
 class PtTemplate(Template):
+    name = "Portuguese Vocab"
     from_lang: str = "pt"
     to_lang: str = "de"
 
@@ -288,17 +349,43 @@ class PtTemplate(Template):
         }
         self.fields = [
             TextInputField(field_name="word", callback=self.search),
-            CheckChipOptionsField(field_name="translation"),
-            OptionsField(
-                option_dict={"synonym": [], "synonymTrans": []},
-                kv_dict={"synonym": "text_orig", "synonymTrans": "text_trans"},
-                widget_kv="""
-MyCheckChipContainer
-    child_class_name: "MyTransChip"
-    check_one: True""",
-            ),
             ImgField(),
+            CheckChipOptionsField(field_name="translation"),
+            TransChipOptionsField(
+                option_dict={"synonym": [], "synonym_trans": []},
+                kv_dict={"synonym": "text_orig", "synonym_trans": "text_trans"},
+            ),
+            TransChipOptionsField(
+                option_dict={"antonym": [], "antonym_trans": []},
+                kv_dict={"antonym": "text_orig", "antonym_trans": "text_trans"},
+            ),
+            DualLongTextField(
+                option_dict={"explanation": [], "explanation_trans": []},
+                kv_dict={"explanation": "text_orig", "explanation_trans": "text_trans"},
+            ),
+            DualLongTextField(
+                option_dict={"example": [], "example_trans": []},
+                kv_dict={"example": "text_orig", "example_trans": "text_trans"},
+            ),
         ]
+
+    def set_data_from_parsers(self):
+        super(PtTemplate, self).set_data_from_parsers()
+        self.add_translations()
+
+    def translate(self, string):
+        """Translate string from :attr:`from_lang` to :attr:`to_lang`."""
+        return translator.translate(string, src=self.from_lang, dest=self.to_lang).text
+
+    def add_translations(self):
+        for key_trans in self.data:
+            match = re.findall(r"(.*)(_trans)", key_trans)
+            if match:
+                key_orig = match[0][0]
+                for i, (text_orig, text_trans) in enumerate(
+                    zip(self.data[key_orig], self.data[key_trans])
+                ):
+                    self.data[key_trans][i] = text_trans or self.translate(text_orig)
 
 
 if __name__ == "__main__":
