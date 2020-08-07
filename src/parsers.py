@@ -199,8 +199,8 @@ class DicioParser(Parser):
             "antonym_trans": [None for _ in antonyms],
             "example": examples,
             "example_trans": [None for _ in examples],
-            "add_info_dict": add_info_dict,
-            "conj_table_html": conj_table_html,
+            "additional_info": add_info_dict,
+            "conjugation_table": conj_table_html,
         }
 
     @staticmethod
