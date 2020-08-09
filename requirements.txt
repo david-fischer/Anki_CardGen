@@ -1,5 +1,6 @@
 attrs~=19.3.0
 beautifulsoup4~=4.9.1
+bidict
 certifi~=2020.6.20
 genanki~=0.8.0
 googletrans~=3.0.0
