@@ -152,6 +152,13 @@ def new_template(template_obj):
     )
 
 
+@db_session
+def get_card_by_id(card_id):
+    """Get card from database by id."""
+    cards = select(c for c in Card if c.id == card_id)
+    return toolz.first(cards) if cards else None
+
+
 if __name__ == "__main__":
     set_sql_debug(True)
 
