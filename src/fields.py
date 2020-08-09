@@ -348,11 +348,13 @@ class MediaField(Field):
 
     def post_process(self, content):
         """Return strings for the fields of the anki-card."""
-        print(type(content), content)
+        with db_session:
+            current_card = self.template.current_card_db()
+            media_file_db = current_card.get_media(self.field_name)
         file_name, field_val = self.get_file_strings()
         content[self.field_name] = field_val
         content["media_files"] = [file_name]
-        return content
+        return content if media_file_db else {self.field_name: ""}
 
 
 @attr.s
