@@ -56,6 +56,11 @@ class Template(db.Entity):
         return toolz.first(cards_by_name) if cards_by_name else None
 
     @db_session
+    def get_cards_by_selector(self, selector):
+        """Get cards by selector."""
+        return select(c for c in self.cards if selector(c))
+
+    @db_session
     def add_card(self, name):
         """Create a new :class:`Card` with relation to this template."""
         card = Card(name=name, state="waiting", template=self)
@@ -174,7 +179,8 @@ def get_card_by_id(card_id):
 
 
 def export_cards(card_list, out_folder):
-    """Export cards to <template_name>.apkg file in out_folder."""
+    """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
+    anki_obj = AnkiObject(root_dir="anki")
     if not card_list:
         print("Empty list.")
         return False
@@ -183,13 +189,11 @@ def export_cards(card_list, out_folder):
     for card in card_list:
         card.write_media_files_to_folder(folder_name)
         content_dict = card.fields
-        ao.add_card(**content_dict)
-        print(f"added {card.name}.")
+        anki_obj.add_card(**content_dict)
     with CD(folder_name):
-        print(ao.deck.notes)
         file_name = f'{toolz.first(card_list).template.name.replace(" ", "_")}_{now_string()}.apkg'
-        ao.write_apkg(file_name)
-        os.rename(file_name, os.path.join(out_folder, file_name))
+        anki_obj.write_apkg(file_name)
+    os.rename(os.path.join(folder_name, file_name), os.path.join(out_folder, file_name))
     now = datetime.now()
     for card in card_list:
         card.state = "exported"
@@ -217,5 +221,4 @@ if __name__ == "__main__":
     with db_session:
         template = get_template("Portuguese Vocab")
         cards = select(c for c in template.cards if c.state == ("done" or "exported"))
-        ao = AnkiObject(root_dir="src/anki")
         export_cards(cards, "/home/david/Schreibtisch/")
