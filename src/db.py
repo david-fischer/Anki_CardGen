@@ -1,4 +1,6 @@
 """Database containing Templates, Cards and the corresponding media-files."""
+import os
+import shutil
 from datetime import datetime
 
 import toolz
@@ -12,11 +14,13 @@ from pony.orm import (
     Required,
     select,
     Set,
-    set_sql_debug,
 )
 
+from generate_anki_card import AnkiObject
+from utils import CD, now_string
+
 db = Database()
-db.bind(provider="sqlite", filename="db.sqlite", create_db=True)
+db.bind(provider="sqlite", filename="../db.sqlite", create_db=True)
 
 
 # @attr.s(
@@ -47,9 +51,9 @@ class Template(db.Entity):
 
     @db_session
     def get_card(self, name):
-        """The ``name`` attribute is unique, so we can get a single :class:`Card` by name."""
-        cards = select(c for c in self.cards if c.name == name)
-        return toolz.first(cards) if cards else None
+        """Get a single :class:`Card` by name. (unique attribute)."""
+        cards_by_name = select(c for c in self.cards if c.name == name)
+        return toolz.first(cards_by_name) if cards_by_name else None
 
     @db_session
     def add_card(self, name):
@@ -93,6 +97,16 @@ class Card(db.Entity):
         """Add a new :class:`MediaFile` to this card."""
         media_file = MediaFile(**kwargs, card=self)
         return media_file
+
+    @db_session
+    def write_media_files_to_folder(self, folder):
+        """Write media-files in :attr:`media_files` to folder with name `folder`."""
+        media_files = select(m for m in self.media_files)
+        for m_file in media_files:
+            name = f"{self.name}.{m_file.type}"
+            with CD(folder):
+                with open(name, "wb") as file:
+                    file.write(m_file.content)
 
 
 ## UNUSED FOR THE MOMENT:
@@ -155,22 +169,53 @@ def new_template(template_obj):
 @db_session
 def get_card_by_id(card_id):
     """Get card from database by id."""
-    cards = select(c for c in Card if c.id == card_id)
-    return toolz.first(cards) if cards else None
+    card_list = select(c for c in Card if c.id == card_id)
+    return toolz.first(card_list) if card_list else None
 
 
+def export_cards(card_list, out_folder):
+    """Export cards to <template_name>.apkg file in out_folder."""
+    if not card_list:
+        print("Empty list.")
+        return False
+    folder_name = f"temp_{now_string()}"
+    os.makedirs(folder_name, exist_ok=True)
+    for card in card_list:
+        card.write_media_files_to_folder(folder_name)
+        content_dict = card.fields
+        ao.add_card(**content_dict)
+        print(f"added {card.name}.")
+    with CD(folder_name):
+        print(ao.deck.notes)
+        file_name = f'{toolz.first(card_list).template.name.replace(" ", "_")}_{now_string()}.apkg'
+        ao.write_apkg(file_name)
+        os.rename(file_name, os.path.join(out_folder, file_name))
+    now = datetime.now()
+    for card in card_list:
+        card.state = "exported"
+        card.dt_exported = now
+    shutil.rmtree(folder_name)
+    return True
+
+
+# pylint: disable = W,C,R,I
 if __name__ == "__main__":
-    set_sql_debug(True)
+    # set_sql_debug(True)
 
+    # with db_session:
+    #     # rand_wiki_template = Template(
+    #     #     name="Random Wiki Template",
+    #     #     cls_name="fields.Template",
+    #     #     description="Generate cards from random articles of a topic on Wikipedia.",
+    #     # )
+    #     rand_wiki_template = Template(
+    #         name="Portuguese Vocab",
+    #         cls_name="fields.PtTemplate",
+    #         description="Generate beautiful cards to learn brazilian portuguese vocabulary.\nSources: Dicio,Reverso,"
+    #         "Linguee and Google Images.",
+    #     )
     with db_session:
-        # rand_wiki_template = Template(
-        #     name="Random Wiki Template",
-        #     cls_name="fields.Template",
-        #     description="Generate cards from random articles of a topic on Wikipedia.",
-        # )
-        rand_wiki_template = Template(
-            name="Portuguese Vocab",
-            cls_name="fields.PtTemplate",
-            description="Generate beautiful cards to learn brazilian portuguese vocabulary.\nSources: Dicio,Reverso,"
-            "Linguee and Google Images.",
-        )
+        template = get_template("Portuguese Vocab")
+        cards = select(c for c in template.cards if c.state == ("done" or "exported"))
+        ao = AnkiObject(root_dir="src/anki")
+        export_cards(cards, "/home/david/Schreibtisch/")
