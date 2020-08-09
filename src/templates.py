@@ -189,6 +189,7 @@ class PtTemplate(Template):
             Field(field_name="additional_info", template=self),
             Field(field_name="conjugation_table", template=self),
         ]
+        self.add_field_widgets()
 
     def update_from_single_parser(self, search_term, parser_key):
         """Use only a single parser to update :attr`data`."""
