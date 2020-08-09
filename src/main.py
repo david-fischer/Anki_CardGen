@@ -6,7 +6,7 @@ from functools import partial
 
 from kivy.clock import mainthread
 from kivy.lang import Builder
-from kivy.properties import DictProperty, ListProperty, ObjectProperty
+from kivy.properties import DictProperty, ListProperty, ObjectProperty, StringProperty
 from kivymd.app import MDApp
 from kivymd.theming import ThemeManager
 from kivymd.toast import toast
@@ -67,6 +67,8 @@ class AnkiCardGenApp(MDApp):
         ]
     )
     """:class:`~kivy.properties.ListProperty` containing the name of all attributes that should be saved on change."""
+    current_template = StringProperty("Portuguese Vocab")
+    apkg_export_dir = StringProperty("../app_data/apkgs")
 
     @mainthread
     def show_dialog(
