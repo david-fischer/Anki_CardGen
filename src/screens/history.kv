@@ -1,8 +1,18 @@
-RecycleList:
-    id: history_list
-    viewclass: "LeftStatusIndicatorListItem"
-    data:
-        [\
-        {"text": word, "current_state":word_state} for word, word_state in\
-        pick_val(["error","done"],app.word_state_dict).items()\
-        ]
+#:import HistoryMain screens.history.HistoryMain
+HistoryMain:
+    id: history_main
+    speed_dial: speed_dial
+
+    RecycleList:
+        id: history_list
+        viewclass: "LeftStatusIndicatorListItem"
+        data:
+            [\
+            {"text": word, "current_state":word_state} for word, word_state in\
+            pick_val(["error","done"],app.word_state_dict).items()\
+            ]
+
+    MDFloatingActionButtonSpeedDial:
+        id: speed_dial
+        data: root.action_button_data
+        callback: root.export_cards
