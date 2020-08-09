@@ -205,7 +205,8 @@ Builder.load_string(
     """
 <Template>:
     orientation: "vertical"
-    size_hint:1,1
+    size_hint:1,None
+    height: self.minimum_height
     padding: 10
     spacing: 10
 """
