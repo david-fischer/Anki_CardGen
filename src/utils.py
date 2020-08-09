@@ -10,6 +10,8 @@ import threading
 from collections import defaultdict
 from datetime import datetime
 from functools import partial
+from io import BytesIO
+from itertools import chain
 
 import toolz
 from bs4 import BeautifulSoup
@@ -132,6 +134,18 @@ def smart_saver(obj, path):
             json.dump(obj, file, indent=4, sort_keys=True)
     if ext == "csv":
         save_dict_to_csv(obj, path)
+
+
+def merge_or_last(args):
+    """If all args are list, returns merged list. Else returns last arg."""
+    if all(isinstance(a, list) for a in args) and len(args) > 1:
+        return list(chain(*args))
+    return args[-1]
+
+
+def smart_dict_merge(*args):
+    """If values are lists they are merged, else the last element is chosen as new value."""
+    return toolz.merge_with(merge_or_last, *args)
 
 
 def now_string():
@@ -288,6 +302,17 @@ def tag_word_in_sentence(sentence, tag_word):
 
 
 # Image resizing
+def compress_img_bytes(bytes_image, width=512):
+    """Compress image given as bytes (e.g. as content of :class:`requests.Response`)."""
+    img = Image.open(BytesIO(bytes_image))
+    if img.size[0] > width:
+        resize = (width, width * img.size[1] // img.size[0])
+        img = img.resize(resize, Image.ANTIALIAS)
+    output = BytesIO()
+    img.save(
+        output, format="JPEG", optimize=True,
+    )
+    return output.getvalue()
 
 
 def compress_img(path, width=512):
