@@ -1,121 +1,14 @@
-#:import WordProperties screens.single_word.WordProperties
-WordProperties:
+#:import SingleWordMain screens.single_word_new.SingleWordMain
+SingleWordMain:
     id: word_prop
+    scroll_view: word_scroll
     ScrollView:
         id: word_scroll
         do_scroll_x: False
         do_scroll_y: True
         size_hint: 1,1
-        BoxLayout:
-            id: word_box
-            size_hint:1,None
-            height: self.minimum_height
-            orientation: "vertical"
-            padding: dp(20),dp(20)
-            spacing: 20
-
-            MDTextField:
-                id: search_field
-                size: 200,50
-                hint_text: "Search Term"
-                text: ""
-                on_text_validate: word_prop.load_or_search(self.text)
-                size_hint: 0.,None
-                on_parent: self.focus = True
-                pos_hint: {"center_x":0.5,"center_y":0}
-
-            MDLabel:
-                text: "Images"
-                color: self.theme_cls.disabled_hint_text_color
-                pos_hint: {"x":0,"y":0}
-
-            RecycleImageCarousel:
-                id: image
-                height: 200
-
-
-            MDLabel:
-                text: "Translations"
-                color: self.theme_cls.disabled_hint_text_color
-                pos_hint: {"x":0,"y":0}
-
-            MyCheckChipContainer:
-                id: translation
-                check_one: False
-
-            MDLabel:
-                text: "Synonyms"
-                color: self.theme_cls.disabled_hint_text_color
-                pos_hint: {"x":0,"y":0}
-
-            MyCheckChipContainer:
-                id: synonym
-                check_one: True
-                child_class_name: "MyTransChip"
-
-            MDLabel:
-                text: "Antonyms"
-                color: self.theme_cls.disabled_hint_text_color
-                pos_hint: {"x":0,"y":0}
-
-            MyCheckChipContainer:
-                id: antonym
-                child_class_name: "MyTransChip"
-                check_one: True
-
-            MDLabel:
-                text: "Explanations"
-                color: self.theme_cls.disabled_hint_text_color
-                pos_hint: {"x":0,"y":0}
-
-            RecycleCardCarousel:
-                id: explanation
-                size_hint_x: None
-                width: root.width
-
-
-            MDLabel:
-                text: "Examples"
-                color: self.theme_cls.disabled_hint_text_color
-                pos_hint: {"x":0,"y":0}
-
-            RecycleCardCarousel:
-                id: example
-                size_hint_x: None
-                width: root.width
-
-            Widget:
-                size_hint: None,None
-                height: dp(30)
 
     MDFloatingActionButton:
         icon: "check-bold"
         pos: (root.width-dp(16)-self.width,dp(10))
         on_press: word_prop.complete_generation()
-
-#    StackLayout:
-#        MDTextField:
-#            id: img_search_field
-#            hint_text: "Image Search"
-#            text: ""
-#            on_text_validate: image_grid.get_images(self.text)
-#            #pos_hint: {"center_x":0.5,"center_y":0}
-
-#        RecycleView:
-#            do_scroll_x: False
-#            do_scroll_y: True
-#            size_hint: 1,1
-#            ImageSearchResultGrid:
-#                cols: 2
-#                id: image_grid
-#                row_default_height: (self.width - self.cols*self.spacing[0]) / self.cols *3/4
-#                row_force_default: True
-#                size_hint_y: None
-#                height: self.minimum_height
-#                padding: dp(4), dp(4)
-#                spacing: dp(4)
-#                check_one: True
-#
-#        MDFloatingActionButton:
-#            pos_hint: {"center_x":0.5,"center_y":0.5}
-#            on_press: image_grid.element_dicts = [{"source":url} for url in app.word.image_urls]
