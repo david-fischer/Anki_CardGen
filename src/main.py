@@ -1,7 +1,7 @@
 """Contains the Main App :class:`AnkiCardGenApp`."""
 
 import os
-import queue
+import pydoc
 from functools import partial
 
 from kivy.clock import mainthread
@@ -17,8 +17,9 @@ from kivymd.uix.list import OneLineIconListItem
 from kivymd.uix.picker import MDThemePicker
 
 from custom_widgets.main_menu import MainMenu
+from db import get_template
 from generate_anki_card import AnkiObject
-from utils import now_string, smart_loader, smart_saver
+from utils import now_string, smart_loader, smart_saver, widget_by_id
 from words import Word
 
 this_dir = os.path.dirname(__file__)
@@ -43,31 +44,13 @@ class AnkiCardGenApp(MDApp):
     """:class:`pt_word.Word` Object."""
     anki = ObjectProperty()
     """:class:`generate_anki_card.AnkiObject` Object."""
-    queue = ObjectProperty()
-    """:class:`queue.Queue` Object."""
     # Data
-    error_words = ListProperty([])
-    """:class:`~kivy.properties.ListProperty` containing all words that could not be processed by Queue."""
-    queue_words = ListProperty([])
-    """:class:`~kivy.properties.ListProperty` containing all words not yet made into Anki-cards."""
-    done_words = ListProperty([])
-    """:class:`~kivy.properties.ListProperty` containing all words for which Anki-cards have been generated."""
-    loading_state_dict = DictProperty({})
-    """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
     word_state_dict = DictProperty({})
     """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
-    keys_to_save = ListProperty(
-        [
-            "queue_words",
-            "done_words",
-            "error_words",
-            "loading_state_dict",
-            "anki",
-            "word_state_dict",
-        ]
-    )
+    keys_to_save = ListProperty(["word_state_dict",])
     """:class:`~kivy.properties.ListProperty` containing the name of all attributes that should be saved on change."""
-    current_template = StringProperty("Portuguese Vocab")
+    current_template_name = StringProperty("Portuguese Vocab")
+    template = ObjectProperty()
     apkg_export_dir = StringProperty("../app_data/apkgs")
 
     @mainthread
@@ -165,18 +148,9 @@ class AnkiCardGenApp(MDApp):
             }
         )
         self.word = Word(data_dir="../app_data/words")
-        self.setup_queue()
         # Kivy Objects
         self.file_manager = MDFileManager()
         return MainMenu()
-
-    def setup_queue(self):
-        """Set up :attr:`queue` from words in :attr:`queue_words`."""
-        self.queue = queue.Queue()
-        for word in self.queue_words:
-            if self.loading_state_dict[word] in ["loading", "queued"]:
-                self.loading_state_dict[word] = "queued"
-                self.queue.put(word)
 
     def save_theme(self, *_):
         """Save current theme to config file."""
@@ -233,6 +207,29 @@ class AnkiCardGenApp(MDApp):
         self.anki.write_apkg(apkg_bkp_path)
         self.save_by_config_key("anki")
         self.done_words.append(result_dict["word"])
+
+    def get_current_template_db(self):
+        """Return data-base object for :attr:`current_template_name`."""
+        return get_template(self.current_template_name)
+
+    def setup_template(self):
+        """Initialize :class:`templates.Template` and adds it to the single_word screen."""
+        template_cls_name = self.get_current_template_db().cls_name
+        template_cls = pydoc.locate(template_cls_name)
+        self.template = template_cls()
+        template_parent = widget_by_id("single_word/scroll_view")
+        if template_parent.children:
+            template_parent.clear_widgets()
+        template_parent.add_widget(self.template)
+
+    def on_current_template_name(self, *_):
+        """Set up new template if :attr:`current_template_name` changes."""
+        self.setup_template()
+
+    def on_start(self):
+        """Set up template on start of app."""
+        super(AnkiCardGenApp, self).on_start()
+        self.setup_template()
 
 
 if __name__ == "__main__":
