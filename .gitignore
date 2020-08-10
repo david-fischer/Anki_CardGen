@@ -6,3 +6,4 @@ test/
 .vscode/
 */__pycache__/
 __pycache__/
+src/db.sqlite
