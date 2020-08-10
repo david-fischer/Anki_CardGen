@@ -3,6 +3,7 @@
 import os
 import pydoc
 
+import certifi
 from kivy.lang import Builder
 from kivy.properties import DictProperty, ObjectProperty, StringProperty
 from kivymd.app import MDApp
@@ -16,6 +17,9 @@ from db import get_template
 from generate_anki_card import AnkiObject
 from utils import smart_loader, smart_saver, widget_by_id
 from words import Word
+
+os.environ["SSL_CERT_FILE"] = certifi.where()
+
 
 this_dir = os.path.dirname(__file__)
 if this_dir:
