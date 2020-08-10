@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>UI &mdash; ACG 0.3.0 documentation</title>
+  <title>User Interface &mdash; ACG 0.3.0 documentation</title>
 
 
 
@@ -37,8 +37,8 @@
 
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Behaviors" href="ui/behaviors.html" />
-    <link rel="prev" title="Words" href="word_processing/words.html" />
+    <link rel="next" title="History Screen" href="screens/history.html" />
+    <link rel="prev" title="Selection Widgets" href="custom_widgets/selection_widget.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -85,19 +85,16 @@
 
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="word_processing.html">Word Processing</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">UI</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ui/behaviors.html">Behaviors</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/dialogs.html">Dialogs</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/main_menu.html">Main Menu</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/screen_history.html">History Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/screen_queue.html">Queue Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/screen_single_word.html">Single Word Screen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/scroll_widgets.html">Scroll Widgets</a></li>
-<li class="toctree-l2"><a class="reference internal" href="ui/selection_widget.html">Selection Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">User Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="screens/history.html">History Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screens/queued.html">Queue Screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="screens/single_word.html">Single Word Screen</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="db.html">Database</a></li>
 </ul>
 
 
@@ -144,7 +141,7 @@
 
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
 
-      <li>UI</li>
+      <li>User Interface</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -163,20 +160,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="ui">
-<h1>UI<a class="headerlink" href="#ui" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="user-interface">
+<h1>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h1>
 <p>The user interface is based on <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.html#module-kivy" title="(in Kivy v1.11.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy</span></code></a> and <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/unincluded/kivymd/index.html#module-kivymd" title="(in KivyMD v0.104.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivymd</span></code></a>.</p>
-<img alt="_images/screen_queue.png" src="_images/screen_queue.png" />
+<a class="reference internal image-reference" href="_images/nav_drawer_open.png"><img alt="_images/nav_drawer_open.png" src="_images/nav_drawer_open.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/word_1.png"><img alt="_images/word_1.png" src="_images/word_1.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/word_2.png"><img alt="_images/word_2.png" src="_images/word_2.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/import.png"><img alt="_images/import.png" src="_images/import.png" style="width: 200px;" /></a>
+<p>The project is organized as follows:
+Each screen of the app is defined by a screens/&lt;screen_name&gt;.kv file. The root widget of the screen is named
+&lt;ScreenNameRoot&gt; and implemented in the file screens/&lt;screen_name&gt;.py.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ui/behaviors.html">Behaviors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/dialogs.html">Dialogs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/main_menu.html">Main Menu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/screen_history.html">History Screen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/screen_queue.html">Queue Screen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/screen_single_word.html">Single Word Screen</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/scroll_widgets.html">Scroll Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui/selection_widget.html">Selection Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens/history.html">History Screen</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="screens/history.html#history.HistoryRoot">HistoryRoot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="screens/queued.html">Queue Screen</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="screens/queued.html#queued.CheckableQueue">CheckableQueue</a></li>
+</ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="screens/queued.html#queued.QueuedRoot">QueuedRoot</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="screens/single_word.html">Single Word Screen</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="screens/single_word.html#single_word.SingleWordRoot">SingleWordRoot</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -189,10 +199,10 @@
 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
 
-        <a href="ui/behaviors.html" class="btn btn-neutral float-right" title="Behaviors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="screens/history.html" class="btn btn-neutral float-right" title="History Screen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
 
-        <a href="word_processing/words.html" class="btn btn-neutral float-left" title="Words" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="custom_widgets/selection_widget.html" class="btn btn-neutral float-left" title="Selection Widgets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
 
     </div>
 

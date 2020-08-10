@@ -14,7 +14,6 @@ from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
 from db import get_template
-from generate_anki_card import AnkiObject
 from utils import smart_loader, smart_saver, widget_by_id
 from words import Word
 
@@ -78,8 +77,8 @@ class AnkiCardGenApp(MDApp):
         # The following condition is a workaround:
         # If we set self.anki = AnkiObject(...) and load from the pickled file
         # afterwards, the object is not loaded correctly and we start with an empty deck...
-        if not os.path.exists(self.config["Paths"]["anki"]):
-            self.anki = AnkiObject(root_dir="anki")
+        # if not os.path.exists(self.config["Paths"]["anki"]):
+        #     self.anki = AnkiObject(root_dir="anki")
         self.word_state_dict = self.get_word_states()
         print(self.word_state_dict)
         self.word = Word(data_dir="../app_data/words")

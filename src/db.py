@@ -1,4 +1,8 @@
-"""Database containing Templates, Cards and the corresponding media-files."""
+"""
+The app uses :mod:`pony` to manage a sqlite-database. The database is structured as follows.
+
+.. image:: ../docs/ponyorm_diagram.png
+"""
 import os
 import shutil
 from datetime import datetime
@@ -33,16 +37,6 @@ except dbapiprovider.OperationalError:
     db.bind(provider="sqlite", filename="db.sqlite")
 
 
-# @attr.s(
-#     these={
-#         "name": attr.ib(),
-#         "id": attr.ib(init=False),
-#         "cards": attr.ib(init=False),
-#         "cls_name": attr.ib(default="fields.Template"),
-#         "description": attr.ib(default=""),
-#         "additional_info": attr.ib(default=None),
-#     }
-# )
 class Template(db.Entity):
     """Contains data of a :class:`fields.Template` and all cards that have been generated with the template."""
 

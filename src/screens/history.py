@@ -32,9 +32,11 @@ class HistoryRoot(FloatLayout):
     def export_cards(self, button):
         """Depending on which button was pressed, exports one of the following.
 
-        * all cards
-        * all new cards (i.e. cards that have been generated but not exported)
-        * custom selection of cards (NOT YET IMPLEMENTED)
+            * all cards
+            * all new cards (i.e. cards that have been generated but not exported)
+            * custom selection of cards (NOT YET IMPLEMENTED)
+
+
         TODO: IMPLEMENT
         """
         self.speed_dial.close_stack()

@@ -127,7 +127,7 @@ class MyTransChip(TranslationOnCheckBehavior, MyCheckChip):
 
 
 class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
-    """Container for :class:`MyCheckChip`s. Use :attr:`child_dict` to populate."""
+    r"""Container for :class:`MyCheckChip`\ s. Use :attr:`child_dict` to populate."""
 
     child_class_name = "MyCheckChip"
 

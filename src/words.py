@@ -98,8 +98,8 @@ class Word:
             self.update_from_dict(parser.result_dict(self.search_term))
 
     def update_from_dict(self, attr_dict):
-        """
-        Update :class:`Word` s attributes by iterating through ``attr_dict``.
+        r"""
+        Update :class:`Word`\ s attributes by iterating through ``attr_dict``.
 
         If the value is a list, it extends the original list, else the value is set to the value of attr_dict
 

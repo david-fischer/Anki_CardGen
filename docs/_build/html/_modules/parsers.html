@@ -83,9 +83,11 @@
 
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">UI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
 
@@ -159,12 +161,14 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="kn">import</span> <span class="n">quote</span>
 
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">toolz</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">from</span> <span class="nn">google_images_download</span> <span class="kn">import</span> <span class="n">google_images_download</span>
 
@@ -207,11 +211,11 @@
 <span class="sd">    Main functionality is the result_dict function.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Parser.phrase"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.phrase">[docs]</a>    <span class="n">phrase</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Parser.phrase"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.phrase">[docs]</a>    <span class="n">phrase</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
     <span class="sd">&quot;&quot;&quot;The word or phrase to search the site for.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Parser.from_lang"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.from_lang">[docs]</a>    <span class="n">from_lang</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Parser.from_lang"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.from_lang">[docs]</a>    <span class="n">from_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
     <span class="sd">&quot;&quot;&quot;Target language.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Parser.to_lang"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.to_lang">[docs]</a>    <span class="n">to_lang</span><span class="p">:</span> <span class="nb">str</span></div>
+<div class="viewcode-block" id="Parser.to_lang"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.to_lang">[docs]</a>    <span class="n">to_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
     <span class="sd">&quot;&quot;&quot;Source Language.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="Parser.base_url"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.base_url">[docs]</a>    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
@@ -222,29 +226,30 @@
     <span class="sd">&quot;&quot;&quot;Headers for the request. Defaults to :const:`DEFAULT_HEADERS`.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Parser.setup"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Stuff that needs to be executed before :meth:`url` is called.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Stuff that needs to be executed before :meth:`format_url_with_attribs` is called.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Parser.url"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.url">[docs]</a>    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get url for http-request.</span>
+<div class="viewcode-block" id="Parser.format_url_with_attribs"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.format_url_with_attribs">[docs]</a>    <span class="k">def</span> <span class="nf">format_url_with_attribs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="c1"># TODO: Rewrite Doc-string</span>
+        <span class="sd">&quot;&quot;&quot;Get format_url_with_attribs for http-request.</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          :  :attr:`base_url` formatted with all class attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span>
+        <span class="k">return</span> <span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Parser.make_request"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.make_request">[docs]</a>    <span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Use :attr:`headers` to make an http-request via :meth:`~requests.get`.</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          url: If None, will be set to :meth:`url`. (Default value = None)</span>
+<span class="sd">          url: If None, will be set to :meth:`format_url_with_attribs`. (Default value = None)</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          : :class:`~requests.Response` object</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">url</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">()</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_url_with_attribs</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Parser.parse_response"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.Parser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span></div>
@@ -295,10 +300,10 @@
             <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;translations&quot;</span><span class="p">]</span>
         <span class="p">]</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;translations&quot;</span><span class="p">:</span> <span class="n">translations</span><span class="p">,</span>
+            <span class="s2">&quot;translation&quot;</span><span class="p">:</span> <span class="n">translations</span><span class="p">,</span>
             <span class="s2">&quot;word_type&quot;</span><span class="p">:</span> <span class="n">word_type</span><span class="p">,</span>
             <span class="s2">&quot;gender&quot;</span><span class="p">:</span> <span class="n">gender</span><span class="p">,</span>
-            <span class="s2">&quot;audio_url&quot;</span><span class="p">:</span> <span class="n">audio_url</span><span class="p">,</span></div></div>
+            <span class="s2">&quot;audio&quot;</span><span class="p">:</span> <span class="n">audio_url</span><span class="p">,</span></div></div>
         <span class="p">}</span>
 
 
@@ -323,14 +328,14 @@
             <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
         <span class="n">explanations</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;.significado &gt; span:not(.cl)&quot;</span><span class="p">)]</span>
         <span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="n">phrase</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+            <span class="n">phrase</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;.tit-frases + .frases div.frase&quot;</span><span class="p">)</span>
         <span class="p">]</span>
         <span class="n">synonyms</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;sin&quot;).sinonimos a&#39;</span><span class="p">)</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;sin&quot;).sinonimos a&#39;</span><span class="p">)</span>
         <span class="p">]</span>
         <span class="n">antonyms</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">]</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;contr&quot;).sinonimos a&#39;</span><span class="p">)</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;contr&quot;).sinonimos a&#39;</span><span class="p">)</span>
         <span class="p">]</span>
         <span class="n">add_info_dict</span> <span class="o">=</span> <span class="n">strip_multiline_str</span><span class="p">(</span><span class="n">get_element_after_regex</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="s2">&quot;Definição.*&quot;</span><span class="p">))</span>
         <span class="n">conj_table_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -340,12 +345,16 @@
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;no conjugation table obtained :(&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;explanations&quot;</span><span class="p">:</span> <span class="n">explanations</span><span class="p">,</span>
-            <span class="s2">&quot;synonyms&quot;</span><span class="p">:</span> <span class="n">synonyms</span><span class="p">,</span>
-            <span class="s2">&quot;antonyms&quot;</span><span class="p">:</span> <span class="n">antonyms</span><span class="p">,</span>
-            <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="n">examples</span><span class="p">,</span>
-            <span class="s2">&quot;add_info_dict&quot;</span><span class="p">:</span> <span class="n">add_info_dict</span><span class="p">,</span>
-            <span class="s2">&quot;conj_table_html&quot;</span><span class="p">:</span> <span class="n">conj_table_html</span><span class="p">,</span></div>
+            <span class="s2">&quot;explanation&quot;</span><span class="p">:</span> <span class="n">explanations</span><span class="p">,</span>
+            <span class="s2">&quot;explanation_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">explanations</span><span class="p">],</span>
+            <span class="s2">&quot;synonym&quot;</span><span class="p">:</span> <span class="n">synonyms</span><span class="p">,</span>
+            <span class="s2">&quot;synonym_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">synonyms</span><span class="p">],</span>
+            <span class="s2">&quot;antonym&quot;</span><span class="p">:</span> <span class="n">antonyms</span><span class="p">,</span>
+            <span class="s2">&quot;antonym_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">antonyms</span><span class="p">],</span>
+            <span class="s2">&quot;example&quot;</span><span class="p">:</span> <span class="n">examples</span><span class="p">,</span>
+            <span class="s2">&quot;example_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span>
+            <span class="s2">&quot;additional_info&quot;</span><span class="p">:</span> <span class="n">add_info_dict</span><span class="p">,</span>
+            <span class="s2">&quot;conjugation_table&quot;</span><span class="p">:</span> <span class="n">conj_table_html</span><span class="p">,</span></div>
         <span class="p">}</span>
 
     <span class="nd">@staticmethod</span>
@@ -405,14 +414,10 @@
 <div class="viewcode-block" id="ReversoParser.parse_response"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.ReversoParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Parse response and return dict of the form ``{&quot;examples&quot;:[ [ex_src_lang, ex_trg_lang],...]]}``.&quot;&quot;&quot;</span>
         <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.example&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="p">[</span>
-                <span class="p">[</span>
-                    <span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
-                    <span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.trg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
-                <span class="p">]</span>
-                <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.example&quot;</span><span class="p">)</span></div></div>
-            <span class="p">]</span>
+            <span class="s2">&quot;example&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span>
+            <span class="s2">&quot;example_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.trg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span></div></div>
         <span class="p">}</span>
 
 
@@ -420,7 +425,7 @@
     <span class="sd">&quot;&quot;&quot;Uses google_images_download to get img_urls.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="GoogleImagesParser.result_dict"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.GoogleImagesParser.result_dict">[docs]</a>    <span class="k">def</span> <span class="nf">result_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dictionary of the form ``{&quot;image_urls&quot;:[url0,url1,...]}}``.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Return dictionary of the form ``{&quot;image&quot;:[url0,url1,...]}}``.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">phrase</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
@@ -436,7 +441,78 @@
             <span class="c1"># &quot;prefix&quot;: &quot;img_&quot;,</span>
         <span class="p">}</span>
         <span class="n">paths</span> <span class="o">=</span> <span class="n">gid</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">arguments</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;image_urls&quot;</span><span class="p">:</span> <span class="n">paths</span><span class="p">}</span></div></div>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">paths</span><span class="p">}</span></div></div>
+
+
+<span class="c1"># @attr.s(auto_attribs=True)</span>
+<span class="c1"># class WikiParser(Parser):</span>
+<span class="c1">#     base_url = &quot;https://en.wikipedia.org/api/rest_v1/page/random/summary&quot;</span>
+<span class="c1">#     media_url = (</span>
+<span class="c1">#         &quot;https://en.wikipedia.org/api/rest_v1/page/media-list/{title}?redirect=true&quot;</span>
+<span class="c1">#     )</span>
+<span class="c1">#     title = &quot;&quot;</span>
+<span class="c1">#</span>
+<span class="c1">#     def parse_response(self, response: requests.Response) -&gt; Dict[str, Any]:</span>
+<span class="c1">#         json_resp = response.json()</span>
+<span class="c1">#         title = json_resp[&quot;title&quot;]</span>
+<span class="c1">#         summary = json_resp[&quot;extract&quot;]</span>
+<span class="c1">#         self.title = json_resp[&quot;titles&quot;][&quot;canonical&quot;]</span>
+<span class="c1">#         media_json_resp = self.make_request(self.media_url).json()</span>
+<span class="c1">#         image = [</span>
+<span class="c1">#             &quot;https:&quot; + item[&quot;srcset&quot;][0][&quot;src&quot;]</span>
+<span class="c1">#             for item in media_json_resp[&quot;items&quot;]</span>
+<span class="c1">#             if item[&quot;type&quot;] == &quot;image&quot;</span>
+<span class="c1">#         ]</span>
+<span class="c1">#         return {&quot;title&quot;: title, &quot;summary&quot;: summary, &quot;img_urls&quot;: image}</span>
+
+
+<div class="viewcode-block" id="RandTopicWikiParser"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.RandTopicWikiParser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">RandTopicWikiParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get title, summary and a list of image-urls for given random topic.&quot;&quot;&quot;</span>
+
+    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://en.wikipedia.org/api/rest_v1/page/summary/</span><span class="si">{page}</span><span class="s2">&quot;</span>
+    <span class="n">media_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;https://en.wikipedia.org/api/rest_v1/page/media-list/</span><span class="si">{title}</span><span class="s2">?redirect=true&quot;</span>
+    <span class="p">)</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="RandTopicWikiParser.make_request"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.RandTopicWikiParser.make_request">[docs]</a>    <span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tries</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call base method if url is set. Else obtain response from random wiki page.</span>
+
+<span class="sd">        Because we only use content-pages and not category-pages ``try`` specifies how often we draw a random page.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">RandTopicWikiParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">category</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tries</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">get_random_wiki_topic</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">RandTopicWikiParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">make_request</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">resp</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="c1"># TODO: Error handling.</span>
+        <span class="k">raise</span> <span class="n">NoMatchError</span><span class="p">(</span><span class="n">site</span><span class="o">=</span><span class="s2">&quot;Wiki&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RandTopicWikiParser.parse_response"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.RandTopicWikiParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Extract title, summary, image_urls and return in dict.&quot;&quot;&quot;</span>
+        <span class="n">json_resp</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;extract&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;titles&quot;</span><span class="p">][</span><span class="s2">&quot;canonical&quot;</span><span class="p">]</span>
+        <span class="n">media_json_resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">media_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">media_json_resp</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;https:&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;srcset&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">media_json_resp</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image</span><span class="p">}</span></div></div>
 
 
 <span class="c1"># BS4 Helper Functions</span>
@@ -484,6 +560,29 @@
     <span class="k">return</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;span.corrected&quot;</span><span class="p">)]</span></div>
 
 
+<div class="viewcode-block" id="star"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.star">[docs]</a><span class="k">def</span> <span class="nf">star</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper-function. Call a function with unpacked arguments.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="k">lambda</span> <span class="n">args</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="json2list"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.json2list">[docs]</a><span class="k">def</span> <span class="nf">json2list</span><span class="p">(</span><span class="n">filter_fn</span><span class="p">,</span> <span class="n">map_fn</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter and map dictionary in succession to obtain list.&quot;&quot;&quot;</span>
+    <span class="n">filtered</span> <span class="o">=</span> <span class="n">toolz</span><span class="o">.</span><span class="n">itemfilter</span><span class="p">(</span><span class="n">star</span><span class="p">(</span><span class="n">filter_fn</span><span class="p">),</span> <span class="n">dictionary</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">itemmap</span><span class="p">(</span><span class="n">star</span><span class="p">(</span><span class="n">map_fn</span><span class="p">),</span> <span class="n">filtered</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_random_wiki_topic"><a class="viewcode-back" href="../word_processing/parsers.html#parsers.get_random_wiki_topic">[docs]</a><span class="k">def</span> <span class="nf">get_random_wiki_topic</span><span class="p">(</span><span class="n">category</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return page-string for a random page in a category.&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;https://en.wikipedia.org/wiki/Special:RandomInCategory/</span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">allow_redirects</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">page_string</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&quot;Location&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/wiki/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">page_string</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;Category:&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">page_string</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">page_string</span></div>
+
+
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">TEST_WORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="c1"># print(linguee_did_you_mean(&quot;comecar&quot;))</span>
@@ -491,6 +590,8 @@
     <span class="n">RP</span> <span class="o">=</span> <span class="n">ReversoParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="n">PHRASE</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
     <span class="n">DP</span> <span class="o">=</span> <span class="n">DicioParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="n">PHRASE</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
     <span class="n">LP</span> <span class="o">=</span> <span class="n">LingueeParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="n">PHRASE</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
+    <span class="n">WP</span> <span class="o">=</span> <span class="n">RandTopicWikiParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="s2">&quot;animal_rights&quot;</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;xx&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;xx&quot;</span><span class="p">)</span>
+    <span class="n">pprint</span><span class="p">(</span><span class="n">WP</span><span class="o">.</span><span class="n">result_dict</span><span class="p">())</span>
     <span class="c1"># pprint(LP.result_dict())</span>
 </pre></div>
 

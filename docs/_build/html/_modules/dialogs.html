@@ -83,9 +83,11 @@
 
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">UI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
 
@@ -167,41 +169,41 @@
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.dialog</span> <span class="kn">import</span> <span class="n">MDDialog</span>
 
-<span class="kn">from</span> <span class="nn">my_kivy.scroll_widgets</span> <span class="kn">import</span> <span class="n">ScrollList</span>
+<span class="kn">from</span> <span class="nn">custom_widgets.scroll_widgets</span> <span class="kn">import</span> <span class="n">ScrollList</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;my_kivy/dialogs.kv&quot;</span><span class="p">)</span>
+    <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;custom_widgets/dialogs.kv&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
     <span class="n">this_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
     <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_directory</span><span class="p">,</span> <span class="s2">&quot;dialogs.kv&quot;</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="ReplacementItem"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementItem">[docs]</a><span class="k">class</span> <span class="nc">ReplacementItem</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="ReplacementItem"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementItem">[docs]</a><span class="k">class</span> <span class="nc">ReplacementItem</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Item displaying a word (:attr:`word`) and a possible replacement (:attr:`lemma`).</span>
 
 <span class="sd">    :attr:`lemma` can be edited and the selection of word vs replacement switches on click.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ReplacementItem.lemma"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementItem.lemma">[docs]</a>    <span class="n">lemma</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ReplacementItem.lemma"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementItem.lemma">[docs]</a>    <span class="n">lemma</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;&quot;``.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ReplacementItem.word"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementItem.word">[docs]</a>    <span class="n">word</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ReplacementItem.word"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementItem.word">[docs]</a>    <span class="n">word</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;&quot;``.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ReplacementItem.take_lemma"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementItem.take_lemma">[docs]</a>    <span class="n">take_lemma</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ReplacementItem.take_lemma"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementItem.take_lemma">[docs]</a>    <span class="n">take_lemma</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.BooleanProperty` defaults to ``False``. Indicates user choice.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="ReplacementItem.edit"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementItem.edit">[docs]</a>    <span class="n">edit</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ReplacementItem.edit"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementItem.edit">[docs]</a>    <span class="n">edit</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.BooleanProperty` defaults to ``False``. While ``True`` the :attr:`lemma` can be</span>
 <span class="sd">    edited.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ReplacementItem.on_press"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementItem.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="ReplacementItem.on_press"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementItem.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="DialogContent"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.DialogContent">[docs]</a><span class="k">class</span> <span class="nc">DialogContent</span><span class="p">(</span><span class="n">ScrollList</span><span class="p">):</span>
+<div class="viewcode-block" id="DialogContent"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.DialogContent">[docs]</a><span class="k">class</span> <span class="nc">DialogContent</span><span class="p">(</span><span class="n">ScrollList</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Content for the :class:`CustomDialog` class.&quot;&quot;&quot;</span>
 
     <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;ReplacementItem&quot;</span>
-<div class="viewcode-block" id="DialogContent.data"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.DialogContent.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
+<div class="viewcode-block" id="DialogContent.data"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.DialogContent.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
         <span class="p">[{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;word_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;lemma</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span></div>
     <span class="p">)</span>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`.``&quot;&quot;&quot;</span>
@@ -211,20 +213,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;on_press&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">,</span> <span class="s2">&quot;on_item_press&quot;</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DialogContent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DialogContent.on_item_press"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.DialogContent.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DialogContent.on_item_press"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.DialogContent.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="DialogContent.get_result"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.DialogContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="DialogContent.get_result"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.DialogContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="ReplacementContent"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementContent">[docs]</a><span class="k">class</span> <span class="nc">ReplacementContent</span><span class="p">(</span><span class="n">DialogContent</span><span class="p">):</span>
+<div class="viewcode-block" id="ReplacementContent"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementContent">[docs]</a><span class="k">class</span> <span class="nc">ReplacementContent</span><span class="p">(</span><span class="n">DialogContent</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Content for the ReplacementDialog.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ReplacementContent.child_class_name"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementContent.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;ReplacementItem&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="ReplacementContent.child_class_name"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementContent.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;ReplacementItem&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;ReplacementItem&quot;``.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ReplacementContent.get_result"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.ReplacementContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ReplacementContent.get_result"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.ReplacementContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get user selection.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span>
             <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">lemma</span> <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">take_lemma</span> <span class="k">else</span> <span class="n">child</span><span class="o">.</span><span class="n">word</span><span class="p">)</span>
@@ -232,17 +234,17 @@
         <span class="p">]</span>
 
 
-<div class="viewcode-block" id="CustomDialog"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog">[docs]</a><span class="k">class</span> <span class="nc">CustomDialog</span><span class="p">(</span><span class="n">MDDialog</span><span class="p">):</span>
+<div class="viewcode-block" id="CustomDialog"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog">[docs]</a><span class="k">class</span> <span class="nc">CustomDialog</span><span class="p">(</span><span class="n">MDDialog</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Custom dialog.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
-<div class="viewcode-block" id="CustomDialog.button_cls_name"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog.button_cls_name">[docs]</a>    <span class="n">button_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;DialogButton&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="CustomDialog.button_cls_name"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog.button_cls_name">[docs]</a>    <span class="n">button_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;DialogButton&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;DialogButton&quot;``.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="CustomDialog.button_texts"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog.button_texts">[docs]</a>    <span class="n">button_texts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="s2">&quot;CANCEL&quot;</span><span class="p">])</span></div>
+<div class="viewcode-block" id="CustomDialog.button_texts"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog.button_texts">[docs]</a>    <span class="n">button_texts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="s2">&quot;CANCEL&quot;</span><span class="p">])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` defaults to ``[&quot;OK&quot;, &quot;CANCEL&quot;]``.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="CustomDialog.callback"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog.callback">[docs]</a>    <span class="n">callback</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` defaults to ````.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="CustomDialog.auto_dismiss"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog.auto_dismiss">[docs]</a>    <span class="n">auto_dismiss</span> <span class="o">=</span> <span class="kc">False</span></div>
+<div class="viewcode-block" id="CustomDialog.callback"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog.callback">[docs]</a>    <span class="n">callback</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` defaults to ``None``.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CustomDialog.auto_dismiss"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog.auto_dismiss">[docs]</a>    <span class="n">auto_dismiss</span> <span class="o">=</span> <span class="kc">False</span></div>
     <span class="sd">&quot;&quot;&quot;Do not dismiss on click outside the dialog.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -255,12 +257,12 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">CustomDialog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_item_press</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_item_press</span><span class="p">)</span>
 
-<div class="viewcode-block" id="CustomDialog.on_button_press"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog.on_button_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_button_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<div class="viewcode-block" id="CustomDialog.on_button_press"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog.on_button_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_button_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">get_result</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CustomDialog.on_item_press"><a class="viewcode-back" href="../ui/dialogs.html#dialogs.CustomDialog.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="CustomDialog.on_item_press"><a class="viewcode-back" href="../custom_widgets/dialogs.html#dialogs.CustomDialog.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
 

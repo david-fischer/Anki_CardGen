@@ -45,10 +45,10 @@ class Template(BoxLayout):
     parsers: Dict[str, Parser] = None
     """Each parser fetches data as a dict. The union of all these dicts will be collected in :attr:`data`."""
     data: Dict = None
-    """: Base data to generate card from. Dict of the form ``"key": ["list","of","options"]`` or
-    ``"key":"single_value"``."""
+    """: : Base data to generate card from. Dict of the form ``{"key": ["list","of","options"]}`` or
+    ``{"key":"single_value"}``."""
     content: Dict = None
-    """: Dict of the form ``{"field_on_anki_card": "content"}``."""
+    """: : Dict of the form ``{"field_on_anki_card": "content"}``."""
     search_term: str = None
     # TODO: is this necessary?
     name: str = None
@@ -89,10 +89,10 @@ class Template(BoxLayout):
                 self.add_widget(field.widget)
 
     def get_content_from_fields(self):
-        """
-        Iterate through :class:`fields.Field`s in :attr:`fields` to obtain the processed data and user selection.
+        r"""
+        Iterate through :class:`fields.Field`\ s in :attr:`fields` to obtain the processed data and user selection.
 
-        Return result as merged dict from all :class:`fields.Field`s.
+        Return result as merged dict from all :class:`fields.Field`\\ s.
         """
         res_dict = {}
         for field in self.fields:
