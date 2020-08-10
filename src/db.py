@@ -8,6 +8,7 @@ from pony.orm import (
     buffer,
     Database,
     db_session,
+    dbapiprovider,
     Json,
     Optional,
     PrimaryKey,
@@ -19,8 +20,17 @@ from pony.orm import (
 from generate_anki_card import AnkiObject
 from utils import CD, now_string
 
+# print(os.listdir(), os.path.exists("db.sqlite"))
+# print(os.getcwd())
 db = Database()
-db.bind(provider="sqlite", filename="../db.sqlite", create_db=True)
+try:
+    db.bind(
+        provider="sqlite",
+        filename="/data/data/org.ankicardgen.ankicardgenapp/files/app/db.sqlite",
+        create_db=True,
+    )
+except dbapiprovider.OperationalError:
+    db.bind(provider="sqlite", filename="db.sqlite")
 
 
 # @attr.s(
@@ -202,9 +212,15 @@ def export_cards(card_list, out_folder):
     return True
 
 
+@db_session
+def get_template_names():
+    """Get list of all templates in database."""
+    return list(select(t.name for t in Template))
+
+
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
-    # set_sql_debug(True)
+    #
 
     # with db_session:
     #     # rand_wiki_template = Template(
