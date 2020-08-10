@@ -30,7 +30,7 @@ class CheckableQueue(Queue):
             return item in self.queue
 
 
-class QueueScreen(FloatLayout):
+class QueuedRoot(FloatLayout):
     """Root widget for the queue-screen."""
 
     recycle_list = ObjectProperty()
@@ -53,7 +53,7 @@ class QueueScreen(FloatLayout):
     """:class:`~kivy.properties.ObjectProperty`. Instance of :class:`custom_widgets.dialogs.CustomDialog`."""
 
     def __init__(self, **kwargs):
-        super(QueueScreen, self).__init__(**kwargs)
+        super(QueuedRoot, self).__init__(**kwargs)
         self._init_queue()
         self._init_dialog()
 

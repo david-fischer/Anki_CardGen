@@ -10,7 +10,7 @@ from pony.orm import db_session
 from db import export_cards, get_template
 
 
-class HistoryMain(FloatLayout):
+class HistoryRoot(FloatLayout):
     """Root widget of the history screen."""
 
     action_button_data = bidict(
@@ -23,7 +23,7 @@ class HistoryMain(FloatLayout):
     speed_dial = ObjectProperty()
 
     def __init__(self, **kwargs):
-        super(HistoryMain, self).__init__(**kwargs)
+        super(HistoryRoot, self).__init__(**kwargs)
         Clock.schedule_once(self.__post_init__)
 
     def __post_init__(self, *_):

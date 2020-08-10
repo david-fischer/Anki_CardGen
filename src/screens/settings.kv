@@ -1,3 +1,8 @@
-MDRaisedButton:
-    text: "Theme"
-    on_press: app.theme_dialog.open()
+#:import SettingsRoot screens.settings.SettingsRoot
+SettingsRoot:
+    id: settings_root
+    orientation: "vertical"
+
+    MDRaisedButton:
+        text: "Theme"
+        on_press: app.theme_dialog.open()
