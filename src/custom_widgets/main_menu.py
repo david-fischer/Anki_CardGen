@@ -2,6 +2,7 @@
 
 import os
 
+import toolz
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import ListProperty, StringProperty
@@ -152,6 +153,17 @@ class MainMenu(StackLayout):
     def get_screen(self, screen_name):
         """Return screen by name."""
         return [screen for screen in self.screens if screen.name == screen_name][0]
+
+    def get_item_text(self, screen):
+        """Get the text of the :class:`DrawerItem` corresponding to a screen."""
+        if not screen:
+            return None
+        screen_dict = toolz.first(
+            screen_dict
+            for screen_dict in self.screen_dicts
+            if screen_dict["name"] == screen.name
+        )
+        return screen_dict["text"]
 
     def get_screen_names(self):
         """Return screen names."""
