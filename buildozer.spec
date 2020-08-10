@@ -13,7 +13,7 @@ package.domain = org.ankicardgen
 source.dir = src
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg
+source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg,sqlite
 
 # (list) List of inclusions using pattern matching
 #source.include_patterns = assets/*,images/*.png
@@ -28,7 +28,7 @@ source.exclude_dirs = bin, test, .buildozer, docs
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.4.0
+version = 0.5.0
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -36,7 +36,7 @@ version = 0.4.0
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,googletrans,pillow,cached_property,pystache,pyyaml,soupsieve,urllib3,chardet,idna,certifi,lxml,imgkit,toolz
+requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,googletrans,pillow,cached_property,pystache,pyyaml,soupsieve,urllib3,chardet,idna,certifi,lxml,imgkit,toolz,sdl2_ttf==2.0.15,pony,bidict
 #,spacy
 #,setuptools,preshed,thinc,blis,tqdm,murmurhash,numpy,wasabi,plac,catalogue,cymem,srsly,importlib_metadata,zipp
 
