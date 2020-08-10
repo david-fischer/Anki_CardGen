@@ -54,7 +54,7 @@
     orientation:"tb-lr"
     MDToolbar:
         id: main_toolbar
-        title: "Anki CardGen"
+        title: root.get_item_text(screen_man.current_screen) or "Anki CardGen"
         elevation: 10
         icon_color: self.theme_cls.text_color
         left_action_items: [['menu', lambda x: nav_drawer.set_state("toggle")]]
