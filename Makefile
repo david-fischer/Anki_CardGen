@@ -19,6 +19,7 @@ clean:
 	buildozer appclean
 
 docs:
+	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	xdg-open docs/_build/html/index.html
 
