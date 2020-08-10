@@ -83,9 +83,11 @@
 
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">UI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
 
@@ -312,7 +314,7 @@
             <span class="n">field</span><span class="p">:</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="n">field</span><span class="p">]</span> <span class="k">if</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span>
         <span class="p">}</span>
         <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="n">fields</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">fields</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
-        <span class="n">new_note</span> <span class="o">=</span> <span class="n">genanki</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">sort_field</span><span class="o">=</span><span class="s2">&quot;Word&quot;</span><span class="p">)</span>
+        <span class="n">new_note</span> <span class="o">=</span> <span class="n">genanki</span><span class="o">.</span><span class="n">Note</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">fields</span><span class="o">=</span><span class="n">fields</span><span class="p">,</span> <span class="n">sort_field</span><span class="o">=</span><span class="s2">&quot;word&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">media_files</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">.</span><span class="n">media_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">deck</span><span class="o">.</span><span class="n">add_note</span><span class="p">(</span><span class="n">new_note</span><span class="p">)</span></div>
@@ -332,9 +334,9 @@
     <span class="n">ankiobject</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span>
     <span class="n">ankiobject</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span>
         <span class="o">**</span><span class="n">smart_loader</span><span class="p">(</span><span class="s2">&quot;../app_data/words/casa/casa_card.json&quot;</span><span class="p">)</span>
-        <span class="c1"># Word=&quot;casa&quot;,</span>
-        <span class="c1"># Audio=&quot;[sound:casa.mp3]&quot;,</span>
-        <span class="c1"># Image=&#39;&lt;img src=&quot;casa.jpg&quot;&gt;&#39;,</span>
+        <span class="c1"># word=&quot;casa&quot;,</span>
+        <span class="c1"># audio=&quot;[sound:casa.mp3]&quot;,</span>
+        <span class="c1"># image=&#39;&lt;img src=&quot;casa.jpg&quot;&gt;&#39;,</span>
         <span class="c1"># media_files=[&quot;../words/casa/casa.mp3&quot;, &quot;../words/casa/casa.jpg&quot;],</span>
     <span class="p">)</span>
     <span class="c1"># ankiobject.write_apkg(&quot;output.apkg&quot;)</span>

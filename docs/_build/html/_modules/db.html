@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>db &mdash; ACG 0.3.0 documentation</title>
+
+
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ACG</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+
+          <li><a href="index.html">Module code</a> &raquo;</li>
+
+      <li>db</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for db</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">The app uses :mod:`pony` to manage a sqlite-database.</span>
+<span class="sd">The database is structured as follows:</span>
+
+<span class="sd">.. image:: ../docs/ponyorm_diagram.png</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+
+<span class="kn">import</span> <span class="nn">toolz</span>
+<span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">buffer</span><span class="p">,</span>
+    <span class="n">Database</span><span class="p">,</span>
+    <span class="n">db_session</span><span class="p">,</span>
+    <span class="n">dbapiprovider</span><span class="p">,</span>
+    <span class="n">Json</span><span class="p">,</span>
+    <span class="n">Optional</span><span class="p">,</span>
+    <span class="n">PrimaryKey</span><span class="p">,</span>
+    <span class="n">Required</span><span class="p">,</span>
+    <span class="n">select</span><span class="p">,</span>
+    <span class="n">Set</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">generate_anki_card</span> <span class="kn">import</span> <span class="n">AnkiObject</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">CD</span><span class="p">,</span> <span class="n">now_string</span>
+
+<span class="c1"># print(os.listdir(), os.path.exists(&quot;db.sqlite&quot;))</span>
+<span class="c1"># print(os.getcwd())</span>
+<span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">()</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+        <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;/data/data/org.ankicardgen.ankicardgenapp/files/app/db.sqlite&quot;</span><span class="p">,</span>
+        <span class="n">create_db</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="k">except</span> <span class="n">dbapiprovider</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">:</span>
+    <span class="n">db</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;db.sqlite&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Template"><a class="viewcode-back" href="../db.html#db.Template">[docs]</a><span class="k">class</span> <span class="nc">Template</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Contains data of a :class:`fields.Template` and all cards that have been generated with the template.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Template.id"><a class="viewcode-back" href="../db.html#db.Template.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Id.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Template.cls_name"><a class="viewcode-back" href="../db.html#db.Template.cls_name">[docs]</a>    <span class="n">cls_name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;The &quot;module.class&quot; to construct the template from.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Template.name"><a class="viewcode-back" href="../db.html#db.Template.name">[docs]</a>    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;A unique name for the template.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Template.description"><a class="viewcode-back" href="../db.html#db.Template.description">[docs]</a>    <span class="n">description</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;A short description of the template.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Template.cards"><a class="viewcode-back" href="../db.html#db.Template.cards">[docs]</a>    <span class="n">cards</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s2">&quot;Card&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;References to all the cards that have been generated using this template.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Template.additional_info"><a class="viewcode-back" href="../db.html#db.Template.additional_info">[docs]</a>    <span class="n">additional_info</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">Json</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Additional info.&quot;&quot;&quot;</span>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="Template.get_card"><a class="viewcode-back" href="../db.html#db.Template.get_card">[docs]</a>    <span class="k">def</span> <span class="nf">get_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get a single :class:`Card` by name. (unique attribute).&quot;&quot;&quot;</span>
+        <span class="n">cards_by_name</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">cards_by_name</span><span class="p">)</span> <span class="k">if</span> <span class="n">cards_by_name</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="Template.get_cards_by_selector"><a class="viewcode-back" href="../db.html#db.Template.get_cards_by_selector">[docs]</a>    <span class="k">def</span> <span class="nf">get_cards_by_selector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selector</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get cards by selector.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">select</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">cards</span> <span class="k">if</span> <span class="n">selector</span><span class="p">(</span><span class="n">c</span><span class="p">))</span></div>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="Template.add_card"><a class="viewcode-back" href="../db.html#db.Template.add_card">[docs]</a>    <span class="k">def</span> <span class="nf">add_card</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a new :class:`Card` with relation to this template.&quot;&quot;&quot;</span>
+        <span class="n">card</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="s2">&quot;waiting&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">card</span></div></div>
+
+
+<div class="viewcode-block" id="Card"><a class="viewcode-back" href="../db.html#db.Card">[docs]</a><span class="k">class</span> <span class="nc">Card</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Object containing the data for a card.&quot;&quot;&quot;</span>
+
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">base_data</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">Json</span><span class="p">)</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">Json</span><span class="p">)</span>
+    <span class="n">media_files</span> <span class="o">=</span> <span class="n">Set</span><span class="p">(</span><span class="s2">&quot;MediaFile&quot;</span><span class="p">)</span>
+    <span class="n">dt_queried</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">datetime</span><span class="p">)</span>
+    <span class="n">dt_generated</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">datetime</span><span class="p">)</span>
+    <span class="n">dt_exported</span> <span class="o">=</span> <span class="n">Optional</span><span class="p">(</span><span class="n">datetime</span><span class="p">)</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="n">Template</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__setattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Change state according to values set.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Card</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;base_data&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dt_queried</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;ready&quot;</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">&quot;fields&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dt_generated</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;done&quot;</span>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="Card.get_media"><a class="viewcode-back" href="../db.html#db.Card.get_media">[docs]</a>    <span class="k">def</span> <span class="nf">get_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field_key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get :class:`MediaFile` of this card by ``field_key`` which is unique.&quot;&quot;&quot;</span>
+        <span class="n">media_files</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_files</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">field_key</span> <span class="o">==</span> <span class="n">field_key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">media_files</span><span class="p">)</span> <span class="k">if</span> <span class="n">media_files</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="Card.add_media"><a class="viewcode-back" href="../db.html#db.Card.add_media">[docs]</a>    <span class="k">def</span> <span class="nf">add_media</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a new :class:`MediaFile` to this card.&quot;&quot;&quot;</span>
+        <span class="n">media_file</span> <span class="o">=</span> <span class="n">MediaFile</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">card</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">media_file</span></div>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="Card.write_media_files_to_folder"><a class="viewcode-back" href="../db.html#db.Card.write_media_files_to_folder">[docs]</a>    <span class="k">def</span> <span class="nf">write_media_files_to_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write media-files in :attr:`media_files` to folder with name `folder`.&quot;&quot;&quot;</span>
+        <span class="n">media_files</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">media_files</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">m_file</span> <span class="ow">in</span> <span class="n">media_files</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">m_file</span><span class="o">.</span><span class="n">type</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="n">folder</span><span class="p">):</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+                    <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">m_file</span><span class="o">.</span><span class="n">content</span><span class="p">)</span></div></div>
+
+
+<span class="c1">## UNUSED FOR THE MOMENT:</span>
+<span class="c1"># class Parser(db.Entity):</span>
+<span class="c1">#     id = PrimaryKey(int, auto=True)</span>
+<span class="c1">#     name = Required(str)</span>
+<span class="c1">#     cls_name = Required(str)</span>
+<span class="c1">#     init_json = Optional(Json)</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="c1"># class Field(db.Entity):</span>
+<span class="c1">#     id = PrimaryKey(int, auto=True)</span>
+<span class="c1">#     name = Required(str)</span>
+<span class="c1">#     cls_name = Required(str)</span>
+<span class="c1">#     init_json = Optional(Json)</span>
+<span class="c1">#     callback_str = Optional(str)</span>
+
+
+<div class="viewcode-block" id="MediaFile"><a class="viewcode-back" href="../db.html#db.MediaFile">[docs]</a><span class="k">class</span> <span class="nc">MediaFile</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class containing a media-file.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MediaFile.id"><a class="viewcode-back" href="../db.html#db.MediaFile.id">[docs]</a>    <span class="nb">id</span> <span class="o">=</span> <span class="n">PrimaryKey</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">auto</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Unique id.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MediaFile.type"><a class="viewcode-back" href="../db.html#db.MediaFile.type">[docs]</a>    <span class="nb">type</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;File type, e.g. &quot;mp3&quot;, &quot;jpg&quot;, &quot;png&quot;, etc. ...&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MediaFile.field_key"><a class="viewcode-back" href="../db.html#db.MediaFile.field_key">[docs]</a>    <span class="n">field_key</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Name of the field of the card which the content belongs to.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MediaFile.content"><a class="viewcode-back" href="../db.html#db.MediaFile.content">[docs]</a>    <span class="n">content</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Bytes object with media-file.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MediaFile.card"><a class="viewcode-back" href="../db.html#db.MediaFile.card">[docs]</a>    <span class="n">card</span> <span class="o">=</span> <span class="n">Required</span><span class="p">(</span><span class="n">Card</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Relation to :class:`Card` object.&quot;&quot;&quot;</span>
+
+    <span class="nd">@db_session</span>
+<div class="viewcode-block" id="MediaFile.update"><a class="viewcode-back" href="../db.html#db.MediaFile.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update attributes by ``*kwargs``.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div></div>
+
+
+<span class="n">db</span><span class="o">.</span><span class="n">generate_mapping</span><span class="p">(</span><span class="n">create_tables</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<span class="nd">@db_session</span>
+<div class="viewcode-block" id="get_template"><a class="viewcode-back" href="../db.html#db.get_template">[docs]</a><span class="k">def</span> <span class="nf">get_template</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get :class:`Template` by unique ``name``-attribute.&quot;&quot;&quot;</span>
+    <span class="n">templates</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">Template</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">templates</span><span class="p">)</span> <span class="k">if</span> <span class="n">templates</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+<span class="nd">@db_session</span>
+<div class="viewcode-block" id="new_template"><a class="viewcode-back" href="../db.html#db.new_template">[docs]</a><span class="k">def</span> <span class="nf">new_template</span><span class="p">(</span><span class="n">template_obj</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a new entry in the database from an :class:`fields.Template`-object.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">Template</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="n">template_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+        <span class="n">cls_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;fields.</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">template_obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;A template.&quot;</span><span class="p">,</span></div>
+    <span class="p">)</span>
+
+
+<span class="nd">@db_session</span>
+<div class="viewcode-block" id="get_card_by_id"><a class="viewcode-back" href="../db.html#db.get_card_by_id">[docs]</a><span class="k">def</span> <span class="nf">get_card_by_id</span><span class="p">(</span><span class="n">card_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get card from database by id.&quot;&quot;&quot;</span>
+    <span class="n">card_list</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">Card</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">card_id</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">card_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">card_list</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="export_cards"><a class="viewcode-back" href="../db.html#db.export_cards">[docs]</a><span class="k">def</span> <span class="nf">export_cards</span><span class="p">(</span><span class="n">card_list</span><span class="p">,</span> <span class="n">out_folder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Export cards to &lt;template_name&gt;_&lt;time-stamp&gt;.apkg file in out_folder.&quot;&quot;&quot;</span>
+    <span class="n">anki_obj</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">card_list</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Empty list.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">folder_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;temp_</span><span class="si">{</span><span class="n">now_string</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">folder_name</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">card_list</span><span class="p">:</span>
+        <span class="n">card</span><span class="o">.</span><span class="n">write_media_files_to_folder</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
+        <span class="n">content_dict</span> <span class="o">=</span> <span class="n">card</span><span class="o">.</span><span class="n">fields</span>
+        <span class="n">anki_obj</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span><span class="o">**</span><span class="n">content_dict</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">CD</span><span class="p">(</span><span class="n">folder_name</span><span class="p">):</span>
+        <span class="n">file_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">card_list</span><span class="p">)</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">now_string</span><span class="p">()</span><span class="si">}</span><span class="s1">.apkg&#39;</span>
+        <span class="n">anki_obj</span><span class="o">.</span><span class="n">write_apkg</span><span class="p">(</span><span class="n">file_name</span><span class="p">)</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder_name</span><span class="p">,</span> <span class="n">file_name</span><span class="p">),</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_folder</span><span class="p">,</span> <span class="n">file_name</span><span class="p">))</span>
+    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="n">card_list</span><span class="p">:</span>
+        <span class="n">card</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;exported&quot;</span>
+        <span class="n">card</span><span class="o">.</span><span class="n">dt_exported</span> <span class="o">=</span> <span class="n">now</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">folder_name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<span class="nd">@db_session</span>
+<div class="viewcode-block" id="get_template_names"><a class="viewcode-back" href="../db.html#db.get_template_names">[docs]</a><span class="k">def</span> <span class="nf">get_template_names</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Get list of all templates in database.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">select</span><span class="p">(</span><span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">Template</span><span class="p">))</span></div>
+
+
+<span class="c1"># pylint: disable = W,C,R,I</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="c1">#</span>
+
+    <span class="c1"># with db_session:</span>
+    <span class="c1">#     # rand_wiki_template = Template(</span>
+    <span class="c1">#     #     name=&quot;Random Wiki Template&quot;,</span>
+    <span class="c1">#     #     cls_name=&quot;fields.Template&quot;,</span>
+    <span class="c1">#     #     description=&quot;Generate cards from random articles of a topic on Wikipedia.&quot;,</span>
+    <span class="c1">#     # )</span>
+    <span class="c1">#     rand_wiki_template = Template(</span>
+    <span class="c1">#         name=&quot;Portuguese Vocab&quot;,</span>
+    <span class="c1">#         cls_name=&quot;fields.PtTemplate&quot;,</span>
+    <span class="c1">#         description=&quot;Generate beautiful cards to learn brazilian portuguese vocabulary.\nSources: Dicio,Reverso,&quot;</span>
+    <span class="c1">#         &quot;Linguee and Google Images.&quot;,</span>
+    <span class="c1">#     )</span>
+    <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;Portuguese Vocab&quot;</span><span class="p">)</span>
+        <span class="n">cards</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">cards</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;done&quot;</span> <span class="ow">or</span> <span class="s2">&quot;exported&quot;</span><span class="p">))</span>
+        <span class="n">export_cards</span><span class="p">(</span><span class="n">cards</span><span class="p">,</span> <span class="s2">&quot;/home/david/Schreibtisch/&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+
+          </div>
+          <footer>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

@@ -86,13 +86,16 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Word Processing</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="word_processing/anki.html">Generate Anki Cards</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html">Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html">Parsers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="word_processing/words.html">Words</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html">Templates</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="ui.html">UI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="db.html">Database</a></li>
 </ul>
 
 
@@ -160,11 +163,34 @@
 
   <div class="section" id="word-processing">
 <h1>Word Processing<a class="headerlink" href="#word-processing" title="Permalink to this headline">¶</a></h1>
+<p>The main object for the card generation is the <a class="reference internal" href="word_processing/templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a>, which contains a number of
+<a class="reference internal" href="word_processing/parsers.html#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.Parser</span></code></a>s and <a class="reference internal" href="word_processing/fields.html#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a>s.
+Each parser fetches data in some form.
+Each field uses a part of this data to do one or more of the following:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>process the data</p></li>
+<li><p>display the data to the user</p></li>
+<li><p>let the user make a choice or edit the data</p></li>
+</ul>
+</div></blockquote>
+<p>If the <a class="reference internal" href="word_processing/templates.html#templates.Template.get_results" title="templates.Template.get_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">templates.Template.get_results()</span></code></a> is called, each field returns a dict that is then merged into one.</p>
+<p>This one dict should contain values for each field of the anki card that should be generated.</p>
+<p>Feel free to define your own <code class="xref py py-class docutils literal notranslate"><span class="pre">template.Template</span></code>s by the following steps:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>inherit from <a class="reference internal" href="word_processing/templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a></p></li>
+<li><p>define parsers and fields</p></li>
+<li><p>(customize further if you like)</p></li>
+<li><p>add template to database to make it available in the app</p></li>
+</ul>
+</div></blockquote>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="word_processing/anki.html">Generate Anki Cards</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_processing/fields.html">Fields</a></li>
 <li class="toctree-l1"><a class="reference internal" href="word_processing/parsers.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_processing/words.html">Words</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_processing/templates.html">Templates</a></li>
 </ul>
 </div>
 </div>

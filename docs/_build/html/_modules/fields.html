@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>fields &mdash; ACG 0.3.0 documentation</title>
+
+
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ACG</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+
+          <li><a href="index.html">Module code</a> &raquo;</li>
+
+      <li>fields</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <h1>Source code for fields</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Implementation of :class:`Field` and subclasses. They are used in the :attr:`templates.template.fields` attribute.</span>
+
+<span class="sd">Each one is responsible handling a part of data-procesing in the card-generation process. This allows easy</span>
+<span class="sd">customization of :class:`templates.Template`.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">attr</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bidict</span> <span class="kn">import</span> <span class="n">bidict</span>
+<span class="kn">from</span> <span class="nn">googletrans</span> <span class="kn">import</span> <span class="n">Translator</span>
+<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
+<span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
+
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">compress_img_bytes</span>
+
+<span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="TranslationMixin"><a class="viewcode-back" href="../word_processing/fields.html#fields.TranslationMixin">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">TranslationMixin</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Mixin-Class that adds missing translations to the ``target_field`` of the ``template.data`` dict.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TranslationMixin.template"><a class="viewcode-back" href="../word_processing/fields.html#fields.TranslationMixin.template">[docs]</a>    <span class="n">template</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Instance of :class:`templates.template`.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TranslationMixin.trans_callback"><a class="viewcode-back" href="../word_processing/fields.html#fields.TranslationMixin.trans_callback">[docs]</a>    <span class="n">trans_callback</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Function that is applied to the data in source field to obtain a translation.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TranslationMixin.src_field"><a class="viewcode-back" href="../word_processing/fields.html#fields.TranslationMixin.src_field">[docs]</a>    <span class="n">src_field</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Name of the source_field of :attr:`template`.data.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TranslationMixin.target_field"><a class="viewcode-back" href="../word_processing/fields.html#fields.TranslationMixin.target_field">[docs]</a>    <span class="n">target_field</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Name of the target_field of :attr:`template`.data.&quot;&quot;&quot;</span>
+    <span class="n">_kv_bidict</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;Mapping between fields and kv_attributes of widgets.&quot;&quot;&quot;</span>
+
+    <span class="nd">@_kv_bidict</span><span class="o">.</span><span class="n">default</span>
+    <span class="k">def</span> <span class="nf">_get_kv_dict_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">bidict</span><span class="p">({</span><span class="bp">self</span><span class="o">.</span><span class="n">src_field</span><span class="p">:</span> <span class="s2">&quot;text_orig&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">target_field</span><span class="p">:</span> <span class="s2">&quot;text_trans&quot;</span><span class="p">})</span>
+
+    <span class="nd">@trans_callback</span><span class="o">.</span><span class="n">default</span>
+    <span class="k">def</span> <span class="nf">_default_trans_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">translate</span>
+
+<div class="viewcode-block" id="TranslationMixin.pre_process"><a class="viewcode-back" href="../word_processing/fields.html#fields.TranslationMixin.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Add translations, where they are missing.</span>
+
+<span class="sd">        Handles the cases that source and target are strings or list of strings.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;pre_process&quot;</span><span class="p">):</span>
+            <span class="nb">super</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">pre_process</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">src_field</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_field</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">target_field</span><span class="p">,</span> <span class="kc">None</span>
+                <span class="p">)</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_callback</span><span class="p">(</span><span class="n">src_data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">target_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target_field</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[</span>
+                    <span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">src_data</span>
+                <span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">target_data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">src_data</span><span class="p">):</span>
+                    <span class="n">target_data</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">target_data</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">src_data</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target_field</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="n">trans</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">trans_callback</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">source</span><span class="p">,</span> <span class="n">trans</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="n">target_data</span><span class="p">)</span></div></div>
+                <span class="p">]</span>
+
+
+<div class="viewcode-block" id="Field"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">Field</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base-class for fields.</span>
+
+<span class="sd">    Accesses the data in :attr:`template`.data, can perform actions on the obtained data and/or display it in a</span>
+<span class="sd">    widget to allow user input to change it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Field.template"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.template">[docs]</a>    <span class="n">template</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;Reference to :class:`templates.Template`.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Field.field_name"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.field_name">[docs]</a>    <span class="n">field_name</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;default_field&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Key of :attr:`template`.data which this field is handling.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Field.widget"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.widget">[docs]</a>    <span class="n">widget</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">object</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Gets constructed by :meth:`~kivy.lang.Builder.load_string` from :attr:`widget_kv` if set.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Field.widget_kv"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.widget_kv">[docs]</a>    <span class="n">widget_kv</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;If set, widget gets constructed.&quot;&quot;&quot;</span>
+    <span class="n">_kv_bidict</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+    <span class="sd">&quot;&quot;&quot;Mapping between attributes of kivy-widget and field_name.&quot;&quot;&quot;</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="Field.kv_bidict"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.kv_bidict">[docs]</a>    <span class="k">def</span> <span class="nf">kv_bidict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Getter function for :attr:`_audio_url`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_kv_bidict</span></div>
+
+    <span class="nd">@kv_bidict</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">kv_bidict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set :attr:`_audio_url` and download file.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">bidict</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">bidict</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_kv_bidict</span> <span class="o">=</span> <span class="n">value</span>
+
+    <span class="nd">@_kv_bidict</span><span class="o">.</span><span class="n">default</span>
+    <span class="k">def</span> <span class="nf">_default_kv_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">bidict</span><span class="p">({</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">:</span> <span class="s2">&quot;text&quot;</span><span class="p">})</span>
+
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_kv</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">construct_widget</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Field.pre_process"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Field.post_process"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">content</span></div>
+
+<div class="viewcode-block" id="Field.get_data"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get dictionary to construct :attr:`widget`.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="n">value</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span>
+            <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_bidict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></div>
+        <span class="p">}</span>
+
+<div class="viewcode-block" id="Field.construct_widget"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.construct_widget">[docs]</a>    <span class="k">def</span> <span class="nf">construct_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Construct widget that is used for the selection of :attr:`content`.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget_kv</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_widget_data</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Field.update"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply :meth:`pre_process` and :meth:`update_widget_data`.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pre_process</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_widget_data</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Field.update_widget_data"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.update_widget_data">[docs]</a>    <span class="k">def</span> <span class="nf">update_widget_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if widget is present and update the attributes of the kivy-widget from :attr:`template`.data.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_bidict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Field.get_content"><a class="viewcode-back" href="../word_processing/fields.html#fields.Field.get_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If :attr:`widget` is set, use :attr:`kv_bidict` to extract.</span>
+
+<span class="sd">        Calls :meth:`post_process` on the data before returning it.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">key</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_bidict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">]}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="DisplayTextField"><a class="viewcode-back" href="../word_processing/fields.html#fields.DisplayTextField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DisplayTextField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Only displays text.&quot;&quot;&quot;</span>
+
+    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">MDLabel:</span>
+<span class="s2">    size_hint:1, None</span>
+<span class="s2">    size: self.texture_size</span>
+<span class="s2">&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="TextInputField"><a class="viewcode-back" href="../word_processing/fields.html#fields.TextInputField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">TextInputField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Displays text and lets user edit it.</span>
+
+<span class="sd">    If callback is set, it will be called ``on_text_validate``, i.e. when the user presses enter while field is in</span>
+<span class="sd">    focus.</span>
+
+<span class="sd">    Useful to bind to :meth:`templates.Template.search` or `templates.Template.update_from_single_parser`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TextInputField.callback"><a class="viewcode-back" href="../word_processing/fields.html#fields.TextInputField.callback">[docs]</a>    <span class="n">callback</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;Gets called ``on_text_validate`` of the kivy-widget.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TextInputField.widget_kv"><a class="viewcode-back" href="../word_processing/fields.html#fields.TextInputField.widget_kv">[docs]</a>    <span class="n">widget_kv</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;MDTextField&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;kv-string describing the widget.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TextInputField.construct_widget"><a class="viewcode-back" href="../word_processing/fields.html#fields.TextInputField.construct_widget">[docs]</a>    <span class="k">def</span> <span class="nf">construct_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Furthermore add :attr:`field_name` as hint-text and bind ``on_text_validate``.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TextInputField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">construct_widget</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">hint_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_text_validate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_text_validate</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TextInputField.on_text_validate"><a class="viewcode-back" href="../word_processing/fields.html#fields.TextInputField.on_text_validate">[docs]</a>    <span class="k">def</span> <span class="nf">on_text_validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">widget</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wrapper-function for the possible call of :attr:`callback`.&quot;&quot;&quot;</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">widget</span><span class="o">.</span><span class="n">text</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="OptionsField"><a class="viewcode-back" href="../word_processing/fields.html#fields.OptionsField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">OptionsField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base-class for a field with multiple options to choose from.&quot;&quot;&quot;</span>
+
+    <span class="n">get_selection</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OptionsField.get_data"><a class="viewcode-back" href="../word_processing/fields.html#fields.OptionsField.get_data">[docs]</a>    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get dictionaries to construct children of :attr:`widget`.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="n">min_len</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span> <span class="k">else</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_bidict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">min_len</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">{</span><span class="n">value</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_bidict</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">min_len</span><span class="p">)</span></div>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="OptionsField.update_widget_data"><a class="viewcode-back" href="../word_processing/fields.html#fields.OptionsField.update_widget_data">[docs]</a>    <span class="k">def</span> <span class="nf">update_widget_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update widget (if present) with data from :meth:`get_data`.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="OptionsField.get_content"><a class="viewcode-back" href="../word_processing/fields.html#fields.OptionsField.get_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If :attr:`widget` is set, gets content from widget using :attr:`kv_bidict`.</span>
+
+<span class="sd">        If :attr:`selection_callback` is set, get content from call.</span>
+
+<span class="sd">        Else simply get the first option as default.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget_kv</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="p">,</span> <span class="s2">&quot;get_checked&quot;</span><span class="p">):</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="n">field</span><span class="p">:</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="nb">getattr</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">kv_attr</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">widget</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">get_checked</span><span class="p">()</span>
+                        <span class="k">if</span> <span class="n">widget</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">field</span><span class="p">,</span> <span class="n">kv_attr</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_bidict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selection</span><span class="p">:</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_selection</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">]</span>
+            <span class="n">content</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="n">options</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">options</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">1</span>
+                    <span class="k">else</span> <span class="n">options</span>
+                <span class="p">)</span>
+            <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CheckChipOptionsField"><a class="viewcode-back" href="../word_processing/fields.html#fields.CheckChipOptionsField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">CheckChipOptionsField</span><span class="p">(</span><span class="n">OptionsField</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pick multiple options using :class:`custom_widgets.selection_widgets.CheckChip`\\ s.&quot;&quot;&quot;</span>
+
+    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;MyCheckChipContainer&quot;</span></div>
+
+
+<div class="viewcode-block" id="TransChipOptionsField"><a class="viewcode-back" href="../word_processing/fields.html#fields.TransChipOptionsField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">TransChipOptionsField</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="n">OptionsField</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pick a single options using :class:`custom_widgets.selection_widgets.MyTransChip`\\ s.</span>
+
+<span class="sd">    Inheritance from :class:`TranslationMixin` guarantees that translations are available.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">MyCheckChipContainer</span>
+<span class="s2">    child_class_name: &quot;MyTransChip&quot;</span>
+<span class="s2">    check_one: True&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="DualLongTextField"><a class="viewcode-back" href="../word_processing/fields.html#fields.DualLongTextField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">DualLongTextField</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="n">OptionsField</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pick a single options using :class:`custom_widgets.selection_widgets.CardCarousel`.</span>
+
+<span class="sd">    Useful for longer text, i.e. examples or explanations.</span>
+
+<span class="sd">    Inheritance from :class:`TranslationMixin` guarantees that translations are available.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CardCarousel&quot;</span></div>
+
+
+<div class="viewcode-block" id="MediaField"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">MediaField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Handles download of a single media-file and content of corresponding field.</span>
+
+<span class="sd">    The field should only contain the a single url.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="MediaField.file_type"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField.file_type">[docs]</a>    <span class="n">file_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;mp3&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;File-type of media-file.&quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MediaField.get_media_file"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField.get_media_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_media_file</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Download file using :meth:`requests.get`.&quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;downloading file from </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;done.&quot;</span> <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">ok</span> <span class="k">else</span> <span class="s2">&quot;download failed :(&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">ok</span> <span class="k">else</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MediaField.get_file_strings"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField.get_file_strings">[docs]</a>    <span class="k">def</span> <span class="nf">get_file_strings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get string that embeds the file in the anki-card.&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Add different media types.</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_type</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">search_term</span>
+        <span class="k">if</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;png&quot;</span><span class="p">]:</span>
+            <span class="n">field_val</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&lt;img src=&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s1">&quot;&gt;&#39;</span>
+        <span class="k">elif</span> <span class="n">ext</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;wav&quot;</span><span class="p">,</span> <span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="s2">&quot;ogg&quot;</span><span class="p">]:</span>
+            <span class="n">field_val</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;[sound:</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">]&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">field_val</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2"> (don&#39;t know how to embed).&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">ext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">field_val</span></div>
+
+<div class="viewcode-block" id="MediaField.save_media_file"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField.save_media_file">[docs]</a>    <span class="k">def</span> <span class="nf">save_media_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">media_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save media_file to the data-base.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
+            <span class="n">current_card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">current_card_db</span><span class="p">()</span>
+            <span class="n">media_file_db</span> <span class="o">=</span> <span class="n">current_card</span><span class="o">.</span><span class="n">get_media</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">media_file_db</span><span class="p">:</span>
+                <span class="n">media_file_db</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+                    <span class="n">content</span><span class="o">=</span><span class="n">media_file</span><span class="p">,</span> <span class="n">field_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_type</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current_card</span><span class="o">.</span><span class="n">add_media</span><span class="p">(</span>
+                    <span class="n">content</span><span class="o">=</span><span class="n">media_file</span><span class="p">,</span> <span class="n">field_key</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">file_type</span></div>
+                <span class="p">)</span>
+
+<div class="viewcode-block" id="MediaField.pre_process"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField.pre_process">[docs]</a>    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Obtain url, download and save file.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">]</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">url</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">media_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_media_file</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">media_file</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_media_file</span><span class="p">(</span><span class="n">media_file</span><span class="o">=</span><span class="n">media_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MediaField.post_process"><a class="viewcode-back" href="../word_processing/fields.html#fields.MediaField.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return strings for the fields of the anki-card.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
+            <span class="n">current_card</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">current_card_db</span><span class="p">()</span>
+            <span class="n">media_file_db</span> <span class="o">=</span> <span class="n">current_card</span><span class="o">.</span><span class="n">get_media</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">)</span>
+        <span class="n">file_name</span><span class="p">,</span> <span class="n">field_val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_file_strings</span><span class="p">()</span>
+        <span class="n">content</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">field_val</span>
+        <span class="n">content</span><span class="p">[</span><span class="s2">&quot;media_files&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">file_name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">content</span> <span class="k">if</span> <span class="n">media_file_db</span> <span class="k">else</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span></div></div>
+
+
+<div class="viewcode-block" id="ImgField"><a class="viewcode-back" href="../word_processing/fields.html#fields.ImgField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<span class="k">class</span> <span class="nc">ImgField</span><span class="p">(</span><span class="n">OptionsField</span><span class="p">,</span> <span class="n">MediaField</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Let user choose between multiple images.&quot;&quot;&quot;</span>
+
+    <span class="n">file_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;jpg&quot;</span><span class="p">)</span>
+    <span class="n">widget_kv</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;ImageCarousel&quot;</span><span class="p">)</span>
+    <span class="n">_kv_bidict</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">()</span>
+
+    <span class="nd">@_kv_bidict</span><span class="o">.</span><span class="n">default</span>
+    <span class="k">def</span> <span class="nf">_get_kv_dict_default</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">bidict</span><span class="p">({</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">:</span> <span class="s2">&quot;source&quot;</span><span class="p">})</span>
+
+<div class="viewcode-block" id="ImgField.post_process"><a class="viewcode-back" href="../word_processing/fields.html#fields.ImgField.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Download user choice and save to data-base.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">content</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="n">img_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_media_file</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">img_file</span><span class="p">:</span>
+                <span class="n">img_file</span> <span class="o">=</span> <span class="n">compress_img_bytes</span><span class="p">(</span><span class="n">img_file</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_media_file</span><span class="p">(</span><span class="n">media_file</span><span class="o">=</span><span class="n">img_file</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ImgField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+
+          </div>
+          <footer>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

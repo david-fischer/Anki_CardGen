@@ -115,4 +115,5 @@ intersphinx_mapping = {
     "kivy": ("https://kivy.org/doc/stable/", None),
     "kivymd": ("https://kivymd.readthedocs.io/en/0.104.1/", None),
     "requests": ("https://requests.readthedocs.io/en/master/", None),
+    "pony": ("https://docs.ponyorm.org", None),
 }

@@ -89,7 +89,7 @@ class CustomDialog(MDDialog):
     button_texts = ListProperty(["OK", "CANCEL"])
     """:class:`~kivy.properties.ListProperty` defaults to ``["OK", "CANCEL"]``."""
     callback = ObjectProperty()
-    """:class:`~kivy.properties.ObjectProperty` defaults to ````."""
+    """:class:`~kivy.properties.ObjectProperty` defaults to ``None``."""
     auto_dismiss = False
     """Do not dismiss on click outside the dialog."""
 

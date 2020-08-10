@@ -1,4 +1,4 @@
-utils
+Some useful functions
 --------------------------
 
 .. autoapimodule:: utils
