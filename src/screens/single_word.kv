@@ -1,9 +1,10 @@
 #:import SingleWordMain screens.single_word.SingleWordMain
 SingleWordMain:
-    id: word_prop
-    scroll_view: word_scroll
+    id: single_word_root
+    scroll_view: scroll_view
+    template: app.template
     ScrollView:
-        id: word_scroll
+        id: scroll_view
         do_scroll_x: False
         do_scroll_y: True
         size_hint: 1,1
