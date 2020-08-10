@@ -49,10 +49,11 @@ class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
     """:class:`~kivy.properties.ListProperty` defaults to :attr:`main.AnkiCardGenApp.theme_cls.text_color`."""
 
     current_state = OptionProperty(
-        "queued", options=["loading", "queued", "waiting", "ready", "done", "error"]
+        "queued",
+        options=["loading", "queued", "waiting", "ready", "done", "error", "exported"],
     )
     """:class:`~kivy.properties.OptionProperty` with options
-    ``["loading", "queued", "waiting", "ready", "done", "error"]``."""
+    ``["loading", "queued", "waiting", "ready", "done", "error", "exported"]``."""
 
 
 class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
@@ -63,10 +64,11 @@ class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
     """
 
     current_state = OptionProperty(
-        "queued", options=["loading", "queued", "waiting", "ready", "done", "error"]
+        "queued",
+        options=["loading", "queued", "waiting", "ready", "done", "error", "exported"],
     )
     """:class:`~kivy.properties.OptionProperty` with options
-    ``["loading", "queued", "waiting", "ready", "done", "error"]``."""
+    ``["loading", "queued", "waiting", "ready", "done", "error", "exported"]``."""
 
 
 class ScrollList(ChildrenFromDataBehavior, ScrollView):
