@@ -47,7 +47,8 @@
         size_hint_y: None
         height: self.texture_size[1]
 
-
+    MDSeparator:
+        id: color_sep
 
 <MainMenu>:
     orientation:"tb-lr"
@@ -81,8 +82,16 @@
                     Color:
                         rgba: app.theme_cls.primary_color
                     Rectangle:
-                        size: self.size[0],self.ids.mail.pos[1]
-                        pos: self.pos[0], self.ids.mail.pos[1]- self.ids.mail.height
+                        size: self.size[0], self.ids.color_sep.pos[1]
+                        pos: self.pos[0], self.ids.color_sep.pos[1]
+
+                MDDropDownItem:
+                    id: current_template_drop
+                    pos_hint: {'center_x': .5, 'center_y': .5}
+                    text: app.current_template_name
+                    on_release: root.dropdown_menu.open()
+
+
                 DrawerList:
                     id: drawer_list
                     size_hint: 1,1
