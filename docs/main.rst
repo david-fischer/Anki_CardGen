@@ -1,4 +1,4 @@
-main
+Main App
 -------------------------
 
 .. autoapimodule:: main

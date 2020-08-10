@@ -1,0 +1,438 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Queue Screen &mdash; ACG 0.3.0 documentation</title>
+
+
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Single Word Screen" href="single_word.html" />
+    <link rel="prev" title="History Screen" href="history.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../ui.html">User Interface</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="history.html">History Screen</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Queue Screen</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#queued.CheckableQueue">CheckableQueue</a></li>
+</ul>
+<ul>
+<li class="toctree-l3"><a class="reference internal" href="#queued.QueuedRoot">QueuedRoot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.add_waiting">add_waiting</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.choose_file_to_import">choose_file_to_import</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.click_on_item">click_on_item</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.dequeue_word">dequeue_word</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.dialog">dialog</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.dialog_callback">dialog_callback</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.import_from">import_from</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.import_options">import_options</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.is_duplicate">is_duplicate</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.is_queued">is_queued</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.pause_downloading">pause_downloading</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.queue">queue</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.queue_word">queue_word</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.recycle_list">recycle_list</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.show_replacements_dialog">show_replacements_dialog</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.speed_dial">speed_dial</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.stale">stale</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.start_downloading">start_downloading</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.switch_to_single_word_screen">switch_to_single_word_screen</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#queued.QueuedRoot.worker_single_word">worker_single_word</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="single_word.html">Single Word Screen</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ACG</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+
+          <li><a href="../ui.html">User Interface</a> &raquo;</li>
+
+      <li>Queue Screen</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+            <a href="../_sources/screens/queued.rst.txt" rel="nofollow"> View page source</a>
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="module-queued">
+<span id="queue-screen"></span><h1>Queue Screen<a class="headerlink" href="#module-queued" title="Permalink to this headline">¶</a></h1>
+<p>Contains the functions needed on the screen queue.</p>
+<dl class="py class">
+<dt id="queued.CheckableQueue">
+<em class="property">class </em><code class="sig-prename descclassname">queued.</code><code class="sig-name descname">CheckableQueue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">maxsize</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#CheckableQueue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.CheckableQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/queue.html#queue.Queue" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">queue.Queue</span></code></a></p>
+<p>Queue with additional <code class="xref py py-meth docutils literal notranslate"><span class="pre">__contains__()</span></code> method, so one can check if item is already in queue.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="queued.QueuedRoot">
+<em class="property">class </em><code class="sig-prename descclassname">queued.</code><code class="sig-name descname">QueuedRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
+<p>Root widget for the queue-screen.</p>
+<dl class="py method">
+<dt id="queued.QueuedRoot.add_waiting">
+<code class="sig-name descname">add_waiting</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.add_waiting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.add_waiting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add word in <code class="docutils literal notranslate"><span class="pre">&quot;waiting&quot;</span></code> state, waiting to be queued.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.choose_file_to_import">
+<code class="sig-name descname">choose_file_to_import</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.choose_file_to_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.choose_file_to_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open an instance of <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> to let user choose a file to import.</p>
+<p>Binds function to clicking on file, so the import is started in separate thread.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.click_on_item">
+<code class="sig-name descname">click_on_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.click_on_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.click_on_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dependent of the <code class="docutils literal notranslate"><span class="pre">current_state</span></code> of the <code class="docutils literal notranslate"><span class="pre">item</span></code> performs appropriate action.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.dequeue_word">
+<code class="sig-name descname">dequeue_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.dequeue_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.dequeue_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change state to <code class="docutils literal notranslate"><span class="pre">&quot;waiting&quot;</span></code> and adds <code class="docutils literal notranslate"><span class="pre">word</span></code> to <a class="reference internal" href="#queued.QueuedRoot.stale" title="queued.QueuedRoot.stale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">stale</span></code></a> so it will be skipped in <a class="reference internal" href="#queued.QueuedRoot.queue" title="queued.QueuedRoot.queue"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queue</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="queued.QueuedRoot.dialog">
+<code class="sig-name descname">dialog</code><a class="reference internal" href="../_modules/queued.html#QueuedRoot.dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a>. Instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.dialogs.CustomDialog</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.dialog_callback">
+<code class="sig-name descname">dialog_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">btn_txt</span></em>, <em class="sig-param"><span class="n">words</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.dialog_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.dialog_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add <code class="docutils literal notranslate"><span class="pre">words</span></code> to <a class="reference internal" href="#queued.QueuedRoot.queue" title="queued.QueuedRoot.queue"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queue</span></code></a> if <code class="docutils literal notranslate"><span class="pre">&quot;OK&quot;</span></code>-button was pressed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.import_from">
+<code class="sig-name descname">import_from</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">source</span><span class="o">=</span><span class="default_value">'kindle'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.import_from"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.import_from" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import, process and queue words from file.</p>
+<p>If non-dictionary forms are detected, prompts the user with suggestions for replacement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – Path to file.</p></li>
+<li><p><strong>source</strong> – Type of source. Options=[“kindle”,”txt”] (Default value = “kindle”)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="queued.QueuedRoot.import_options">
+<code class="sig-name descname">import_options</code><a class="reference internal" href="../_modules/queued.html#QueuedRoot.import_options"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.import_options" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> of the form <code class="docutils literal notranslate"><span class="pre">{&quot;icon_name&quot;:&quot;Help</span> <span class="pre">text&quot;}</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.is_duplicate">
+<em class="property">static </em><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.is_duplicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if word is <code class="docutils literal notranslate"><span class="pre">app.word_state_dict</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.is_queued">
+<code class="sig-name descname">is_queued</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.is_queued"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.is_queued" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if word is in <a class="reference internal" href="#queued.QueuedRoot.queue" title="queued.QueuedRoot.queue"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queue</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.pause_downloading">
+<code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.pause_downloading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empty the queue. Worker stop after finishing current task.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="queued.QueuedRoot.queue">
+<code class="sig-name descname">queue</code><a class="reference internal" href="../_modules/queued.html#QueuedRoot.queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.queue" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#queued.CheckableQueue" title="queued.CheckableQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckableQueue</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.queue_word">
+<code class="sig-name descname">queue_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.queue_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.queue_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queue word for downloading.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="queued.QueuedRoot.recycle_list">
+<code class="sig-name descname">recycle_list</code><a class="reference internal" href="../_modules/queued.html#QueuedRoot.recycle_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.recycle_list" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleList</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.show_replacements_dialog">
+<code class="sig-name descname">show_replacements_dialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">replacements</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.show_replacements_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.show_replacements_dialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open dialog to show user possible corrections for the imported words.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="queued.QueuedRoot.speed_dial">
+<code class="sig-name descname">speed_dial</code><a class="reference internal" href="../_modules/queued.html#QueuedRoot.speed_dial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.speed_dial" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> contains reference to
+<a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/button/index.html#kivymd.uix.button.MDFloatingActionButtonSpeedDial" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFloatingActionButtonSpeedDial</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="queued.QueuedRoot.stale">
+<code class="sig-name descname">stale</code><a class="reference internal" href="../_modules/queued.html#QueuedRoot.stale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.stale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of stale words, i.e. words that have been dequeued and will be skipped if appearing in the queue.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.start_downloading">
+<code class="sig-name descname">start_downloading</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.start_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.start_downloading" title="Permalink to this definition">¶</a></dt>
+<dd><p>If no worker is present, start a new one to download data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.switch_to_single_word_screen">
+<em class="property">static </em><code class="sig-name descname">switch_to_single_word_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.switch_to_single_word_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.switch_to_single_word_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch to single_word to generate a card for the clicked word.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="queued.QueuedRoot.worker_single_word">
+<code class="sig-name descname">worker_single_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/queued.html#QueuedRoot.worker_single_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#queued.QueuedRoot.worker_single_word" title="Permalink to this definition">¶</a></dt>
+<dd><p>Take a word from app.queue and process it, changing app.loading_state_dict accordingly.</p>
+<p>Repeat as long as app.queue is not empty.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+        <a href="single_word.html" class="btn btn-neutral float-right" title="Single Word Screen" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+
+
+        <a href="history.html" class="btn btn-neutral float-left" title="History Screen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+
+    </div>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+
+        &copy; Copyright 2020, David Fischer
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

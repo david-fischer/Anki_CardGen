@@ -83,9 +83,11 @@
 
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">UI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">main</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
 
@@ -158,24 +160,15 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
-<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 
-<span class="kn">import</span> <span class="nn">imgkit</span>
-<span class="kn">import</span> <span class="nn">pystache</span>
 <span class="kn">import</span> <span class="nn">toolz</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">mainthread</span>
-<span class="kn">from</span> <span class="nn">kivy.core.image</span> <span class="kn">import</span> <span class="n">Image</span> <span class="k">as</span> <span class="n">KivyImage</span>
-<span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.context_instructions</span> <span class="kn">import</span> <span class="n">Scale</span><span class="p">,</span> <span class="n">Translate</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.fbo</span> <span class="kn">import</span> <span class="n">Fbo</span>
-<span class="kn">from</span> <span class="nn">kivy.graphics.gl_instructions</span> <span class="kn">import</span> <span class="n">ClearBuffers</span><span class="p">,</span> <span class="n">ClearColor</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
 
@@ -297,6 +290,18 @@
         <span class="n">save_dict_to_csv</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
 
+<div class="viewcode-block" id="merge_or_last"><a class="viewcode-back" href="../utils.html#utils.merge_or_last">[docs]</a><span class="k">def</span> <span class="nf">merge_or_last</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;If all args are list, returns merged list. Else returns last arg.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="smart_dict_merge"><a class="viewcode-back" href="../utils.html#utils.smart_dict_merge">[docs]</a><span class="k">def</span> <span class="nf">smart_dict_merge</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;If values are lists they are merged, else the last element is chosen as new value.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">merge_with</span><span class="p">(</span><span class="n">merge_or_last</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="now_string"><a class="viewcode-back" href="../utils.html#utils.now_string">[docs]</a><span class="k">def</span> <span class="nf">now_string</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Return current time in the format ``YYYY-MM-DD_HH:MM:SS``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
@@ -321,113 +326,22 @@
 <span class="sd">      : widget</span>
 
 <span class="sd">    Examples</span>
-<span class="sd">      # &gt;&gt;&gt; widget_by_id(&quot;single_word/edit_tab/word_prop&quot;)</span>
-<span class="sd">      # MDApp.get_running_app().root.ids.screen_man.get_screen(&quot;single_word&quot;).children[</span>
-<span class="sd">      # 0].ids.word_prop</span>
+<span class="sd">      &gt;&gt;&gt; print(widget_by_id(&quot;single_word/word_prop&quot;).__name__)</span>
+<span class="sd">      MDApp.get_running_app().root.get_screen(&quot;single_word&quot;).children[</span>
+<span class="sd">      0].ids.word_prop</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">id_list</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span>
     <span class="n">id_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">id_str</span> <span class="k">for</span> <span class="n">id_str</span> <span class="ow">in</span> <span class="n">id_list</span> <span class="k">if</span> <span class="n">id_str</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">]</span>
     <span class="n">obj</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span>
-    <span class="k">if</span> <span class="n">id_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">screen_names</span><span class="p">:</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="n">id_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">id_str</span> <span class="ow">in</span> <span class="n">id_list</span><span class="p">:</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="n">id_str</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">id_list</span><span class="p">:</span>
+        <span class="n">first_id</span> <span class="o">=</span> <span class="n">id_list</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">first_id</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_screen_names</span><span class="p">():</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="n">first_id</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="n">first_id</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">id_str</span> <span class="ow">in</span> <span class="n">id_list</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="n">id_str</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">obj</span></div>
-
-
-<div class="viewcode-block" id="sleep_decorator"><a class="viewcode-back" href="../utils.html#utils.sleep_decorator">[docs]</a><span class="k">def</span> <span class="nf">sleep_decorator</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Execute sleep(time) before and after decorated function.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="nf">the_real_decorator</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
-        <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-            <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-            <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-            <span class="n">sleep</span><span class="p">(</span><span class="n">time</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">wrapper</span>
-
-    <span class="k">return</span> <span class="n">the_real_decorator</span></div>
-
-
-<span class="nd">@sleep_decorator</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-<span class="nd">@mainthread</span>
-<div class="viewcode-block" id="screenshot"><a class="viewcode-back" href="../utils.html#utils.screenshot">[docs]</a><span class="k">def</span> <span class="nf">screenshot</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Take screenshot of the current state of the app and save it under ``path``.</span>
-
-<span class="sd">    The sleep- and mainthread-decorator ensure that the app shows the current state properly.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">root_widget</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span>
-
-    <span class="n">fbo</span> <span class="o">=</span> <span class="n">Fbo</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">root_widget</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">root_widget</span><span class="o">.</span><span class="n">height</span><span class="p">),</span> <span class="n">with_stencilbuffer</span><span class="o">=</span><span class="kc">True</span><span class="p">,)</span>
-
-    <span class="k">with</span> <span class="n">fbo</span><span class="p">:</span>
-        <span class="n">ClearColor</span><span class="p">(</span><span class="o">*</span><span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bg_normal</span><span class="p">)</span>
-        <span class="n">ClearBuffers</span><span class="p">()</span>
-        <span class="n">Scale</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">Translate</span><span class="p">(</span><span class="o">-</span><span class="n">root_widget</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">root_widget</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">root_widget</span><span class="o">.</span><span class="n">height</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-    <span class="n">fbo</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">root_widget</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
-    <span class="n">fbo</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
-    <span class="n">img</span> <span class="o">=</span> <span class="n">KivyImage</span><span class="p">(</span><span class="n">fbo</span><span class="o">.</span><span class="n">texture</span><span class="p">)</span>
-
-    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="make_screenshots"><a class="viewcode-back" href="../utils.html#utils.make_screenshots">[docs]</a><span class="k">def</span> <span class="nf">make_screenshots</span><span class="p">(</span><span class="n">window_size</span><span class="o">=</span><span class="p">(</span><span class="mi">270</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mi">480</span> <span class="o">*</span> <span class="mf">1.4</span><span class="p">)):</span>
-    <span class="sd">&quot;&quot;&quot;Set the app in a number of predefined states and takes a screenshot of each.&quot;&quot;&quot;</span>
-    <span class="n">old_size</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">size</span>
-    <span class="n">Window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">window_size</span>
-    <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;drawer_list&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
-        <span class="n">item</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span>
-        <span class="n">screenshot</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;screenshots/</span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
-    <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;open&quot;</span><span class="p">)</span>
-    <span class="n">screenshot</span><span class="p">(</span><span class="s2">&quot;../screenshots/nav_drawer_open.png&quot;</span><span class="p">)</span>
-    <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span>
-    <span class="c1"># Word</span>
-    <span class="n">word_prop</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;single_word/edit_tab/word_prop/&quot;</span><span class="p">)</span>
-    <span class="n">word_prop</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">search_field</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;casa&quot;</span>
-    <span class="n">word_prop</span><span class="o">.</span><span class="n">load_or_search</span><span class="p">(</span><span class="s2">&quot;casa&quot;</span><span class="p">)</span>
-    <span class="n">screenshot</span><span class="p">(</span><span class="s2">&quot;../screenshots/example_word_text.png&quot;</span><span class="p">)</span>
-    <span class="n">tabs</span> <span class="o">=</span> <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;single_word/tabs&quot;</span><span class="p">)</span>
-    <span class="n">tabs</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># (tabs.carousel, 1)</span>
-    <span class="n">screenshot</span><span class="p">(</span><span class="s2">&quot;../screenshots/example_word_images.png&quot;</span><span class="p">)</span>
-    <span class="n">Window</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">old_size</span></div>
-
-
-<span class="n">rend</span> <span class="o">=</span> <span class="n">pystache</span><span class="o">.</span><span class="n">Renderer</span><span class="p">(</span><span class="n">escape</span><span class="o">=</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="p">)</span>
-
-
-<div class="viewcode-block" id="save_card_pngs"><a class="viewcode-back" href="../utils.html#utils.save_card_pngs">[docs]</a><span class="k">def</span> <span class="nf">save_card_pngs</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;casa&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">540</span><span class="p">,</span> <span class="mi">960</span><span class="p">)):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Save pngs of the anki-cards for a given word.</span>
-
-<span class="sd">    The fields need to be saved as json at ``../app_data/&lt;word&gt;/&lt;word&gt;_card.json``.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">      word:  (Default value = &quot;casa&quot;)</span>
-<span class="sd">      size:  (Default value = (540,960))</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">paths</span> <span class="o">=</span> <span class="n">glob</span><span class="p">(</span><span class="s2">&quot;anki/*.html&quot;</span><span class="p">)</span>
-    <span class="n">field_dict</span> <span class="o">=</span> <span class="n">smart_loader</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../app_data/words/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">_card.json&quot;</span><span class="p">)</span>
-    <span class="n">field_dict</span><span class="p">[</span><span class="s2">&quot;Audio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&amp;#9658;&quot;</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/js&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/js/&quot;</span><span class="p">)</span>
-        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s2">&quot;anki/css&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp/css/&quot;</span><span class="p">)</span>
-    <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;JS AND CSS FOLDER ALREADY EXIST IN /tmp/ skip copying.&quot;</span><span class="p">)</span>
-    <span class="n">shutil</span><span class="o">.</span><span class="n">copy2</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../app_data/words/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;/tmp/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">)</span>
-    <span class="n">compress_img</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;/tmp/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">.jpg&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">-</span> <span class="mi">12</span><span class="p">)</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;../screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-            <span class="n">string</span> <span class="o">=</span> <span class="n">rend</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="o">**</span><span class="n">field_dict</span><span class="p">)</span>
-        <span class="n">imgkit</span><span class="o">.</span><span class="n">from_string</span><span class="p">(</span>
-            <span class="n">string</span><span class="p">,</span>
-            <span class="sa">f</span><span class="s1">&#39;../screenshots/</span><span class="si">{</span><span class="n">word</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.html&quot;</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span>
-            <span class="n">options</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]),},</span></div>
-        <span class="p">)</span>
 
 
 <span class="c1"># KINDLE EXPORT PARSING</span>
@@ -542,6 +456,17 @@
 
 
 <span class="c1"># Image resizing</span>
+<div class="viewcode-block" id="compress_img_bytes"><a class="viewcode-back" href="../utils.html#utils.compress_img_bytes">[docs]</a><span class="k">def</span> <span class="nf">compress_img_bytes</span><span class="p">(</span><span class="n">bytes_image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compress image given as bytes (e.g. as content of :class:`requests.Response`).&quot;&quot;&quot;</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">bytes_image</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
+        <span class="n">resize</span> <span class="o">=</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">width</span> <span class="o">*</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">resize</span><span class="p">,</span> <span class="n">Image</span><span class="o">.</span><span class="n">ANTIALIAS</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+    <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span>
+        <span class="n">output</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;JPEG&quot;</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
 
 
 <div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../utils.html#utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
@@ -606,7 +531,6 @@
     <span class="n">fn_parameters</span> <span class="o">=</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span>
     <span class="n">fn_kwargs</span> <span class="o">=</span> <span class="n">toolz</span><span class="o">.</span><span class="n">keyfilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">fn_parameters</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
     <span class="n">thread_kwargs</span> <span class="o">=</span> <span class="n">toolz</span><span class="o">.</span><span class="n">keyfilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">fn_parameters</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="n">fn_kwargs</span><span class="p">,</span> <span class="n">thread_kwargs</span><span class="p">)</span>
     <span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span>
         <span class="n">target</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">fn_arg</span><span class="p">,</span> <span class="o">**</span><span class="n">fn_kwargs</span><span class="p">),</span> <span class="o">**</span><span class="n">thread_kwargs</span>
     <span class="p">)</span>

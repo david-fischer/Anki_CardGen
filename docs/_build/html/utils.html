@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>utils &mdash; ACG 0.3.0 documentation</title>
+  <title>Some useful functions &mdash; ACG 0.3.0 documentation</title>
 
 
 
@@ -37,7 +37,8 @@
 
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="main" href="main.html" />
+    <link rel="next" title="Database" href="db.html" />
+    <link rel="prev" title="Main App" href="main.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -84,9 +85,10 @@
 
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ui.html">UI</a></li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">main</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">utils</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Some useful functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.CD">CD</a></li>
 </ul>
 <ul>
@@ -102,13 +104,16 @@
 <li class="toctree-l2"><a class="reference internal" href="#utils.compress_img">compress_img</a></li>
 </ul>
 <ul>
+<li class="toctree-l2"><a class="reference internal" href="#utils.compress_img_bytes">compress_img_bytes</a></li>
+</ul>
+<ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.dict_from_kindle_export">dict_from_kindle_export</a></li>
 </ul>
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.load_dicts_from_csv">load_dicts_from_csv</a></li>
 </ul>
 <ul>
-<li class="toctree-l2"><a class="reference internal" href="#utils.make_screenshots">make_screenshots</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.merge_or_last">merge_or_last</a></li>
 </ul>
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.now_string">now_string</a></li>
@@ -117,19 +122,13 @@
 <li class="toctree-l2"><a class="reference internal" href="#utils.pick_val">pick_val</a></li>
 </ul>
 <ul>
-<li class="toctree-l2"><a class="reference internal" href="#utils.save_card_pngs">save_card_pngs</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.save_dict_to_csv">save_dict_to_csv</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#utils.screenshot">screenshot</a></li>
 </ul>
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.set_screen">set_screen</a></li>
 </ul>
 <ul>
-<li class="toctree-l2"><a class="reference internal" href="#utils.sleep_decorator">sleep_decorator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#utils.smart_dict_merge">smart_dict_merge</a></li>
 </ul>
 <ul>
 <li class="toctree-l2"><a class="reference internal" href="#utils.smart_loader">smart_loader</a></li>
@@ -156,6 +155,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#utils.word_list_from_txt">word_list_from_txt</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="db.html">Database</a></li>
 </ul>
 
 
@@ -202,7 +202,7 @@
 
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
 
-      <li>utils</li>
+      <li>Some useful functions</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -222,7 +222,7 @@
            <div itemprop="articleBody">
 
   <div class="section" id="module-utils">
-<span id="utils"></span><h1>utils<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
+<span id="some-useful-functions"></span><h1>Some useful functions<a class="headerlink" href="#module-utils" title="Permalink to this headline">¶</a></h1>
 <p>This module contains lots of helper functions.</p>
 <dl class="py class">
 <dt id="utils.CD">
@@ -278,6 +278,12 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
+<dt id="utils.compress_img_bytes">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">compress_img_bytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bytes_image</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#compress_img_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.compress_img_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compress image given as bytes (e.g. as content of <a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">requests.Response</span></code></a>).</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="utils.dict_from_kindle_export">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">dict_from_kindle_export</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#dict_from_kindle_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.dict_from_kindle_export" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extract highlighted parts and sorts them by color in a dictionary.</p>
@@ -303,9 +309,9 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
-<dt id="utils.make_screenshots">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">make_screenshots</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">window_size</span><span class="o">=</span><span class="default_value">270 * 1.4, 480 * 1.4</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#make_screenshots"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.make_screenshots" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the app in a number of predefined states and takes a screenshot of each.</p>
+<dt id="utils.merge_or_last">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">merge_or_last</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#merge_or_last"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.merge_or_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>If all args are list, returns merged list. Else returns last arg.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -321,31 +327,9 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
-<dt id="utils.save_card_pngs">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_card_pngs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span><span class="o">=</span><span class="default_value">'casa'</span></em>, <em class="sig-param"><span class="n">size</span><span class="o">=</span><span class="default_value">540, 960</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#save_card_pngs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_card_pngs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save pngs of the anki-cards for a given word.</p>
-<p>The fields need to be saved as json at <code class="docutils literal notranslate"><span class="pre">../app_data/&lt;word&gt;/&lt;word&gt;_card.json</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>word</strong> – (Default value = “casa”)</p></li>
-<li><p><strong>size</strong> – (Default value = (540,960))</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt id="utils.save_dict_to_csv">
 <code class="sig-prename descclassname">utils.</code><code class="sig-name descname">save_dict_to_csv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_dict</span></em>, <em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#save_dict_to_csv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.save_dict_to_csv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save dictionary as row to csv.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="utils.screenshot">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">screenshot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#screenshot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.screenshot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Take screenshot of the current state of the app and save it under <code class="docutils literal notranslate"><span class="pre">path</span></code>.</p>
-<p>The sleep- and mainthread-decorator ensure that the app shows the current state properly.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -355,9 +339,9 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
-<dt id="utils.sleep_decorator">
-<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">sleep_decorator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">time</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#sleep_decorator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.sleep_decorator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Execute sleep(time) before and after decorated function.</p>
+<dt id="utils.smart_dict_merge">
+<code class="sig-prename descclassname">utils.</code><code class="sig-name descname">smart_dict_merge</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/utils.html#smart_dict_merge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#utils.smart_dict_merge" title="Permalink to this definition">¶</a></dt>
+<dd><p>If values are lists they are merged, else the last element is chosen as new value.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -469,10 +453,12 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dd class="field-even"><p>widget</p>
 </dd>
 </dl>
-<dl class="simple">
-<dt>Examples</dt><dd><p># &gt;&gt;&gt; widget_by_id(“single_word/edit_tab/word_prop”)
-# MDApp.get_running_app().root.ids.screen_man.get_screen(“single_word”).children[
-# 0].ids.word_prop</p>
+<dl>
+<dt>Examples</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;single_word/word_prop&quot;</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="go">MDApp.get_running_app().root.get_screen(&quot;single_word&quot;).children[</span>
+<span class="go">0].ids.word_prop</span>
+</pre></div>
+</div>
 </dd>
 </dl>
 </dd></dl>
@@ -512,8 +498,10 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
 
+        <a href="db.html" class="btn btn-neutral float-right" title="Database" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
-        <a href="main.html" class="btn btn-neutral float-left" title="main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+
+        <a href="main.html" class="btn btn-neutral float-left" title="Main App" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
 
     </div>
 
