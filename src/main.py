@@ -14,7 +14,7 @@ from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
 from db import get_template
-from utils import smart_loader, smart_saver, widget_by_id
+from utils import smart_loader, smart_saver
 from words import Word
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
@@ -122,10 +122,6 @@ class AnkiCardGenApp(MDApp):
         template_cls_name = self.get_current_template_db().cls_name
         template_cls = pydoc.locate(template_cls_name)
         self.template = template_cls()
-        template_parent = widget_by_id("single_word/scroll_view")
-        if template_parent.children:
-            template_parent.clear_widgets()
-        template_parent.add_widget(self.template)
 
     def on_current_template_name(self, *_):
         """Set up new template if :attr:`current_template_name` changes."""
