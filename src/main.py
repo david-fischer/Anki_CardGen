@@ -61,7 +61,7 @@ class AnkiCardGenApp(MDApp):
             },
         )
         config.setdefaults(
-            "Paths", {"word_state_dict": "../app_data/word_state_dict.json",},
+            "Paths", {},
         )
         os.makedirs("../app_data/", exist_ok=True)
         os.makedirs("../app_data/apkgs/", exist_ok=True)
