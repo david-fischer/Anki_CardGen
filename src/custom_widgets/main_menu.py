@@ -3,6 +3,7 @@
 import os
 
 import toolz
+from kivy.core.window import Window
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import ListProperty, StringProperty
@@ -182,6 +183,9 @@ class KvScreen(Screen):
 
     def __init__(self, **kwargs):
         super(KvScreen, self).__init__(**kwargs)
+        self.size_hint = None, 1
+        self.width = Window.width
+        Window.bind(width=self.setter("width"))
         if not os.path.exists(self.path):
             self._create_content_file()
         self._load_content()
