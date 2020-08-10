@@ -362,7 +362,7 @@ class ImgField(OptionsField, MediaField):
     """Let user choose between multiple images."""
 
     file_type = attr.ib(default="jpg")
-    widget_kv = attr.ib(default="ImageCarousel")
+    widget_kv = attr.ib(default="ImageCarousel:\n\theight:dp(250)")
     _kv_bidict = attr.ib()
 
     @_kv_bidict.default
