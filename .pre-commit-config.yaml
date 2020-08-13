@@ -43,7 +43,7 @@ repos:
       - id: take_screenshots
         name: screenshots
         entry: .pre-commit/screenshots.py
-        stages: [push]
+        stages: [push,merge-commit]
         language: system
         pass_filenames: False
         always_run: True
