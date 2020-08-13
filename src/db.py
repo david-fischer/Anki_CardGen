@@ -44,7 +44,7 @@ try:
         create_db=True,
     )
 except dbapiprovider.OperationalError:
-    db.bind(provider="sqlite", filename="db.sqlite")
+    db.bind(provider="sqlite", filename="db.sqlite", create_db=True)
 
 
 class Template(db.Entity):
