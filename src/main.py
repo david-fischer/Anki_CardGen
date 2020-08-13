@@ -13,7 +13,7 @@ from kivymd.uix.picker import MDThemePicker
 from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
-from db import get_template
+from db import add_missing_templates, get_template
 from utils import smart_loader, smart_saver
 from words import Word
 
@@ -68,6 +68,7 @@ class AnkiCardGenApp(MDApp):
     def build(self):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         # Config and Theme
+        add_missing_templates()
         self.theme_cls = ThemeManager(  # pylint: disable=attribute-defined-outside-init
             **self.config["Theme"]
         )
