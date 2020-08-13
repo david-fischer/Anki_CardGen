@@ -9,7 +9,7 @@ HistoryRoot:
         data:
             [\
             {"text": word, "current_state":word_state} for word, word_state in\
-            pick_val(["error","done"],app.word_state_dict).items()\
+            pick_val(["error","done","exported"],app.word_state_dict).items()\
             ]
 
     MDFloatingActionButtonSpeedDial:
