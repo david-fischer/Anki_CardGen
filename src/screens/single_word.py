@@ -13,4 +13,6 @@ class SingleWordRoot(FloatLayout):
     def on_template(self, *_):
         """Update :attr:`scroll_view` if self.template changes."""
         self.scroll_view.clear_widgets()
+        if self.template.parent:
+            self.template.parent.remove_widget(self.template)
         self.scroll_view.add_widget(self.template)
