@@ -11,6 +11,7 @@ from typing import Dict, List
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
+from kivymd.toast import toast
 from pony.orm import db_session
 
 from custom_widgets.scroll_widgets import ScrollBox
@@ -30,6 +31,7 @@ from parsers import (
     DicioParser,
     GoogleImagesParser,
     LingueeParser,
+    NoMatchError,
     Parser,
     ReversoParser,
 )
@@ -116,7 +118,13 @@ class Template(BoxLayout):
         pprint(self.content)
         return self.content
 
-    def search(self, search_term):
+    def update_from_single_parser(self, search_term, parser_key):
+        """Use only a single parser to update :attr`data`."""
+        result_dict = self.parsers[parser_key].result_dict(search_term)
+        self.data.update(result_dict)
+        self.update_fields()
+
+    def search(self, search_term, make_suggestion=False):
         """
         Look up card with name ``search_term`` in data-base.
 
@@ -133,13 +141,20 @@ class Template(BoxLayout):
                 self.data = current_card.base_data
                 try:
                     self.update_fields()
+                    current_card.base_data = self.data
+                    return
                 except ValueError:
                     print("Could not load previously saved data. Request data anew...")
-                    self.set_data_from_parsers()
-                    current_card.base_data = self.data
-            else:
+            try:
                 self.set_data_from_parsers()
+                self.update_fields()
                 current_card.base_data = self.data
+            except NoMatchError:
+                current_card.state = "error"
+                toast(f"Could not obtain data for {search_term}.")
+                if make_suggestion:
+                    # choose suggestion dialog here.
+                    pass
 
 
 class PtTemplate(Template):
@@ -190,12 +205,6 @@ class PtTemplate(Template):
             Field(field_name="conjugation_table", template=self),
         ]
         self.add_field_widgets()
-
-    def update_from_single_parser(self, search_term, parser_key):
-        """Use only a single parser to update :attr`data`."""
-        result_dict = self.parsers[parser_key].result_dict(search_term)
-        self.data.update(result_dict)
-        self.update_fields()
 
     def translate(self, string):
         """Translate string from :attr:`from_lang` to :attr:`to_lang`."""
