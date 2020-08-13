@@ -8,10 +8,10 @@
 
 #### Screenshots
 
-<img src="screenshots/import.png" width=270><img src="screenshots/nav_drawer_open.png" width=270><img src="screenshots/word_1.png" width=270><!--  -->
+<img src="screenshots/import.png" width=270 align-self=center><img src="screenshots/nav_drawer_open.png" width=270 align-self=center><img src="screenshots/word_1.png" width=270 align-self=center><!--  -->
 <details>
 <summary>More screenshots</summary>
-<img src="screenshots/word_2.png" width=270><img src="screenshots/word_images.png" width=270></details>
+<img src="screenshots/word_2.png" width=270 align-self=center><img src="screenshots/word_images.png" width=270 align-self=center></details>
 <details>
 <summary>Example Cards</summary>
 <h3>casa</h3>
