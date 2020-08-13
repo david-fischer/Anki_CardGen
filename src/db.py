@@ -24,6 +24,16 @@ from pony.orm import (
 from generate_anki_card import AnkiObject
 from utils import CD, now_string
 
+TEMPLATE_DICTS = [
+    {
+        "name": "Portuguese Vocab",
+        "cls_name": "templates.PtTemplate",
+        "description": "Generate beautiful cards to learn brazilian portuguese vocabulary.\n"
+        "Sources: Dicio,Reverso,Linguee and Google Images.",
+    }
+]
+
+
 # print(os.listdir(), os.path.exists("db.sqlite"))
 # print(os.getcwd())
 db = Database()
@@ -210,6 +220,15 @@ def export_cards(card_list, out_folder):
 def get_template_names():
     """Get list of all templates in database."""
     return list(select(t.name for t in Template))
+
+
+@db_session
+def add_missing_templates():
+    """Add templates from :data:`TEMPLATE_DICTS` to database if not already present."""
+    template_names = get_template_names()
+    for template_dict in TEMPLATE_DICTS:
+        if template_dict["name"] not in template_names:
+            Template(**template_dict)
 
 
 # pylint: disable = W,C,R,I
