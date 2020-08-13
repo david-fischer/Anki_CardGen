@@ -7,6 +7,7 @@ from kivy.clock import Clock
 from kivy.properties import DictProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
+from pony.orm import db_session
 
 from custom_widgets.dialogs import CustomDialog, ReplacementContent
 from parsers import NoMatchError
@@ -19,7 +20,6 @@ from utils import (
     word_list_from_kindle,
     word_list_from_txt,
 )
-from words import Word
 
 
 class CheckableQueue(Queue):
@@ -99,8 +99,8 @@ class QueuedRoot(FloatLayout):
                 MDApp.get_running_app().word_state_dict[word] = "loading"
                 try:
                     local = threading.local()
-                    local.word = Word()
-                    local.word.search(word)
+                    local.template = MDApp.get_running_app().template
+                    local.template.search(word)
                     MDApp.get_running_app().word_state_dict[word] = "ready"
                 except (NoMatchError, KeyError):
                     MDApp.get_running_app().word_state_dict[word] = "error"
@@ -109,9 +109,13 @@ class QueuedRoot(FloatLayout):
             else:
                 self.stale.remove(word)
 
-    def add_waiting(self, word):
+    @staticmethod
+    @db_session
+    def add_waiting(word, template=None):
         """Add word in ``"waiting"`` state, waiting to be queued."""
-        if not self.is_duplicate(word):
+        template = template or MDApp.get_running_app().get_current_template_db()
+        if not template.get_card(word):
+            template.add_card(word)
             MDApp.get_running_app().word_state_dict[word] = "waiting"
 
     def queue_word(self, word):
@@ -143,18 +147,17 @@ class QueuedRoot(FloatLayout):
             MDApp.get_running_app().word_state_dict[word] = "waiting"
 
     @staticmethod
-    def switch_to_single_word_screen(word):
+    def generate_card(word):
         """Switch to single_word to generate a card for the clicked word."""
         set_screen("single_word")
-        widget_by_id("single_word/search_field").text = word
-        Clock.schedule_once(lambda t: widget_by_id("single_word").load_or_search(word))
+        Clock.schedule_once(lambda x: widget_by_id("single_word").template.search(word))
 
     def click_on_item(self, item):
         """Dependent of the ``current_state`` of the ``item`` performs appropriate action."""
         if item.current_state == "queued":
             self.dequeue_word(item.text)
         elif item.current_state == "ready":
-            self.switch_to_single_word_screen(item.text)
+            self.generate_card(item.text)
         elif item.current_state == "waiting":
             self.queue_word(item.text)
 
