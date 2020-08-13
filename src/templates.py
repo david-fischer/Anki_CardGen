@@ -233,15 +233,12 @@ if __name__ == "__main__":
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
-            template = Builder.load_string(
+            return Builder.load_string(
                 """#
 PtTemplate:
     MDFlatButton:
         text: "Get Results"
         on_press: app.root.get_results()"""
             )
-            # print(template.fields)
-            template.add_field_widgets()
-            return template
 
     _TestApp().run()
