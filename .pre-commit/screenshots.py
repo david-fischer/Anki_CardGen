@@ -75,7 +75,7 @@ def make_screenshots(*_, window_size=(270 * 1.4, 480 * 1.4)):
     """Set the app in a number of predefined states and takes a screenshot of each."""
     Window.size = window_size
     widget_by_id("nav_drawer").set_state("open")
-    screenshot("../screenshots/nav_drawer_open.png")
+    screenshot("../screenshots/0-nav_drawer_open.png")
     widget_by_id("nav_drawer").set_state("close")
     # for screen_name in widget_by_id("/").get_screen_names():
     #     set_screen(screen_name)
@@ -87,17 +87,20 @@ def make_screenshots(*_, window_size=(270 * 1.4, 480 * 1.4)):
     word_prop.load_or_search("casa")
     img_carousel = word_prop.ids.images
     sleep(1)
-    screenshot("../screenshots/word_1.png")
+    screenshot("../screenshots/1-word_1.png")
     img_carousel.open_menu()
     sleep(1)
-    screenshot("../screenshots/word_images.png", root_widget=img_carousel.modal)
+    screenshot("../screenshots/3-word_images.png", root_widget=img_carousel.modal)
     img_carousel.modal.dismiss()
     word_prop.parent.scroll_y = 0.1
-    screenshot("../screenshots/word_2.png")
+    screenshot("../screenshots/2-word_2.png")
     # Queue
-    set_screen("queue")
-    widget_by_id("queue/speed_dial/").open_stack(1)
-    screenshot("../screenshots/import.png")
+    set_screen("queued")
+    widget_by_id("queued/speed_dial/").open_stack(1)
+    screenshot("../screenshots/4-import.png")
+    set_screen("history")
+    widget_by_id("history/speed_dial/").open_stack(1)
+    screenshot("../screenshots/5-export.png")
     os._exit(0)  # pylint: disable=protected-access
 
 
