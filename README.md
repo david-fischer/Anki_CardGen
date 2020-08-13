@@ -1,17 +1,21 @@
-![Logo](src/assets/AnkiCardGen_small.png)
-
-<h1 align="center">AnkiCardGen</h1>
-
+<div>
+<img align="left" height=200 src="src/assets/AnkiCardGen.png">
+</br>
+</br>
+</br>
+</br>
+<h1>AnkiCardGen</h1>
+</div>
 
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 #### Screenshots
 
-<img src="screenshots/import.png" width=270 align-self=center><img src="screenshots/nav_drawer_open.png" width=270 align-self=center><img src="screenshots/word_1.png" width=270 align-self=center><!--  -->
+<img src="screenshots/import.png" width=270>&nbsp;<img src="screenshots/nav_drawer_open.png" width=270>&nbsp;<img src="screenshots/word_1.png" width=270>&nbsp;<!--  -->
 <details>
 <summary>More screenshots</summary>
-<img src="screenshots/word_2.png" width=270 align-self=center><img src="screenshots/word_images.png" width=270 align-self=center></details>
+<img src="screenshots/word_2.png" width=270>&nbsp;<img src="screenshots/word_images.png" width=270>&nbsp;</details>
 <details>
 <summary>Example Cards</summary>
 <h3>casa</h3>
