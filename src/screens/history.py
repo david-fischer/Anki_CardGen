@@ -7,7 +7,7 @@ from kivymd.app import MDApp
 from kivymd.toast import toast
 from pony.orm import db_session
 
-from db import export_cards, get_template
+from db import export_cards
 
 
 class HistoryRoot(FloatLayout):
@@ -49,7 +49,7 @@ class HistoryRoot(FloatLayout):
             toast("NOT IMPLEMENTED YET.", 10)
             return False
         with db_session:
-            current_template = get_template(MDApp.get_running_app().current_template)
+            current_template = MDApp.get_running_app().get_current_template_db()
             cards = current_template.get_cards_by_selector(lambda c: c.state in states)
             if not cards:
                 toast("Empty Selection. Could not export cards.")
