@@ -1,0 +1,4 @@
+#RECORDER1.0
+(4.179071664810181, 'begin', 1, {'is_touch': True, 'sx': 0.09953703703703703, 'sy': 0.9538239538239538, 'profile': ['pos']})
+(4.2293994426727295, 'end', 1, {'is_touch': True, 'sx': 0.09953703703703703, 'sy': 0.9538239538239538, 'profile': ['pos']})
+(4.961249828338623, 'keydown', 0, {'key': 289, 'scancode': None, 'codepoint': None, 'modifier': None, 'is_touch': False})
