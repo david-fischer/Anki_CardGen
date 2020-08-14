@@ -35,7 +35,7 @@ from parsers import (
     Parser,
     ReversoParser,
 )
-from utils import smart_dict_merge
+from utils import app_busy, smart_dict_merge
 
 
 class Template(BoxLayout):
@@ -112,6 +112,7 @@ class Template(BoxLayout):
         """Write content to card."""
         self.current_card_db().fields = self.content
 
+    @app_busy
     def get_results(self):
         """Get final results for the card fields as dictionary."""
         self.get_content_from_fields()
@@ -142,7 +143,9 @@ class Template(BoxLayout):
             if current_card.base_data:
                 self.data = current_card.base_data
                 try:
+                    print("1")
                     self.update_fields()
+                    print("2")
                     current_card.base_data = self.data
                     return
                 except ValueError:
@@ -157,6 +160,11 @@ class Template(BoxLayout):
                 if make_suggestion:
                     # choose suggestion dialog here.
                     pass
+
+    @app_busy
+    def manual_search(self, search_term):
+        """Call :meth:`search` but with ``make_suggestion=True`` and @app_busy-decorator."""
+        self.search(search_term, make_suggestion=True)
 
 
 class PtTemplate(Template):
@@ -180,7 +188,9 @@ class PtTemplate(Template):
             "image": GoogleImagesParser(**parser_attrs),
         }
         self.fields = [
-            TextInputField(field_name="word", callback=self.search, template=self),
+            TextInputField(
+                field_name="word", callback=self.manual_search, template=self
+            ),
             TextInputField(
                 field_name="image_search_keywords",
                 callback=partial(self.update_from_single_parser, parser_key="image"),
@@ -231,8 +241,8 @@ Builder.load_string(
     orientation: "vertical"
     size_hint:1,None
     height: self.minimum_height
-    padding: 10
-    spacing: 10
+    padding: dp(10),dp(10),dp(10),dp(100)
+    spacing: dp(10)
 """
 )
 
