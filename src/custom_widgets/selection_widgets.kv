@@ -5,7 +5,7 @@
 
 <SeparatorWithHeading>:
     size_hint: 1,None
-    height: 15
+    height: dp(15)
     pos_hint: {"center_y":0.5}
 
     MDSeparator:
@@ -124,6 +124,8 @@
         on_current_slide: root.update_height()
         ignore_perpendicular_swipes: True
         size_hint_x: 1
+        scroll_distance: dp(5)
+        scroll_timeout: 500
 
     MDIconButton:
         id: left_icon
