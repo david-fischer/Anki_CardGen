@@ -285,6 +285,10 @@ class CardCarousel(MyCarousel):
     To use it with different objects, change :attr:`viewclass` and :attr:`modal_data_cls_name`.
     """
 
+    def __init__(self, **kwargs):
+        super(CardCarousel, self).__init__(**kwargs)
+        del self.child_bindings["on_press"]
+
     def update_height(self, *_):
         """Update height via animation, so that Widget has height of currently displayed card."""
         if self.carousel.current_slide:
