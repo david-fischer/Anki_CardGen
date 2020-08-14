@@ -8,8 +8,9 @@ import pickle
 import re
 import threading
 from collections import defaultdict
+from contextlib import ContextDecorator
 from datetime import datetime
-from functools import partial
+from functools import partial, wraps
 from io import BytesIO
 from itertools import chain
 
@@ -419,3 +420,40 @@ if __name__ == "__main__":
     # }
     # word_dict["cachorro"] = "queued"
     # smart_saver(word_dict, "../app_data/word_state_dict.json")
+
+
+def run_in_thread(func):
+    """Call ``func`` in new thread."""
+
+    @wraps(func)
+    def run(*k, **kw):
+        new_thread = threading.Thread(target=func, args=k, kwargs=kw)
+        new_thread.start()
+        return new_thread
+
+    return run
+
+
+class AppBusyContext(ContextDecorator):
+    """Set app.busy to ``True`` and back to its previous value."""
+
+    previous_state = None
+
+    def __enter__(self):
+        self.previous_state = MDApp.get_running_app().busy
+        MDApp.get_running_app().busy = True
+        return self
+
+    def __exit__(self, *exc):
+        MDApp.get_running_app().busy = self.previous_state
+        return False
+
+
+def app_busy(func):
+    """Call function in new thread and set app.busy = ``True`` in the meantime."""
+
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        return run_in_thread(AppBusyContext()(func))(*args, **kwargs)
+
+    return wrapper
