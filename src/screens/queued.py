@@ -152,7 +152,9 @@ class QueuedRoot(FloatLayout):
     def generate_card(word):
         """Switch to single_word to generate a card for the clicked word."""
         set_screen("single_word")
-        Clock.schedule_once(lambda x: widget_by_id("single_word").template.search(word))
+        Clock.schedule_once(
+            lambda x: widget_by_id("single_word").template.manual_search(word)
+        )
 
     def click_on_item(self, item):
         """Dependent of the ``current_state`` of the ``item`` performs appropriate action."""
