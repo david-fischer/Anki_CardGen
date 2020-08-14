@@ -267,8 +267,11 @@ class ReversoParser(Parser):
         }
 
 
+@attr.s
 class GoogleImagesParser(Parser):
     """Uses google_images_download to get img_urls."""
+
+    limit = attr.ib(default=15)
 
     def result_dict(self, phrase=None):
         """Return dictionary of the form ``{"image":[url0,url1,...]}}``."""
@@ -279,7 +282,7 @@ class GoogleImagesParser(Parser):
         arguments = {
             "keywords": self.phrase,
             # "no_directory": True,
-            "limit": 10,
+            "limit": self.limit,
             "format": "jpg",
             # "language": LANGUAGES[self.from_lang],
             "no_download": True,
