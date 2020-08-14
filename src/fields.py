@@ -10,6 +10,7 @@ import attr
 import requests
 from bidict import bidict
 from googletrans import Translator
+from kivy.clock import mainthread
 from kivy.lang import Builder
 from pony.orm import db_session
 
@@ -136,6 +137,7 @@ class Field:
         self.pre_process()
         self.update_widget_data()
 
+    @mainthread
     def update_widget_data(self):
         """Check if widget is present and update the attributes of the kivy-widget from :attr:`template`.data."""
         if self.widget:
@@ -221,6 +223,7 @@ class OptionsField(Field):
             for i in range(min_len)
         ]
 
+    @mainthread
     def update_widget_data(self):
         """Update widget (if present) with data from :meth:`get_data`."""
         if self.widget:
