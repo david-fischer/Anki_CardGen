@@ -15,7 +15,7 @@
 <img src="screenshots/0-nav-drawer-open.png" width=270>&nbsp;<img src="screenshots/1-word-0.png" width=270>&nbsp;<img src="screenshots/2-word-1.png" width=270>&nbsp;<!--  -->
 <details>
 <summary>More screenshots</summary>
-<img src="screenshots/3-word-images.png" width=270>&nbsp;<img src="screenshots/4-import.png" width=270>&nbsp;<img src="screenshots/5-export.png" width=270>&nbsp;<img src="screenshots/import.png" width=270>&nbsp;<img src="screenshots/nav_drawer_open.png" width=270>&nbsp;<img src="screenshots/word_1.png" width=270>&nbsp;<img src="screenshots/word_2.png" width=270>&nbsp;<img src="screenshots/word_images.png" width=270>&nbsp;</details>
+<img src="screenshots/3-word-images.png" width=270>&nbsp;<img src="screenshots/4-import.png" width=270>&nbsp;<img src="screenshots/5-export.png" width=270>&nbsp;</details>
 <details>
 <summary>Example Cards</summary>
 <h3>casa</h3>
