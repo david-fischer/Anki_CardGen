@@ -4,10 +4,18 @@ import os
 import pydoc
 
 import certifi
+from kivy.clock import mainthread
 from kivy.lang import Builder
-from kivy.properties import DictProperty, ObjectProperty, StringProperty
+from kivy.properties import (
+    BooleanProperty,
+    DictProperty,
+    ObjectProperty,
+    StringProperty,
+)
+from kivy.uix.modalview import ModalView
 from kivymd.app import MDApp
 from kivymd.theming import ThemeManager
+from kivymd.uix.spinner import MDSpinner
 from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
@@ -15,7 +23,6 @@ from db import add_missing_templates, get_template
 from utils import smart_loader, smart_saver
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
-
 
 this_dir = os.path.dirname(__file__)
 if this_dir:
@@ -33,6 +40,8 @@ class AnkiCardGenApp(MDApp):
     current_template_name = StringProperty("Portuguese Vocab")
     template = ObjectProperty()
     apkg_export_dir = StringProperty("../app_data/apkgs")
+    busy = BooleanProperty(False)
+    busy_modal = ObjectProperty(None)
 
     def build_config(self, config):  # pylint: disable=no-self-use
         """If no config-file exists, sets the default."""
@@ -104,6 +113,21 @@ class AnkiCardGenApp(MDApp):
             return {
                 card.name: card.state for card in self.get_current_template_db().cards
             }
+
+    @mainthread
+    def on_busy(self, *_):
+        """Set up :attr:`busy_modal` if necessary. Then open or close it depending on state of :attr:`busy`."""
+        if not self.busy_modal:
+            self.busy_modal = ModalView(
+                auto_dismiss=False, size_hint=(1.2, 1.2), opacity=0.5,
+            )
+            spinner = MDSpinner(active=False, size_hint=(0.5, 0.5))
+            self.busy_modal.add_widget(spinner)
+            self.bind(busy=spinner.setter("active"))
+        if self.busy:
+            self.busy_modal.open()
+        else:
+            self.busy_modal.dismiss()
 
 
 if __name__ == "__main__":
