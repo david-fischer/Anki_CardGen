@@ -8,14 +8,11 @@ from kivy.lang import Builder
 from kivy.properties import DictProperty, ObjectProperty, StringProperty
 from kivymd.app import MDApp
 from kivymd.theming import ThemeManager
-from kivymd.uix.filemanager import MDFileManager
-from kivymd.uix.picker import MDThemePicker
 from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
 from db import add_missing_templates, get_template
 from utils import smart_loader, smart_saver
-from words import Word
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
@@ -30,18 +27,6 @@ Builder.load_file(f"{this_dir}custom_widgets/fixes.kv")
 class AnkiCardGenApp(MDApp):
     """Main App."""
 
-    # Kivy
-    dialog = ObjectProperty()
-    """:class:`~kivymd.uix.dialog.MDDialog` Object."""
-    file_manager = ObjectProperty()
-    """:class:`~kivymd.uix.filemanager.MDFileManager` Object."""
-    theme_dialog = ObjectProperty()
-    """:class:`~kivymd.uix.picker.MDThemePicker` Object."""
-    # Other Objects
-    word = ObjectProperty()
-    """:class:`pt_word.Word` Object."""
-    anki = ObjectProperty()
-    """:class:`generate_anki_card.AnkiObject` Object."""
     # Data
     word_state_dict = DictProperty({})
     """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
@@ -72,19 +57,8 @@ class AnkiCardGenApp(MDApp):
         self.theme_cls = ThemeManager(  # pylint: disable=attribute-defined-outside-init
             **self.config["Theme"]
         )
-        self.theme_dialog = MDThemePicker()
-        self.theme_dialog.ids.close_button.bind(on_press=self.save_theme)
-        # Non Kivy Objects
-        # The following condition is a workaround:
-        # If we set self.anki = AnkiObject(...) and load from the pickled file
-        # afterwards, the object is not loaded correctly and we start with an empty deck...
-        # if not os.path.exists(self.config["Paths"]["anki"]):
-        #     self.anki = AnkiObject(root_dir="anki")
         self.word_state_dict = self.get_word_states()
         print(self.word_state_dict)
-        self.word = Word(data_dir="../app_data/words")
-        # Kivy Objects
-        self.file_manager = MDFileManager()
         return MainMenu()
 
     def save_theme(self, *_):
@@ -92,15 +66,6 @@ class AnkiCardGenApp(MDApp):
         for key in self.config["Theme"]:
             self.config["Theme"][key] = getattr(self.theme_cls, key)
         self.config.write()
-
-    def open_file_manager(self, path="/", select_path=print, ext=None):
-        """Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file."""
-        print("opening file manager...")
-        if ext is None:
-            ext = [".html"]
-        self.file_manager.ext = ext
-        self.file_manager.select_path = select_path
-        self.file_manager.show(path)
 
     def load_by_config_key(self, key):
         """Use :func:`utils.smart_loader` to load attribute from path in :attr:`config` [attribute]."""
