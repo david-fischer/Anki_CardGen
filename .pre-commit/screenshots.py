@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Script to automatically take screenshots of the app in given states."""
 import os
+import re
 import shutil
 import sys
 import threading
@@ -10,15 +11,20 @@ from time import sleep
 
 import imgkit
 import pystache
-from kivy.clock import mainthread
+import toolz
+from kivy.clock import Clock, mainthread
 from kivy.core.image import Image as KivyImage
 from kivy.core.window import Window
 from kivy.graphics.context_instructions import Scale, Translate
 from kivy.graphics.fbo import Fbo
 from kivy.graphics.gl_instructions import ClearBuffers, ClearColor
+from kivy.input.recorder import Recorder
 from kivymd.app import MDApp
+from kivymd.toast import toast
 
 sys.path.append(os.path.abspath("src"))
+print(sys.path)
+
 
 from utils import (  # pylint: disable=wrong-import-position
     CD,
@@ -45,7 +51,6 @@ def sleep_decorator(time):
     return the_real_decorator
 
 
-@sleep_decorator(1)
 @mainthread
 def screenshot(path, root_widget=None):
     """
@@ -77,26 +82,24 @@ def make_screenshots(*_, window_size=(270 * 1.4, 480 * 1.4)):
     widget_by_id("nav_drawer").set_state("open")
     screenshot("../screenshots/0-nav_drawer_open.png")
     widget_by_id("nav_drawer").set_state("close")
-    # for screen_name in widget_by_id("/").get_screen_names():
-    #     set_screen(screen_name)
-    #     screenshot(f"../screenshots/{screen_name}.png")
-    # Word
+    for screen_name in widget_by_id("/").get_screen_names():
+        set_screen(screen_name)
+        screenshot(f"../screenshots/{screen_name}.png")
     set_screen("single_word")
-    word_prop = widget_by_id("single_word/word_prop")
-    word_prop.ids.search_field.text = "casa"
-    word_prop.load_or_search("casa")
-    img_carousel = word_prop.ids.images
+    single_word_root = widget_by_id("single_word")
+    single_word_root.template.search("casa")
+    image_carousel = single_word_root.template.fields[2].widget
     sleep(1)
     screenshot("../screenshots/1-word_1.png")
-    img_carousel.open_menu()
+    image_carousel.open_menu()
     sleep(1)
-    screenshot("../screenshots/3-word_images.png", root_widget=img_carousel.modal)
-    img_carousel.modal.dismiss()
-    word_prop.parent.scroll_y = 0.1
+    screenshot("../screenshots/3-word_images.png", root_widget=image_carousel.modal)
+    image_carousel.modal.dismiss()
+    single_word_root.scroll_view.scroll_y = 0.1
     screenshot("../screenshots/2-word_2.png")
     # Queue
-    set_screen("queued")
-    widget_by_id("queued/speed_dial/").open_stack(1)
+    set_screen("queue")
+    widget_by_id("queue/speed_dial/").open_stack(1)
     screenshot("../screenshots/4-import.png")
     set_screen("history")
     widget_by_id("history/speed_dial/").open_stack(1)
@@ -142,10 +145,62 @@ def start_thread(func):
     thread.start()
 
 
+def stop_recording(_instance, key, *_, recorder=None):
+    if key == 289:
+        # toast("Start" if not recorder.record else "Stop")
+        recorder.record = not recorder.record
+
+
+@mainthread
+def main_thread_screenshot(name, window_size=(405, 720)):
+    # Window.size = window_size
+    Clock.schedule_once(lambda t: Window.screenshot(name=name))
+
+
+def make_recordings():
+    names = [
+        "0-nav-drawer-open",
+        "1-word-0",
+        "2-word-1",
+        "3-word-images",
+        "4-import",
+        "5-export",
+    ]
+    toast(f"Screenshot with F8.")
+    for i, name in enumerate(names):
+        print(i, name)
+        rec = Recorder(filename=f"../screenshots/recordings/{name}.kvi")
+        stop_rec = partial(stop_recording, recorder=rec)
+        Window.bind(on_keyboard=stop_rec)
+        rec.record = True
+        while rec.record:
+            sleep(0.5)
+        Window.unbind(on_keyboard=stop_rec)
+        main_thread_screenshot(f"../screenshots/{name}.png")
+
+
+def play_recordings(folder):
+    print(folder)
+    rec_files = sorted(glob(f"{folder}/*.kvi"))
+    print(rec_files)
+    for rec_file in rec_files:
+        rec = Recorder(filename=rec_file)
+        rec.play = True
+        name = re.split(r"[/.]", rec_file)[-2]
+        print(name)
+        while rec.play:
+            sleep(0.5)
+        main_thread_screenshot(name=f"../screenshots/{name}.png")
+
+
 if __name__ == "__main__":
     with CD("src"):
         from main import AnkiCardGenApp
 
         app = AnkiCardGenApp()
-        app.on_start = partial(start_thread, make_screenshots)
+        record = partial(start_thread, make_recordings)
+        play = partial(
+            start_thread, partial(play_recordings, "../screenshots/recordings/")
+        )
+        app.on_start = toolz.juxt(app.on_start, record)
         app.run()
