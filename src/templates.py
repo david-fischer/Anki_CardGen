@@ -15,7 +15,7 @@ from kivymd.toast import toast
 from pony.orm import db_session
 
 from custom_widgets.scroll_widgets import ScrollBox
-from custom_widgets.selection_widgets import ImageCarousel
+from custom_widgets.selection_widgets import ImageCarousel, SeparatorWithHeading
 from db import get_template, new_template
 from fields import (
     CheckChipOptionsField,
@@ -88,6 +88,8 @@ class Template(BoxLayout):
         """For all :class:`fields.Field` with a widget, add it to the :class:`Template` itself."""
         for field in self.fields:
             if field.widget:
+                if field.heading:
+                    self.add_widget(SeparatorWithHeading(heading=field.heading))
                 self.add_widget(field.widget)
 
     def get_content_from_fields(self):
@@ -185,20 +187,32 @@ class PtTemplate(Template):
                 template=self,
             ),
             ImgField(field_name="image", file_type="jpg", template=self),
-            CheckChipOptionsField(field_name="translation", template=self),
-            TransChipOptionsField(
-                src_field="synonym", target_field="synonym_trans", template=self,
+            CheckChipOptionsField(
+                field_name="translation", heading="Translations", template=self
             ),
             TransChipOptionsField(
-                src_field="antonym", target_field="antonym_trans", template=self,
+                src_field="synonym",
+                heading="Synonyms",
+                target_field="synonym_trans",
+                template=self,
+            ),
+            TransChipOptionsField(
+                src_field="antonym",
+                heading="Antonyms",
+                target_field="antonym_trans",
+                template=self,
             ),
             DualLongTextField(
                 src_field="explanation",
+                heading="Explanations",
                 target_field="explanation_trans",
                 template=self,
             ),
             DualLongTextField(
-                src_field="example", target_field="example_trans", template=self
+                src_field="example",
+                heading="Examples",
+                target_field="example_trans",
+                template=self,
             ),
             MediaField(field_name="audio", file_type="mp3", template=self),
             Field(field_name="additional_info", template=self),
@@ -230,15 +244,23 @@ if __name__ == "__main__":
     Factory.register("ScrollBox", ScrollBox)
 
     class _TestApp(MDApp):
+        from custom_widgets.selection_widgets import SeparatorWithHeading
+
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
             return Builder.load_string(
                 """#
-PtTemplate:
-    MDFlatButton:
-        text: "Get Results"
-        on_press: app.root.get_results()"""
+FloatLayout:
+    size_hint: 1,1
+    SeparatorWithHeading:
+        heading: "Test"
+
+
+# PtTemplate:
+#     MDFlatButton:
+#         text: "Get Results"
+#         on_press: app.root.get_results()"""
             )
 
     _TestApp().run()

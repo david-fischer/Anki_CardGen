@@ -43,6 +43,13 @@ except FileNotFoundError:
     Builder.load_file(os.path.join(this_directory, "selection_widgets.kv"))
 
 
+class SeparatorWithHeading(FloatLayout):
+    r"""Two :class:`MDSeparator`\ s with a heading in between."""
+
+    heading = StringProperty("")
+    """:class:`~kivy.properties.StringProperty` with string used as heading."""
+
+
 class CheckContainer(ChildrenFromDataBehavior):
     """Container for widgets with :class:`~custom_widgets.behaviors.CheckBehavior`."""
 
@@ -130,6 +137,7 @@ class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
     r"""Container for :class:`MyCheckChip`\ s. Use :attr:`child_dict` to populate."""
 
     child_class_name = "MyCheckChip"
+    draw_box = BooleanProperty(False)
 
 
 class MyCheckImageTile(CheckBehavior, SmartTile):
@@ -256,9 +264,18 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
 class ImageCarousel(MyCarousel):
     """Carousel of images."""
 
+    def __init__(self, **kwargs):
+        super(ImageCarousel, self).__init__(**kwargs)
+        self.child_bindings["on_error"] = lambda *_: self.dispatch("on_error", *_)
+        self.register_event_type("on_error")
+        self.on_data()
+
     def get_modal_content(self, size_hint=(1, 1)):
         """Call :meth:`MyCarousel.get_modal_content` with ``size_hint=(1,1)``."""
         return super(ImageCarousel, self).get_modal_content(size_hint=size_hint)
+
+    def on_error(self, *_):
+        """Placeholder-function."""
 
 
 class CardCarousel(MyCarousel):
@@ -273,7 +290,7 @@ class CardCarousel(MyCarousel):
         if self.carousel.current_slide:
             new_height = self.carousel.current_slide.height + 24
             if self.height != new_height:
-                anim = Animation(height=new_height, duration=0.5)
+                anim = Animation(height=new_height, duration=0.2)
                 anim.start(self)
 
     def on_data(self, *_):
