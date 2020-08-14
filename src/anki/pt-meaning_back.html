@@ -12,12 +12,12 @@
         </button>
         {{image}}
         <p>
-            <span class="synonym">{{synonym}} ~</span>
+            {{#synonym}}<span class="synonym">{{synonym}} ~</span>{{/synonym}}
             <button class="open-button" data-modal-target="#modal">
                 <div class="word">{{word}}</div>
             </button>
             {{audio}}
-            <span class="antonym"> &harr; {{antonym}}</span>
+            {{#antonym}}<span class="antonym"> &harr; {{antonym}}</span>{{/antonym}}
         </p>
         <p class="explanation">{{explanation}}</p>
     </div>
