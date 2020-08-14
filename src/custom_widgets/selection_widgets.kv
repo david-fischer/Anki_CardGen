@@ -3,6 +3,35 @@
         Color:
             rgba: root.bg_color
 
+<SeparatorWithHeading>:
+    size_hint: 1,None
+    height: 15
+    pos_hint: {"center_y":0.5}
+
+    MDSeparator:
+        id: sep1
+        orientation: "horizontal"
+        pos_hint: {"center_y": .5, "right":1.0}
+        size_hint_x: None
+        width: (root.width - label.texture_size[0] - 50)/2
+
+    MDSeparator:
+        id: sep2
+        orientation: "horizontal"
+        pos_hint: {"center_y": .5,"x":0}
+        size_hint_x: None
+        width: sep1.width
+
+    MDLabel:
+        id: label
+        text: root.heading
+        font_style: "Button"
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+        halign: "center"
+        can_capitalize: True
+        size_hint: None, 1
+        text_size: None,None
+
 <MyCheckChip>:
     icon: ""
     size_hint: None,  None
@@ -66,7 +95,7 @@
         Color:
             rgba: self.theme_cls.divider_color
         Line:
-            width: 1
+            width: 1 if self.draw_box else .0001
             rectangle: self.x, self.y+self.spacing[1]/2, self.width, self.height
 
 
@@ -91,6 +120,7 @@
         id: carousel
         pos: root.pos
         size:root.size
+        anim_move_duration: 0.2
         on_current_slide: root.update_height()
         ignore_perpendicular_swipes: True
         size_hint_x: 1

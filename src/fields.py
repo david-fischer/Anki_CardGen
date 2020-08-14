@@ -80,6 +80,8 @@ class Field:
     """Reference to :class:`templates.Template`."""
     field_name = attr.ib(default="default_field")
     """Key of :attr:`template`.data which this field is handling."""
+    heading = attr.ib(default=None)
+    """Heading to be shown over widget."""
     widget = attr.ib(type=object, default=None)
     """Gets constructed by :meth:`~kivy.lang.Builder.load_string` from :attr:`widget_kv` if set."""
     widget_kv = attr.ib(type=str, default=None)
@@ -201,6 +203,7 @@ class OptionsField(Field):
     """Base-class for a field with multiple options to choose from."""
 
     get_selection = attr.ib(default=None, type=Callable)
+    display_limit = attr.ib(default=None)
 
     def get_data(self):
         """Get dictionaries to construct children of :attr:`widget`."""
@@ -211,6 +214,8 @@ class OptionsField(Field):
             )
         else:
             min_len = 0
+        if self.display_limit:
+            min_len = min(self.display_limit, min_len)
         return [
             {value: self.template.data[key][i] for key, value in self.kv_bidict.items()}
             for i in range(min_len)
@@ -363,7 +368,13 @@ class ImgField(OptionsField, MediaField):
 
     file_type = attr.ib(default="jpg")
     widget_kv = attr.ib(default="ImageCarousel:\n\theight:dp(250)")
+    display_limit = attr.ib(default=10)
     _kv_bidict = attr.ib()
+
+    def construct_widget(self):
+        """Bind :meth:`on_error` to child's ``on_error`` event."""
+        super(ImgField, self).construct_widget()
+        self.widget.bind(on_error=self.on_error)
 
     @_kv_bidict.default
     def _get_kv_dict_default(self):
@@ -378,3 +389,8 @@ class ImgField(OptionsField, MediaField):
                 img_file = compress_img_bytes(img_file)
                 self.save_media_file(media_file=img_file)
         return super(ImgField, self).post_process(content)
+
+    def on_error(self, _widget, child, *_):
+        """Remove urls that could not be loaded from :attr:`template`.data."""
+        self.template.data[self.field_name].remove(child.source)
+        self.update()
