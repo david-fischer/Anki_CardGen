@@ -179,7 +179,7 @@ def make_recordings():
         main_thread_screenshot(f"../screenshots/{name}.png")
     rename_screenshots()
     sleep(2)
-    os._exit(1)
+    os._exit(0)
 
 
 def play_recordings(folder):
@@ -196,7 +196,7 @@ def play_recordings(folder):
         main_thread_screenshot(name=f"../screenshots/{name}.png")
     sleep(2)
     rename_screenshots()
-    os._exit(1)
+    os._exit(0)
 
 
 def rename_screenshots():
