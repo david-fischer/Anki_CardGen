@@ -19,9 +19,9 @@
         </button>
         {{image}}
         <p>
-            <span class="synonym">{{synonym}} ~</span>
-            <span class="word">{{word}}</span>
-            <span class="antonym"> &harr; {{antonym}}</span>
+            {{#synonym}}<span class="synonym">{{synonym}} ~</span>{{/synonym}}
+            <span class="word">{{type:word}}</span>
+            {{#antonym}}<span class="antonym"> &harr; {{antonym}}</span>{{/antonym}}
         </p>
         <p class="explanation">{{explanation}}</p>
     </div>
