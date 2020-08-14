@@ -1,0 +1,7 @@
+#RECORDER1.0
+(0.06138277053833008, 'keyup', 0, {'key': 289, 'scancode': None, 'codepoint': None, 'modifier': None, 'is_touch': False})
+(1.457047462463379, 'begin', 2, {'is_touch': True, 'sx': 0.26851851851851855, 'sy': 0.48051948051948057, 'profile': ['pos']})
+(1.557004451751709, 'end', 2, {'is_touch': True, 'sx': 0.26851851851851855, 'sy': 0.48051948051948057, 'profile': ['pos']})
+(3.685460090637207, 'begin', 3, {'is_touch': True, 'sx': 0.2824074074074074, 'sy': 0.27128427128427124, 'profile': ['pos']})
+(3.785365581512451, 'end', 3, {'is_touch': True, 'sx': 0.2824074074074074, 'sy': 0.27128427128427124, 'profile': ['pos']})
+(6.440136909484863, 'keydown', 0, {'key': 289, 'scancode': None, 'codepoint': None, 'modifier': None, 'is_touch': False})

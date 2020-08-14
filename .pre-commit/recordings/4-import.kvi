@@ -1,0 +1,11 @@
+#RECORDER1.0
+(0.13737750053405762, 'keyup', 0, {'key': 289, 'scancode': None, 'codepoint': None, 'modifier': None, 'is_touch': False})
+(1.8694274425506592, 'begin', 8, {'is_touch': True, 'sx': 0.35648148148148145, 'sy': 0.935064935064935, 'profile': ['pos']})
+(1.9068198204040527, 'end', 8, {'is_touch': True, 'sx': 0.35648148148148145, 'sy': 0.935064935064935, 'profile': ['pos']})
+(2.705217123031616, 'begin', 9, {'is_touch': True, 'sx': 0.10648148148148148, 'sy': 0.9466089466089466, 'profile': ['pos']})
+(2.767923593521118, 'end', 9, {'is_touch': True, 'sx': 0.10648148148148148, 'sy': 0.9466089466089466, 'profile': ['pos']})
+(3.7231547832489014, 'begin', 10, {'is_touch': True, 'sx': 0.2708333333333333, 'sy': 0.4545454545454546, 'profile': ['pos']})
+(3.823193311691284, 'end', 10, {'is_touch': True, 'sx': 0.2708333333333333, 'sy': 0.4545454545454546, 'profile': ['pos']})
+(4.666972875595093, 'begin', 11, {'is_touch': True, 'sx': 0.8796296296296297, 'sy': 0.09523809523809523, 'profile': ['pos']})
+(4.741044998168945, 'end', 11, {'is_touch': True, 'sx': 0.8796296296296297, 'sy': 0.09523809523809523, 'profile': ['pos']})
+(5.315388441085815, 'keydown', 0, {'key': 289, 'scancode': None, 'codepoint': None, 'modifier': None, 'is_touch': False})

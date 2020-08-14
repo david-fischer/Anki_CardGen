@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Script to automatically take screenshots of the app in given states."""
 import os
 import re
@@ -9,6 +8,7 @@ from functools import partial
 from glob import glob
 from time import sleep
 
+import fire
 import imgkit
 import pystache
 import toolz
@@ -169,7 +169,7 @@ def make_recordings():
     toast(f"Screenshot with F8.")
     for i, name in enumerate(names):
         print(i, name)
-        rec = Recorder(filename=f"../screenshots/recordings/{name}.kvi")
+        rec = Recorder(filename=f"../.pre-commit/recordings/{name}.kvi")
         stop_rec = partial(stop_recording, recorder=rec)
         Window.bind(on_keyboard=stop_rec)
         rec.record = True
@@ -177,13 +177,16 @@ def make_recordings():
             sleep(0.5)
         Window.unbind(on_keyboard=stop_rec)
         main_thread_screenshot(f"../screenshots/{name}.png")
+    rename_screenshots()
+    sleep(2)
+    os._exit(1)
 
 
 def play_recordings(folder):
     print(folder)
     rec_files = sorted(glob(f"{folder}/*.kvi"))
-    print(rec_files)
     for rec_file in rec_files:
+        print(rec_file)
         rec = Recorder(filename=rec_file)
         rec.play = True
         name = re.split(r"[/.]", rec_file)[-2]
@@ -191,16 +194,40 @@ def play_recordings(folder):
         while rec.play:
             sleep(0.5)
         main_thread_screenshot(name=f"../screenshots/{name}.png")
+    sleep(2)
+    rename_screenshots()
+    os._exit(1)
 
 
-if __name__ == "__main__":
+def rename_screenshots():
+    for old in glob("../screenshots/*.png"):
+        new = re.sub(r"\d{4}", "", old)
+        os.rename(old, new)
+
+
+def main(command_fn):
+
     with CD("src"):
         from main import AnkiCardGenApp
 
         app = AnkiCardGenApp()
-        record = partial(start_thread, make_recordings)
-        play = partial(
-            start_thread, partial(play_recordings, "../screenshots/recordings/")
-        )
-        app.on_start = toolz.juxt(app.on_start, record)
+        app.on_start = toolz.juxt(app.on_start, command_fn)
         app.run()
+
+
+def play():
+    play_fn = partial(
+        start_thread, partial(play_recordings, "../.pre-commit/recordings/")
+    )
+    main(play_fn)
+
+
+def record():
+    record_fn = partial(start_thread, make_recordings)
+    main(record_fn)
+
+
+if __name__ == "__main__":
+    fire.Fire(
+        {"play": play, "record": record,}
+    )
