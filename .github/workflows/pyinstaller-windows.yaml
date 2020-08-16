@@ -18,6 +18,8 @@ jobs:
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: src
+        spec: src/pyinstaller-linux.spec
+
 
     - uses: actions/upload-artifact@v2
       with:
