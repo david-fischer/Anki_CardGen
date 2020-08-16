@@ -1,4 +1,4 @@
-name: Buildozer (Android)
+name: build android apk
 on:
   release:
     branches: [ master ]
