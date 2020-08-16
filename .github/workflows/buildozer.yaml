@@ -4,7 +4,7 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  manually_dispatch:
+  workflow_dispatch:
 
 jobs:
   # Build job. Builds app for Android with Buildozer
