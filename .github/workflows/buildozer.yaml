@@ -18,7 +18,7 @@ jobs:
           path: master
 
       - name: Build with Buildozer
-        uses: david-fischer/buildozer-action@v1
+        uses: david-fischer/buildozer-action@master
         id: buildozer
         with:
           repository_root: master
