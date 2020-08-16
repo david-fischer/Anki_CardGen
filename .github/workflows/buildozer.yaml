@@ -17,11 +17,8 @@ jobs:
         with:
           path: master
 
-      - name: Install Deps
-        run: sudo apt install autopoint
-
       - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
+        uses: david-fischer/buildozer-action@v1
         id: buildozer
         with:
           repository_root: master
