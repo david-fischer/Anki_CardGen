@@ -1,9 +1,10 @@
 name: build android apk
 on:
-  push:
+  release:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  manually_dispatch:
 
 jobs:
   # Build job. Builds app for Android with Buildozer
@@ -39,4 +40,4 @@ jobs:
           architecture: x64
 
       - name: Push binary to data branch
-        run: python master/.ci/move_binary.py "${{ steps.buildozer.outputs.filename }}" master data
+        run: python master/.ci/move_binary.py "${{ steps.buildozer.outputs.filename }}" master data android
