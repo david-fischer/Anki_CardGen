@@ -22,7 +22,7 @@ jobs:
         id: buildozer
         with:
           repository_root: master
-          workdir: src
+          workdir: .
           buildozer_version: stable
 
       - name: Checkout
