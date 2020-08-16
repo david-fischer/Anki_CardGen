@@ -26,5 +26,8 @@ jobs:
         python-version: 3.7
         architecture: x64
 
+    - name: ls
+      run: ls; ls master
+
     - name: Push binary to data branch
       run: python master/.ci/move_binary.py "src/dist/linux/AnkiCardGen" master data linux
