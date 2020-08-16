@@ -24,7 +24,7 @@ jobs:
           repository_root: master
           workdir: .
           buildozer_version: stable
-          command: apt install autopoint; buildozer android debug
+          command: sudo apt install autopoint ; buildozer android debug
 
       - name: Checkout
         uses: actions/checkout@v2
