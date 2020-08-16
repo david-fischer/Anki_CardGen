@@ -17,6 +17,9 @@ jobs:
         with:
           path: master
 
+      - name: Install Deps
+        run: sudo apt install autopoint
+
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
@@ -24,7 +27,7 @@ jobs:
           repository_root: master
           workdir: .
           buildozer_version: stable
-          command: sudo apt install autopoint ; buildozer android debug
+          command: buildozer android debug
 
       - name: Checkout
         uses: actions/checkout@v2
