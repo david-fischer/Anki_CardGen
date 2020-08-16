@@ -27,6 +27,12 @@ jobs:
           buildozer_version: stable
           command: sudo apt install autopoint; buildozer android debug
 
+      - name: Cache Buildozer global directory
+        uses: actions/cache@v2
+        with:
+          path: .buildozer_global
+          key: buildozer-global-${{ hashFiles('buildozer.spec') }} # Replace with your path
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
