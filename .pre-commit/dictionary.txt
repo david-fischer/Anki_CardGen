@@ -1,2 +1,3 @@
 eles->else, disabled because of portuguese pronoun
 scr->src,
+datas->data, disabled because of keyword in pyinstaller spec file
