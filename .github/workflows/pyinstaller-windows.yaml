@@ -1,7 +1,7 @@
 name: Package exe with PyInstaller - Windows
 
 on:
-  push:
+  release:
     branches: [ master ]
   pull_request:
     branches: [ master ]
@@ -21,4 +21,4 @@ jobs:
     - uses: actions/upload-artifact@v2
       with:
         name: AnkiCardGen
-        path: dist/windows # or path/to/artifact
+        path: src/dist/windows # or path/to/artifact
