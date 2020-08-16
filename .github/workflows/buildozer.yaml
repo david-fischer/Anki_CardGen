@@ -1,6 +1,6 @@
 name: build android apk
 on:
-  release:
+  push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
