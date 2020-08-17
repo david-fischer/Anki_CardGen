@@ -22,7 +22,7 @@ jobs:
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
         path: src
-        spec: pyinstaller-linux.spec
+        spec: master/scr/pyinstaller-linux.spec
 
     - uses: actions/upload-artifact@v2
       with:
