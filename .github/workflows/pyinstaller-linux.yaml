@@ -22,7 +22,7 @@ jobs:
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
-        path: src
+        path: master/src
         spec: pyinstaller-linux.spec
 
 #    - uses: actions/upload-artifact@v2
