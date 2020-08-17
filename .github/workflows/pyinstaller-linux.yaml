@@ -42,4 +42,4 @@ jobs:
         architecture: x64
 
     - name: Push binary to data branch
-      run: python master/.ci/move_binary.py "src/dist/linux/AnkiCardGen" master data linux
+      run: python master/.ci/move_binary.py "master/src/dist/linux/AnkiCardGen" master data linux
