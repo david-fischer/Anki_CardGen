@@ -17,18 +17,19 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: master
+        ref: master
 
     - name: PyInstaller Windows
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
         path: src
-        spec: pyinstaller-linux.spec
+        spec: pyinstaller-windows.spec
 
 
-    - uses: actions/upload-artifact@v2
-      with:
-        name: AnkiCardGen
-        path: src/dist/windows # or path/to/artifact
+#    - uses: actions/upload-artifact@v2
+#      with:
+#        name: AnkiCardGen
+#        path: src/dist/windows # or path/to/artifact
 
     - name: Checkout
       uses: actions/checkout@v2
