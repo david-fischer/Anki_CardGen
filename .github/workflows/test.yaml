@@ -13,6 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: master
+        ref: master # Branch name
+
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -27,7 +33,7 @@ jobs:
         architecture: x64
 
     - name: ls
-      run: ls ..; ls data
+      run: ls
 
     - name: Push binary to data branch
       run: python master/.ci/move_binary.py "src/dist/linux/AnkiCardGen" master data linux
