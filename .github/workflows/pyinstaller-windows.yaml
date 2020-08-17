@@ -22,7 +22,7 @@ jobs:
     - name: PyInstaller Windows
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
-        path: src
+        path: master/src
         spec: pyinstaller-windows.spec
 
 
