@@ -7,7 +7,7 @@ from glob import glob
 kv_hidden_imports = [py_name[:-3].replace("/", ".") for py_name in glob("screens/*.py")]
 kivymd_hidden_imports = ["kivymd.vendor.circularTimePicker"]
 print(kv_hidden_imports)
-from kivy_deps import sdl2, glew
+#from kivy_deps import sdl2, glew
 
 from kivymd import hooks_path as kivymd_hooks_path
 
@@ -35,7 +35,7 @@ exe = EXE(
     a.datas,
     Tree("screens"),
     Tree("custom_widgets"),
-    *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
+#    *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
     debug=False,
     strip=False,
     upx=True,
