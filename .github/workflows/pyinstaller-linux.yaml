@@ -13,7 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: master
 
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
