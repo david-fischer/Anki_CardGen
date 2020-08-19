@@ -7,7 +7,7 @@
 <h1>AnkiCardGen</h1>
 </div>
 
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![Android](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20android/master?label=android%20build)]() [![Windows](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20windows/master?label=windows%20build)]()[![Linux](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20linux/master?label=linux%20build)]() [![Version](https://img.shields.io/github/v/release/david-fischer/Anki_CardGen?label=version)]()
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/release/david-fischer/Anki_CardGen?label=version)]() [![Android](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20android/master?label=android%20build)]() [![Windows](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20windows/master?label=windows%20build)]()[![Linux](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20linux/master?label=linux%20build)]()
 #### Screenshots
 
 <img src="screenshots/0-nav-drawer-open.png" width=270>&nbsp;<img src="screenshots/1-word.png" width=270>&nbsp;<img src="screenshots/2-word.png" width=270>&nbsp;<!--  -->
