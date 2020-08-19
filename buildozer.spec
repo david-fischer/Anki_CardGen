@@ -28,10 +28,10 @@ source.exclude_dirs = bin, test, .buildozer, docs
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 0.5.0
+# version = 0.5.0
 
 # (str) Application versioning (method 2)
-# version.regex = __version__ = ['"](.*)['"]
+version.regex = __version__ = ['"](.*)['"]
 # version.filename = %(source.dir)s/main.py
 
 # (list) Application requirements
