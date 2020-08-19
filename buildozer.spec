@@ -32,7 +32,7 @@ source.exclude_dirs = bin, test, .buildozer, docs
 
 # (str) Application versioning (method 2)
 version.regex = __version__ = ['"](.*)['"]
-# version.filename = %(source.dir)s/main.py
+version.filename = %(source.dir)s/main.py
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
