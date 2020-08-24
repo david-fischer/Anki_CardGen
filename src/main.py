@@ -131,5 +131,10 @@ class AnkiCardGenApp(MDApp):
             self.busy_modal.dismiss()
 
 
-if __name__ == "__main__":
+def main():
+    """Main-function."""
     AnkiCardGenApp().run()
+
+
+if __name__ == "__main__":
+    main()
