@@ -9,7 +9,6 @@ kivy~=1.11.1
 kivymd~=0.104.1
 pandas~=1.0.4
 pillow~=6.2.2
-pre-commit
 pystache~=0.5.4
 requests~=2.24.0
 spacy~=2.3.0
