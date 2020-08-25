@@ -5,6 +5,7 @@ import os
 import pydoc
 
 import certifi
+from kivy import platform
 from kivy.clock import mainthread
 from kivy.lang import Builder
 from kivy.properties import (
@@ -133,6 +134,15 @@ class AnkiCardGenApp(MDApp):
 
 def main():
     """Main-function."""
+    if platform == "android":
+        from android.permissions import (  # pylint: disable=import-outside-toplevel
+            request_permissions,
+            Permission,
+        )
+
+        request_permissions(
+            [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+        )
     AnkiCardGenApp().run()
 
 
