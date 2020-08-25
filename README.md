@@ -8,6 +8,15 @@
 </div>
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/release/david-fischer/Anki_CardGen?label=version)]() [![Android](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20android/master?label=android%20build)]() [![Windows](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20windows/master?label=windows%20build)]()[![Linux](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20linux/master?label=linux%20build)]()
+
+[Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [kivymd](https://github.com/kivymd/KivyMD).
+
+> **:warning: The project is still under development, with some features only working on desktop or not yet working at all. See [current state](https://github.com/david-fischer/Anki_CardGen#-current-state).**
+
+Currently supported languages:
+
+* **Brazilian Portuguese**
+
 #### Screenshots
 
 <img src="screenshots/0-nav-drawer-open.png" width=270>&nbsp;<img src="screenshots/1-word.png" width=270>&nbsp;<img src="screenshots/2-word.png" width=270>&nbsp;<!--  -->
@@ -29,20 +38,6 @@
     <img src="screenshots/convite/meaning-pt_front.png" width=270>
     <img src="screenshots/convite/pt-meaning_front.png" width=270>
 </details>
-
-
-
-[Kivy](https://kivy.org/) App (mobile/dektop) for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing:
-
-* Image
-* Audio
-* Example
-* Synonym - Antonym
-* Definition
-
-Currently supported languages:
-* **Brazilian Portuguese**
-
 ## ❓ About
 
 Anki is a powerful tool for reviewing flash cards, in particular for language learning.
@@ -51,33 +46,30 @@ Having flash cards with multiple cues (image, audio, example-sentence, ...) is b
 
 This allows quick generation of high-quality, personalized cards.
 
+## ⚡ Quick Start
+
+You can install the [current version](https://github.com/david-fischer/Anki_CardGen/tree/data/android) of the Android-apk and try it out. So far it is only tested on an S5 Neo.
+
+**⚠️ Not yet working:** The packaged application is also available for [linux](https://github.com/david-fischer/Anki_CardGen/raw/data/linux/AnkiCardGen) and [windows](https://github.com/david-fischer/Anki_CardGen/raw/data/windows/AnkiCardGen.exe).
+
 ## 🏗 Current State
 
-* [x] Importing a list of words
-    * [x] User interface to load
-        * [x] from exported kindle-notes in html-format
-        * [x] from simple text file
-    * [x] Pre-Processing
-        * [x] Extracting the words
-        * [x] Removal of punctuation
-        * [x] Get dictionary form of word **(only desktop)**
-    * [x] Clicking on loaded words to start generation-process
-* [x] Processing single words
-    * [x] Fetching necessary data to build card
-    * [x] Provide user interface to select content of card
-    * [x] Process the user input
-    * [x] Downloading image and audio files
-    * [x] Building the Anki card from html-templates
-
-- [ ] Incremental saving of apkgs
-- [ ] Error handling for incomplete selection
-- [ ] Chaning of languages
+* [x] Processing of single words
+* [x] Batch-import from .txt and **from kindle-notes**
+* [x] Queue-system for words that have not been processed
+* [x] Overview over processed words and option to export as .apkg
+* [ ] change of languages
+* [ ] storage access on mobile
+* [ ] spacy on mobile
+* [ ] pyinstaller workflows for windows and linux
+* [ ] installation via setup.py
+* [ ] executables for windows and linux
 
 ## 🚧 Installing
 
 ### Prerequisites
 
-Download repository and install requirements:
+Clone repository and install requirements:
 
 ```
 git clone https://github.com/david-fischer/Anki_CardGen.git
@@ -88,7 +80,7 @@ pip install -r requirements.txt
 Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese:
 
 ```
-pythn -m spacy download pt_core_news_sm
+python -m spacy download pt_core_news_sm
 ```
 
 **NOTE:** This model is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version.
@@ -108,19 +100,27 @@ buildozer ios debug deploy
 
 ## 🎯 Troubleshooting
 
-* python3.8 not working -> change to 3.7
+* python==3.7
+* start script from `src` folder
 
 ## 🔧 Usage
-(add info)
+Simply start the app from the `src` folder:
+
+```
+cd src
+python main.py
+```
+
+
 
 ## 🚀 Contribute
 * So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
   Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
-* Unfortunately, I had problems building SpaCy (more precisely its dependency blis) on arm. I therefore removed it from the dependencies in buildozer.spec and built the code to work around it if the package is not present.make blis work on mobile
+* Unfortunately, I had problems building SpaCy (more precisely its dependency blis) on arm. I therefore removed it from the dependencies in buildozer.spec and built the code to work around it if the package is not present.
 
 ## ✍️ Authors
 - [David Fischer](https://github.com/david-fischer) - Author
 
 ## 🎉 Acknowledgements
 
-* [ ] List info here
+src/google-images-download is basically https://github.com/Joeclinton1/google-images-download with minor fixes
