@@ -1,2 +1,1 @@
-kivy
-kivymd
+../requirements.txt
