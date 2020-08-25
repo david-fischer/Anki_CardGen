@@ -38,6 +38,8 @@ Currently supported languages:
     <img src="screenshots/convite/meaning-pt_front.png" width=270>
     <img src="screenshots/convite/pt-meaning_front.png" width=270>
 </details>
+
+
 ## ❓ About
 
 Anki is a powerful tool for reviewing flash cards, in particular for language learning.
