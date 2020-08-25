@@ -16,7 +16,7 @@ path = os.path.abspath(".")
 a = Analysis(
     ["main.py"],
     pathex=[path],
-    hiddenimports=["pony.orm.dbproviders.sqlite", "templates"]
+    hiddenimports=["pony.orm.dbproviders.sqlite", "templates", "lxml", "soupsieve"]
     + kv_hidden_imports
     + kivymd_hidden_imports,
     hookspath=[kivymd_hooks_path],
