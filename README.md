@@ -9,17 +9,18 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/release/david-fischer/Anki_CardGen?label=version)]() [![Android](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20android/master?label=android%20build)]() [![Windows](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20windows/master?label=windows%20build)]()[![Linux](https://img.shields.io/github/workflow/status/david-fischer/Anki_CardGen/build%20linux/master?label=linux%20build)]()
 
-[Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [kivymd](https://github.com/kivymd/KivyMD).
+[Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [KivyMD](https://github.com/kivymd/KivyMD). However, this project is not affiliated with Anki.
 
-> **:warning: The project is still under development, with some features only working on desktop or not yet working at all. See [current state](https://github.com/david-fischer/Anki_CardGen#-current-state).**
+> **:warning: This project is still under development, see [current state](https://github.com/david-fischer/Anki_CardGen#-current-state). If you would like to contribute have a look at the [documentation]() and the [contribute](https://github.com/david-fischer/Anki_CardGen#-contribute) section.**
 
 Currently supported languages:
 
 * **Brazilian Portuguese**
 
-#### Screenshots
+### Screenshots
 
 <img src="screenshots/0-nav-drawer-open.png" width=270>&nbsp;<img src="screenshots/1-word.png" width=270>&nbsp;<img src="screenshots/2-word.png" width=270>&nbsp;<!--  -->
+
 <details>
 <summary>More screenshots</summary>
 <img src="screenshots/3-word-images.png" width=270>&nbsp;<img src="screenshots/4-import.png" width=270>&nbsp;<img src="screenshots/5-export.png" width=270>&nbsp;</details>
@@ -52,20 +53,20 @@ This allows quick generation of high-quality, personalized cards.
 
 You can install the [current version](https://github.com/david-fischer/Anki_CardGen/tree/data/android) of the Android-apk and try it out. So far it is only tested on an S5 Neo.
 
-**⚠️ Not yet working:** The packaged application is also available for [linux](https://github.com/david-fischer/Anki_CardGen/raw/data/linux/AnkiCardGen) and [windows](https://github.com/david-fischer/Anki_CardGen/raw/data/windows/AnkiCardGen.exe).
+> **⚠️ Not yet working:** The packaged application is also available as a single-file executable for [linux](https://github.com/david-fischer/Anki_CardGen/raw/data/linux/AnkiCardGen) and [windows](https://github.com/david-fischer/Anki_CardGen/raw/data/windows/AnkiCardGen.exe).
 
 ## 🏗 Current State
 
 * [x] Processing of single words
 * [x] Batch-import from .txt and **from kindle-notes**
 * [x] Queue-system for words that have not been processed
-* [x] Overview over processed words and option to export as .apkg
+* [x] Overview over processed words and option to export as .apkg (**mobile app lacks proper management of paths**)
 * [ ] change of languages
-* [ ] storage access on mobile
 * [ ] spacy on mobile
 * [ ] pyinstaller workflows for windows and linux
 * [ ] installation via setup.py
 * [ ] executables for windows and linux
+* [ ] clean-up package-structure, imports and file-paths
 
 ## 🚧 Installing
 
@@ -103,7 +104,6 @@ buildozer ios debug deploy
 ## 🎯 Troubleshooting
 
 * python==3.7
-* start script from `src` folder
 
 ## 🔧 Usage
 Simply start the app from the `src` folder:
@@ -125,4 +125,4 @@ python main.py
 
 ## 🎉 Acknowledgements
 
-src/google-images-download is basically https://github.com/Joeclinton1/google-images-download with minor fixes
+`src/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
