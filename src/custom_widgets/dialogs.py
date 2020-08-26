@@ -16,12 +16,9 @@ from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 
 from custom_widgets.scroll_widgets import ScrollList
+from paths import CUSTOM_WIDGET_DIR
 
-try:
-    Builder.load_file("custom_widgets/dialogs.kv")
-except FileNotFoundError:
-    this_directory = os.path.dirname(__file__)
-    Builder.load_file(os.path.join(this_directory, "dialogs.kv"))
+Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
 
 
 class ReplacementItem(ButtonBehavior, BoxLayout):

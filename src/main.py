@@ -22,15 +22,14 @@ from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
 from db import add_missing_templates, get_template
+from paths import CUSTOM_WIDGET_DIR
 from utils import smart_loader, smart_saver
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
-this_dir = os.path.dirname(__file__)
-if this_dir:
-    this_dir += "/"
-Builder.load_file(f"{this_dir}custom_widgets/main_menu.kv")
-Builder.load_file(f"{this_dir}custom_widgets/fixes.kv")
+
+Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "main_menu.kv"))
+Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "fixes.kv"))
 
 
 class AnkiCardGenApp(MDApp):
@@ -58,8 +57,8 @@ class AnkiCardGenApp(MDApp):
         config.setdefaults(
             "Paths", {},
         )
-        os.makedirs("../app_data/", exist_ok=True)
-        os.makedirs("../app_data/apkgs/", exist_ok=True)
+        # os.makedirs("../app_data/", exist_ok=True)
+        # os.makedirs("../app_data/apkgs/", exist_ok=True)
 
     def build(self):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""

@@ -28,12 +28,9 @@ from custom_widgets.behaviors import (
     ChildrenFromDataBehavior,
     MultiStateBehavior,
 )
+from paths import CUSTOM_WIDGET_DIR
 
-try:
-    Builder.load_file("custom_widgets/scroll_widgets.kv")
-except FileNotFoundError:
-    this_directory = os.path.dirname(__file__)
-    Builder.load_file(os.path.join(this_directory, "scroll_widgets.kv"))
+Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "scroll_widgets.kv"))
 
 
 class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
