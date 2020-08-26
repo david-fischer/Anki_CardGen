@@ -17,7 +17,15 @@ from kivymd.uix.menu import MDDropdownMenu
 from custom_widgets.behaviors import CheckBehavior
 from custom_widgets.selection_widgets import CheckContainer
 from db import get_template_names
+from paths import SCREEN_DIR
 from utils import widget_by_id
+
+
+# print(SCREEN_DIR)
+# print(__file__)
+# print(os.getcwd())
+# print(os.listdir("."))
+# input()
 
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
@@ -29,8 +37,8 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
     name = StringProperty("test")
     """:class:`~kivy.properties.StringProperty`: name of the screen."""
 
-    path = StringProperty("")
-    """:class:`~kivy.properties.StringProperty`: path of the screens kv-file."""
+    kv_file_name = StringProperty("")
+    """:class:`~kivy.properties.StringProperty`: name of the screens kv-file."""
 
     def __init__(self, **kwargs):
         super(DrawerItem, self).__init__(**kwargs)
@@ -85,25 +93,25 @@ class MainMenu(StackLayout):
                 "icon": "form-textbox",
                 "text": "Manual Input",
                 "name": "single_word",
-                "path": "screens/single_word.kv",
+                "kv_file_name": "single_word.kv",
             },
             {
                 "icon": "format-list-checkbox",
                 "text": "Queue",
                 "name": "queue",
-                "path": "screens/queued.kv",
+                "kv_file_name": "queued.kv",
             },
             {
                 "icon": "history",
                 "text": "History",
                 "name": "history",
-                "path": "screens/history.kv",
+                "kv_file_name": "history.kv",
             },
             {
                 "icon": "cogs",
                 "text": "Settings",
                 "name": "settings",
-                "path": "screens/settings.kv",
+                "kv_file_name": "settings.kv",
             },
         ]
     )
@@ -137,7 +145,7 @@ class MainMenu(StackLayout):
         """
         # for screen_dict in self.screen_dicts:
         self.screens = [
-            KvScreen(**{key: screen_dict[key] for key in ["name", "path"]})
+            KvScreen(**{key: screen_dict[key] for key in ["name", "kv_file_name"]})
             for screen_dict in self.screen_dicts
         ]
         # self.ids.screen_man.add_widget(screen)
@@ -178,11 +186,12 @@ class KvScreen(Screen):
     If :attr:`path` does not exist, create file.
     """
 
-    path = StringProperty("screens/screen_default.kv")
-    """:class:`~kivy.properties.StringProperty` defaults to ``"screens/screen_default.kv"`` """
+    kv_file_name = StringProperty("screen_default.kv")
+    """:class:`~kivy.properties.StringProperty` defaults to ``"screen_default.kv"`` """
 
     def __init__(self, **kwargs):
         super(KvScreen, self).__init__(**kwargs)
+        self.path = os.path.join(SCREEN_DIR, self.kv_file_name)
         self.size_hint = None, 1
         self.width = Window.width
         Window.bind(width=self.setter("width"))
