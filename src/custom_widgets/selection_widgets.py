@@ -35,12 +35,9 @@ from custom_widgets.behaviors import (
     ThemableColorChangeBehavior,
     TranslationOnCheckBehavior,
 )
+from paths import CUSTOM_WIDGET_DIR
 
-try:
-    Builder.load_file("custom_widgets/selection_widgets.kv")
-except FileNotFoundError:
-    this_directory = os.path.dirname(__file__)
-    Builder.load_file(os.path.join(this_directory, "selection_widgets.kv"))
+Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "selection_widgets.kv"))
 
 
 class SeparatorWithHeading(FloatLayout):

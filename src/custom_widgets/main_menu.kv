@@ -1,4 +1,6 @@
 #:import NoTransition kivy.uix.screenmanager.NoTransition
+#:import ASSETS_DIR paths.ASSETS_DIR
+#:import os os
 
 <DrawerItem>:
     theme_text_color: "Custom"
@@ -30,7 +32,7 @@
             id: avatar
             size_hint: None, None
             size: "112dp", "112dp"
-            source: "assets/AnkiCardGen.png"
+            source: os.path.join(ASSETS_DIR,"AnkiCardGen.png")
 
     MDLabel:
         text: "Anki CardGen"
