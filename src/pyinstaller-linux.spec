@@ -3,10 +3,10 @@
 import sys
 import os
 from glob import glob
+import sys
+sys.setrecursionlimit(5000)
 
-kv_hidden_imports = [py_name[:-3].replace("/", ".") for py_name in glob("screens/*.py")]
 kivymd_hidden_imports = ["kivymd.vendor.circularTimePicker"]
-print(kv_hidden_imports)
 # from kivy_deps import sdl2, glew
 
 from kivymd import hooks_path as kivymd_hooks_path
@@ -17,7 +17,6 @@ a = Analysis(
     ["main.py"],
     pathex=[path],
     hiddenimports=["pony.orm.dbproviders.sqlite", "templates", "lxml", "soupsieve"]
-    + kv_hidden_imports
     + kivymd_hidden_imports,
     hookspath=[kivymd_hooks_path],
     win_no_prefer_redirects=False,
@@ -27,14 +26,14 @@ a = Analysis(
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=None)
 
+trees = [Tree(folder,prefix=folder) for folder in ["screens", "custom_widgets", "assets", "anki"]]
 exe = EXE(
     pyz,
     a.scripts,
     a.binaries,
     a.zipfiles,
     a.datas,
-    Tree("screens"),
-    Tree("custom_widgets"),
+    *trees,
     #    *[Tree(p) for p in (sdl2.dep_bins + glew.dep_bins)],
     debug=False,
     strip=False,
