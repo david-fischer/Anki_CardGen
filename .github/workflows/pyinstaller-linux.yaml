@@ -24,7 +24,7 @@ jobs:
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
         path: master/acg
-        spec: pyinstaller-linux.spec
+        spec: pyinstaller.spec
 
 #    - uses: actions/upload-artifact@v2
 #      with:
