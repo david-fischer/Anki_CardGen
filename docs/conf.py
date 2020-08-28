@@ -27,6 +27,7 @@ project = "ACG"
 copyright = "2020, David Fischer"
 author = "David Fischer"
 
+master_doc = "index"
 # The full version, including alpha/beta/rc tags
 release = "1.0.6"
 
