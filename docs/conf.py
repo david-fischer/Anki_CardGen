@@ -28,7 +28,7 @@ copyright = "2020, David Fischer"
 author = "David Fischer"
 
 # The full version, including alpha/beta/rc tags
-release = "0.3.0"
+release = "1.0.6"
 
 # -- General configuration ---------------------------------------------------
 
