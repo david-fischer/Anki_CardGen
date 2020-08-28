@@ -1,7 +1,11 @@
 #:import SettingsRoot screens.SettingsRoot
+#:import toast kivymd.toast.toast
 SettingsRoot:
     id: settings_root
     orientation: "vertical"
+    size_hint: 1,1
+    padding: dp(10)
+    spacing: dp(10)
 
     MDRaisedButton:
         text: "Theme"
@@ -10,3 +14,16 @@ SettingsRoot:
     MDRaisedButton:
         text: "Busy"
         on_press: root.sleep_some()
+
+    StackLayout:
+        orientation: "lr-tb"
+        spacing: dp(20)
+        MDTextField:
+            id: apkg_export_dir_text_field
+            hint_text: "apkg export dir"
+            text: app.apkg_export_dir
+            size_hint_x: 0.8
+            on_text_validate: app.apkg_export_dir = self.text; toast("Saved change.",5)
+        MDFloatingActionButton:
+            icon: "folder"
+            on_press: toast("Not yet implemented.",5)

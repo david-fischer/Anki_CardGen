@@ -1,4 +1,6 @@
 """Implements :class:`HistoryMain`, the root widget of the history screen."""
+import os
+
 from bidict import bidict
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
@@ -49,12 +51,13 @@ class HistoryRoot(FloatLayout):
             toast("NOT IMPLEMENTED YET.", 10)
             return False
         with db_session:
-            current_template = MDApp.get_running_app().get_current_template_db()
+            app = MDApp.get_running_app()
+            current_template = app.get_current_template_db()
             cards = current_template.get_cards_by_selector(lambda c: c.state in states)
             if not cards:
                 toast("Empty Selection. Could not export cards.")
                 return False
-            export_dir = MDApp.get_running_app().apkg_export_dir
-            export_cards(cards, export_dir)
-        toast(f"Exported cards to {export_dir}.", 5)
+            print(os.path.exists(app.apkg_export_dir))
+            export_cards(cards, app.apkg_export_dir, app.get_anki_template_dir())
+        toast(f"Exported cards to {app.apkg_export_dir}.", 5)
         return True
