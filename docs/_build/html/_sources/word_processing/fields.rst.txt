@@ -1,6 +1,6 @@
 Fields
 --------------------------------------------
 
-.. autoapimodule:: fields
+.. autoapimodule:: acg.fields
    :members:
    :show-inheritance:

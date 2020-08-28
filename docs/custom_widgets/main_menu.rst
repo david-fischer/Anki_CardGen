@@ -1,6 +1,6 @@
 Main Menu
 ---------------------------------------
 
-.. autoapimodule:: main_menu
+.. autoapimodule:: acg.custom_widgets.main_menu
    :members:
    :show-inheritance:

@@ -7,13 +7,13 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>history &mdash; ACG 0.3.0 documentation</title>
+  <title>acg.screens.history &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
 
 
 
@@ -22,21 +22,21 @@
 
 
   <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
 
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
 
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
 
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -63,7 +63,7 @@
 
 
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -82,12 +82,12 @@
 
 
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db.html">Database</a></li>
 </ul>
 
 
@@ -103,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../../../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -132,11 +132,11 @@
 
   <ul class="wy-breadcrumbs">
 
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
 
-          <li><a href="index.html">Module code</a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>history</li>
+      <li>acg.screens.history</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -151,7 +151,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for history</h1><div class="highlight"><pre>
+  <h1>Source code for acg.screens.history</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Implements :class:`HistoryMain`, the root widget of the history screen.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">bidict</span> <span class="kn">import</span> <span class="n">bidict</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
@@ -161,10 +161,10 @@
 <span class="kn">from</span> <span class="nn">kivymd.toast</span> <span class="kn">import</span> <span class="n">toast</span>
 <span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
 
-<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">export_cards</span><span class="p">,</span> <span class="n">get_template</span>
+<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">export_cards</span>
 
 
-<div class="viewcode-block" id="HistoryRoot"><a class="viewcode-back" href="../screens/history.html#history.HistoryRoot">[docs]</a><span class="k">class</span> <span class="nc">HistoryRoot</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="HistoryRoot"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot">[docs]</a><span class="k">class</span> <span class="nc">HistoryRoot</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Root widget of the history screen.&quot;&quot;&quot;</span>
 
     <span class="n">action_button_data</span> <span class="o">=</span> <span class="n">bidict</span><span class="p">(</span>
@@ -183,7 +183,7 @@
     <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speed_dial</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;content-save&quot;</span>
 
-<div class="viewcode-block" id="HistoryRoot.export_cards"><a class="viewcode-back" href="../screens/history.html#history.HistoryRoot.export_cards">[docs]</a>    <span class="k">def</span> <span class="nf">export_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+<div class="viewcode-block" id="HistoryRoot.export_cards"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.export_cards">[docs]</a>    <span class="k">def</span> <span class="nf">export_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Depending on which button was pressed, exports one of the following.</span>
 
 <span class="sd">            * all cards</span>
@@ -203,7 +203,7 @@
             <span class="n">toast</span><span class="p">(</span><span class="s2">&quot;NOT IMPLEMENTED YET.&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
-            <span class="n">current_template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">current_template</span><span class="p">)</span>
+            <span class="n">current_template</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span>
             <span class="n">cards</span> <span class="o">=</span> <span class="n">current_template</span><span class="o">.</span><span class="n">get_cards_by_selector</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">states</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">cards</span><span class="p">:</span>
                 <span class="n">toast</span><span class="p">(</span><span class="s2">&quot;Empty Selection. Could not export cards.&quot;</span><span class="p">)</span>

@@ -1,6 +1,6 @@
 Queue Screen
 -------------------------------------------
 
-.. autoapimodule:: queued
+.. autoapimodule:: acg.screens.queued
    :members:
    :show-inheritance:

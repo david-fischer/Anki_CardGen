@@ -1,6 +1,6 @@
 Single Word Screen
 --------------------------------------------------
 
-.. autoapimodule:: single_word
+.. autoapimodule:: acg.screens.single_word
    :members:
    :show-inheritance:

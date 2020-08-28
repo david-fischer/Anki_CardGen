@@ -1,6 +1,6 @@
 Selection Widgets
 ---------------------------------------
 
-.. autoapimodule:: selection_widgets
+.. autoapimodule:: acg.custom_widgets.selection_widgets
    :members:
    :show-inheritance:

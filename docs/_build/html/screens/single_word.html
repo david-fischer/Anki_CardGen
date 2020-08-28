@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Single Word Screen &mdash; ACG 0.3.0 documentation</title>
+  <title>Single Word Screen &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -90,13 +90,16 @@
 <li class="toctree-l2"><a class="reference internal" href="history.html">History Screen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="queued.html">Queue Screen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Single Word Screen</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#single_word.SingleWordRoot">SingleWordRoot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot">SingleWordRoot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot.on_template">on_template</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
@@ -113,7 +116,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -165,14 +168,20 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="module-single_word">
-<span id="single-word-screen"></span><h1>Single Word Screen<a class="headerlink" href="#module-single_word" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-acg.screens.single_word">
+<span id="single-word-screen"></span><h1>Single Word Screen<a class="headerlink" href="#module-acg.screens.single_word" title="Permalink to this headline">¶</a></h1>
 <p>Implements root widget of the single_word screen.</p>
 <dl class="py class">
-<dt id="single_word.SingleWordRoot">
-<em class="property">class </em><code class="sig-prename descclassname">single_word.</code><code class="sig-name descname">SingleWordRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/single_word.html#SingleWordRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#single_word.SingleWordRoot" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.screens.single_word.SingleWordRoot">
+<em class="property">class </em><code class="sig-prename descclassname">acg.screens.single_word.</code><code class="sig-name descname">SingleWordRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
 <p>Root widget of the single_word screen.</p>
+<dl class="py method">
+<dt id="acg.screens.single_word.SingleWordRoot.on_template">
+<code class="sig-name descname">on_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot.on_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot.on_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update <code class="xref py py-attr docutils literal notranslate"><span class="pre">scroll_view</span></code> if self.template changes.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>

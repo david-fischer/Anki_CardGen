@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Fields &mdash; ACG 0.3.0 documentation</title>
+  <title>Fields &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -87,125 +87,134 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../word_processing.html">Word Processing</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="anki.html">Generate Anki Cards</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Fields</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.CheckChipOptionsField">CheckChipOptionsField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.CheckChipOptionsField">CheckChipOptionsField</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.DisplayTextField">DisplayTextField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.DisplayTextField">DisplayTextField</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.DualLongTextField">DualLongTextField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.DualLongTextField">DualLongTextField</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.Field">Field</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.construct_widget">construct_widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.Field">Field</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.construct_widget">construct_widget</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.field_name">field_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.field_name">field_name</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.get_content">get_content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.get_content">get_content</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.get_data">get_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.get_data">get_data</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.kv_bidict">kv_bidict</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.heading">heading</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.post_process">post_process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.kv_bidict">kv_bidict</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.pre_process">pre_process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.post_process">post_process</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.template">template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.pre_process">pre_process</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.update">update</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.template">template</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.update_widget_data">update_widget_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.update">update</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.widget">widget</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.update_widget_data">update_widget_data</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.Field.widget_kv">widget_kv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.widget">widget</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.widget_kv">widget_kv</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.ImgField">ImgField</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.ImgField.post_process">post_process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.ImgField">ImgField</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.ImgField.construct_widget">construct_widget</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.ImgField.on_error">on_error</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.ImgField.post_process">post_process</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.MediaField">MediaField</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.MediaField.file_type">file_type</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.MediaField">MediaField</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.file_type">file_type</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.MediaField.get_file_strings">get_file_strings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.get_file_strings">get_file_strings</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.MediaField.get_media_file">get_media_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.get_media_file">get_media_file</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.MediaField.post_process">post_process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.post_process">post_process</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.MediaField.pre_process">pre_process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.pre_process">pre_process</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.MediaField.save_media_file">save_media_file</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.save_media_file">save_media_file</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.OptionsField">OptionsField</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.OptionsField.get_content">get_content</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.OptionsField">OptionsField</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.OptionsField.get_content">get_content</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.OptionsField.get_data">get_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.OptionsField.get_data">get_data</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.OptionsField.update_widget_data">update_widget_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.OptionsField.update_widget_data">update_widget_data</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.TextInputField">TextInputField</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TextInputField.callback">callback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.TextInputField">TextInputField</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.callback">callback</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TextInputField.construct_widget">construct_widget</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.construct_widget">construct_widget</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TextInputField.on_text_validate">on_text_validate</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.on_text_validate">on_text_validate</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TextInputField.widget_kv">widget_kv</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.widget_kv">widget_kv</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.TransChipOptionsField">TransChipOptionsField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.TransChipOptionsField">TransChipOptionsField</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#fields.TranslationMixin">TranslationMixin</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TranslationMixin.pre_process">pre_process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.TranslationMixin">TranslationMixin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.pre_process">pre_process</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TranslationMixin.src_field">src_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.src_field">src_field</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TranslationMixin.target_field">target_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.target_field">target_field</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TranslationMixin.template">template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.template">template</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#fields.TranslationMixin.trans_callback">trans_callback</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.trans_callback">trans_callback</a></li>
 </ul>
 </li>
 </ul>
@@ -217,7 +226,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
@@ -234,7 +243,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -286,273 +295,291 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="module-fields">
-<span id="fields"></span><h1>Fields<a class="headerlink" href="#module-fields" title="Permalink to this headline">¶</a></h1>
-<p>Implementation of <a class="reference internal" href="#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> and subclasses. They are used in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">templates.template.fields</span></code> attribute.</p>
+  <div class="section" id="module-acg.fields">
+<span id="fields"></span><h1>Fields<a class="headerlink" href="#module-acg.fields" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of <a class="reference internal" href="#acg.fields.Field" title="acg.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> and subclasses. They are used in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">templates.template.fields</span></code> attribute.</p>
 <p>Each one is responsible handling a part of data-procesing in the card-generation process. This allows easy
-customization of <a class="reference internal" href="templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a>.</p>
+customization of <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code>.</p>
 <dl class="py class">
-<dt id="fields.CheckChipOptionsField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">CheckChipOptionsField</code><a class="reference internal" href="../_modules/fields.html#CheckChipOptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.CheckChipOptionsField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.OptionsField" title="fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.OptionsField</span></code></a></p>
+<dt id="acg.fields.CheckChipOptionsField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">CheckChipOptionsField</code><a class="reference internal" href="../_modules/acg/fields.html#CheckChipOptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.CheckChipOptionsField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.OptionsField" title="acg.fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.OptionsField</span></code></a></p>
 <p>Pick multiple options using <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.selection_widgets.CheckChip</span></code>s.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.DisplayTextField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">DisplayTextField</code><a class="reference internal" href="../_modules/fields.html#DisplayTextField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.DisplayTextField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a></p>
+<dt id="acg.fields.DisplayTextField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">DisplayTextField</code><a class="reference internal" href="../_modules/acg/fields.html#DisplayTextField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.DisplayTextField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.Field" title="acg.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.Field</span></code></a></p>
 <p>Only displays text.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.DualLongTextField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">DualLongTextField</code><a class="reference internal" href="../_modules/fields.html#DualLongTextField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.DualLongTextField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.TranslationMixin" title="fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.TranslationMixin</span></code></a>, <a class="reference internal" href="#fields.OptionsField" title="fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.OptionsField</span></code></a></p>
+<dt id="acg.fields.DualLongTextField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">DualLongTextField</code><a class="reference internal" href="../_modules/acg/fields.html#DualLongTextField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.DualLongTextField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.TranslationMixin" title="acg.fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.TranslationMixin</span></code></a>, <a class="reference internal" href="#acg.fields.OptionsField" title="acg.fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.OptionsField</span></code></a></p>
 <p>Pick a single options using <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.selection_widgets.CardCarousel</span></code>.</p>
 <p>Useful for longer text, i.e. examples or explanations.</p>
-<p>Inheritance from <a class="reference internal" href="#fields.TranslationMixin" title="fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationMixin</span></code></a> guarantees that translations are available.</p>
+<p>Inheritance from <a class="reference internal" href="#acg.fields.TranslationMixin" title="acg.fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationMixin</span></code></a> guarantees that translations are available.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.Field">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">Field</code><a class="reference internal" href="../_modules/fields.html#Field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.Field">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">Field</code><a class="reference internal" href="../_modules/acg/fields.html#Field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base-class for fields.</p>
-<p>Accesses the data in <a class="reference internal" href="#fields.Field.template" title="fields.Field.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data, can perform actions on the obtained data and/or display it in a
+<p>Accesses the data in <a class="reference internal" href="#acg.fields.Field.template" title="acg.fields.Field.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data, can perform actions on the obtained data and/or display it in a
 widget to allow user input to change it.</p>
 <dl class="py method">
-<dt id="fields.Field.construct_widget">
-<code class="sig-name descname">construct_widget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.construct_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.construct_widget" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.Field.construct_widget">
+<code class="sig-name descname">construct_widget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.construct_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.construct_widget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct widget that is used for the selection of <code class="xref py py-attr docutils literal notranslate"><span class="pre">content</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.Field.field_name">
-<code class="sig-name descname">field_name</code><a class="reference internal" href="../_modules/fields.html#Field.field_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.field_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>Key of <a class="reference internal" href="#fields.Field.template" title="fields.Field.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data which this field is handling.</p>
+<dt id="acg.fields.Field.field_name">
+<code class="sig-name descname">field_name</code><a class="reference internal" href="../_modules/acg/fields.html#Field.field_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.field_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Key of <a class="reference internal" href="#acg.fields.Field.template" title="acg.fields.Field.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data which this field is handling.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.get_content">
-<code class="sig-name descname">get_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.get_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.get_content" title="Permalink to this definition">¶</a></dt>
-<dd><p>If <a class="reference internal" href="#fields.Field.widget" title="fields.Field.widget"><code class="xref py py-attr docutils literal notranslate"><span class="pre">widget</span></code></a> is set, use <a class="reference internal" href="#fields.Field.kv_bidict" title="fields.Field.kv_bidict"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kv_bidict</span></code></a> to extract.</p>
-<p>Calls <a class="reference internal" href="#fields.Field.post_process" title="fields.Field.post_process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">post_process()</span></code></a> on the data before returning it.</p>
+<dt id="acg.fields.Field.get_content">
+<code class="sig-name descname">get_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.get_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.get_content" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <a class="reference internal" href="#acg.fields.Field.widget" title="acg.fields.Field.widget"><code class="xref py py-attr docutils literal notranslate"><span class="pre">widget</span></code></a> is set, use <a class="reference internal" href="#acg.fields.Field.kv_bidict" title="acg.fields.Field.kv_bidict"><code class="xref py py-attr docutils literal notranslate"><span class="pre">kv_bidict</span></code></a> to extract.</p>
+<p>Calls <a class="reference internal" href="#acg.fields.Field.post_process" title="acg.fields.Field.post_process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">post_process()</span></code></a> on the data before returning it.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.get_data">
-<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.get_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get dictionary to construct <a class="reference internal" href="#fields.Field.widget" title="fields.Field.widget"><code class="xref py py-attr docutils literal notranslate"><span class="pre">widget</span></code></a>.</p>
+<dt id="acg.fields.Field.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.get_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get dictionary to construct <a class="reference internal" href="#acg.fields.Field.widget" title="acg.fields.Field.widget"><code class="xref py py-attr docutils literal notranslate"><span class="pre">widget</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.fields.Field.heading">
+<code class="sig-name descname">heading</code><a class="reference internal" href="../_modules/acg/fields.html#Field.heading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.heading" title="Permalink to this definition">¶</a></dt>
+<dd><p>Heading to be shown over widget.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.kv_bidict">
-<code class="sig-name descname">kv_bidict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.kv_bidict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.kv_bidict" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.Field.kv_bidict">
+<code class="sig-name descname">kv_bidict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.kv_bidict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.kv_bidict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Getter function for <code class="xref py py-attr docutils literal notranslate"><span class="pre">_audio_url</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.post_process">
-<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.post_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.Field.post_process">
+<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Placeholder-function.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.pre_process">
-<code class="sig-name descname">pre_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.pre_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.pre_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.Field.pre_process">
+<code class="sig-name descname">pre_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.pre_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.pre_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Placeholder-function.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.Field.template">
-<code class="sig-name descname">template</code><a class="reference internal" href="../_modules/fields.html#Field.template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reference to <a class="reference internal" href="templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a>.</p>
+<dt id="acg.fields.Field.template">
+<code class="sig-name descname">template</code><a class="reference internal" href="../_modules/acg/fields.html#Field.template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reference to <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.update">
-<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.update" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply <a class="reference internal" href="#fields.Field.pre_process" title="fields.Field.pre_process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pre_process()</span></code></a> and <a class="reference internal" href="#fields.Field.update_widget_data" title="fields.Field.update_widget_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_widget_data()</span></code></a>.</p>
+<dt id="acg.fields.Field.update">
+<code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply <a class="reference internal" href="#acg.fields.Field.pre_process" title="acg.fields.Field.pre_process"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pre_process()</span></code></a> and <a class="reference internal" href="#acg.fields.Field.update_widget_data" title="acg.fields.Field.update_widget_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update_widget_data()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.Field.update_widget_data">
-<code class="sig-name descname">update_widget_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#Field.update_widget_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.update_widget_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if widget is present and update the attributes of the kivy-widget from <a class="reference internal" href="#fields.Field.template" title="fields.Field.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data.</p>
+<dt id="acg.fields.Field.update_widget_data">
+<code class="sig-name descname">update_widget_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#Field.update_widget_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.update_widget_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if widget is present and update the attributes of the kivy-widget from <a class="reference internal" href="#acg.fields.Field.template" title="acg.fields.Field.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.Field.widget">
-<code class="sig-name descname">widget</code><a class="reference internal" href="../_modules/fields.html#Field.widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.widget" title="Permalink to this definition">¶</a></dt>
-<dd><p>Gets constructed by <code class="xref py py-meth docutils literal notranslate"><span class="pre">load_string()</span></code> from <a class="reference internal" href="#fields.Field.widget_kv" title="fields.Field.widget_kv"><code class="xref py py-attr docutils literal notranslate"><span class="pre">widget_kv</span></code></a> if set.</p>
+<dt id="acg.fields.Field.widget">
+<code class="sig-name descname">widget</code><a class="reference internal" href="../_modules/acg/fields.html#Field.widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets constructed by <code class="xref py py-meth docutils literal notranslate"><span class="pre">load_string()</span></code> from <a class="reference internal" href="#acg.fields.Field.widget_kv" title="acg.fields.Field.widget_kv"><code class="xref py py-attr docutils literal notranslate"><span class="pre">widget_kv</span></code></a> if set.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.Field.widget_kv">
-<code class="sig-name descname">widget_kv</code><a class="reference internal" href="../_modules/fields.html#Field.widget_kv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.Field.widget_kv" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.Field.widget_kv">
+<code class="sig-name descname">widget_kv</code><a class="reference internal" href="../_modules/acg/fields.html#Field.widget_kv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.Field.widget_kv" title="Permalink to this definition">¶</a></dt>
 <dd><p>If set, widget gets constructed.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.ImgField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">ImgField</code><a class="reference internal" href="../_modules/fields.html#ImgField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.ImgField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.OptionsField" title="fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.OptionsField</span></code></a>, <a class="reference internal" href="#fields.MediaField" title="fields.MediaField"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.MediaField</span></code></a></p>
+<dt id="acg.fields.ImgField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">ImgField</code><a class="reference internal" href="../_modules/acg/fields.html#ImgField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.ImgField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.OptionsField" title="acg.fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.OptionsField</span></code></a>, <a class="reference internal" href="#acg.fields.MediaField" title="acg.fields.MediaField"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.MediaField</span></code></a></p>
 <p>Let user choose between multiple images.</p>
 <dl class="py method">
-<dt id="fields.ImgField.post_process">
-<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#ImgField.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.ImgField.post_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.ImgField.construct_widget">
+<code class="sig-name descname">construct_widget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#ImgField.construct_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.ImgField.construct_widget" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bind <a class="reference internal" href="#acg.fields.ImgField.on_error" title="acg.fields.ImgField.on_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_error()</span></code></a> to child’s <code class="docutils literal notranslate"><span class="pre">on_error</span></code> event.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.fields.ImgField.on_error">
+<code class="sig-name descname">on_error</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">_widget</span></em>, <em class="sig-param"><span class="n">child</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#ImgField.on_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.ImgField.on_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove urls that could not be loaded from <code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code>.data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.fields.ImgField.post_process">
+<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#ImgField.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.ImgField.post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download user choice and save to data-base.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.MediaField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">MediaField</code><a class="reference internal" href="../_modules/fields.html#MediaField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a></p>
+<dt id="acg.fields.MediaField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">MediaField</code><a class="reference internal" href="../_modules/acg/fields.html#MediaField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.Field" title="acg.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.Field</span></code></a></p>
 <p>Handles download of a single media-file and content of corresponding field.</p>
 <p>The field should only contain the a single url.</p>
 <dl class="py attribute">
-<dt id="fields.MediaField.file_type">
-<code class="sig-name descname">file_type</code><a class="reference internal" href="../_modules/fields.html#MediaField.file_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField.file_type" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.MediaField.file_type">
+<code class="sig-name descname">file_type</code><a class="reference internal" href="../_modules/acg/fields.html#MediaField.file_type"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField.file_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>File-type of media-file.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.MediaField.get_file_strings">
-<code class="sig-name descname">get_file_strings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#MediaField.get_file_strings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField.get_file_strings" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.MediaField.get_file_strings">
+<code class="sig-name descname">get_file_strings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#MediaField.get_file_strings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField.get_file_strings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get string that embeds the file in the anki-card.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.MediaField.get_media_file">
-<em class="property">static </em><code class="sig-name descname">get_media_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#MediaField.get_media_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField.get_media_file" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.MediaField.get_media_file">
+<em class="property">static </em><code class="sig-name descname">get_media_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#MediaField.get_media_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField.get_media_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Download file using <code class="xref py py-meth docutils literal notranslate"><span class="pre">requests.get()</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.MediaField.post_process">
-<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#MediaField.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField.post_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.MediaField.post_process">
+<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#MediaField.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField.post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return strings for the fields of the anki-card.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.MediaField.pre_process">
-<code class="sig-name descname">pre_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#MediaField.pre_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField.pre_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.MediaField.pre_process">
+<code class="sig-name descname">pre_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#MediaField.pre_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField.pre_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Obtain url, download and save file.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.MediaField.save_media_file">
-<code class="sig-name descname">save_media_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">media_file</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#MediaField.save_media_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.MediaField.save_media_file" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.MediaField.save_media_file">
+<code class="sig-name descname">save_media_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">media_file</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#MediaField.save_media_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.MediaField.save_media_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save media_file to the data-base.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.OptionsField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">OptionsField</code><a class="reference internal" href="../_modules/fields.html#OptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.OptionsField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a></p>
+<dt id="acg.fields.OptionsField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">OptionsField</code><a class="reference internal" href="../_modules/acg/fields.html#OptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.OptionsField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.Field" title="acg.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.Field</span></code></a></p>
 <p>Base-class for a field with multiple options to choose from.</p>
 <dl class="py method">
-<dt id="fields.OptionsField.get_content">
-<code class="sig-name descname">get_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#OptionsField.get_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.OptionsField.get_content" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.OptionsField.get_content">
+<code class="sig-name descname">get_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#OptionsField.get_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.OptionsField.get_content" title="Permalink to this definition">¶</a></dt>
 <dd><p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">widget</span></code> is set, gets content from widget using <code class="xref py py-attr docutils literal notranslate"><span class="pre">kv_bidict</span></code>.</p>
 <p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">selection_callback</span></code> is set, get content from call.</p>
 <p>Else simply get the first option as default.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.OptionsField.get_data">
-<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#OptionsField.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.OptionsField.get_data" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.OptionsField.get_data">
+<code class="sig-name descname">get_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#OptionsField.get_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.OptionsField.get_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get dictionaries to construct children of <code class="xref py py-attr docutils literal notranslate"><span class="pre">widget</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.OptionsField.update_widget_data">
-<code class="sig-name descname">update_widget_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#OptionsField.update_widget_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.OptionsField.update_widget_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update widget (if present) with data from <a class="reference internal" href="#fields.OptionsField.get_data" title="fields.OptionsField.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>.</p>
+<dt id="acg.fields.OptionsField.update_widget_data">
+<code class="sig-name descname">update_widget_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#OptionsField.update_widget_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.OptionsField.update_widget_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update widget (if present) with data from <a class="reference internal" href="#acg.fields.OptionsField.get_data" title="acg.fields.OptionsField.get_data"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_data()</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.TextInputField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">TextInputField</code><a class="reference internal" href="../_modules/fields.html#TextInputField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TextInputField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a></p>
+<dt id="acg.fields.TextInputField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">TextInputField</code><a class="reference internal" href="../_modules/acg/fields.html#TextInputField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TextInputField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.Field" title="acg.fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.Field</span></code></a></p>
 <p>Displays text and lets user edit it.</p>
 <p>If callback is set, it will be called <code class="docutils literal notranslate"><span class="pre">on_text_validate</span></code>, i.e. when the user presses enter while field is in
 focus.</p>
-<p>Useful to bind to <a class="reference internal" href="templates.html#templates.Template.search" title="templates.Template.search"><code class="xref py py-meth docutils literal notranslate"><span class="pre">templates.Template.search()</span></code></a> or <cite>templates.Template.update_from_single_parser</cite>.</p>
+<p>Useful to bind to <code class="xref py py-meth docutils literal notranslate"><span class="pre">templates.Template.search()</span></code> or <cite>templates.Template.update_from_single_parser</cite>.</p>
 <dl class="py attribute">
-<dt id="fields.TextInputField.callback">
-<code class="sig-name descname">callback</code><a class="reference internal" href="../_modules/fields.html#TextInputField.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TextInputField.callback" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TextInputField.callback">
+<code class="sig-name descname">callback</code><a class="reference internal" href="../_modules/acg/fields.html#TextInputField.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TextInputField.callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets called <code class="docutils literal notranslate"><span class="pre">on_text_validate</span></code> of the kivy-widget.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.TextInputField.construct_widget">
-<code class="sig-name descname">construct_widget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#TextInputField.construct_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TextInputField.construct_widget" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TextInputField.construct_widget">
+<code class="sig-name descname">construct_widget</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#TextInputField.construct_widget"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TextInputField.construct_widget" title="Permalink to this definition">¶</a></dt>
 <dd><p>Furthermore add <code class="xref py py-attr docutils literal notranslate"><span class="pre">field_name</span></code> as hint-text and bind <code class="docutils literal notranslate"><span class="pre">on_text_validate</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="fields.TextInputField.on_text_validate">
-<code class="sig-name descname">on_text_validate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">widget</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#TextInputField.on_text_validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TextInputField.on_text_validate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Wrapper-function for the possible call of <a class="reference internal" href="#fields.TextInputField.callback" title="fields.TextInputField.callback"><code class="xref py py-attr docutils literal notranslate"><span class="pre">callback</span></code></a>.</p>
+<dt id="acg.fields.TextInputField.on_text_validate">
+<code class="sig-name descname">on_text_validate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">widget</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#TextInputField.on_text_validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TextInputField.on_text_validate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper-function for the possible call of <a class="reference internal" href="#acg.fields.TextInputField.callback" title="acg.fields.TextInputField.callback"><code class="xref py py-attr docutils literal notranslate"><span class="pre">callback</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.TextInputField.widget_kv">
-<code class="sig-name descname">widget_kv</code><a class="reference internal" href="../_modules/fields.html#TextInputField.widget_kv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TextInputField.widget_kv" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TextInputField.widget_kv">
+<code class="sig-name descname">widget_kv</code><a class="reference internal" href="../_modules/acg/fields.html#TextInputField.widget_kv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TextInputField.widget_kv" title="Permalink to this definition">¶</a></dt>
 <dd><p>kv-string describing the widget.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.TransChipOptionsField">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">TransChipOptionsField</code><a class="reference internal" href="../_modules/fields.html#TransChipOptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TransChipOptionsField" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#fields.TranslationMixin" title="fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.TranslationMixin</span></code></a>, <a class="reference internal" href="#fields.OptionsField" title="fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.OptionsField</span></code></a></p>
+<dt id="acg.fields.TransChipOptionsField">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">TransChipOptionsField</code><a class="reference internal" href="../_modules/acg/fields.html#TransChipOptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TransChipOptionsField" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.fields.TranslationMixin" title="acg.fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.TranslationMixin</span></code></a>, <a class="reference internal" href="#acg.fields.OptionsField" title="acg.fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.OptionsField</span></code></a></p>
 <p>Pick a single options using <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.selection_widgets.MyTransChip</span></code>s.</p>
-<p>Inheritance from <a class="reference internal" href="#fields.TranslationMixin" title="fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationMixin</span></code></a> guarantees that translations are available.</p>
+<p>Inheritance from <a class="reference internal" href="#acg.fields.TranslationMixin" title="acg.fields.TranslationMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">TranslationMixin</span></code></a> guarantees that translations are available.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt id="fields.TranslationMixin">
-<em class="property">class </em><code class="sig-prename descclassname">fields.</code><code class="sig-name descname">TranslationMixin</code><a class="reference internal" href="../_modules/fields.html#TranslationMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TranslationMixin" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TranslationMixin">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">TranslationMixin</code><a class="reference internal" href="../_modules/acg/fields.html#TranslationMixin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TranslationMixin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mixin-Class that adds missing translations to the <code class="docutils literal notranslate"><span class="pre">target_field</span></code> of the <code class="docutils literal notranslate"><span class="pre">template.data</span></code> dict.</p>
 <dl class="py method">
-<dt id="fields.TranslationMixin.pre_process">
-<code class="sig-name descname">pre_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/fields.html#TranslationMixin.pre_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TranslationMixin.pre_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TranslationMixin.pre_process">
+<code class="sig-name descname">pre_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/fields.html#TranslationMixin.pre_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TranslationMixin.pre_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add translations, where they are missing.</p>
 <p>Handles the cases that source and target are strings or list of strings.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.TranslationMixin.src_field">
-<code class="sig-name descname">src_field</code><a class="reference internal" href="../_modules/fields.html#TranslationMixin.src_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TranslationMixin.src_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Name of the source_field of <a class="reference internal" href="#fields.TranslationMixin.template" title="fields.TranslationMixin.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data.</p>
+<dt id="acg.fields.TranslationMixin.src_field">
+<code class="sig-name descname">src_field</code><a class="reference internal" href="../_modules/acg/fields.html#TranslationMixin.src_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TranslationMixin.src_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the source_field of <a class="reference internal" href="#acg.fields.TranslationMixin.template" title="acg.fields.TranslationMixin.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.TranslationMixin.target_field">
-<code class="sig-name descname">target_field</code><a class="reference internal" href="../_modules/fields.html#TranslationMixin.target_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TranslationMixin.target_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Name of the target_field of <a class="reference internal" href="#fields.TranslationMixin.template" title="fields.TranslationMixin.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data.</p>
+<dt id="acg.fields.TranslationMixin.target_field">
+<code class="sig-name descname">target_field</code><a class="reference internal" href="../_modules/acg/fields.html#TranslationMixin.target_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TranslationMixin.target_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Name of the target_field of <a class="reference internal" href="#acg.fields.TranslationMixin.template" title="acg.fields.TranslationMixin.template"><code class="xref py py-attr docutils literal notranslate"><span class="pre">template</span></code></a>.data.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.TranslationMixin.template">
-<code class="sig-name descname">template</code><a class="reference internal" href="../_modules/fields.html#TranslationMixin.template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TranslationMixin.template" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TranslationMixin.template">
+<code class="sig-name descname">template</code><a class="reference internal" href="../_modules/acg/fields.html#TranslationMixin.template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TranslationMixin.template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Instance of <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.template</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="fields.TranslationMixin.trans_callback">
-<code class="sig-name descname">trans_callback</code><a class="reference internal" href="../_modules/fields.html#TranslationMixin.trans_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#fields.TranslationMixin.trans_callback" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.fields.TranslationMixin.trans_callback">
+<code class="sig-name descname">trans_callback</code><a class="reference internal" href="../_modules/acg/fields.html#TranslationMixin.trans_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.TranslationMixin.trans_callback" title="Permalink to this definition">¶</a></dt>
 <dd><p>Function that is applied to the data in source field to obtain a translation.</p>
 </dd></dl>
 

@@ -1,6 +1,6 @@
 Parsers
 ------------------------------------------------------
 
-.. autoapimodule:: parsers
+.. autoapimodule:: acg.parsers
    :members:
    :show-inheritance:
