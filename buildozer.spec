@@ -10,7 +10,7 @@ package.name = ankicardgenapp
 package.domain = org.ankicardgen
 
 # (str) Source code where the main.py live
-source.dir = src
+source.dir = acg
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg,sqlite
@@ -49,10 +49,10 @@ requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,ki
 #garden_requirements =
 
 # (str) Presplash of the application
-presplash.filename = src/assets/AnkiCardGen.png
+presplash.filename = acg/assets/AnkiCardGen.png
 
 # (str) Icon of the application
-icon.filename = src/assets/AnkiCardGen.png
+icon.filename = acg/assets/AnkiCardGen.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait
@@ -238,7 +238,7 @@ android.arch = armeabi-v7a
 #p4a.source_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-p4a.local_recipes = ./src/python-for-android/recipes/
+p4a.local_recipes = ./python-for-android/recipes/
 
 # (str) Filename to the hook for p4a
 #p4a.hook =
