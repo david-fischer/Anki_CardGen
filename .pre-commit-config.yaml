@@ -19,7 +19,7 @@ repos:
 #        entry: pylint
 #        language: system
         args: [--rcfile=.pre-commit/.pylintrc]
-        files: src
+        files: acg
         types: [python]
         exclude: (google_images_download|python-for-android|__init__.py)
   - repo: https://github.com/PyCQA/pydocstyle
@@ -27,13 +27,13 @@ repos:
     hooks:
       - id: pydocstyle
         exclude: (google_images_download|python-for-android|__init__.py)
-        files: src
+        files: acg
         args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
   - repo: https://github.com/codespell-project/codespell
     rev: "v1.17.1"
     hooks:
       - id: codespell
-        files: src
+        files: acg
         verbose: True
         exclude: google_images_download
         types: [text]
