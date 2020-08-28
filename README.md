@@ -1,5 +1,5 @@
 <div>
-<img align="left" height=200 src="src/assets/AnkiCardGen.png">
+<img align="left" height=200 src="acg/assets/AnkiCardGen.png">
 </br>
 </br>
 </br>
@@ -7,12 +7,11 @@
 </br>
 <h1>AnkiCardGen</h1>
 </div>
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/tag/david-fischer/Anki_CardGen?label=version)]() [![android apk](https://github.com/david-fischer/Anki_CardGen/workflows/build%20android%20apk/badge.svg)]() [![windows](https://github.com/david-fischer/Anki_CardGen/workflows/build%20windows/badge.svg)]() [![linux](https://github.com/david-fischer/Anki_CardGen/workflows/build%20linux/badge.svg)]() [![Documentation Status](https://readthedocs.org/projects/anki-cardgen/badge/?version=latest)](https://anki-cardgen.readthedocs.io/en/latest/?badge=latest)
 
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)[![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE)[![Version](https://img.shields.io/github/v/tag/david-fischer/Anki_CardGen?label=version)]()[![android apk](https://github.com/david-fischer/Anki_CardGen/workflows/build%20android%20apk/badge.svg)]()[![windows](https://github.com/david-fischer/Anki_CardGen/workflows/build%20windows/badge.svg)]()[![linux](https://github.com/david-fischer/Anki_CardGen/workflows/build%20linux/badge.svg)]()
+Python [Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [KivyMD](https://github.com/kivymd/KivyMD). The project is not affiliated with Anki.
 
-[Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [KivyMD](https://github.com/kivymd/KivyMD). However, this project is not affiliated with Anki.
-
-> **:warning: This project is still under development, see [current state](https://github.com/david-fischer/Anki_CardGen#-current-state). If you would like to contribute have a look at the [documentation]() and the [contribute](https://github.com/david-fischer/Anki_CardGen#-contribute) section.**
+> **:warning: This project is still under development, see [current state](https://github.com/david-fischer/Anki_CardGen#-current-state). If you would like to contribute have a look at the [documentation](https://anki-cardgen.readthedocs.io) and the [contribute](https://github.com/david-fischer/Anki_CardGen#-contribute) section.**
 
 Currently supported languages:
 
@@ -44,9 +43,9 @@ Currently supported languages:
 
 ## ❓ About
 
-Anki is a powerful tool for reviewing flash cards, in particular for language learning.
+Anki is a powerful tool for reviewing flash cards, in particular for learning languages.
 
-Having flash cards with multiple cues (image, audio, example-sentence, ...) is beneficial, but one does not want to spend a large amount of time in the creation. This project aims to provide the solution to this process. The app automatically downloads and processes data for a given word in the target language and offers the user a choice of various options for the content of the card.
+Having flash cards with multiple cues (image, audio, example sentence, ...) is beneficial for memorization but one does not want to spend a large amount of time on the creation of the cards. This project aims to provide a solution to this process. The app automatically downloads and processes data for a given word in the target language and offers the user a choice of various options for the content of the card.
 
 This allows quick generation of high-quality, personalized cards.
 
@@ -69,19 +68,16 @@ You can install the [current version](https://github.com/david-fischer/Anki_Card
 * [ ] executables for windows and linux
 * [ ] clean-up package-structure, imports and file-paths
 
-## 🚧 Installing
+## 🚧 Installation
 
-### Prerequisites
-
-Clone repository and install requirements:
+* Setup new virtual environment
+* install application
 
 ```
-git clone https://github.com/david-fischer/Anki_CardGen.git
-cd Anki_CardGen
-pip install -r requirements.txt
+pip install git+https://github.com/david-fischer/Anki_CardGen.git
 ```
 
-Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese:
+* Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese:
 
 ```
 python -m spacy download pt_core_news_sm
@@ -89,31 +85,17 @@ python -m spacy download pt_core_news_sm
 
 **NOTE:** This model is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version.
 
-### Building the Android App
-
-The apk is built using [Buildozer](https://buildozer.readthedocs.io/en/latest/)
-```
-buildozer android debug deploy
-```
-
-### Building the iOS App
-(not yet tested)
-```
-buildozer ios debug deploy
-```
 
 ## 🎯 Troubleshooting
 
 * python==3.7
 
 ## 🔧 Usage
-Simply start the app from the `src` folder:
 
+After installation you should be able to start the app from the command line:
 ```
-cd src
-python main.py
+acg
 ```
-
 
 
 ## 🚀 Contribute
@@ -126,4 +108,4 @@ python main.py
 
 ## 🎉 Acknowledgements
 
-`src/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
+`acg/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
