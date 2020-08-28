@@ -1,6 +1,6 @@
-Some useful functions
+Utils
 --------------------------
 
-.. autoapimodule:: utils
+.. autoapimodule:: acg.utils
    :members:
    :show-inheritance:

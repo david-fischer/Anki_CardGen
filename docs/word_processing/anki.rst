@@ -1,6 +1,6 @@
 Generate Anki Cards
 ----------------------------------------------
 
-.. autoapimodule:: generate_anki_card
+.. autoapimodule:: acg.generate_anki_card
    :members:
    :show-inheritance:

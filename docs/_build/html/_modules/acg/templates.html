@@ -7,13 +7,13 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>templates &mdash; ACG 0.3.0 documentation</title>
+  <title>acg.templates &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
 
 
 
@@ -22,21 +22,21 @@
 
 
   <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
+    <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
 
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
 
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
 
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -63,7 +63,7 @@
 
 
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -82,12 +82,12 @@
 
 
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../db.html">Database</a></li>
 </ul>
 
 
@@ -103,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -132,11 +132,11 @@
 
   <ul class="wy-breadcrumbs">
 
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
 
-          <li><a href="index.html">Module code</a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
 
-      <li>templates</li>
+      <li>acg.templates</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -151,7 +151,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for templates</h1><div class="highlight"><pre>
+  <h1>Source code for acg.templates</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Implementation of :class:`Template` class and sub-classes.</span>
 
@@ -165,10 +165,11 @@
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.boxlayout</span> <span class="kn">import</span> <span class="n">BoxLayout</span>
+<span class="kn">from</span> <span class="nn">kivymd.toast</span> <span class="kn">import</span> <span class="n">toast</span>
 <span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
 
 <span class="kn">from</span> <span class="nn">custom_widgets.scroll_widgets</span> <span class="kn">import</span> <span class="n">ScrollBox</span>
-<span class="kn">from</span> <span class="nn">custom_widgets.selection_widgets</span> <span class="kn">import</span> <span class="n">ImageCarousel</span>
+<span class="kn">from</span> <span class="nn">custom_widgets.selection_widgets</span> <span class="kn">import</span> <span class="n">ImageCarousel</span><span class="p">,</span> <span class="n">SeparatorWithHeading</span>
 <span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">get_template</span><span class="p">,</span> <span class="n">new_template</span>
 <span class="kn">from</span> <span class="nn">fields</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">CheckChipOptionsField</span><span class="p">,</span>
@@ -184,30 +185,31 @@
     <span class="n">DicioParser</span><span class="p">,</span>
     <span class="n">GoogleImagesParser</span><span class="p">,</span>
     <span class="n">LingueeParser</span><span class="p">,</span>
+    <span class="n">NoMatchError</span><span class="p">,</span>
     <span class="n">Parser</span><span class="p">,</span>
     <span class="n">ReversoParser</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">smart_dict_merge</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">app_busy</span><span class="p">,</span> <span class="n">smart_dict_merge</span>
 
 
-<div class="viewcode-block" id="Template"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template">[docs]</a><span class="k">class</span> <span class="nc">Template</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="Template"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template">[docs]</a><span class="k">class</span> <span class="nc">Template</span><span class="p">(</span><span class="n">BoxLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Main class handling the data for the card-generation, database-access and user-selection.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="Template.fields"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.fields">[docs]</a>    <span class="n">fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Field</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="Template.fields"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.fields">[docs]</a>    <span class="n">fields</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Field</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
     <span class="sd">&quot;&quot;&quot;Each field can have individual pre- and post-process functions and an optional widget so the user can make a</span>
 <span class="sd">    selection between multiple options.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Template.parsers"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.parsers">[docs]</a>    <span class="n">parsers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Parser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="Template.parsers"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.parsers">[docs]</a>    <span class="n">parsers</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Parser</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span></div>
     <span class="sd">&quot;&quot;&quot;Each parser fetches data as a dict. The union of all these dicts will be collected in :attr:`data`.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Template.data"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.data">[docs]</a>    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="Template.data"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.data">[docs]</a>    <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span></div>
     <span class="sd">&quot;&quot;&quot;: : Base data to generate card from. Dict of the form ``{&quot;key&quot;: [&quot;list&quot;,&quot;of&quot;,&quot;options&quot;]}`` or</span>
 <span class="sd">    ``{&quot;key&quot;:&quot;single_value&quot;}``.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Template.content"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.content">[docs]</a>    <span class="n">content</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="Template.content"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.content">[docs]</a>    <span class="n">content</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span></div>
     <span class="sd">&quot;&quot;&quot;: : Dict of the form ``{&quot;field_on_anki_card&quot;: &quot;content&quot;}``.&quot;&quot;&quot;</span>
     <span class="n">search_term</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="c1"># TODO: is this necessary?</span>
-<div class="viewcode-block" id="Template.name"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.name">[docs]</a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="Template.name"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.name">[docs]</a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span></div>
     <span class="sd">&quot;&quot;&quot;Name of the template as saved in database.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="Template.sort_field"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.sort_field">[docs]</a>    <span class="n">sort_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span></div>
+<div class="viewcode-block" id="Template.sort_field"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.sort_field">[docs]</a>    <span class="n">sort_field</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span></div>
     <span class="sd">&quot;&quot;&quot;The field that should be unique on all cards. For language cards e.g. the word to learn.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -215,36 +217,38 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span> <span class="ow">or</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="ow">or</span> <span class="p">[]</span>
 
-<div class="viewcode-block" id="Template.template_db"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.template_db">[docs]</a>    <span class="k">def</span> <span class="nf">template_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.template_db"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.template_db">[docs]</a>    <span class="k">def</span> <span class="nf">template_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;If existent, get entry in the database by name, else create new one.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="ow">or</span> <span class="n">new_template</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Template.current_card_db"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.current_card_db">[docs]</a>    <span class="k">def</span> <span class="nf">current_card_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.current_card_db"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.current_card_db">[docs]</a>    <span class="k">def</span> <span class="nf">current_card_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;If existent get card by name, else create new one.&quot;&quot;&quot;</span>
         <span class="n">t_db</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template_db</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">t_db</span><span class="o">.</span><span class="n">get_card</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">)</span> <span class="ow">or</span> <span class="n">t_db</span><span class="o">.</span><span class="n">add_card</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Template.set_data_from_parsers"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.set_data_from_parsers">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_from_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.set_data_from_parsers"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.set_data_from_parsers">[docs]</a>    <span class="k">def</span> <span class="nf">set_data_from_parsers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Collect all data obtained by the :class:`parsers.parser` in :attr:`data`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sort_field</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">}</span>
         <span class="k">for</span> <span class="n">parser</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
             <span class="n">parser_res_dict</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">result_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">search_term</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">smart_dict_merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">parser_res_dict</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Template.update_fields"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.update_fields">[docs]</a>    <span class="k">def</span> <span class="nf">update_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.update_fields"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.update_fields">[docs]</a>    <span class="k">def</span> <span class="nf">update_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update all fields.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="n">field</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="Template.add_field_widgets"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.add_field_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">add_field_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.add_field_widgets"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.add_field_widgets">[docs]</a>    <span class="k">def</span> <span class="nf">add_field_widgets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;For all :class:`fields.Field` with a widget, add it to the :class:`Template` itself.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fields</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">field</span><span class="o">.</span><span class="n">heading</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">SeparatorWithHeading</span><span class="p">(</span><span class="n">heading</span><span class="o">=</span><span class="n">field</span><span class="o">.</span><span class="n">heading</span><span class="p">))</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">field</span><span class="o">.</span><span class="n">widget</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Template.get_content_from_fields"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.get_content_from_fields">[docs]</a>    <span class="k">def</span> <span class="nf">get_content_from_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Iterate through :class:`fields.Field`\\ s in :attr:`fields` to obtain the processed data and user selection.</span>
+<div class="viewcode-block" id="Template.get_content_from_fields"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.get_content_from_fields">[docs]</a>    <span class="k">def</span> <span class="nf">get_content_from_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Iterate through :class:`fields.Field`\ s in :attr:`fields` to obtain the processed data and user selection.</span>
 
 <span class="sd">        Return result as merged dict from all :class:`fields.Field`\\ s.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -254,15 +258,16 @@
             <span class="n">res_dict</span> <span class="o">=</span> <span class="n">smart_dict_merge</span><span class="p">(</span><span class="n">res_dict</span><span class="p">,</span> <span class="n">field_content</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">res_dict</span></div>
 
-<div class="viewcode-block" id="Template.post_process"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Template.post_process"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.post_process">[docs]</a>    <span class="k">def</span> <span class="nf">post_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
     <span class="nd">@db_session</span>
-<div class="viewcode-block" id="Template.add_content_to_db"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.add_content_to_db">[docs]</a>    <span class="k">def</span> <span class="nf">add_content_to_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.add_content_to_db"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.add_content_to_db">[docs]</a>    <span class="k">def</span> <span class="nf">add_content_to_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write content to card.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_card_db</span><span class="p">()</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span></div>
 
-<div class="viewcode-block" id="Template.get_results"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.get_results">[docs]</a>    <span class="k">def</span> <span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="nd">@app_busy</span>
+<div class="viewcode-block" id="Template.get_results"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.get_results">[docs]</a>    <span class="k">def</span> <span class="nf">get_results</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get final results for the card fields as dictionary.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">get_content_from_fields</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">()</span>
@@ -270,7 +275,13 @@
         <span class="n">pprint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">content</span></div>
 
-<div class="viewcode-block" id="Template.search"><a class="viewcode-back" href="../word_processing/templates.html#templates.Template.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
+<div class="viewcode-block" id="Template.update_from_single_parser"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.update_from_single_parser">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_single_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">,</span> <span class="n">parser_key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use only a single parser to update :attr`data`.&quot;&quot;&quot;</span>
+        <span class="n">result_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="n">parser_key</span><span class="p">]</span><span class="o">.</span><span class="n">result_dict</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_fields</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Template.search"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">,</span> <span class="n">make_suggestion</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Look up card with name ``search_term`` in data-base.</span>
 
@@ -286,17 +297,31 @@
             <span class="k">if</span> <span class="n">current_card</span><span class="o">.</span><span class="n">base_data</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">current_card</span><span class="o">.</span><span class="n">base_data</span>
                 <span class="k">try</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">update_fields</span><span class="p">()</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span>
+                    <span class="n">current_card</span><span class="o">.</span><span class="n">base_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+                    <span class="k">return</span>
                 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
                     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not load previously saved data. Request data anew...&quot;</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">set_data_from_parsers</span><span class="p">()</span>
-                    <span class="n">current_card</span><span class="o">.</span><span class="n">base_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
-            <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">set_data_from_parsers</span><span class="p">()</span>
-                <span class="n">current_card</span><span class="o">.</span><span class="n">base_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span></div></div>
+                <span class="bp">self</span><span class="o">.</span><span class="n">update_fields</span><span class="p">()</span>
+                <span class="n">current_card</span><span class="o">.</span><span class="n">base_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+            <span class="k">except</span> <span class="n">NoMatchError</span><span class="p">:</span>
+                <span class="n">current_card</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span>
+                <span class="n">toast</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Could not obtain data for </span><span class="si">{</span><span class="n">search_term</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">make_suggestion</span><span class="p">:</span>
+                    <span class="c1"># choose suggestion dialog here.</span>
+                    <span class="k">pass</span></div>
+
+    <span class="nd">@app_busy</span>
+<div class="viewcode-block" id="Template.manual_search"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.Template.manual_search">[docs]</a>    <span class="k">def</span> <span class="nf">manual_search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Call :meth:`search` but with ``make_suggestion=True`` and @app_busy-decorator.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">search_term</span><span class="p">,</span> <span class="n">make_suggestion</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="PtTemplate"><a class="viewcode-back" href="../word_processing/templates.html#templates.PtTemplate">[docs]</a><span class="k">class</span> <span class="nc">PtTemplate</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
+<div class="viewcode-block" id="PtTemplate"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.PtTemplate">[docs]</a><span class="k">class</span> <span class="nc">PtTemplate</span><span class="p">(</span><span class="n">Template</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Template to generate vocabulary cards for brazilian portuguese.&quot;&quot;&quot;</span>
 
     <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Portuguese Vocab&quot;</span>
@@ -317,27 +342,41 @@
             <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">GoogleImagesParser</span><span class="p">(</span><span class="o">**</span><span class="n">parser_attrs</span><span class="p">),</span>
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">fields</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">TextInputField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
+            <span class="n">TextInputField</span><span class="p">(</span>
+                <span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;word&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">manual_search</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span>
+            <span class="p">),</span>
             <span class="n">TextInputField</span><span class="p">(</span>
                 <span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;image_search_keywords&quot;</span><span class="p">,</span>
                 <span class="n">callback</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">update_from_single_parser</span><span class="p">,</span> <span class="n">parser_key</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">),</span>
                 <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">ImgField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">,</span> <span class="n">file_type</span><span class="o">=</span><span class="s2">&quot;jpg&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
-            <span class="n">CheckChipOptionsField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;translation&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
-            <span class="n">TransChipOptionsField</span><span class="p">(</span>
-                <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;synonym&quot;</span><span class="p">,</span> <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;synonym_trans&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="n">CheckChipOptionsField</span><span class="p">(</span>
+                <span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;translation&quot;</span><span class="p">,</span> <span class="n">heading</span><span class="o">=</span><span class="s2">&quot;Translations&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span>
             <span class="p">),</span>
             <span class="n">TransChipOptionsField</span><span class="p">(</span>
-                <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;antonym&quot;</span><span class="p">,</span> <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;antonym_trans&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+                <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;synonym&quot;</span><span class="p">,</span>
+                <span class="n">heading</span><span class="o">=</span><span class="s2">&quot;Synonyms&quot;</span><span class="p">,</span>
+                <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;synonym_trans&quot;</span><span class="p">,</span>
+                <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">TransChipOptionsField</span><span class="p">(</span>
+                <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;antonym&quot;</span><span class="p">,</span>
+                <span class="n">heading</span><span class="o">=</span><span class="s2">&quot;Antonyms&quot;</span><span class="p">,</span>
+                <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;antonym_trans&quot;</span><span class="p">,</span>
+                <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">DualLongTextField</span><span class="p">(</span>
                 <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;explanation&quot;</span><span class="p">,</span>
+                <span class="n">heading</span><span class="o">=</span><span class="s2">&quot;Explanations&quot;</span><span class="p">,</span>
                 <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;explanation_trans&quot;</span><span class="p">,</span>
                 <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">DualLongTextField</span><span class="p">(</span>
-                <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;example&quot;</span><span class="p">,</span> <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;example_trans&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span>
+                <span class="n">src_field</span><span class="o">=</span><span class="s2">&quot;example&quot;</span><span class="p">,</span>
+                <span class="n">heading</span><span class="o">=</span><span class="s2">&quot;Examples&quot;</span><span class="p">,</span>
+                <span class="n">target_field</span><span class="o">=</span><span class="s2">&quot;example_trans&quot;</span><span class="p">,</span>
+                <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
             <span class="p">),</span>
             <span class="n">MediaField</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;audio&quot;</span><span class="p">,</span> <span class="n">file_type</span><span class="o">=</span><span class="s2">&quot;mp3&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
             <span class="n">Field</span><span class="p">(</span><span class="n">field_name</span><span class="o">=</span><span class="s2">&quot;additional_info&quot;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="bp">self</span><span class="p">),</span>
@@ -345,13 +384,7 @@
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_field_widgets</span><span class="p">()</span>
 
-<div class="viewcode-block" id="PtTemplate.update_from_single_parser"><a class="viewcode-back" href="../word_processing/templates.html#templates.PtTemplate.update_from_single_parser">[docs]</a>    <span class="k">def</span> <span class="nf">update_from_single_parser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">search_term</span><span class="p">,</span> <span class="n">parser_key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Use only a single parser to update :attr`data`.&quot;&quot;&quot;</span>
-        <span class="n">result_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parsers</span><span class="p">[</span><span class="n">parser_key</span><span class="p">]</span><span class="o">.</span><span class="n">result_dict</span><span class="p">(</span><span class="n">search_term</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">result_dict</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update_fields</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="PtTemplate.translate"><a class="viewcode-back" href="../word_processing/templates.html#templates.PtTemplate.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="PtTemplate.translate"><a class="viewcode-back" href="../../word_processing/templates.html#acg.templates.PtTemplate.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Translate string from :attr:`from_lang` to :attr:`to_lang`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">translator</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">,</span> <span class="n">dest</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">to_lang</span><span class="p">)</span><span class="o">.</span><span class="n">text</span></div></div>
 
@@ -362,8 +395,8 @@
 <span class="sd">    orientation: &quot;vertical&quot;</span>
 <span class="sd">    size_hint:1,None</span>
 <span class="sd">    height: self.minimum_height</span>
-<span class="sd">    padding: 10</span>
-<span class="sd">    spacing: 10</span>
+<span class="sd">    padding: dp(10),dp(10),dp(10),dp(100)</span>
+<span class="sd">    spacing: dp(10)</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="p">)</span>
 
@@ -375,19 +408,24 @@
     <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;ScrollBox&quot;</span><span class="p">,</span> <span class="n">ScrollBox</span><span class="p">)</span>
 
     <span class="k">class</span> <span class="nc">_TestApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">custom_widgets.selection_widgets</span> <span class="kn">import</span> <span class="n">SeparatorWithHeading</span>
+
         <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">primary_palette</span> <span class="o">=</span> <span class="s2">&quot;Red&quot;</span>  <span class="c1"># &quot;Purple&quot;, &quot;Red&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">theme_style</span> <span class="o">=</span> <span class="s2">&quot;Light&quot;</span>  <span class="c1"># &quot;Purple&quot;, &quot;Red&quot;</span>
-            <span class="n">template</span> <span class="o">=</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span>
+            <span class="k">return</span> <span class="n">Builder</span><span class="o">.</span><span class="n">load_string</span><span class="p">(</span>
                 <span class="sd">&quot;&quot;&quot;#</span>
-<span class="sd">PtTemplate:</span>
-<span class="sd">    MDFlatButton:</span>
-<span class="sd">        text: &quot;Get Results&quot;</span>
-<span class="sd">        on_press: app.root.get_results()&quot;&quot;&quot;</span>
+<span class="sd">FloatLayout:</span>
+<span class="sd">    size_hint: 1,1</span>
+<span class="sd">    SeparatorWithHeading:</span>
+<span class="sd">        heading: &quot;Test&quot;</span>
+
+
+<span class="sd"># PtTemplate:</span>
+<span class="sd">#     MDFlatButton:</span>
+<span class="sd">#         text: &quot;Get Results&quot;</span>
+<span class="sd">#         on_press: app.root.get_results()&quot;&quot;&quot;</span>
             <span class="p">)</span>
-            <span class="c1"># print(template.fields)</span>
-            <span class="n">template</span><span class="o">.</span><span class="n">add_field_widgets</span><span class="p">()</span>
-            <span class="k">return</span> <span class="n">template</span>
 
     <span class="n">_TestApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
 </pre></div>

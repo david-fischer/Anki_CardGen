@@ -1,6 +1,6 @@
 Templates
 --------------------------------------------
 
-.. autoapimodule:: templates
+.. autoapimodule:: acg.templates
    :members:
    :show-inheritance:

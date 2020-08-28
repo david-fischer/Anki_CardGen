@@ -7,13 +7,13 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>behaviors &mdash; ACG 0.3.0 documentation</title>
+  <title>acg.custom_widgets.behaviors &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
 
 
 
@@ -22,21 +22,21 @@
 
 
   <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
 
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
 
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
 
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -63,7 +63,7 @@
 
 
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -82,12 +82,12 @@
 
 
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db.html">Database</a></li>
 </ul>
 
 
@@ -103,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../../../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -132,11 +132,11 @@
 
   <ul class="wy-breadcrumbs">
 
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
 
-          <li><a href="index.html">Module code</a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>behaviors</li>
+      <li>acg.custom_widgets.behaviors</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -151,7 +151,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for behaviors</h1><div class="highlight"><pre>
+  <h1>Source code for acg.custom_widgets.behaviors</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Provides various mixin-classes for kivy widgets.&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
@@ -172,7 +172,7 @@
 <span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">ButtonBehavior</span>
 
 
-<div class="viewcode-block" id="CallbackBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CallbackBehavior">[docs]</a><span class="k">class</span> <span class="nc">CallbackBehavior</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="viewcode-block" id="CallbackBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior">[docs]</a><span class="k">class</span> <span class="nc">CallbackBehavior</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mixin Class to implement a number of callbacks.</span>
 
@@ -185,26 +185,26 @@
 <span class="sd">        Does this pose a problem?</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CallbackBehavior.callbacks"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CallbackBehavior.callbacks">[docs]</a>    <span class="n">callbacks</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="CallbackBehavior.callbacks"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior.callbacks">[docs]</a>    <span class="n">callbacks</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.property.DictProperty` of the form {&quot;on_event&quot;: callback_fn}.</span>
 <span class="sd">    callback_fn(self) -&gt; Any</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CallbackBehavior.on_callbacks"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CallbackBehavior.on_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">on_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="CallbackBehavior.on_callbacks"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior.on_callbacks">[docs]</a>    <span class="k">def</span> <span class="nf">on_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Binds the callbacks to the specified events on definition.&quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">callback_fn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">event</span><span class="p">:</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callback_wrapper</span><span class="p">,</span> <span class="n">callback_fn</span><span class="p">)})</span></div>
 
-<div class="viewcode-block" id="CallbackBehavior.callback_wrapper"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CallbackBehavior.callback_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">callback_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="CallbackBehavior.callback_wrapper"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior.callback_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">callback_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Call ``callback`` with first argument as ``self`` in new thread.&quot;&quot;&quot;</span>
         <span class="n">thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">partial</span><span class="p">(</span><span class="n">callback</span><span class="p">,</span> <span class="bp">self</span><span class="p">))</span>
         <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="LongPressBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.LongPressBehavior">[docs]</a><span class="k">class</span> <span class="nc">LongPressBehavior</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="LongPressBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior">[docs]</a><span class="k">class</span> <span class="nc">LongPressBehavior</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Dispatches &quot;on_long_press&quot; if pressed for longer than :attr:`long_press_time` else &quot;on_short_press&quot;.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LongPressBehavior.long_press_time"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.LongPressBehavior.long_press_time">[docs]</a>    <span class="n">long_press_time</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span></div>
+<div class="viewcode-block" id="LongPressBehavior.long_press_time"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.long_press_time">[docs]</a>    <span class="n">long_press_time</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.NumericProperty`&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -213,7 +213,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_long_press&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_short_press&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LongPressBehavior.on_state"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.LongPressBehavior.on_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="LongPressBehavior.on_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Dispatches ``on_long_press`` if the :attr:`state` stays down for longer than :attr:`long_press_time`.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="nb">super</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
@@ -232,24 +232,24 @@
         <span class="sd">&quot;&quot;&quot;Dispatch ``&quot;on_long_press&quot;`` event.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;on_long_press&quot;</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LongPressBehavior.on_long_press"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.LongPressBehavior.on_long_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_long_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span></div>
+<div class="viewcode-block" id="LongPressBehavior.on_long_press"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_long_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_long_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Implement in sub class. Placeholder.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LongPressBehavior.on_short_press"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.LongPressBehavior.on_short_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_short_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="LongPressBehavior.on_short_press"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_short_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_short_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">largs</span><span class="p">):</span></div></div>
         <span class="sd">&quot;&quot;&quot;Implement in sub class. Placeholder.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="MultiStateBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.MultiStateBehavior">[docs]</a><span class="k">class</span> <span class="nc">MultiStateBehavior</span><span class="p">:</span>
+<div class="viewcode-block" id="MultiStateBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior">[docs]</a><span class="k">class</span> <span class="nc">MultiStateBehavior</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes properties of widget based on :attr:`current_state` and the corresponding entry in :attr:`state_dict`.</span>
 
 <span class="sd">    The properties in :attr:`animated_properties` change via animation.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MultiStateBehavior.current_state"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.MultiStateBehavior.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MultiStateBehavior.current_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">Property</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.Property` current state of the widget.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MultiStateBehavior.state_dicts"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.MultiStateBehavior.state_dicts">[docs]</a>    <span class="n">state_dicts</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MultiStateBehavior.state_dicts"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.state_dicts">[docs]</a>    <span class="n">state_dicts</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.properties.DictProperty`. E.g.,</span>
 <span class="sd">    ::</span>
@@ -260,14 +260,14 @@
 <span class="sd">            }</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MultiStateBehavior.animated_properties"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.MultiStateBehavior.animated_properties">[docs]</a>    <span class="n">animated_properties</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MultiStateBehavior.animated_properties"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.animated_properties">[docs]</a>    <span class="n">animated_properties</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the list of property-names that get changed via animation.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">clock</span><span class="o">.</span><span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MultiStateBehavior.on_current_state"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.MultiStateBehavior.on_current_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="MultiStateBehavior.on_current_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.on_current_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Change widgets properties based on new :attr:`current_state`.</span>
 
@@ -290,21 +290,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Two-State-Behavior with states ``True`` and ``False``.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CheckBehavior.current_state"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CheckBehavior.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+<div class="viewcode-block" id="CheckBehavior.current_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.BooleanProperty` defaults to ``False``. State of widget.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="CheckBehavior.state_dicts"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.CheckBehavior.state_dicts">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="o">=</span> <span class="p">(</span>
+<div class="viewcode-block" id="CheckBehavior.state_dicts"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior.state_dicts">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="o">=</span> <span class="p">(</span>
             <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">{},</span> <span class="kc">False</span><span class="p">:</span> <span class="p">{}}</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span></div>
         <span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;: : :class:`~kivy.properties.DictProperty`, defaults to ``{False:{}, True:{}}`` .&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior">[docs]</a><span class="k">class</span> <span class="nc">ChildrenFromDataBehavior</span><span class="p">:</span>
+<div class="viewcode-block" id="ChildrenFromDataBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior">[docs]</a><span class="k">class</span> <span class="nc">ChildrenFromDataBehavior</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates widgets dynamically from :attr:`data` and adds them to :attr:`root_for_children`.</span>
 
@@ -312,23 +312,23 @@
 <span class="sd">    :meth:`after_add_child`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.data"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.data"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([])</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.properties.ListProperty` containing the dictionaries from which the child-widgets are</span>
 <span class="sd">    constructed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.child_class_name"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">([])</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.child_class_name"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">([])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` class name for children. Needs to be available via</span>
 <span class="sd">    :meth:`~kivy.factory.Factory.get`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.root_for_children"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.root_for_children">[docs]</a>    <span class="n">root_for_children</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.root_for_children"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.root_for_children">[docs]</a>    <span class="n">root_for_children</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.properties.ObjectProperty` the widget, where the children should be added to</span>
 <span class="sd">    Defaults to self.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.child_bindings"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.child_bindings">[docs]</a>    <span class="n">child_bindings</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.child_bindings"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.child_bindings">[docs]</a>    <span class="n">child_bindings</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty` of the form {&quot;on_event&quot;: binding_fn}.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -337,7 +337,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_data</span><span class="p">()</span>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.on_data"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.on_data"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Construct children on change of :attr:`data`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">child_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
@@ -349,20 +349,20 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">after_add_child</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.before_add_child"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.before_add_child"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Do something before child is added to :attr:`parent_widget`. Placeholder.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior.after_add_child"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ChildrenFromDataBehavior.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="ChildrenFromDataBehavior.after_add_child"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div></div>
         <span class="sd">&quot;&quot;&quot;Do something after child is added to :attr:`parent_widget`. Placeholder.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="TranslationOnCheckBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.TranslationOnCheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">TranslationOnCheckBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="TranslationOnCheckBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">TranslationOnCheckBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Switches :attr:`text` between :attr:`text_orig` and :attr:`text_trans` depending on :attr:`current_state`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TranslationOnCheckBehavior.text_orig"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.TranslationOnCheckBehavior.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;orig&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TranslationOnCheckBehavior.text_orig"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;orig&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`. Original Text.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TranslationOnCheckBehavior.text_trans"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.TranslationOnCheckBehavior.text_trans">[docs]</a>    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;trans&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TranslationOnCheckBehavior.text_trans"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.text_trans">[docs]</a>    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;trans&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`. Translated Text.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
@@ -372,13 +372,13 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ThemableColorChangeBehavior"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ThemableColorChangeBehavior">[docs]</a><span class="k">class</span> <span class="nc">ThemableColorChangeBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="ThemableColorChangeBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior">[docs]</a><span class="k">class</span> <span class="nc">ThemableColorChangeBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Changes :attr:`bg_color` :attr:`text_color` based on :attr:`current_state`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ThemableColorChangeBehavior.text_color"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ThemableColorChangeBehavior.text_color">[docs]</a>    <span class="n">text_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ThemableColorChangeBehavior.text_color"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior.text_color">[docs]</a>    <span class="n">text_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`. Text color in rgba.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ThemableColorChangeBehavior.bg_color"><a class="viewcode-back" href="../custom_widgets/behaviors.html#behaviors.ThemableColorChangeBehavior.bg_color">[docs]</a>    <span class="n">bg_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
+<div class="viewcode-block" id="ThemableColorChangeBehavior.bg_color"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior.bg_color">[docs]</a>    <span class="n">bg_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`. Background color in rgba.&quot;&quot;&quot;</span>
 
     <span class="n">animated_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bg_color&quot;</span><span class="p">,</span> <span class="s2">&quot;text_color&quot;</span><span class="p">]</span>

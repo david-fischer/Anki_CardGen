@@ -1,6 +1,6 @@
 Scroll Widgets
 ------------------------------------------
 
-.. autoapimodule:: scroll_widgets
+.. autoapimodule:: acg.custom_widgets.scroll_widgets
    :members:
    :show-inheritance:

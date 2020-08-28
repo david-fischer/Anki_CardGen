@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>History Screen &mdash; ACG 0.3.0 documentation</title>
+  <title>History Screen &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -88,8 +88,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">User Interface</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">History Screen</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#history.HistoryRoot">HistoryRoot</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#history.HistoryRoot.export_cards">export_cards</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.HistoryRoot">HistoryRoot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.export_cards">export_cards</a></li>
 </ul>
 </li>
 </ul>
@@ -99,7 +99,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
@@ -116,7 +116,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -168,17 +168,17 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="module-history">
-<span id="history-screen"></span><h1>History Screen<a class="headerlink" href="#module-history" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-acg.screens.history">
+<span id="history-screen"></span><h1>History Screen<a class="headerlink" href="#module-acg.screens.history" title="Permalink to this headline">¶</a></h1>
 <p>Implements <code class="xref py py-class docutils literal notranslate"><span class="pre">HistoryMain</span></code>, the root widget of the history screen.</p>
 <dl class="py class">
-<dt id="history.HistoryRoot">
-<em class="property">class </em><code class="sig-prename descclassname">history.</code><code class="sig-name descname">HistoryRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/history.html#HistoryRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#history.HistoryRoot" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.screens.history.HistoryRoot">
+<em class="property">class </em><code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">HistoryRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
 <p>Root widget of the history screen.</p>
 <dl class="py method">
-<dt id="history.HistoryRoot.export_cards">
-<code class="sig-name descname">export_cards</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/history.html#HistoryRoot.export_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#history.HistoryRoot.export_cards" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.screens.history.HistoryRoot.export_cards">
+<code class="sig-name descname">export_cards</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.export_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.export_cards" title="Permalink to this definition">¶</a></dt>
 <dd><p>Depending on which button was pressed, exports one of the following.</p>
 <blockquote>
 <div><ul class="simple">

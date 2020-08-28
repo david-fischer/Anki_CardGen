@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>User Interface &mdash; ACG 0.3.0 documentation</title>
+  <title>User Interface &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -93,7 +93,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="db.html">Database</a></li>
 </ul>
 
@@ -110,7 +110,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ACG</a>
+          <a href="index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -163,30 +163,19 @@
   <div class="section" id="user-interface">
 <h1>User Interface<a class="headerlink" href="#user-interface" title="Permalink to this headline">¶</a></h1>
 <p>The user interface is based on <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.html#module-kivy" title="(in Kivy v1.11.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivy</span></code></a> and <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/unincluded/kivymd/index.html#module-kivymd" title="(in KivyMD v0.104.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">kivymd</span></code></a>.</p>
-<a class="reference internal image-reference" href="_images/nav_drawer_open.png"><img alt="_images/nav_drawer_open.png" src="_images/nav_drawer_open.png" style="width: 200px;" /></a>
-<a class="reference internal image-reference" href="_images/word_1.png"><img alt="_images/word_1.png" src="_images/word_1.png" style="width: 200px;" /></a>
-<a class="reference internal image-reference" href="_images/word_2.png"><img alt="_images/word_2.png" src="_images/word_2.png" style="width: 200px;" /></a>
-<a class="reference internal image-reference" href="_images/import.png"><img alt="_images/import.png" src="_images/import.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/0-nav-drawer-open.png"><img alt="_images/0-nav-drawer-open.png" src="_images/0-nav-drawer-open.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/1-word.png"><img alt="_images/1-word.png" src="_images/1-word.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/2-word.png"><img alt="_images/2-word.png" src="_images/2-word.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/4-import.png"><img alt="_images/4-import.png" src="_images/4-import.png" style="width: 200px;" /></a>
+<a class="reference internal image-reference" href="_images/5-export.png"><img alt="_images/5-export.png" src="_images/5-export.png" style="width: 200px;" /></a>
 <p>The project is organized as follows:
 Each screen of the app is defined by a screens/&lt;screen_name&gt;.kv file. The root widget of the screen is named
 &lt;ScreenNameRoot&gt; and implemented in the file screens/&lt;screen_name&gt;.py.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="screens/history.html">History Screen</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="screens/history.html#history.HistoryRoot">HistoryRoot</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="screens/queued.html">Queue Screen</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="screens/queued.html#queued.CheckableQueue">CheckableQueue</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="screens/queued.html#queued.QueuedRoot">QueuedRoot</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="screens/single_word.html">Single Word Screen</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="screens/single_word.html#single_word.SingleWordRoot">SingleWordRoot</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="screens/history.html">History Screen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens/queued.html">Queue Screen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="screens/single_word.html">Single Word Screen</a></li>
 </ul>
 </div>
 </div>

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Word Processing &mdash; ACG 0.3.0 documentation</title>
+  <title>Word Processing &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -94,7 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_widgets.html">Custom Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="db.html">Database</a></li>
 </ul>
 
@@ -111,7 +111,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ACG</a>
+          <a href="index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -163,8 +163,8 @@
 
   <div class="section" id="word-processing">
 <h1>Word Processing<a class="headerlink" href="#word-processing" title="Permalink to this headline">¶</a></h1>
-<p>The main object for the card generation is the <a class="reference internal" href="word_processing/templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a>, which contains a number of
-<a class="reference internal" href="word_processing/parsers.html#parsers.Parser" title="parsers.Parser"><code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.Parser</span></code></a>s and <a class="reference internal" href="word_processing/fields.html#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a>s.
+<p>The main object for the card generation is the <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code>, which contains a number of
+<code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.Parser</span></code>s and <code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code>s.
 Each parser fetches data in some form.
 Each field uses a part of this data to do one or more of the following:</p>
 <blockquote>
@@ -174,12 +174,12 @@ Each field uses a part of this data to do one or more of the following:</p>
 <li><p>let the user make a choice or edit the data</p></li>
 </ul>
 </div></blockquote>
-<p>If the <a class="reference internal" href="word_processing/templates.html#templates.Template.get_results" title="templates.Template.get_results"><code class="xref py py-meth docutils literal notranslate"><span class="pre">templates.Template.get_results()</span></code></a> is called, each field returns a dict that is then merged into one.</p>
+<p>If the <code class="xref py py-meth docutils literal notranslate"><span class="pre">templates.Template.get_results()</span></code> is called, each field returns a dict that is then merged into one.</p>
 <p>This one dict should contain values for each field of the anki card that should be generated.</p>
 <p>Feel free to define your own <code class="xref py py-class docutils literal notranslate"><span class="pre">template.Template</span></code>s by the following steps:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>inherit from <a class="reference internal" href="word_processing/templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a></p></li>
+<li><p>inherit from <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></p></li>
 <li><p>define parsers and fields</p></li>
 <li><p>(customize further if you like)</p></li>
 <li><p>add template to database to make it available in the app</p></li>

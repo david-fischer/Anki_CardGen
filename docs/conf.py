@@ -23,7 +23,7 @@ print(sys.path)
 
 # -- Project information -----------------------------------------------------
 
-project = "ACG"
+project = "Anki Card Gen"
 copyright = "2020, David Fischer"
 author = "David Fischer"
 
@@ -47,7 +47,7 @@ extensions = [
     "sphinx.ext.napoleon",
 ]
 autoapi_type = "python"
-autoapi_dirs = ["../src"]
+autoapi_dirs = ["../acg"]
 autoapi_ignore = [
     f"*{folder}/*"
     for folder in [
@@ -58,7 +58,7 @@ autoapi_ignore = [
         "google_images_download",
         "python-for-android",
     ]
-]
+] + ["*/__init__.py"]
 autoapi_member_order = "groupwise"
 autoapi_generate_api_docs = False
 # autoapi_add_toctree_entry = False

@@ -1,6 +1,6 @@
 Database
 --------------------------
 
-.. autoapimodule:: db
+.. autoapimodule:: acg.db
    :members:
    :show-inheritance:

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Templates &mdash; ACG 0.3.0 documentation</title>
+  <title>Templates &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -89,62 +89,65 @@
 <li class="toctree-l2"><a class="reference internal" href="fields.html">Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="parsers.html">Parsers</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Templates</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#templates.PtTemplate">PtTemplate</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.PtTemplate.translate">translate</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.PtTemplate.update_from_single_parser">update_from_single_parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.templates.PtTemplate">PtTemplate</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.PtTemplate.translate">translate</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#templates.Template">Template</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.add_content_to_db">add_content_to_db</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.templates.Template">Template</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.add_content_to_db">add_content_to_db</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.add_field_widgets">add_field_widgets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.add_field_widgets">add_field_widgets</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.content">content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.content">content</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.current_card_db">current_card_db</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.current_card_db">current_card_db</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.data">data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.data">data</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.fields">fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.fields">fields</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.get_content_from_fields">get_content_from_fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.get_content_from_fields">get_content_from_fields</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.get_results">get_results</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.get_results">get_results</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.name">name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.manual_search">manual_search</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.parsers">parsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.name">name</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.post_process">post_process</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.parsers">parsers</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.search">search</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.post_process">post_process</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.set_data_from_parsers">set_data_from_parsers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.search">search</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.sort_field">sort_field</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.set_data_from_parsers">set_data_from_parsers</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.template_db">template_db</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.sort_field">sort_field</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#templates.Template.update_fields">update_fields</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.template_db">template_db</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.update_fields">update_fields</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.templates.Template.update_from_single_parser">update_from_single_parser</a></li>
 </ul>
 </li>
 </ul>
@@ -154,7 +157,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
 </ul>
 
@@ -171,7 +174,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -223,134 +226,140 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="module-templates">
-<span id="templates"></span><h1>Templates<a class="headerlink" href="#module-templates" title="Permalink to this headline">¶</a></h1>
-<p>Implementation of <a class="reference internal" href="#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">Template</span></code></a> class and sub-classes.</p>
-<p>To add a new template, inherit from Template or a subclass and define the <a class="reference internal" href="parsers.html#module-parsers" title="parsers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parsers</span></code></a> and <a class="reference internal" href="fields.html#module-fields" title="fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code></a> attributes.
-See e.g. the definition of <a class="reference internal" href="#templates.PtTemplate" title="templates.PtTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">PtTemplate</span></code></a>.</p>
+  <div class="section" id="module-acg.templates">
+<span id="templates"></span><h1>Templates<a class="headerlink" href="#module-acg.templates" title="Permalink to this headline">¶</a></h1>
+<p>Implementation of <a class="reference internal" href="#acg.templates.Template" title="acg.templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">Template</span></code></a> class and sub-classes.</p>
+<p>To add a new template, inherit from Template or a subclass and define the <code class="xref py py-attr docutils literal notranslate"><span class="pre">parsers</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code> attributes.
+See e.g. the definition of <a class="reference internal" href="#acg.templates.PtTemplate" title="acg.templates.PtTemplate"><code class="xref py py-class docutils literal notranslate"><span class="pre">PtTemplate</span></code></a>.</p>
 <dl class="py class">
-<dt id="templates.PtTemplate">
-<em class="property">class </em><code class="sig-prename descclassname">templates.</code><code class="sig-name descname">PtTemplate</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#PtTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.PtTemplate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a></p>
+<dt id="acg.templates.PtTemplate">
+<em class="property">class </em><code class="sig-prename descclassname">acg.templates.</code><code class="sig-name descname">PtTemplate</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#PtTemplate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.PtTemplate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.templates.Template" title="acg.templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.templates.Template</span></code></a></p>
 <p>Template to generate vocabulary cards for brazilian portuguese.</p>
 <dl class="py method">
-<dt id="templates.PtTemplate.translate">
-<code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#PtTemplate.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.PtTemplate.translate" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.PtTemplate.translate">
+<code class="sig-name descname">translate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#PtTemplate.translate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.PtTemplate.translate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Translate string from <code class="xref py py-attr docutils literal notranslate"><span class="pre">from_lang</span></code> to <code class="xref py py-attr docutils literal notranslate"><span class="pre">to_lang</span></code>.</p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="templates.PtTemplate.update_from_single_parser">
-<code class="sig-name descname">update_from_single_parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em>, <em class="sig-param"><span class="n">parser_key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#PtTemplate.update_from_single_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.PtTemplate.update_from_single_parser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use only a single parser to update :attr`data`.</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
-<dt id="templates.Template">
-<em class="property">class </em><code class="sig-prename descclassname">templates.</code><code class="sig-name descname">Template</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template">
+<em class="property">class </em><code class="sig-prename descclassname">acg.templates.</code><code class="sig-name descname">Template</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
 <p>Main class handling the data for the card-generation, database-access and user-selection.</p>
 <dl class="py method">
-<dt id="templates.Template.add_content_to_db">
-<code class="sig-name descname">add_content_to_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.add_content_to_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.add_content_to_db" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.add_content_to_db">
+<code class="sig-name descname">add_content_to_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.add_content_to_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.add_content_to_db" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write content to card.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.add_field_widgets">
-<code class="sig-name descname">add_field_widgets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.add_field_widgets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.add_field_widgets" title="Permalink to this definition">¶</a></dt>
-<dd><p>For all <a class="reference internal" href="fields.html#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a> with a widget, add it to the <a class="reference internal" href="#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">Template</span></code></a> itself.</p>
+<dt id="acg.templates.Template.add_field_widgets">
+<code class="sig-name descname">add_field_widgets</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.add_field_widgets"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.add_field_widgets" title="Permalink to this definition">¶</a></dt>
+<dd><p>For all <code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code> with a widget, add it to the <a class="reference internal" href="#acg.templates.Template" title="acg.templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">Template</span></code></a> itself.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="templates.Template.content">
-<code class="sig-name descname">content</code><a class="reference internal" href="../_modules/templates.html#Template.content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.content" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.content">
+<code class="sig-name descname">content</code><a class="reference internal" href="../_modules/acg/templates.html#Template.content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.content" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dict of the form <code class="docutils literal notranslate"><span class="pre">{&quot;field_on_anki_card&quot;:</span> <span class="pre">&quot;content&quot;}</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.current_card_db">
-<code class="sig-name descname">current_card_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.current_card_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.current_card_db" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.current_card_db">
+<code class="sig-name descname">current_card_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.current_card_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.current_card_db" title="Permalink to this definition">¶</a></dt>
 <dd><p>If existent get card by name, else create new one.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="templates.Template.data">
-<code class="sig-name descname">data</code><a class="reference internal" href="../_modules/templates.html#Template.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.data" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.data">
+<code class="sig-name descname">data</code><a class="reference internal" href="../_modules/acg/templates.html#Template.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Base data to generate card from. Dict of the form <code class="docutils literal notranslate"><span class="pre">{&quot;key&quot;:</span> <span class="pre">[&quot;list&quot;,&quot;of&quot;,&quot;options&quot;]}</span></code> or
 <code class="docutils literal notranslate"><span class="pre">{&quot;key&quot;:&quot;single_value&quot;}</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="templates.Template.fields">
-<code class="sig-name descname">fields</code><a class="reference internal" href="../_modules/templates.html#Template.fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.fields" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.fields">
+<code class="sig-name descname">fields</code><a class="reference internal" href="../_modules/acg/templates.html#Template.fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>Each field can have individual pre- and post-process functions and an optional widget so the user can make a
 selection between multiple options.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.get_content_from_fields">
-<code class="sig-name descname">get_content_from_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.get_content_from_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.get_content_from_fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>Iterate through <a class="reference internal" href="fields.html#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a>s in <a class="reference internal" href="fields.html#module-fields" title="fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code></a> to obtain the processed data and user selection.</p>
-<p>Return result as merged dict from all <a class="reference internal" href="fields.html#fields.Field" title="fields.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code></a>s.</p>
+<dt id="acg.templates.Template.get_content_from_fields">
+<code class="sig-name descname">get_content_from_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.get_content_from_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.get_content_from_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterate through <code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code>s in <a class="reference internal" href="#acg.templates.Template.fields" title="acg.templates.Template.fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields</span></code></a> to obtain the processed data and user selection.</p>
+<p>Return result as merged dict from all <code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Field</span></code>\ s.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.get_results">
-<code class="sig-name descname">get_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.get_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.get_results" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.get_results">
+<code class="sig-name descname">get_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.get_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.get_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get final results for the card fields as dictionary.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="acg.templates.Template.manual_search">
+<code class="sig-name descname">manual_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.manual_search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.manual_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call <a class="reference internal" href="#acg.templates.Template.search" title="acg.templates.Template.search"><code class="xref py py-meth docutils literal notranslate"><span class="pre">search()</span></code></a> but with <code class="docutils literal notranslate"><span class="pre">make_suggestion=True</span></code> and &#64;app_busy-decorator.</p>
+</dd></dl>
+
 <dl class="py attribute">
-<dt id="templates.Template.name">
-<code class="sig-name descname">name</code><a class="reference internal" href="../_modules/templates.html#Template.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.name" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.name">
+<code class="sig-name descname">name</code><a class="reference internal" href="../_modules/acg/templates.html#Template.name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Name of the template as saved in database.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="templates.Template.parsers">
-<code class="sig-name descname">parsers</code><a class="reference internal" href="../_modules/templates.html#Template.parsers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.parsers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Each parser fetches data as a dict. The union of all these dicts will be collected in <a class="reference internal" href="#templates.Template.data" title="templates.Template.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
+<dt id="acg.templates.Template.parsers">
+<code class="sig-name descname">parsers</code><a class="reference internal" href="../_modules/acg/templates.html#Template.parsers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.parsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each parser fetches data as a dict. The union of all these dicts will be collected in <a class="reference internal" href="#acg.templates.Template.data" title="acg.templates.Template.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.post_process">
-<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.post_process" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.post_process">
+<code class="sig-name descname">post_process</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.post_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.post_process" title="Permalink to this definition">¶</a></dt>
 <dd><p>Placeholder-function.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.search">
-<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.search" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.search">
+<code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em>, <em class="sig-param"><span class="n">make_suggestion</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Look up card with name <code class="docutils literal notranslate"><span class="pre">search_term</span></code> in data-base.</p>
-<p>Try to load data from card, if not possible use <a class="reference internal" href="#templates.Template.set_data_from_parsers" title="templates.Template.set_data_from_parsers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data_from_parsers()</span></code></a> to fetch data and save it to
+<p>Try to load data from card, if not possible use <a class="reference internal" href="#acg.templates.Template.set_data_from_parsers" title="acg.templates.Template.set_data_from_parsers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_data_from_parsers()</span></code></a> to fetch data and save it to
 data-base.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.set_data_from_parsers">
-<code class="sig-name descname">set_data_from_parsers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.set_data_from_parsers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.set_data_from_parsers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Collect all data obtained by the <code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.parser</span></code> in <a class="reference internal" href="#templates.Template.data" title="templates.Template.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
+<dt id="acg.templates.Template.set_data_from_parsers">
+<code class="sig-name descname">set_data_from_parsers</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.set_data_from_parsers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.set_data_from_parsers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Collect all data obtained by the <code class="xref py py-class docutils literal notranslate"><span class="pre">parsers.parser</span></code> in <a class="reference internal" href="#acg.templates.Template.data" title="acg.templates.Template.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="templates.Template.sort_field">
-<code class="sig-name descname">sort_field</code><a class="reference internal" href="../_modules/templates.html#Template.sort_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.sort_field" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.sort_field">
+<code class="sig-name descname">sort_field</code><a class="reference internal" href="../_modules/acg/templates.html#Template.sort_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.sort_field" title="Permalink to this definition">¶</a></dt>
 <dd><p>The field that should be unique on all cards. For language cards e.g. the word to learn.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.template_db">
-<code class="sig-name descname">template_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.template_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.template_db" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.template_db">
+<code class="sig-name descname">template_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.template_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.template_db" title="Permalink to this definition">¶</a></dt>
 <dd><p>If existent, get entry in the database by name, else create new one.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="templates.Template.update_fields">
-<code class="sig-name descname">update_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/templates.html#Template.update_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#templates.Template.update_fields" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.templates.Template.update_fields">
+<code class="sig-name descname">update_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.update_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.update_fields" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update all fields.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.templates.Template.update_from_single_parser">
+<code class="sig-name descname">update_from_single_parser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">search_term</span></em>, <em class="sig-param"><span class="n">parser_key</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/templates.html#Template.update_from_single_parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.templates.Template.update_from_single_parser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use only a single parser to update :attr`data`.</p>
 </dd></dl>
 
 </dd></dl>
