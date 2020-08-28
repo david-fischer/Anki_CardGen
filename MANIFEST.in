@@ -1,1 +1,1 @@
-recursive-include src *.kv *.png *.html *.css *.js *.ini
+recursive-include acg *.kv *.png *.html *.css *.js *.ini

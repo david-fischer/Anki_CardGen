@@ -22,7 +22,7 @@ from kivy.input.recorder import Recorder
 from kivymd.app import MDApp
 from kivymd.toast import toast
 
-sys.path.append(os.path.abspath("src"))
+sys.path.append(os.path.abspath("acg"))
 print(sys.path)
 
 
@@ -121,8 +121,8 @@ def save_card_pngs(word="casa", size=(540, 960)):
     field_dict = smart_loader(f"../app_data/words/{word}/{word}_card.json")
     field_dict["Audio"] = "&#9658;"
     try:
-        shutil.copytree("../src/anki/js", "/tmp/js/")
-        shutil.copytree("../src/anki/css", "/tmp/css/")
+        shutil.copytree("../acg/anki/js", "/tmp/js/")
+        shutil.copytree("../acg/anki/css", "/tmp/css/")
     except FileExistsError:
         print("JS AND CSS FOLDER ALREADY EXIST IN /tmp/ skip copying.")
     shutil.copy2(f"../app_data/words/{word}/{word}.jpg", f"/tmp/{word}.jpg")
@@ -207,7 +207,7 @@ def rename_screenshots():
 
 def main(command_fn):
 
-    with CD("src"):
+    with CD("acg"):
         from main import AnkiCardGenApp
 
         app = AnkiCardGenApp()

@@ -23,13 +23,13 @@ jobs:
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
-        path: master/src
+        path: master/acg
         spec: pyinstaller-linux.spec
 
 #    - uses: actions/upload-artifact@v2
 #      with:
 #        name: AnkiCardGen
-#        path: src/dist/linux
+#        path: acg/dist/linux
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -44,4 +44,4 @@ jobs:
         architecture: x64
 
     - name: Push binary to data branch
-      run: python master/.ci/move_binary.py "master/src/dist/linux/AnkiCardGen" master data linux
+      run: python master/.ci/move_binary.py "master/acg/dist/linux/AnkiCardGen" master data linux

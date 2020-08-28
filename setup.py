@@ -14,7 +14,7 @@ def get_requirements():
 setup(
     name="acg",
     version="1.0.6",
-    package_dir={"acg": "src"},
+    package_dir={"acg": "acg"},
     packages=["acg", "acg.google_images_download", "acg.custom_widgets", "acg.screens"],
     include_package_data=True,
     install_requires=get_requirements(),

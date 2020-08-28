@@ -23,14 +23,14 @@ jobs:
     - name: PyInstaller Windows
       uses: JackMcKew/pyinstaller-action-windows@main
       with:
-        path: master/src
+        path: master/acg
         spec: pyinstaller-windows.spec
 
 
 #    - uses: actions/upload-artifact@v2
 #      with:
 #        name: AnkiCardGen
-#        path: src/dist/windows # or path/to/artifact
+#        path: acg/dist/windows # or path/to/artifact
 
     - name: Checkout
       uses: actions/checkout@v2
@@ -45,4 +45,4 @@ jobs:
         architecture: x64
 
     - name: Push binary to data branch
-      run: python master/.ci/move_binary.py "master/src/dist/windows/AnkiCardGen.exe" master data windows
+      run: python master/.ci/move_binary.py "master/acg/dist/windows/AnkiCardGen.exe" master data windows
