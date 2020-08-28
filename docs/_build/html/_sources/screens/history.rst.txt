@@ -1,6 +1,6 @@
 History Screen
 -------------------------------------------
 
-.. autoapimodule:: history
+.. autoapimodule:: acg.screens.history
    :members:
    :show-inheritance:

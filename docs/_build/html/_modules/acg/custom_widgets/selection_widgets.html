@@ -7,13 +7,13 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>selection_widgets &mdash; ACG 0.3.0 documentation</title>
+  <title>acg.custom_widgets.selection_widgets &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
 
 
 
@@ -22,21 +22,21 @@
 
 
   <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
 
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
 
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
 
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -63,7 +63,7 @@
 
 
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -82,12 +82,12 @@
 
 
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../db.html">Database</a></li>
 </ul>
 
 
@@ -103,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../../../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -132,11 +132,11 @@
 
   <ul class="wy-breadcrumbs">
 
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
 
-          <li><a href="index.html">Module code</a> &raquo;</li>
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
 
-      <li>selection_widgets</li>
+      <li>acg.custom_widgets.selection_widgets</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -151,7 +151,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for selection_widgets</h1><div class="highlight"><pre>
+  <h1>Source code for acg.custom_widgets.selection_widgets</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Implements various elements to get user selection.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
@@ -189,25 +189,29 @@
     <span class="n">ThemableColorChangeBehavior</span><span class="p">,</span>
     <span class="n">TranslationOnCheckBehavior</span><span class="p">,</span>
 <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">CUSTOM_WIDGET_DIR</span>
 
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="s2">&quot;custom_widgets/selection_widgets.kv&quot;</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-    <span class="n">this_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span>
-    <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">this_directory</span><span class="p">,</span> <span class="s2">&quot;selection_widgets.kv&quot;</span><span class="p">))</span>
+<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;selection_widgets.kv&quot;</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="CheckContainer"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CheckContainer">[docs]</a><span class="k">class</span> <span class="nc">CheckContainer</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="SeparatorWithHeading"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.SeparatorWithHeading">[docs]</a><span class="k">class</span> <span class="nc">SeparatorWithHeading</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Two :class:`MDSeparator`\ s with a heading in between.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SeparatorWithHeading.heading"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.SeparatorWithHeading.heading">[docs]</a>    <span class="n">heading</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` with string used as heading.&quot;&quot;&quot;</span></div>
+
+
+<div class="viewcode-block" id="CheckContainer"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer">[docs]</a><span class="k">class</span> <span class="nc">CheckContainer</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Container for widgets with :class:`~custom_widgets.behaviors.CheckBehavior`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CheckContainer.check_one"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CheckContainer.check_one">[docs]</a>    <span class="n">check_one</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+<div class="viewcode-block" id="CheckContainer.check_one"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.check_one">[docs]</a>    <span class="n">check_one</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.BooleanProperty` defaults to ``False``. If ``True`` only one child can be selected.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;current_state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conditional_uncheck</span>
 
-<div class="viewcode-block" id="CheckContainer.conditional_uncheck"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CheckContainer.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="CheckContainer.conditional_uncheck"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Uncheck other widgets if :attr:`check_one` is ``True``.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_one</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">check_element</span> <span class="ow">in</span> <span class="p">[</span>
@@ -215,7 +219,7 @@
             <span class="p">]:</span>
                 <span class="n">check_element</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">False</span></div>
 
-<div class="viewcode-block" id="CheckContainer.get_checked"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CheckContainer.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="CheckContainer.get_checked"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return current selection.</span>
 
@@ -236,24 +240,24 @@
         <span class="p">]</span>
 
 
-<div class="viewcode-block" id="MyCheckCard"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckCard">[docs]</a><span class="k">class</span> <span class="nc">MyCheckCard</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCheckCard"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckCard">[docs]</a><span class="k">class</span> <span class="nc">MyCheckCard</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Selectable :~kivymd.uix.card.MDCard`. Select by click. Changes color on selection.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCheckCard.text"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckCard.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;test &quot;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MyCheckCard.text"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckCard.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;test &quot;</span> <span class="o">*</span> <span class="mi">15</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCheckCard.on_press"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckCard.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCheckCard.on_press"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckCard.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Change boolean value of :attr:`self.current_state`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="p">(</span>  <span class="c1"># pylint: disable=attribute-defined-outside-init</span>
             <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span></div></div>
         <span class="p">)</span>
 
 
-<div class="viewcode-block" id="MyTransCard"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyTransCard">[docs]</a><span class="k">class</span> <span class="nc">MyTransCard</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="n">MyCheckCard</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MyTransCard"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyTransCard">[docs]</a><span class="k">class</span> <span class="nc">MyTransCard</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="n">MyCheckCard</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;Selectable :class:`~kivymd.uix.card.MDCard`. Select by click. Changes color and displayed text on click.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="MyCheckChip"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckChip">[docs]</a><span class="k">class</span> <span class="nc">MyCheckChip</span><span class="p">(</span>
+<div class="viewcode-block" id="MyCheckChip"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChip">[docs]</a><span class="k">class</span> <span class="nc">MyCheckChip</span><span class="p">(</span>
     <span class="n">CircularRippleBehavior</span><span class="p">,</span>
     <span class="n">ButtonBehavior</span><span class="p">,</span>
     <span class="n">ThemableColorChangeBehavior</span><span class="p">,</span>
@@ -263,37 +267,38 @@
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Selectable Chip. Select by click. Change color on selection.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCheckChip.icon"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckChip.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MyCheckChip.icon"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChip.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to &quot;&quot;.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCheckChip.text"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckChip.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MyCheckChip.text"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChip.text">[docs]</a>    <span class="n">text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to &quot;&quot;.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCheckChip.on_press"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckChip.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCheckChip.on_press"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChip.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Change boolean value of :attr:`current_state`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="p">(</span>  <span class="c1"># pylint: disable=attribute-defined-outside-init</span>
             <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span></div></div>
         <span class="p">)</span>
 
 
-<div class="viewcode-block" id="MyTransChip"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyTransChip">[docs]</a><span class="k">class</span> <span class="nc">MyTransChip</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="n">MyCheckChip</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MyTransChip"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyTransChip">[docs]</a><span class="k">class</span> <span class="nc">MyTransChip</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="n">MyCheckChip</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;Selectable Chip. Select by click. Change color and text on selection.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="MyCheckChipContainer"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckChipContainer">[docs]</a><span class="k">class</span> <span class="nc">MyCheckChipContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">StackLayout</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Container for :class:`MyCheckChip`\\ s. Use :attr:`child_dict` to populate.&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="MyCheckChipContainer"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChipContainer">[docs]</a><span class="k">class</span> <span class="nc">MyCheckChipContainer</span><span class="p">(</span><span class="n">CheckContainer</span><span class="p">,</span> <span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">StackLayout</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Container for :class:`MyCheckChip`\ s. Use :attr:`child_dict` to populate.&quot;&quot;&quot;</span>
 
-    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;MyCheckChip&quot;</span></div>
+    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;MyCheckChip&quot;</span>
+    <span class="n">draw_box</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MyCheckImageTile"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckImageTile">[docs]</a><span class="k">class</span> <span class="nc">MyCheckImageTile</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">SmartTile</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCheckImageTile"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckImageTile">[docs]</a><span class="k">class</span> <span class="nc">MyCheckImageTile</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">SmartTile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Selectable :class:`~kivymd.uix.imagelist.SmartTile`.</span>
 
 <span class="sd">    Select by click. Changes :attr:`opacity` and :attr:`boarder_width` on selection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCheckImageTile.border_width"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckImageTile.border_width">[docs]</a>    <span class="n">border_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span></div>
+<div class="viewcode-block" id="MyCheckImageTile.border_width"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckImageTile.border_width">[docs]</a>    <span class="n">border_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.NumericProperty` describing boarder-width of image tile.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -303,27 +308,27 @@
         <span class="p">}</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">MyCheckImageTile</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-<div class="viewcode-block" id="MyCheckImageTile.on_press"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCheckImageTile.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCheckImageTile.on_press"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckImageTile.on_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_press</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Change boolean value of current state on press.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="p">(</span>  <span class="c1"># pylint: disable=attribute-defined-outside-init</span>
             <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span></div></div>
         <span class="p">)</span>
 
 
-<div class="viewcode-block" id="TransCard"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.TransCard">[docs]</a><span class="k">class</span> <span class="nc">TransCard</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">,</span> <span class="n">RectangularRippleBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="TransCard"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard">[docs]</a><span class="k">class</span> <span class="nc">TransCard</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="n">MDCard</span><span class="p">,</span> <span class="n">RectangularRippleBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Displays :attr:`text_orig` and :attr:`text_trans`, separated by a line.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TransCard.text_orig"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.TransCard.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TransCard.text_orig"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` first text.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TransCard.text_trans"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.TransCard.text_trans">[docs]</a>    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="TransCard.text_trans"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard.text_trans">[docs]</a>    <span class="n">text_trans</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` second text.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="TransCard.orientation"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.TransCard.orientation">[docs]</a>    <span class="n">orientation</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">])</span></div>
+<div class="viewcode-block" id="TransCard.orientation"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard.orientation">[docs]</a>    <span class="n">orientation</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;vertical&quot;</span><span class="p">,</span> <span class="s2">&quot;horizontal&quot;</span><span class="p">])</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty` possible values [&quot;vertical&quot;, &quot;horizontal&quot;] defaults to &quot;vertical&quot;.&quot;&quot;&quot;</span></div>
 
 
-<div class="viewcode-block" id="LongPressImage"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.LongPressImage">[docs]</a><span class="k">class</span> <span class="nc">LongPressImage</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="n">AsyncImage</span><span class="p">):</span></div>
+<div class="viewcode-block" id="LongPressImage"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressImage">[docs]</a><span class="k">class</span> <span class="nc">LongPressImage</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="n">AsyncImage</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.uix.image.AsyncImage` with additional &quot;on_press&quot; and &quot;on_long_press&quot; event.&quot;&quot;&quot;</span>
 
 
@@ -331,20 +336,20 @@
 <span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;TransCard&quot;</span><span class="p">,</span> <span class="n">TransCard</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="MyCarousel"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel">[docs]</a><span class="k">class</span> <span class="nc">MyCarousel</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">ChildrenFromDataBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel">[docs]</a><span class="k">class</span> <span class="nc">MyCarousel</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">,</span> <span class="n">ChildrenFromDataBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Carousel that constructs contents from :attr:`data`.</span>
 
 <span class="sd">    On click, opens a modal with list of content.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCarousel.carousel"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.carousel">[docs]</a>    <span class="n">carousel</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.carousel"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.carousel">[docs]</a>    <span class="n">carousel</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty`&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCarousel.modal_layout_name"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.modal_layout_name">[docs]</a>    <span class="n">modal_layout_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.modal_layout_name"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.modal_layout_name">[docs]</a>    <span class="n">modal_layout_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCarousel.modal_data_cls_name"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.modal_data_cls_name">[docs]</a>    <span class="n">modal_data_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="MyCarousel.modal_data_cls_name"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.modal_data_cls_name">[docs]</a>    <span class="n">modal_data_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`&quot;&quot;&quot;</span>
 
     <span class="n">modal</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">()</span>
@@ -357,23 +362,23 @@
         <span class="p">}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_data</span><span class="p">()</span>
 
-<div class="viewcode-block" id="MyCarousel.before_add_child"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel.before_add_child"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Bind :meth:`set_child_width` to change of :attr:`width`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_child_width</span><span class="p">(</span><span class="n">child</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="MyCarousel.after_add_child"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel.after_add_child"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.after_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">after_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Call :meth:`set_child_width` after adding child.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_child_width</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MyCarousel.set_child_width"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.set_child_width">[docs]</a>    <span class="k">def</span> <span class="nf">set_child_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel.set_child_width"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.set_child_width">[docs]</a>    <span class="k">def</span> <span class="nf">set_child_width</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set width of child to :attr:`width` - width of left and right-icon.&quot;&quot;&quot;</span>
         <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">left_icon</span><span class="o">.</span><span class="n">width</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">right_icon</span><span class="o">.</span><span class="n">width</span>
         <span class="nb">setattr</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="n">width</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MyCarousel.update_height"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MyCarousel.update_height"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Implement in sub class. Placeholder.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MyCarousel.get_modal_content"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.get_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
+<div class="viewcode-block" id="MyCarousel.get_modal_content"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">)):</span>
         <span class="sd">&quot;&quot;&quot;Return root widget to display on the modal.&quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">set_carousel_index</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
@@ -390,7 +395,7 @@
         <span class="n">recycle_view</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_dicts</span>
         <span class="k">return</span> <span class="n">recycle_view</span></div>
 
-<div class="viewcode-block" id="MyCarousel.get_checked"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel.get_checked"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;If ``attribute_name`` is ``None``, return currently selected widget, else return a property thereof.&quot;&quot;&quot;</span>
         <span class="n">checked_elements</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">attribute_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -399,7 +404,7 @@
             <span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">checked_elements</span> <span class="k">if</span> <span class="n">element</span></div>
         <span class="p">]</span>
 
-<div class="viewcode-block" id="MyCarousel.open_menu"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.MyCarousel.open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">open_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="MyCarousel.open_menu"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">open_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`get_modal_content`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">()</span>
         <span class="n">modal_content</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_modal_content</span><span class="p">()</span>
@@ -407,30 +412,43 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="ImageCarousel"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.ImageCarousel">[docs]</a><span class="k">class</span> <span class="nc">ImageCarousel</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">):</span>
+<div class="viewcode-block" id="ImageCarousel"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel">[docs]</a><span class="k">class</span> <span class="nc">ImageCarousel</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Carousel of images.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ImageCarousel.get_modal_content"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.ImageCarousel.get_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ImageCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;on_error&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="s2">&quot;on_error&quot;</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_error&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_data</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ImageCarousel.get_modal_content"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel.get_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">get_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)):</span>
         <span class="sd">&quot;&quot;&quot;Call :meth:`MyCarousel.get_modal_content` with ``size_hint=(1,1)``.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ImageCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_modal_content</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="n">size_hint</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ImageCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">get_modal_content</span><span class="p">(</span><span class="n">size_hint</span><span class="o">=</span><span class="n">size_hint</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageCarousel.on_error"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel.on_error">[docs]</a>    <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="CardCarousel"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CardCarousel">[docs]</a><span class="k">class</span> <span class="nc">CardCarousel</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">):</span>
+<div class="viewcode-block" id="CardCarousel"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CardCarousel">[docs]</a><span class="k">class</span> <span class="nc">CardCarousel</span><span class="p">(</span><span class="n">MyCarousel</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Carousel of :class:`TransCard`.</span>
 
 <span class="sd">    To use it with different objects, change :attr:`viewclass` and :attr:`modal_data_cls_name`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="CardCarousel.update_height"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CardCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CardCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;on_press&quot;</span><span class="p">]</span>
+
+<div class="viewcode-block" id="CardCarousel.update_height"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CardCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update height via animation, so that Widget has height of currently displayed card.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="p">:</span>
             <span class="n">new_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">24</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">!=</span> <span class="n">new_height</span><span class="p">:</span>
-                <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">new_height</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+                <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">new_height</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
                 <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="CardCarousel.on_data"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.CardCarousel.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="CardCarousel.on_data"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CardCarousel.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Fix size-issue on first init.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CardCarousel</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_data</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="p">:</span>
@@ -438,7 +456,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="mi">0</span></div></div>
 
 
-<div class="viewcode-block" id="RecycleCarousel"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel">[docs]</a><span class="k">class</span> <span class="nc">RecycleCarousel</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel">[docs]</a><span class="k">class</span> <span class="nc">RecycleCarousel</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper class for a :class:`~kivy.uix.carousel.Carousel` that uses only 3 slides to update content dynamically.</span>
 
@@ -446,38 +464,38 @@
 <span class="sd">    updated with data from :attr:`data`. The content of the slides is constructed as instances of :attr:`viewclass`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RecycleCarousel.carousel"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.carousel">[docs]</a>    <span class="n">carousel</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="RecycleCarousel.carousel"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel">[docs]</a>    <span class="n">carousel</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.ObjectProperty` defaults to ``None``.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.viewclass"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.viewclass">[docs]</a>    <span class="n">viewclass</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;TransCard&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="RecycleCarousel.viewclass"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass">[docs]</a>    <span class="n">viewclass</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;TransCard&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.StringProperty` defaults to ``&quot;TransCard&quot;``. Class name of the widgets that are added</span>
 <span class="sd">    to the carousel.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.data"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="RecycleCarousel.data"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.ListProperty` defaults to ``None``. List of dictionaries from which the content is</span>
 <span class="sd">    generated.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.slide_width"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.slide_width">[docs]</a>    <span class="n">slide_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="RecycleCarousel.slide_width"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.slide_width">[docs]</a>    <span class="n">slide_width</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.NumericProperty` defaults to ``None``. Width that the content of the slides should</span>
 <span class="sd">    have.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.dynamic_height"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.dynamic_height">[docs]</a>    <span class="n">dynamic_height</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
+<div class="viewcode-block" id="RecycleCarousel.dynamic_height"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.dynamic_height">[docs]</a>    <span class="n">dynamic_height</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.BooleanProperty` defaults to ``False``. If ``True`` updates the height of the root</span>
 <span class="sd">    widget to the height of the object on the current slide + 24. Only possible if size_hint_y of the widget on the</span>
 <span class="sd">    slide is not set.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.index"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.index">[docs]</a>    <span class="n">index</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+<div class="viewcode-block" id="RecycleCarousel.index"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.index">[docs]</a>    <span class="n">index</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.NumericProperty` defaults to ``0``. Current (virtual) index.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.last_carousel_index"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.last_carousel_index">[docs]</a>    <span class="n">last_carousel_index</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+<div class="viewcode-block" id="RecycleCarousel.last_carousel_index"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.last_carousel_index">[docs]</a>    <span class="n">last_carousel_index</span> <span class="o">=</span> <span class="n">NumericProperty</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.NumericProperty` defaults to ``0``. Last index that the :attr:`carousel` had. Used to</span>
 <span class="sd">    determine whether the user did slide right or left.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.current_slide"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.current_slide">[docs]</a>    <span class="n">current_slide</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="RecycleCarousel.current_slide"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.current_slide">[docs]</a>    <span class="n">current_slide</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.ObjectProperty`. Reference to :attr:`carousel`.current_slide.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="RecycleCarousel.modal_layout_name"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.modal_layout_name">[docs]</a>    <span class="n">modal_layout_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="RecycleCarousel.modal_layout_name"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_layout_name">[docs]</a>    <span class="n">modal_layout_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.StringProperty` defaults to ``None``. Class name for root widget of :attr:`modal`.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.modal_data_cls_name"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.modal_data_cls_name">[docs]</a>    <span class="n">modal_data_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="RecycleCarousel.modal_data_cls_name"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_data_cls_name">[docs]</a>    <span class="n">modal_data_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.StringProperty` defaults to ``None``. Class name for children of :attr:`modal`.&quot;&quot;&quot;</span>
-<div class="viewcode-block" id="RecycleCarousel.modal"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.modal">[docs]</a>    <span class="n">modal</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">ModalView</span><span class="p">())</span></div>
+<div class="viewcode-block" id="RecycleCarousel.modal"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.modal">[docs]</a>    <span class="n">modal</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">ModalView</span><span class="p">())</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`kivy.properties.ObjectProperty` defaults to ``ModalView()``.&quot;&quot;&quot;</span>
     <span class="n">default_modal_size_hint</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">])</span>
 
-<div class="viewcode-block" id="RecycleCarousel.update_height"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.update_height"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_height">[docs]</a>    <span class="k">def</span> <span class="nf">update_height</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update height via animation, so that Widget has height of currently displayed card.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dynamic_height</span><span class="p">:</span>
             <span class="n">new_height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="o">.</span><span class="n">height</span> <span class="o">+</span> <span class="mi">24</span>
@@ -485,7 +503,7 @@
                 <span class="n">anim</span> <span class="o">=</span> <span class="n">Animation</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="n">new_height</span><span class="p">,</span> <span class="n">duration</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
                 <span class="n">anim</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RecycleCarousel.setup_modal"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.setup_modal">[docs]</a>    <span class="k">def</span> <span class="nf">setup_modal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.setup_modal"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal">[docs]</a>    <span class="k">def</span> <span class="nf">setup_modal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return root widget to display on the modal.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">()</span>
         <span class="n">modal_root_cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">modal_layout_name</span><span class="p">)</span>
@@ -496,7 +514,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span>
 
-<div class="viewcode-block" id="RecycleCarousel.update_modal_content"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.update_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">update_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.update_modal_content"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_modal_content">[docs]</a>    <span class="k">def</span> <span class="nf">update_modal_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Update content of modal.&quot;&quot;&quot;</span>
         <span class="n">data_dicts</span> <span class="o">=</span> <span class="p">[</span>
             <span class="p">{</span>
@@ -509,7 +527,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">child_class_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">modal_data_cls_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data_dicts</span></div>
 
-<div class="viewcode-block" id="RecycleCarousel.get_checked"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.get_checked"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.get_checked">[docs]</a>    <span class="k">def</span> <span class="nf">get_checked</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;If ``attribute_name`` is ``None``, return currently selected widget, else return a property thereof.&quot;&quot;&quot;</span>
         <span class="n">checked_elements</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">attribute_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -518,14 +536,14 @@
             <span class="nb">getattr</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">attribute_name</span><span class="p">)</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">checked_elements</span> <span class="k">if</span> <span class="n">element</span></div>
         <span class="p">]</span>
 
-<div class="viewcode-block" id="RecycleCarousel.open_menu"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">open_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.open_menu"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.open_menu">[docs]</a>    <span class="k">def</span> <span class="nf">open_menu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Open :class:`kivy.uix.modalview.ModalView` with content given by :meth:`setup_modal`.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">setup_modal</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_modal_content</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">modal</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="RecycleCarousel.on_data"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.on_data"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up :attr:`carousel` by initializing 3 widgets, adding them and binding some Properties.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
@@ -541,7 +559,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">current_slide</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">height</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">update_height</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RecylceCarousel needs at least 3 elements to be displayed correctly.&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RecycleCarousel.update_index"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.update_index">[docs]</a>    <span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">carousel_index</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.update_index"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_index">[docs]</a>    <span class="k">def</span> <span class="nf">update_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">carousel_index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Change :attr:`index` according to change in ``carousel_index`` and update one of the three slides.&quot;&quot;&quot;</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="n">carousel_index</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_carousel_index</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">diff</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">diff</span> <span class="o">==</span> <span class="o">-</span><span class="mi">2</span> <span class="k">else</span> <span class="n">diff</span>
@@ -549,7 +567,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="n">diff</span><span class="p">)</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_slide</span><span class="p">(</span><span class="n">carousel_index</span> <span class="o">+</span> <span class="n">diff</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">+</span> <span class="n">diff</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RecycleCarousel.update_slide"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.update_slide">[docs]</a>    <span class="k">def</span> <span class="nf">update_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">carousel_index</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.update_slide"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_slide">[docs]</a>    <span class="k">def</span> <span class="nf">update_slide</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">carousel_index</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update slide with index ``carousel_index`` by content from :attr:`data` [index].</span>
 
@@ -560,7 +578,7 @@
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">carousel</span><span class="o">.</span><span class="n">slides</span><span class="p">[</span><span class="n">carousel_index</span><span class="p">],</span> <span class="n">name</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="RecycleCarousel.set_index"><a class="viewcode-back" href="../custom_widgets/selection_widget.html#selection_widgets.RecycleCarousel.set_index">[docs]</a>    <span class="k">def</span> <span class="nf">set_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="RecycleCarousel.set_index"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.set_index">[docs]</a>    <span class="k">def</span> <span class="nf">set_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set :attr:`index` to ``index`` and updates carousel accordingly.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_height</span><span class="p">()</span>

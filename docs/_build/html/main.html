@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Main App &mdash; ACG 0.3.0 documentation</title>
+  <title>Main App &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
@@ -37,7 +37,7 @@
 
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Some useful functions" href="utils.html" />
+    <link rel="next" title="Utils" href="utils.html" />
     <link rel="prev" title="Single Word Screen" href="screens/single_word.html" />
 </head>
 
@@ -52,7 +52,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -88,61 +88,49 @@
 <li class="toctree-l1"><a class="reference internal" href="custom_widgets.html">Custom Widgets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ui.html">User Interface</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Main App</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#main.AnkiCardGenApp">AnkiCardGenApp</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.anki">anki</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.main.AnkiCardGenApp">AnkiCardGenApp</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.build">build</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.build">build</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.build_config">build_config</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.build_config">build_config</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.get_current_template_db">get_current_template_db</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.dialog">dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.get_word_states">get_word_states</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.file_manager">file_manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.load_by_config_key">load_by_config_key</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.get_current_template_db">get_current_template_db</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_busy">on_busy</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.get_word_states">get_word_states</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_current_template_name">on_current_template_name</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.load_by_config_key">load_by_config_key</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_start">on_start</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.on_current_template_name">on_current_template_name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.save_by_config_key">save_by_config_key</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.on_start">on_start</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.save_theme">save_theme</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.open_file_manager">open_file_manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.setup_template">setup_template</a></li>
 </ul>
 <ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.save_by_config_key">save_by_config_key</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.save_theme">save_theme</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.setup_template">setup_template</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.theme_dialog">theme_dialog</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.word">word</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#main.AnkiCardGenApp.word_state_dict">word_state_dict</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.word_state_dict">word_state_dict</a></li>
 </ul>
 </li>
 </ul>
+<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.main.main">main</a></li>
+</ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Some useful functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="db.html">Database</a></li>
 </ul>
 
@@ -159,7 +147,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">ACG</a>
+          <a href="index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -209,116 +197,92 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="module-main">
-<span id="main-app"></span><h1>Main App<a class="headerlink" href="#module-main" title="Permalink to this headline">¶</a></h1>
-<p>Contains the Main App <a class="reference internal" href="#main.AnkiCardGenApp" title="main.AnkiCardGenApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnkiCardGenApp</span></code></a>.</p>
+  <div class="section" id="module-acg.main">
+<span id="main-app"></span><h1>Main App<a class="headerlink" href="#module-acg.main" title="Permalink to this headline">¶</a></h1>
+<p>Contains the Main App <a class="reference internal" href="#acg.main.AnkiCardGenApp" title="acg.main.AnkiCardGenApp"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnkiCardGenApp</span></code></a>.</p>
 <dl class="py class">
-<dt id="main.AnkiCardGenApp">
-<em class="property">class </em><code class="sig-prename descclassname">main.</code><code class="sig-name descname">AnkiCardGenApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp">
+<em class="property">class </em><code class="sig-prename descclassname">acg.main.</code><code class="sig-name descname">AnkiCardGenApp</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/material-app/index.html#kivymd.app.MDApp" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.app.MDApp</span></code></a></p>
 <p>Main App.</p>
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.anki">
-<code class="sig-name descname">anki</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.anki"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.anki" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference internal" href="word_processing/anki.html#generate_anki_card.AnkiObject" title="generate_anki_card.AnkiObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">generate_anki_card.AnkiObject</span></code></a> Object.</p>
-</dd></dl>
-
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.build">
-<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.build">
+<code class="sig-name descname">build</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.build"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.build" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up App and return <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.MainMenu</span></code> as root widget.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.build_config">
-<code class="sig-name descname">build_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.build_config" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.build_config">
+<code class="sig-name descname">build_config</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.build_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.build_config" title="Permalink to this definition">¶</a></dt>
 <dd><p>If no config-file exists, sets the default.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.dialog">
-<code class="sig-name descname">dialog</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/dialog/index.html#kivymd.uix.dialog.MDDialog" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDDialog</span></code></a> Object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.file_manager">
-<code class="sig-name descname">file_manager</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.file_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/file-manager/index.html#kivymd.uix.filemanager.MDFileManager" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDFileManager</span></code></a> Object.</p>
-</dd></dl>
-
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.get_current_template_db">
-<code class="sig-name descname">get_current_template_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.get_current_template_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.get_current_template_db" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.get_current_template_db">
+<code class="sig-name descname">get_current_template_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.get_current_template_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.get_current_template_db" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return data-base object for <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_template_name</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.get_word_states">
-<code class="sig-name descname">get_word_states</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.get_word_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.get_word_states" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.get_word_states">
+<code class="sig-name descname">get_word_states</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.get_word_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.get_word_states" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return dict of word-states for current template from data-base.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.load_by_config_key">
-<code class="sig-name descname">load_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.load_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.load_by_config_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use <a class="reference internal" href="utils.html#utils.smart_loader" title="utils.smart_loader"><code class="xref py py-func docutils literal notranslate"><span class="pre">utils.smart_loader()</span></code></a> to load attribute from path in <code class="xref py py-attr docutils literal notranslate"><span class="pre">config</span></code> [attribute].</p>
+<dt id="acg.main.AnkiCardGenApp.load_by_config_key">
+<code class="sig-name descname">load_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.load_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.load_by_config_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use <code class="xref py py-func docutils literal notranslate"><span class="pre">utils.smart_loader()</span></code> to load attribute from path in <code class="xref py py-attr docutils literal notranslate"><span class="pre">config</span></code> [attribute].</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.on_current_template_name">
-<code class="sig-name descname">on_current_template_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.on_current_template_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.on_current_template_name" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.on_busy">
+<code class="sig-name descname">on_busy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.on_busy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.on_busy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up <code class="xref py py-attr docutils literal notranslate"><span class="pre">busy_modal</span></code> if necessary. Then open or close it depending on state of <code class="xref py py-attr docutils literal notranslate"><span class="pre">busy</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.AnkiCardGenApp.on_current_template_name">
+<code class="sig-name descname">on_current_template_name</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.on_current_template_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.on_current_template_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up new template if <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_template_name</span></code> changes.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.on_start">
-<code class="sig-name descname">on_start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.on_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.on_start" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.on_start">
+<code class="sig-name descname">on_start</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.on_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.on_start" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up template on start of app.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.open_file_manager">
-<code class="sig-name descname">open_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'/'</span></em>, <em class="sig-param"><span class="n">select_path</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.open_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.open_file_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open file manager at <code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code> and calls <code class="xref py py-attr docutils literal notranslate"><span class="pre">select_path</span></code> with path of selected file.</p>
+<dt id="acg.main.AnkiCardGenApp.save_by_config_key">
+<code class="sig-name descname">save_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em>, <em class="sig-param"><span class="n">obj</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.save_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.save_by_config_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use <code class="xref py py-func docutils literal notranslate"><span class="pre">utils.smart_saver()</span></code> to save current attribute to path in <code class="xref py py-attr docutils literal notranslate"><span class="pre">config</span></code> [attribute].</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.save_by_config_key">
-<code class="sig-name descname">save_by_config_key</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em>, <em class="sig-param"><span class="n">obj</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.save_by_config_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_by_config_key" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use <a class="reference internal" href="utils.html#utils.smart_saver" title="utils.smart_saver"><code class="xref py py-func docutils literal notranslate"><span class="pre">utils.smart_saver()</span></code></a> to save current attribute to path in <code class="xref py py-attr docutils literal notranslate"><span class="pre">config</span></code> [attribute].</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="main.AnkiCardGenApp.save_theme">
-<code class="sig-name descname">save_theme</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.save_theme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.save_theme" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.save_theme">
+<code class="sig-name descname">save_theme</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.save_theme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.save_theme" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save current theme to config file.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="main.AnkiCardGenApp.setup_template">
-<code class="sig-name descname">setup_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.setup_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.setup_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize <a class="reference internal" href="word_processing/templates.html#templates.Template" title="templates.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code></a> and adds it to the single_word screen.</p>
+<dt id="acg.main.AnkiCardGenApp.setup_template">
+<code class="sig-name descname">setup_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.setup_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.setup_template" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code> and adds it to the single_word screen.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="main.AnkiCardGenApp.theme_dialog">
-<code class="sig-name descname">theme_dialog</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.theme_dialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.theme_dialog" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/pickers/index.html#kivymd.uix.picker.MDThemePicker" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDThemePicker</span></code></a> Object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.word">
-<code class="sig-name descname">word</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.word" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">pt_word.Word</span></code> Object.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="main.AnkiCardGenApp.word_state_dict">
-<code class="sig-name descname">word_state_dict</code><a class="reference internal" href="_modules/main.html#AnkiCardGenApp.word_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#main.AnkiCardGenApp.word_state_dict" title="Permalink to this definition">¶</a></dt>
+<dt id="acg.main.AnkiCardGenApp.word_state_dict">
+<code class="sig-name descname">word_state_dict</code><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.word_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.word_state_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> containing all words that could not be processed by Queue.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.main.main">
+<code class="sig-prename descclassname">acg.main.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main-function.</p>
 </dd></dl>
 
 </div>
@@ -331,7 +295,7 @@
 
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
 
-        <a href="utils.html" class="btn btn-neutral float-right" title="Some useful functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="Utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
 
 
         <a href="screens/single_word.html" class="btn btn-neutral float-left" title="Single Word Screen" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

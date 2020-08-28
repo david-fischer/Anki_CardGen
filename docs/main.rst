@@ -1,6 +1,6 @@
 Main App
 -------------------------
 
-.. autoapimodule:: main
+.. autoapimodule:: acg.main
    :members:
    :show-inheritance:

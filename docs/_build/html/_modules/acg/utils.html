@@ -7,13 +7,13 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>utils &mdash; ACG 0.3.0 documentation</title>
+  <title>acg.utils &mdash; Anki Card Gen 1.0.6 documentation</title>
 
 
 
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
 
 
 
@@ -22,21 +22,21 @@
 
 
   <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
+    <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
 
 
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
 
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
 
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
 </head>
 
 <body class="wy-body-for-nav">
@@ -50,7 +50,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> ACG
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
 
 
 
@@ -63,7 +63,7 @@
 
 
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -82,12 +82,12 @@
 
 
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../word_processing.html">Word Processing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../ui.html">User Interface</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../utils.html">Some useful functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../db.html">Database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../word_processing.html">Word Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../custom_widgets.html">Custom Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../ui.html">User Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">Main App</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../db.html">Database</a></li>
 </ul>
 
 
@@ -103,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">ACG</a>
+          <a href="../../index.html">Anki Card Gen</a>
 
       </nav>
 
@@ -132,11 +132,11 @@
 
   <ul class="wy-breadcrumbs">
 
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
 
-          <li><a href="index.html">Module code</a> &raquo;</li>
+          <li><a href="../index.html">Module code</a> &raquo;</li>
 
-      <li>utils</li>
+      <li>acg.utils</li>
 
 
       <li class="wy-breadcrumbs-aside">
@@ -151,7 +151,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <h1>Source code for utils</h1><div class="highlight"><pre>
+  <h1>Source code for acg.utils</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;This module contains lots of helper functions.&quot;&quot;&quot;</span>
 
 <span class="kn">import</span> <span class="nn">csv</span>
@@ -162,8 +162,9 @@
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">threading</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">ContextDecorator</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span><span class="p">,</span> <span class="n">wraps</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 
@@ -175,7 +176,7 @@
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">spacy</span>
 
-<div class="viewcode-block" id="SPACY_IS_AVAILABLE"><a class="viewcode-back" href="../utils.html#utils.SPACY_IS_AVAILABLE">[docs]</a>    <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span></div>
+<div class="viewcode-block" id="SPACY_IS_AVAILABLE"><a class="viewcode-back" href="../../utils.html#acg.utils.SPACY_IS_AVAILABLE">[docs]</a>    <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span></div>
     <span class="sd">&quot;&quot;&quot;``True`` if spacy could be imported, else ``False``&quot;&quot;&quot;</span>
 <span class="k">except</span> <span class="ne">ModuleNotFoundError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span>
@@ -184,7 +185,7 @@
     <span class="p">)</span>
     <span class="n">SPACY_IS_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
 
-<div class="viewcode-block" id="COLOR2MEANING"><a class="viewcode-back" href="../utils.html#utils.COLOR2MEANING">[docs]</a><span class="n">COLOR2MEANING</span> <span class="o">=</span> <span class="p">{</span>
+<div class="viewcode-block" id="COLOR2MEANING"><a class="viewcode-back" href="../../utils.html#acg.utils.COLOR2MEANING">[docs]</a><span class="n">COLOR2MEANING</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;highlight_yellow&quot;</span><span class="p">:</span> <span class="s2">&quot;words&quot;</span><span class="p">,</span>
     <span class="s2">&quot;highlight_blue&quot;</span><span class="p">:</span> <span class="s2">&quot;phrases&quot;</span><span class="p">,</span>
     <span class="s2">&quot;highlight_pink&quot;</span><span class="p">:</span> <span class="s2">&quot;sentences&quot;</span><span class="p">,</span>
@@ -202,7 +203,7 @@
 <span class="c1"># GENERAL</span>
 
 
-<div class="viewcode-block" id="CD"><a class="viewcode-back" href="../utils.html#utils.CD">[docs]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">:</span>
+<div class="viewcode-block" id="CD"><a class="viewcode-back" href="../../utils.html#acg.utils.CD">[docs]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Context manager for changing the current working directory to :attr:`new_path`.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_path</span><span class="p">):</span>
@@ -217,7 +218,7 @@
         <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">saved_path</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="save_dict_to_csv"><a class="viewcode-back" href="../utils.html#utils.save_dict_to_csv">[docs]</a><span class="k">def</span> <span class="nf">save_dict_to_csv</span><span class="p">(</span><span class="n">some_dict</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
+<div class="viewcode-block" id="save_dict_to_csv"><a class="viewcode-back" href="../../utils.html#acg.utils.save_dict_to_csv">[docs]</a><span class="k">def</span> <span class="nf">save_dict_to_csv</span><span class="p">(</span><span class="n">some_dict</span><span class="p">,</span> <span class="n">out_path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Save dictionary as row to csv.&quot;&quot;&quot;</span>
     <span class="n">is_first_entry</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">out_path</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
@@ -227,7 +228,7 @@
         <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">some_dict</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="load_dicts_from_csv"><a class="viewcode-back" href="../utils.html#utils.load_dicts_from_csv">[docs]</a><span class="k">def</span> <span class="nf">load_dicts_from_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="load_dicts_from_csv"><a class="viewcode-back" href="../../utils.html#acg.utils.load_dicts_from_csv">[docs]</a><span class="k">def</span> <span class="nf">load_dicts_from_csv</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Load csv. Has to have the keys as first line.</span>
 
@@ -238,7 +239,7 @@
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">DictReader</span><span class="p">(</span><span class="n">read_obj</span><span class="p">))</span></div>
 
 
-<div class="viewcode-block" id="smart_loader"><a class="viewcode-back" href="../utils.html#utils.smart_loader">[docs]</a><span class="k">def</span> <span class="nf">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="smart_loader"><a class="viewcode-back" href="../../utils.html#acg.utils.smart_loader">[docs]</a><span class="k">def</span> <span class="nf">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use file ending of path to determine which function to use to load file.</span>
 
@@ -265,7 +266,7 @@
     <span class="k">raise</span> <span class="ne">Exception</span></div>
 
 
-<div class="viewcode-block" id="smart_saver"><a class="viewcode-back" href="../utils.html#utils.smart_saver">[docs]</a><span class="k">def</span> <span class="nf">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="smart_saver"><a class="viewcode-back" href="../../utils.html#acg.utils.smart_saver">[docs]</a><span class="k">def</span> <span class="nf">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use file ending of path to determine which function to use to save file.</span>
 
@@ -290,19 +291,19 @@
         <span class="n">save_dict_to_csv</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="merge_or_last"><a class="viewcode-back" href="../utils.html#utils.merge_or_last">[docs]</a><span class="k">def</span> <span class="nf">merge_or_last</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="merge_or_last"><a class="viewcode-back" href="../../utils.html#acg.utils.merge_or_last">[docs]</a><span class="k">def</span> <span class="nf">merge_or_last</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;If all args are list, returns merged list. Else returns last arg.&quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">args</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">chain</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span>
     <span class="k">return</span> <span class="n">args</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="smart_dict_merge"><a class="viewcode-back" href="../utils.html#utils.smart_dict_merge">[docs]</a><span class="k">def</span> <span class="nf">smart_dict_merge</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="smart_dict_merge"><a class="viewcode-back" href="../../utils.html#acg.utils.smart_dict_merge">[docs]</a><span class="k">def</span> <span class="nf">smart_dict_merge</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;If values are lists they are merged, else the last element is chosen as new value.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">merge_with</span><span class="p">(</span><span class="n">merge_or_last</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="now_string"><a class="viewcode-back" href="../utils.html#utils.now_string">[docs]</a><span class="k">def</span> <span class="nf">now_string</span><span class="p">():</span>
+<div class="viewcode-block" id="now_string"><a class="viewcode-back" href="../../utils.html#acg.utils.now_string">[docs]</a><span class="k">def</span> <span class="nf">now_string</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Return current time in the format ``YYYY-MM-DD_HH:MM:SS``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">)</span></div>
 
@@ -310,12 +311,12 @@
 <span class="c1"># KIVY</span>
 
 
-<div class="viewcode-block" id="set_screen"><a class="viewcode-back" href="../utils.html#utils.set_screen">[docs]</a><span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">):</span>
+<div class="viewcode-block" id="set_screen"><a class="viewcode-back" href="../../utils.html#acg.utils.set_screen">[docs]</a><span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Set current screen to the one with name ``screen_name``.&quot;&quot;&quot;</span>
     <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">set_screen</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="widget_by_id"><a class="viewcode-back" href="../utils.html#utils.widget_by_id">[docs]</a><span class="k">def</span> <span class="nf">widget_by_id</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="widget_by_id"><a class="viewcode-back" href="../../utils.html#acg.utils.widget_by_id">[docs]</a><span class="k">def</span> <span class="nf">widget_by_id</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Get widget by string of ids, separated by &quot;/&quot;.</span>
 
@@ -347,7 +348,7 @@
 <span class="c1"># KINDLE EXPORT PARSING</span>
 
 
-<div class="viewcode-block" id="dict_from_kindle_export"><a class="viewcode-back" href="../utils.html#utils.dict_from_kindle_export">[docs]</a><span class="k">def</span> <span class="nf">dict_from_kindle_export</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<div class="viewcode-block" id="dict_from_kindle_export"><a class="viewcode-back" href="../../utils.html#acg.utils.dict_from_kindle_export">[docs]</a><span class="k">def</span> <span class="nf">dict_from_kindle_export</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extract highlighted parts and sorts them by color in a dictionary.</span>
 
@@ -366,7 +367,7 @@
     <span class="k">return</span> <span class="n">highlight_dict</span></div>
 
 
-<div class="viewcode-block" id="clean_up"><a class="viewcode-back" href="../utils.html#utils.clean_up">[docs]</a><span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">remove_punct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="clean_up"><a class="viewcode-back" href="../../utils.html#acg.utils.clean_up">[docs]</a><span class="k">def</span> <span class="nf">clean_up</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">remove_punct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lower_case</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">lemmatize</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Preprocess a list of words (or phrases).</span>
 
@@ -395,7 +396,7 @@
     <span class="k">return</span> <span class="n">words</span></div>
 
 
-<div class="viewcode-block" id="word_list_from_kindle"><a class="viewcode-back" href="../utils.html#utils.word_list_from_kindle">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_kindle</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="word_list_from_kindle"><a class="viewcode-back" href="../../utils.html#acg.utils.word_list_from_kindle">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_kindle</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use :const:`MEANING2COLOR` `[&quot;words&quot;]` to extract the list of words highlighted in this specific color.</span>
 
@@ -409,7 +410,7 @@
     <span class="k">return</span> <span class="n">dict_from_kindle_export</span><span class="p">(</span><span class="n">path</span><span class="p">)[</span><span class="n">color</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="word_list_from_txt"><a class="viewcode-back" href="../utils.html#utils.word_list_from_txt">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_txt</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+<div class="viewcode-block" id="word_list_from_txt"><a class="viewcode-back" href="../../utils.html#acg.utils.word_list_from_txt">[docs]</a><span class="k">def</span> <span class="nf">word_list_from_txt</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Return list of words read as lines from txt-file.</span>
 
@@ -421,7 +422,7 @@
     <span class="k">return</span> <span class="n">words</span></div>
 
 
-<div class="viewcode-block" id="tag_word_in_sentence"><a class="viewcode-back" href="../utils.html#utils.tag_word_in_sentence">[docs]</a><span class="k">def</span> <span class="nf">tag_word_in_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">tag_word</span><span class="p">):</span>
+<div class="viewcode-block" id="tag_word_in_sentence"><a class="viewcode-back" href="../../utils.html#acg.utils.tag_word_in_sentence">[docs]</a><span class="k">def</span> <span class="nf">tag_word_in_sentence</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">tag_word</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.</span>
 
@@ -456,7 +457,7 @@
 
 
 <span class="c1"># Image resizing</span>
-<div class="viewcode-block" id="compress_img_bytes"><a class="viewcode-back" href="../utils.html#utils.compress_img_bytes">[docs]</a><span class="k">def</span> <span class="nf">compress_img_bytes</span><span class="p">(</span><span class="n">bytes_image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+<div class="viewcode-block" id="compress_img_bytes"><a class="viewcode-back" href="../../utils.html#acg.utils.compress_img_bytes">[docs]</a><span class="k">def</span> <span class="nf">compress_img_bytes</span><span class="p">(</span><span class="n">bytes_image</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Compress image given as bytes (e.g. as content of :class:`requests.Response`).&quot;&quot;&quot;</span>
     <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">bytes_image</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">width</span><span class="p">:</span>
@@ -469,7 +470,7 @@
     <span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../utils.html#utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
+<div class="viewcode-block" id="compress_img"><a class="viewcode-back" href="../../utils.html#acg.utils.compress_img">[docs]</a><span class="k">def</span> <span class="nf">compress_img</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">512</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use the :class:`~PIL.Image` class to reduce the resolution of an image at ``path`` and overwrites it.</span>
 
@@ -486,7 +487,7 @@
     <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">optimize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="pick_val"><a class="viewcode-back" href="../utils.html#utils.pick_val">[docs]</a><span class="k">def</span> <span class="nf">pick_val</span><span class="p">(</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
+<div class="viewcode-block" id="pick_val"><a class="viewcode-back" href="../../utils.html#acg.utils.pick_val">[docs]</a><span class="k">def</span> <span class="nf">pick_val</span><span class="p">(</span><span class="n">whitelist</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Return filtered dictionary, whose values are in ``whitelist``.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">valfilter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span><span class="p">:</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">whitelist</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">)</span></div>
 
@@ -494,7 +495,7 @@
 <span class="c1"># Threading</span>
 
 
-<div class="viewcode-block" id="start_workers"><a class="viewcode-back" href="../utils.html#utils.start_workers">[docs]</a><span class="k">def</span> <span class="nf">start_workers</span><span class="p">(</span><span class="n">worker_fn</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+<div class="viewcode-block" id="start_workers"><a class="viewcode-back" href="../../utils.html#acg.utils.start_workers">[docs]</a><span class="k">def</span> <span class="nf">start_workers</span><span class="p">(</span><span class="n">worker_fn</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Start a number of ``num`` workers in separate threads.</span>
 
 <span class="sd">    Args:</span>
@@ -508,7 +509,7 @@
 
 
 <span class="nd">@toolz</span><span class="o">.</span><span class="n">curry</span>
-<div class="viewcode-block" id="start_thread"><a class="viewcode-back" href="../utils.html#utils.start_thread">[docs]</a><span class="k">def</span> <span class="nf">start_thread</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">fn_arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="start_thread"><a class="viewcode-back" href="../../utils.html#acg.utils.start_thread">[docs]</a><span class="k">def</span> <span class="nf">start_thread</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">fn_arg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Wrapper-function to call ``func`` in new thread.</span>
 
@@ -573,6 +574,43 @@
     <span class="c1"># }</span>
     <span class="c1"># word_dict[&quot;cachorro&quot;] = &quot;queued&quot;</span>
     <span class="c1"># smart_saver(word_dict, &quot;../app_data/word_state_dict.json&quot;)</span>
+
+
+<div class="viewcode-block" id="run_in_thread"><a class="viewcode-back" href="../../utils.html#acg.utils.run_in_thread">[docs]</a><span class="k">def</span> <span class="nf">run_in_thread</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call ``func`` in new thread.&quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="o">*</span><span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="n">new_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">func</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kw</span><span class="p">)</span>
+        <span class="n">new_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">new_thread</span>
+
+    <span class="k">return</span> <span class="n">run</span></div>
+
+
+<div class="viewcode-block" id="AppBusyContext"><a class="viewcode-back" href="../../utils.html#acg.utils.AppBusyContext">[docs]</a><span class="k">class</span> <span class="nc">AppBusyContext</span><span class="p">(</span><span class="n">ContextDecorator</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set app.busy to ``True`` and back to its previous value.&quot;&quot;&quot;</span>
+
+    <span class="n">previous_state</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">previous_state</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">busy</span>
+        <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">busy</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">exc</span><span class="p">):</span>
+        <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">busy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_state</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="app_busy"><a class="viewcode-back" href="../../utils.html#acg.utils.app_busy">[docs]</a><span class="k">def</span> <span class="nf">app_busy</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call function in new thread and set app.busy = ``True`` in the meantime.&quot;&quot;&quot;</span>
+
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">func</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">run_in_thread</span><span class="p">(</span><span class="n">AppBusyContext</span><span class="p">()(</span><span class="n">func</span><span class="p">))(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">wrapper</span></div>
 </pre></div>
 
            </div>
