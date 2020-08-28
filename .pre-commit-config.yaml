@@ -21,12 +21,12 @@ repos:
         args: [--rcfile=.pre-commit/.pylintrc]
         files: src
         types: [python]
-        exclude: (google_images_download|python-for-android)
+        exclude: (google_images_download|python-for-android|__init__.py)
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 5.0.2
     hooks:
       - id: pydocstyle
-        exclude: (google_images_download|python-for-android)
+        exclude: (google_images_download|python-for-android|__init__.py)
         files: src
         args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
   - repo: https://github.com/codespell-project/codespell
