@@ -15,6 +15,7 @@ import attr
 import bs4
 import genanki
 
+from paths import ANKI_DIR
 from utils import CD, smart_loader
 
 
@@ -177,7 +178,7 @@ class AnkiObject:
 
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
-    ankiobject = AnkiObject(root_dir="anki")
+    ankiobject = AnkiObject(root_dir=ANKI_DIR)
     ankiobject.add_card(
         **smart_loader("../app_data/words/casa/casa_card.json")
         # word="casa",
@@ -186,7 +187,7 @@ if __name__ == "__main__":
         # media_files=["../words/casa/casa.mp3", "../words/casa/casa.jpg"],
     )
     # ankiobject.write_apkg("output.apkg")
-    # with CD("anki"):
+    # with CD(ANKI_DIR):
     #     string = HtmlLoader("test.html").replace_includes_with_content()
     #     with open("test_out.html", "w") as file:
     #         file.write(string)

@@ -10,6 +10,7 @@ from kivy.clock import mainthread
 from kivy.lang import Builder
 from kivy.properties import (
     BooleanProperty,
+    ConfigParserProperty,
     DictProperty,
     ObjectProperty,
     StringProperty,
@@ -22,7 +23,7 @@ from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
 from db import add_missing_templates, get_template
-from paths import CUSTOM_WIDGET_DIR
+from paths import ANKI_DIR, CUSTOM_WIDGET_DIR
 from utils import smart_loader, smart_saver
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
@@ -40,9 +41,16 @@ class AnkiCardGenApp(MDApp):
     """:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue."""
     current_template_name = StringProperty("Portuguese Vocab")
     template = ObjectProperty()
-    apkg_export_dir = StringProperty("../app_data/apkgs")
+    apkg_export_dir = ConfigParserProperty("apgks", "Paths", "apkg_export_dir", "app")
+    anki_template_dir = ConfigParserProperty(
+        "vocab_card", "Paths", "anki_template_dir", "app"
+    )
     busy = BooleanProperty(False)
-    busy_modal = ObjectProperty(None)
+    busy_modal = ObjectProperty(None)  #
+
+    def get_anki_template_dir(self):
+        """Return absolute path where html-, css- and js-files for anki-card is located."""
+        return os.path.join(ANKI_DIR, self.anki_template_dir)
 
     def build_config(self, config):  # pylint: disable=no-self-use
         """If no config-file exists, sets the default."""
@@ -55,7 +63,7 @@ class AnkiCardGenApp(MDApp):
             },
         )
         config.setdefaults(
-            "Paths", {},
+            "Paths", {"anki_template_dir": "vocab_card", "apkg_export_dir": "apkgs"},
         )
         # os.makedirs("../app_data/", exist_ok=True)
         # os.makedirs("../app_data/apkgs/", exist_ok=True)
@@ -107,6 +115,7 @@ class AnkiCardGenApp(MDApp):
         """Set up template on start of app."""
         super(AnkiCardGenApp, self).on_start()
         self.setup_template()
+        print(vars(self.config))
 
     def get_word_states(self):
         """Return dict of word-states for current template from data-base."""

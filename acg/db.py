@@ -12,7 +12,6 @@ from pony.orm import (
     buffer,
     Database,
     db_session,
-    dbapiprovider,
     Json,
     Optional,
     PrimaryKey,
@@ -22,6 +21,7 @@ from pony.orm import (
 )
 
 from generate_anki_card import AnkiObject
+from paths import ANKI_DIR, MAIN_DIR
 from utils import CD, now_string
 
 TEMPLATE_DICTS = [
@@ -37,14 +37,13 @@ TEMPLATE_DICTS = [
 # print(os.listdir(), os.path.exists("db.sqlite"))
 # print(os.getcwd())
 db = Database()
-try:
-    db.bind(
-        provider="sqlite",
-        filename="/data/data/org.ankicardgen.ankicardgenapp/files/app/db.sqlite",
-        create_db=True,
-    )
-except dbapiprovider.OperationalError:
-    db.bind(provider="sqlite", filename="db.sqlite", create_db=True)
+# try:
+print(os.path.join(MAIN_DIR, "db.sqlite"))
+db.bind(
+    provider="sqlite", filename=os.path.join(MAIN_DIR, "db.sqlite"), create_db=True,
+)
+# except dbapiprovider.OperationalError:
+#     db.bind(provider="sqlite", filename="db.sqlite", create_db=True)
 
 
 class Template(db.Entity):
@@ -192,9 +191,9 @@ def get_card_by_id(card_id):
     return toolz.first(card_list) if card_list else None
 
 
-def export_cards(card_list, out_folder):
+def export_cards(card_list, out_folder, anki_template_dir):
     """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
-    anki_obj = AnkiObject(root_dir="anki")
+    anki_obj = AnkiObject(root_dir=anki_template_dir)
     if not card_list:
         print("Empty list.")
         return False
@@ -250,4 +249,6 @@ if __name__ == "__main__":
     with db_session:
         template = get_template("Portuguese Vocab")
         cards = select(c for c in template.cards if c.state == ("done" or "exported"))
-        export_cards(cards, "/home/david/Schreibtisch/")
+        export_cards(
+            cards, "/home/david/Schreibtisch/", os.path.join(ANKI_DIR, "vocab_card")
+        )
