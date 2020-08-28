@@ -35,7 +35,7 @@ repos:
       - id: codespell
         files: acg
         verbose: True
-        exclude: google_images_download
+        exclude: (google_images_download|_build)
         types: [text]
         args: [-q, "4",-D, -, -D, .pre-commit/dictionary.txt, -H]
   - repo: local
