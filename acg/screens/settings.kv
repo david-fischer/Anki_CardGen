@@ -7,23 +7,32 @@ SettingsRoot:
     padding: dp(10)
     spacing: dp(10)
 
-    MDRaisedButton:
-        text: "Theme"
-        on_press: root.theme_dialog.open()
+    SeparatorWithHeading:
+        heading: "Theme"
 
     MDRaisedButton:
-        text: "Busy"
-        on_press: root.sleep_some()
+        pos_hint: {"center_x": 0.5}
+        text: "Change App Theme"
+        on_press: root.theme_dialog.open()
+
+    SeparatorWithHeading:
+        heading: "Export"
 
     StackLayout:
         orientation: "lr-tb"
         spacing: dp(20)
         MDTextField:
-            id: apkg_export_dir_text_field
+            id: export_dir_text_field
             hint_text: "apkg export dir"
             text: app.apkg_export_dir
-            size_hint_x: 0.8
-            on_text_validate: app.apkg_export_dir = self.text; toast("Saved change.",5)
+            size_hint_x: None
+            width: self.parent.width - export_dir_icon.width - self.parent.spacing[0]
+            on_focus: root.check_dir(self.text)
+
         MDFloatingActionButton:
+            id: export_dir_icon
             icon: "folder"
             on_press: toast("Not yet implemented.",5)
+
+        SeparatorWithHeading:
+            heading: "Current Template"
