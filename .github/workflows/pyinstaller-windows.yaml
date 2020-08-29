@@ -44,5 +44,11 @@ jobs:
         python-version: 3.7
         architecture: x64
 
-    - name: Push binary to data branch
-      run: python master/.ci/move_binary.py "master/acg/dist/windows/AnkiCardGen.exe" master data windows
+#    - name: debug
+#      run: ls master/acg/dist/linux
+
+    - name: zip
+      run: cd master/acg/dist/windows; zip -r AnkiCardGen.zip AnkiCardGen; cd -
+
+    - name: Push zipped app to data branch
+      run: python master/.ci/move_binary.py "master/acg/dist/windows/AnkiCardGen.zip" master data windows

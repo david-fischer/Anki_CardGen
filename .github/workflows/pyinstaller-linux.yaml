@@ -43,8 +43,8 @@ jobs:
         python-version: 3.7
         architecture: x64
 
-    - name: debug
-      run: ls master/acg/dist/linux
+#    - name: debug
+#      run: ls master/acg/dist/linux
 
     - name: zip
       run: cd master/acg/dist/linux; zip -r AnkiCardGen.zip AnkiCardGen; cd -
