@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-windows:
-    name: build for linux
+    name: build for windows
     runs-on: ubuntu-latest
 
     steps:
@@ -21,7 +21,7 @@ jobs:
         ref: master
 
     - name: fix requirements.txt #git is missing in wine
-      run: sed -i 's/git+https:\/\/github.com\/kivymd\/KivyMD.git\/kivymd/g' master/requirements.txt
+      run: sed -i 's/git+https:\/\/github.com\/kivymd\/KivyMD.git/kivymd/g' master/requirements.txt
 
     - name: debug-fix
       run: cat master/acg/requirements.txt
