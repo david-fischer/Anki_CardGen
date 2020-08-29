@@ -46,5 +46,8 @@ jobs:
     - name: debug
       run: ls master/acg/dist/linux
 
-    - name: Push binary to data branch
-      run: python master/.ci/move_binary.py "master/acg/dist/linux/AnkiCardGen" master data linux
+    - name: zip
+      run: zip -r master/acg/dist/linux/AnkiCardGen.zip master/acg/dist/linux/AnkiCardGen
+
+    - name: Push zipped app to data branch
+      run: python master/.ci/move_binary.py "master/acg/dist/linux/AnkiCardGen.zip" master data linux
