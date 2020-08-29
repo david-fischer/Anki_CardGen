@@ -71,7 +71,12 @@ You can install the [current version](https://github.com/david-fischer/Anki_Card
 
 ## 🚧 Installation
 
-* Setup new virtual environment
+* Setup new virtual environment with python 3.7, e.g. with conda
+
+```
+conda create -n "environment_name" python==3.7
+```
+
 * install application
 
 ```
