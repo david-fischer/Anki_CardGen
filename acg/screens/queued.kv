@@ -5,6 +5,13 @@ QueuedRoot:
     id: queued_root
     recycle_list: recycle_list
     speed_dial: speed_dial
+    right_action_items:
+        [\
+        ["download", self.queue_all],\
+        ["close", self.dequeue_all],\
+        ["filter", lambda *_: None],\
+        ["sort-variant", lambda *_: None],\
+        ]
 
     RecycleList:
         id: recycle_list
