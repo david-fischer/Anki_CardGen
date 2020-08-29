@@ -13,7 +13,7 @@ from kivymd import hooks_path as kivymd_hooks_path
 path = os.path.abspath(".")
 
 a = Analysis(
-    ["main.py"],
+    ["cli.py"],
     pathex=[path],
     hiddenimports=["pony.orm.dbproviders.sqlite", "templates", "lxml", "soupsieve"]
     + kivymd_hidden_imports,
