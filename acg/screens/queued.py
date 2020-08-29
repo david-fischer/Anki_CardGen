@@ -1,5 +1,5 @@
 """Contains the functions needed on the screen queue."""
-
+import os
 import threading
 from queue import Queue
 
@@ -64,6 +64,12 @@ class QueuedRoot(FloatLayout):
         for word, state in MDApp.get_running_app().word_state_dict.items():
             if state in ["queued", "loading"]:
                 self.queue_word(word)
+
+    def queue_all(self, *_):
+        """Placeholder-function."""
+
+    def dequeue_all(self, *_):
+        """Placeholder-function."""
 
     def _init_dialog(self):
         """Initialize :attr:`dialog` as instance of :class:`custom_widgets.dialogs.CustomDialog`."""
@@ -225,8 +231,10 @@ class QueuedRoot(FloatLayout):
         ]
         self.dialog.open()
 
-    def open_file_manager(self, path="/", select_path=print, ext=None):
+    def open_file_manager(self, path=None, select_path=print, ext=None):
         """Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file."""
+        path = path or "."
+        path = os.path.abspath(path)
         if not self.file_manager:
             self.file_manager = MDFileManager()
         ext = ext or [".html"]
