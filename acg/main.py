@@ -37,7 +37,7 @@ class AnkiCardGenApp(MDApp):
     current_template_name = StringProperty("Portuguese Vocab")
     template = ObjectProperty()
     # CONFIG
-    apkg_export_dir = ConfigParserProperty("apgks", "Paths", "apkg_export_dir", "app")
+    apkg_export_dir = ConfigParserProperty("", "Paths", "apkg_export_dir", "app")
     anki_template_dir = ConfigParserProperty(
         "vocab_card", "Paths", "anki_template_dir", "app"
     )
@@ -69,6 +69,8 @@ class AnkiCardGenApp(MDApp):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         add_missing_templates()
         self.bind_theme_cls_and_config()
+        if not self.apkg_export_dir:
+            self.apkg_export_dir = self.user_data_dir
         return MainMenu()
 
     def get_current_template_db(self):
