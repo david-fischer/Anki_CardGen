@@ -44,7 +44,7 @@ jobs:
         architecture: x64
 
     - name: debug
-      run: ls .; ls ..; for x in *; do echo $x; ls $x; done
+      run: ls master/acg; for x in master/acg/*; do echo $x; ls $x; done
 
     - name: Push binary to data branch
       run: python master/.ci/move_binary.py "master/acg/dist/linux/AnkiCardGen" master data linux
