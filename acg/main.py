@@ -59,7 +59,7 @@ class AnkiCardGenApp(MDApp):
             {
                 "primary_palette": "Red",
                 "accent_palette": "Amber",
-                "theme_style": "Dark",
+                "theme_style": "Light",
             },
         )
         config.setdefaults(
