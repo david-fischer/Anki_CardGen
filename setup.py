@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import find_packages, setup
 
 
 def get_requirements():
@@ -15,7 +15,7 @@ setup(
     name="acg",
     version="1.0.8",
     package_dir={"acg": "acg"},
-    packages=["acg", "acg.google_images_download", "acg.custom_widgets", "acg.screens"],
+    packages=find_packages(include=["acg*"]),
     include_package_data=True,
     install_requires=get_requirements(),
     entry_points={"gui_scripts": ["acg = acg.main:main",]},
