@@ -8,9 +8,6 @@ on:
     branches: [ master ]
   workflow_dispatch:
 
-env:
-  GITHUB_REF:
-
 jobs:
   build-linux:
     name: build for linux
