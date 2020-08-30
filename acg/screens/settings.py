@@ -34,6 +34,7 @@ class SettingsRoot(BoxLayout):
 
         Then, set apkg_export_dir in app and the text-field accordingly.
         """
+        print(directory)
         if os.path.exists(directory):
             self.set_export_dir(directory)
             return
