@@ -5,6 +5,7 @@ import os
 import pydoc
 
 import certifi
+import toolz
 from kivy import platform
 from kivy.clock import mainthread
 from kivy.lang import Builder
@@ -17,6 +18,7 @@ from kivy.properties import (
 )
 from kivy.uix.modalview import ModalView
 from kivymd.app import MDApp
+from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.spinner import MDSpinner
 from pony.orm import db_session
 
@@ -46,7 +48,9 @@ class AnkiCardGenApp(MDApp):
     theme_style = ConfigParserProperty("Light", "Theme", "theme_style", "app")
 
     busy = BooleanProperty(False)
-    busy_modal = ObjectProperty(None)  #
+    busy_modal = ObjectProperty(None)
+
+    file_manager = ObjectProperty(None)
 
     def get_anki_template_dir(self):
         """Return absolute path where html-, css- and js-files for anki-card is located."""
@@ -69,6 +73,7 @@ class AnkiCardGenApp(MDApp):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         add_missing_templates()
         self.bind_theme_cls_and_config()
+        self.file_manager = MDFileManager()
         if not self.apkg_export_dir:
             self.apkg_export_dir = self.user_data_dir
         return MainMenu()
@@ -117,6 +122,18 @@ class AnkiCardGenApp(MDApp):
             self.busy_modal.open()
         else:
             self.busy_modal.dismiss()
+
+    def open_file_manager(self, path=".", callback=print, ext=None, close_after=True):
+        """Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file."""
+        if close_after:
+            callback = toolz.functoolz.juxt(
+                callback, lambda *_: self.file_manager.close()
+            )
+        path = os.path.abspath(path)
+        ext = ext or ["*"]
+        self.file_manager.ext = ext
+        self.file_manager.select_path = callback
+        self.file_manager.show(path)
 
 
 def main():

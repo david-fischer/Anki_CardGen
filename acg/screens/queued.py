@@ -1,5 +1,4 @@
 """Contains the functions needed on the screen queue."""
-import os
 import threading
 from queue import Queue
 
@@ -7,7 +6,6 @@ from kivy.clock import Clock
 from kivy.properties import DictProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
-from kivymd.uix.filemanager import MDFileManager
 from pony.orm import db_session
 
 from custom_widgets.dialogs import CustomDialog, ReplacementContent
@@ -52,7 +50,6 @@ class QueuedRoot(FloatLayout):
     """: : :class:`~kivy.properties.DictProperty` of the form ``{"icon_name":"Help text"}``."""
     dialog = ObjectProperty()
     """:class:`~kivy.properties.ObjectProperty`. Instance of :class:`custom_widgets.dialogs.CustomDialog`."""
-    file_manager = ObjectProperty(None)
 
     def __init__(self, **kwargs):
         super(QueuedRoot, self).__init__(**kwargs)
@@ -188,8 +185,8 @@ class QueuedRoot(FloatLayout):
         import_function = start_thread(  # pylint: disable=no-value-for-parameter
             self.import_from, source=source, name="import_thread"
         )
-        self.open_file_manager(
-            ext=extensions, path="..", select_path=import_function,
+        MDApp.get_running_app().open_file_manager(
+            ext=extensions, path="..", callback=import_function,
         )
 
     def import_from(self, path, source="kindle"):
@@ -219,7 +216,6 @@ class QueuedRoot(FloatLayout):
             {"word": word, "lemma": lemma} for word, lemma in new_pairs if word != lemma
         ]
         unchanged_words = [word for word, lemma in new_pairs if word == lemma]
-        print(unchanged_words, suggested_replacements)
         self.show_replacements_dialog(replacements=suggested_replacements)
         for word in unchanged_words:
             self.add_waiting(word)
@@ -229,15 +225,5 @@ class QueuedRoot(FloatLayout):
         self.dialog.content_cls.data = [
             {**rep_dict, "height": 45} for rep_dict in replacements
         ]
+        print(self.dialog.content_cls.data)
         self.dialog.open()
-
-    def open_file_manager(self, path=None, select_path=print, ext=None):
-        """Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file."""
-        path = path or "."
-        path = os.path.abspath(path)
-        if not self.file_manager:
-            self.file_manager = MDFileManager()
-        ext = ext or [".html"]
-        self.file_manager.ext = ext
-        self.file_manager.select_path = select_path
-        self.file_manager.show(path)
