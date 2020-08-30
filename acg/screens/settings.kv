@@ -32,7 +32,11 @@ SettingsRoot:
         MDFloatingActionButton:
             id: export_dir_icon
             icon: "folder"
-            on_press: toast("Not yet implemented.",5)
+            on_press:
+                app.open_file_manager(
+                path=export_dir_text_field.text,
+                callback=root.check_dir
+                )
 
         SeparatorWithHeading:
             heading: "Current Template"
