@@ -38,16 +38,14 @@ class SettingsRoot(BoxLayout):
         if os.path.exists(directory):
             self.set_export_dir(directory)
             return
-        base = os.path.dirname(directory)
-        if os.path.exists(base):
-            self.snackbar = Snackbar(
-                text=f"{directory}   does not exists. Create?",
-                button_text="CREATE",
-                button_callback=lambda *_: self.set_export_dir(directory),
-                button_color=MDApp.get_running_app().theme_cls.primary_color,
-                duration=10,
-            )
-            self.snackbar.show()
+        self.snackbar = Snackbar(
+            text=f"{directory}   does not exists. Create?",
+            button_text="CREATE",
+            button_callback=lambda *_: self.set_export_dir(directory),
+            button_color=MDApp.get_running_app().theme_cls.primary_color,
+            duration=10,
+        )
+        self.snackbar.show()
         self.ids.export_dir_text_field.text = MDApp.get_running_app().apkg_export_dir
 
     def set_export_dir(self, directory):
