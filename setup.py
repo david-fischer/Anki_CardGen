@@ -13,7 +13,7 @@ def get_requirements():
 
 setup(
     name="acg",
-    version="1.0.8",
+    version="1.0.9",
     package_dir={"acg": "acg"},
     packages=["acg", "acg.google_images_download", "acg.custom_widgets", "acg.screens"],
     include_package_data=True,
