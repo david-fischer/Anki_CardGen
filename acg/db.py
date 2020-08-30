@@ -34,16 +34,11 @@ TEMPLATE_DICTS = [
 ]
 
 
-# print(os.listdir(), os.path.exists("db.sqlite"))
-# print(os.getcwd())
 db = Database()
-# try:
-print(os.path.join(MAIN_DIR, "db.sqlite"))
+db_path = os.path.join(MAIN_DIR, "db.sqlite")
 db.bind(
-    provider="sqlite", filename=os.path.join(MAIN_DIR, "db.sqlite"), create_db=True,
+    provider="sqlite", filename=db_path, create_db=not os.path.exists(db_path),
 )
-# except dbapiprovider.OperationalError:
-#     db.bind(provider="sqlite", filename="db.sqlite", create_db=True)
 
 
 class Template(db.Entity):
