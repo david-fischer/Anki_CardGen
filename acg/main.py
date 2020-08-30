@@ -24,7 +24,7 @@ from pony.orm import db_session
 
 from custom_widgets.main_menu import MainMenu
 from db import add_missing_templates, get_template
-from paths import ANKI_DIR, CUSTOM_WIDGET_DIR
+from paths import ANKI_DIR, CUSTOM_WIDGET_DIR, ROOT_DATA_DIR
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
@@ -38,8 +38,10 @@ class AnkiCardGenApp(MDApp):
     # Data
     current_template_name = StringProperty("Portuguese Vocab")
     template = ObjectProperty()
-    # CONFIG
-    apkg_export_dir = ConfigParserProperty("", "Paths", "apkg_export_dir", "app")
+
+    # Config
+    apkg_export_dir = ConfigParserProperty("", "Paths", "apkg_export_dir", "app",)
+    import_dir = ConfigParserProperty("", "Paths", "import_dir", "app")
     anki_template_dir = ConfigParserProperty(
         "vocab_card", "Paths", "anki_template_dir", "app"
     )
@@ -58,7 +60,14 @@ class AnkiCardGenApp(MDApp):
 
     def build_config(self, config):  # pylint: disable=no-self-use
         """If no config-file exists, sets the default."""
-        config.setdefaults("Theme", {})
+        config.setdefaults(
+            "Theme",
+            {
+                "primary_palette": "Red",
+                "accent_palette": "Amber",
+                "theme_style": "Light",
+            },
+        )
         config.setdefaults("Paths", {})
 
     def bind_theme_cls_and_config(self):
@@ -74,8 +83,11 @@ class AnkiCardGenApp(MDApp):
         add_missing_templates()
         self.bind_theme_cls_and_config()
         self.file_manager = MDFileManager()
-        if not self.apkg_export_dir:
-            self.apkg_export_dir = self.user_data_dir
+        self.apkg_export_dir = self.apkg_export_dir or os.path.join(
+            ROOT_DATA_DIR, "ankicardgen"
+        )
+        self.import_dir = self.import_dir or os.path.abspath(ROOT_DATA_DIR)
+        os.makedirs(self.apkg_export_dir, exist_ok=True)
         return MainMenu()
 
     def get_current_template_db(self):
@@ -107,6 +119,11 @@ class AnkiCardGenApp(MDApp):
         """Set up template on start of app."""
         super(AnkiCardGenApp, self).on_start()
         self.setup_template()
+        self.request_permissions()
+
+    def on_pause(self):  # pylint: disable=no-self-use
+        """Enable coming back to app."""
+        return True
 
     @mainthread
     def on_busy(self, *_):
@@ -135,18 +152,22 @@ class AnkiCardGenApp(MDApp):
         self.file_manager.select_path = callback
         self.file_manager.show(path)
 
+    @staticmethod
+    def request_permissions():
+        """Request storage permissions on android."""
+        if platform == "android":
+            from android.permissions import (  # pylint: disable=import-outside-toplevel
+                request_permissions,
+                Permission,
+            )
+
+            request_permissions(
+                [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
+            )
+
 
 def main():
     """Main-function."""
-    if platform == "android":
-        from android.permissions import (  # pylint: disable=import-outside-toplevel
-            request_permissions,
-            Permission,
-        )
-
-        request_permissions(
-            [Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE]
-        )
     AnkiCardGenApp().run()
 
 
