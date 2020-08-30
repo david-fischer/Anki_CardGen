@@ -2,7 +2,7 @@
 
 import os
 
-MAIN_DIR = os.path.dirname(__file__)
+MAIN_DIR = os.path.abspath(os.path.dirname(__file__))
 ASSETS_DIR = os.path.join(MAIN_DIR, "assets")
 ANKI_DIR = os.path.join(MAIN_DIR, "anki-templates")
 SCREEN_DIR = os.path.join(MAIN_DIR, "screens")
