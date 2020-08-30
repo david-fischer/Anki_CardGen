@@ -185,8 +185,9 @@ class QueuedRoot(FloatLayout):
         import_function = start_thread(  # pylint: disable=no-value-for-parameter
             self.import_from, source=source, name="import_thread"
         )
-        MDApp.get_running_app().open_file_manager(
-            ext=extensions, path="..", callback=import_function,
+        app = MDApp.get_running_app()
+        app.open_file_manager(
+            ext=extensions, path=app.import_dir, callback=import_function,
         )
 
     def import_from(self, path, source="kindle"):
