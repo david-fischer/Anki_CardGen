@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.main &mdash; Anki Card Gen 1.0.6 documentation</title>
+  <title>acg.main &mdash; Anki Card Gen 1.0.8 documentation</title>
 
 
 
@@ -153,34 +153,34 @@
 
   <h1>Source code for acg.main</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Contains the Main App :class:`AnkiCardGenApp`.&quot;&quot;&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.6&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.8&quot;</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pydoc</span>
 
 <span class="kn">import</span> <span class="nn">certifi</span>
+<span class="kn">import</span> <span class="nn">toolz</span>
 <span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">platform</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">mainthread</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AliasProperty</span><span class="p">,</span>
     <span class="n">BooleanProperty</span><span class="p">,</span>
-    <span class="n">DictProperty</span><span class="p">,</span>
+    <span class="n">ConfigParserProperty</span><span class="p">,</span>
     <span class="n">ObjectProperty</span><span class="p">,</span>
     <span class="n">StringProperty</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.modalview</span> <span class="kn">import</span> <span class="n">ModalView</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
-<span class="kn">from</span> <span class="nn">kivymd.theming</span> <span class="kn">import</span> <span class="n">ThemeManager</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.filemanager</span> <span class="kn">import</span> <span class="n">MDFileManager</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.spinner</span> <span class="kn">import</span> <span class="n">MDSpinner</span>
 <span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
 
 <span class="kn">from</span> <span class="nn">custom_widgets.main_menu</span> <span class="kn">import</span> <span class="n">MainMenu</span>
 <span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">add_missing_templates</span><span class="p">,</span> <span class="n">get_template</span>
-<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">CUSTOM_WIDGET_DIR</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">smart_loader</span><span class="p">,</span> <span class="n">smart_saver</span>
+<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">ANKI_DIR</span><span class="p">,</span> <span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="n">ROOT_DATA_DIR</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SSL_CERT_FILE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">()</span>
-
 
 <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;main_menu.kv&quot;</span><span class="p">))</span>
 <span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;fixes.kv&quot;</span><span class="p">))</span>
@@ -190,13 +190,27 @@
     <span class="sd">&quot;&quot;&quot;Main App.&quot;&quot;&quot;</span>
 
     <span class="c1"># Data</span>
-<div class="viewcode-block" id="AnkiCardGenApp.word_state_dict"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.word_state_dict">[docs]</a>    <span class="n">word_state_dict</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">({})</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty` containing all words that could not be processed by Queue.&quot;&quot;&quot;</span>
     <span class="n">current_template_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;Portuguese Vocab&quot;</span><span class="p">)</span>
     <span class="n">template</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
-    <span class="n">apkg_export_dir</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;../app_data/apkgs&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Config</span>
+    <span class="n">apkg_export_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;apkg_export_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">,)</span>
+    <span class="n">import_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;import_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">anki_template_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span>
+        <span class="s2">&quot;vocab_card&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;anki_template_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span>
+    <span class="p">)</span>
+    <span class="n">primary_palette</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;Red&quot;</span><span class="p">,</span> <span class="s2">&quot;Theme&quot;</span><span class="p">,</span> <span class="s2">&quot;primary_palette&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">accent_palette</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;Amber&quot;</span><span class="p">,</span> <span class="s2">&quot;Theme&quot;</span><span class="p">,</span> <span class="s2">&quot;accent_palette&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">theme_style</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;Light&quot;</span><span class="p">,</span> <span class="s2">&quot;Theme&quot;</span><span class="p">,</span> <span class="s2">&quot;theme_style&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+
     <span class="n">busy</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">busy_modal</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+    <span class="n">file_manager</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AnkiCardGenApp.get_anki_template_dir"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_anki_template_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_anki_template_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return absolute path where html-, css- and js-files for anki-card is located.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ANKI_DIR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anki_template_dir</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.build_config"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.build_config">[docs]</a>    <span class="k">def</span> <span class="nf">build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
         <span class="sd">&quot;&quot;&quot;If no config-file exists, sets the default.&quot;&quot;&quot;</span>
@@ -205,47 +219,45 @@
             <span class="p">{</span>
                 <span class="s2">&quot;primary_palette&quot;</span><span class="p">:</span> <span class="s2">&quot;Red&quot;</span><span class="p">,</span>
                 <span class="s2">&quot;accent_palette&quot;</span><span class="p">:</span> <span class="s2">&quot;Amber&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;theme_style&quot;</span><span class="p">:</span> <span class="s2">&quot;Dark&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;theme_style&quot;</span><span class="p">:</span> <span class="s2">&quot;Light&quot;</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">)</span>
-        <span class="n">config</span><span class="o">.</span><span class="n">setdefaults</span><span class="p">(</span>
-            <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="p">{},</span></div>
-        <span class="p">)</span>
-        <span class="c1"># os.makedirs(&quot;../app_data/&quot;, exist_ok=True)</span>
-        <span class="c1"># os.makedirs(&quot;../app_data/apkgs/&quot;, exist_ok=True)</span>
+        <span class="n">config</span><span class="o">.</span><span class="n">setdefaults</span><span class="p">(</span><span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="p">{})</span></div>
+
+<div class="viewcode-block" id="AnkiCardGenApp.bind_theme_cls_and_config"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.bind_theme_cls_and_config">[docs]</a>    <span class="k">def</span> <span class="nf">bind_theme_cls_and_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Bind :attr:`theme_cls` and the corresponding :class:`~kivy.properties.ConfigParserProperties`.&quot;&quot;&quot;</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">})</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.build"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up App and return :class:`custom_widgets.MainMenu` as root widget.&quot;&quot;&quot;</span>
-        <span class="c1"># Config and Theme</span>
         <span class="n">add_missing_templates</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span> <span class="o">=</span> <span class="n">ThemeManager</span><span class="p">(</span>  <span class="c1"># pylint: disable=attribute-defined-outside-init</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind_theme_cls_and_config</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span> <span class="o">=</span> <span class="n">MDFileManager</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apkg_export_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apkg_export_dir</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="n">ROOT_DATA_DIR</span><span class="p">,</span> <span class="s2">&quot;ankicardgen&quot;</span>
         <span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">word_state_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_word_states</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">word_state_dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">import_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">import_dir</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ROOT_DATA_DIR</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">MainMenu</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="AnkiCardGenApp.save_theme"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.save_theme">[docs]</a>    <span class="k">def</span> <span class="nf">save_theme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Save current theme to config file.&quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">]:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Theme&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">()</span></div>
-
-<div class="viewcode-block" id="AnkiCardGenApp.load_by_config_key"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.load_by_config_key">[docs]</a>    <span class="k">def</span> <span class="nf">load_by_config_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Use :func:`utils.smart_loader` to load attribute from path in :attr:`config` [attribute].&quot;&quot;&quot;</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Paths&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
-        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">smart_loader</span><span class="p">(</span><span class="n">path</span><span class="p">))</span></div>
-
-<div class="viewcode-block" id="AnkiCardGenApp.save_by_config_key"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.save_by_config_key">[docs]</a>    <span class="k">def</span> <span class="nf">save_by_config_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Use :func:`utils.smart_saver` to save current attribute to path in :attr:`config` [attribute].&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;Paths&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span>
-        <span class="n">smart_saver</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.get_current_template_db"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_current_template_db">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_template_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return data-base object for :attr:`current_template_name`.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_template_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AnkiCardGenApp.get_word_states"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_word_states">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return dict of word-states for current template from data-base.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span>
+                <span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">card</span><span class="o">.</span><span class="n">state</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span><span class="o">.</span><span class="n">cards</span></div>
+            <span class="p">}</span>
+
+    <span class="n">word_state_dict</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
+        <span class="n">getter</span><span class="o">=</span><span class="n">get_word_states</span><span class="p">,</span> <span class="n">setter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;current_template_name&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
 
 <div class="viewcode-block" id="AnkiCardGenApp.setup_template"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.setup_template">[docs]</a>    <span class="k">def</span> <span class="nf">setup_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize :class:`templates.Template` and adds it to the single_word screen.&quot;&quot;&quot;</span>
@@ -260,14 +272,12 @@
 <div class="viewcode-block" id="AnkiCardGenApp.on_start"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.on_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up template on start of app.&quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">AnkiCardGenApp</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_start</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_template</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_template</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">request_permissions</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AnkiCardGenApp.get_word_states"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_word_states">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return dict of word-states for current template from data-base.&quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
-            <span class="k">return</span> <span class="p">{</span>
-                <span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">card</span><span class="o">.</span><span class="n">state</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span><span class="o">.</span><span class="n">cards</span></div>
-            <span class="p">}</span>
+<div class="viewcode-block" id="AnkiCardGenApp.on_pause"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.on_pause">[docs]</a>    <span class="k">def</span> <span class="nf">on_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
+        <span class="sd">&quot;&quot;&quot;Enable coming back to app.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
 
     <span class="nd">@mainthread</span>
 <div class="viewcode-block" id="AnkiCardGenApp.on_busy"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.on_busy">[docs]</a>    <span class="k">def</span> <span class="nf">on_busy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
@@ -282,20 +292,36 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">busy</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div></div>
+            <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AnkiCardGenApp.open_file_manager"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.open_file_manager">[docs]</a>    <span class="k">def</span> <span class="nf">open_file_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">close_after</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">close_after</span><span class="p">:</span>
+            <span class="n">callback</span> <span class="o">=</span> <span class="n">toolz</span><span class="o">.</span><span class="n">functoolz</span><span class="o">.</span><span class="n">juxt</span><span class="p">(</span>
+                <span class="n">callback</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="p">)</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">select_path</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="AnkiCardGenApp.request_permissions"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.request_permissions">[docs]</a>    <span class="k">def</span> <span class="nf">request_permissions</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Request storage permissions on android.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;android&quot;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">android.permissions</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
+                <span class="n">request_permissions</span><span class="p">,</span>
+                <span class="n">Permission</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">request_permissions</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">Permission</span><span class="o">.</span><span class="n">READ_EXTERNAL_STORAGE</span><span class="p">,</span> <span class="n">Permission</span><span class="o">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">]</span></div></div>
+            <span class="p">)</span>
 
 
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../main.html#acg.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
     <span class="sd">&quot;&quot;&quot;Main-function.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;android&quot;</span><span class="p">:</span>
-        <span class="kn">from</span> <span class="nn">android.permissions</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
-            <span class="n">request_permissions</span><span class="p">,</span>
-            <span class="n">Permission</span><span class="p">,</span>
-        <span class="p">)</span>
-
-        <span class="n">request_permissions</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">Permission</span><span class="o">.</span><span class="n">READ_EXTERNAL_STORAGE</span><span class="p">,</span> <span class="n">Permission</span><span class="o">.</span><span class="n">WRITE_EXTERNAL_STORAGE</span><span class="p">]</span>
-        <span class="p">)</span>
     <span class="n">AnkiCardGenApp</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span></div>
 
 
