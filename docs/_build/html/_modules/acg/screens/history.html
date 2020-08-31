@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.screens.history &mdash; Anki Card Gen 1.0.6 documentation</title>
+  <title>acg.screens.history &mdash; Anki Card Gen 1.0.8 documentation</title>
 
 
 
@@ -153,6 +153,8 @@
 
   <h1>Source code for acg.screens.history</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Implements :class:`HistoryMain`, the root widget of the history screen.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
 <span class="kn">from</span> <span class="nn">bidict</span> <span class="kn">import</span> <span class="n">bidict</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span>
@@ -203,14 +205,15 @@
             <span class="n">toast</span><span class="p">(</span><span class="s2">&quot;NOT IMPLEMENTED YET.&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
             <span class="k">return</span> <span class="kc">False</span>
         <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
-            <span class="n">current_template</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span>
+            <span class="n">app</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span>
+            <span class="n">current_template</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span>
             <span class="n">cards</span> <span class="o">=</span> <span class="n">current_template</span><span class="o">.</span><span class="n">get_cards_by_selector</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">states</span><span class="p">)</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">cards</span><span class="p">:</span>
                 <span class="n">toast</span><span class="p">(</span><span class="s2">&quot;Empty Selection. Could not export cards.&quot;</span><span class="p">)</span>
                 <span class="k">return</span> <span class="kc">False</span>
-            <span class="n">export_dir</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">apkg_export_dir</span>
-            <span class="n">export_cards</span><span class="p">(</span><span class="n">cards</span><span class="p">,</span> <span class="n">export_dir</span><span class="p">)</span>
-        <span class="n">toast</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exported cards to </span><span class="si">{</span><span class="n">export_dir</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="p">))</span>
+            <span class="n">export_cards</span><span class="p">(</span><span class="n">cards</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">get_anki_template_dir</span><span class="p">())</span>
+        <span class="n">toast</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exported cards to </span><span class="si">{</span><span class="n">app</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">True</span></div></div>
 </pre></div>
 

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.db &mdash; Anki Card Gen 1.0.6 documentation</title>
+  <title>acg.db &mdash; Anki Card Gen 1.0.8 documentation</title>
 
 
 
@@ -166,7 +166,6 @@
     <span class="n">buffer</span><span class="p">,</span>
     <span class="n">Database</span><span class="p">,</span>
     <span class="n">db_session</span><span class="p">,</span>
-    <span class="n">dbapiprovider</span><span class="p">,</span>
     <span class="n">Json</span><span class="p">,</span>
     <span class="n">Optional</span><span class="p">,</span>
     <span class="n">PrimaryKey</span><span class="p">,</span>
@@ -176,6 +175,7 @@
 <span class="p">)</span>
 
 <span class="kn">from</span> <span class="nn">generate_anki_card</span> <span class="kn">import</span> <span class="n">AnkiObject</span>
+<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">ANKI_DIR</span><span class="p">,</span> <span class="n">MAIN_DIR</span>
 <span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">CD</span><span class="p">,</span> <span class="n">now_string</span>
 
 <span class="n">TEMPLATE_DICTS</span> <span class="o">=</span> <span class="p">[</span>
@@ -188,17 +188,11 @@
 <span class="p">]</span>
 
 
-<span class="c1"># print(os.listdir(), os.path.exists(&quot;db.sqlite&quot;))</span>
-<span class="c1"># print(os.getcwd())</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">Database</span><span class="p">()</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="n">db</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
-        <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span>
-        <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;/data/data/org.ankicardgen.ankicardgenapp/files/app/db.sqlite&quot;</span><span class="p">,</span>
-        <span class="n">create_db</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
-<span class="k">except</span> <span class="n">dbapiprovider</span><span class="o">.</span><span class="n">OperationalError</span><span class="p">:</span>
-    <span class="n">db</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;db.sqlite&quot;</span><span class="p">,</span> <span class="n">create_db</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">db_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">MAIN_DIR</span><span class="p">,</span> <span class="s2">&quot;db.sqlite&quot;</span><span class="p">)</span>
+<span class="n">db</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+    <span class="n">provider</span><span class="o">=</span><span class="s2">&quot;sqlite&quot;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">db_path</span><span class="p">,</span> <span class="n">create_db</span><span class="o">=</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">db_path</span><span class="p">),</span>
+<span class="p">)</span>
 
 
 <div class="viewcode-block" id="Template"><a class="viewcode-back" href="../../db.html#acg.db.Template">[docs]</a><span class="k">class</span> <span class="nc">Template</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">Entity</span><span class="p">):</span>
@@ -346,9 +340,9 @@
     <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">card_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">card_list</span> <span class="k">else</span> <span class="kc">None</span></div>
 
 
-<div class="viewcode-block" id="export_cards"><a class="viewcode-back" href="../../db.html#acg.db.export_cards">[docs]</a><span class="k">def</span> <span class="nf">export_cards</span><span class="p">(</span><span class="n">card_list</span><span class="p">,</span> <span class="n">out_folder</span><span class="p">):</span>
+<div class="viewcode-block" id="export_cards"><a class="viewcode-back" href="../../db.html#acg.db.export_cards">[docs]</a><span class="k">def</span> <span class="nf">export_cards</span><span class="p">(</span><span class="n">card_list</span><span class="p">,</span> <span class="n">out_folder</span><span class="p">,</span> <span class="n">anki_template_dir</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Export cards to &lt;template_name&gt;_&lt;time-stamp&gt;.apkg file in out_folder.&quot;&quot;&quot;</span>
-    <span class="n">anki_obj</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="s2">&quot;anki&quot;</span><span class="p">)</span>
+    <span class="n">anki_obj</span> <span class="o">=</span> <span class="n">AnkiObject</span><span class="p">(</span><span class="n">root_dir</span><span class="o">=</span><span class="n">anki_template_dir</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">card_list</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Empty list.&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="kc">False</span>
@@ -404,7 +398,9 @@
     <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
         <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;Portuguese Vocab&quot;</span><span class="p">)</span>
         <span class="n">cards</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">template</span><span class="o">.</span><span class="n">cards</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">state</span> <span class="o">==</span> <span class="p">(</span><span class="s2">&quot;done&quot;</span> <span class="ow">or</span> <span class="s2">&quot;exported&quot;</span><span class="p">))</span>
-        <span class="n">export_cards</span><span class="p">(</span><span class="n">cards</span><span class="p">,</span> <span class="s2">&quot;/home/david/Schreibtisch/&quot;</span><span class="p">)</span>
+        <span class="n">export_cards</span><span class="p">(</span>
+            <span class="n">cards</span><span class="p">,</span> <span class="s2">&quot;/home/david/Schreibtisch/&quot;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ANKI_DIR</span><span class="p">,</span> <span class="s2">&quot;vocab_card&quot;</span><span class="p">)</span>
+        <span class="p">)</span>
 </pre></div>
 
            </div>
