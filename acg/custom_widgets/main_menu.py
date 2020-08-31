@@ -180,7 +180,7 @@ class MainMenu(StackLayout):
 
     @staticmethod
     def get_right_action_items(screen):
-        """Return ``right_action_items`` attribute of ``screen``s root widget if present. Else return empty list."""
+        r"""Return ``right_action_items`` attribute of ``screen``\ s root widget if present. Else return empty list."""
         try:
             return screen.children[0].right_action_items
         except (KeyError, AttributeError, IndexError):

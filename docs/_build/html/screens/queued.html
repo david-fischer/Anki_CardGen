@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Queue Screen &mdash; Anki Card Gen 1.0.6 documentation</title>
+  <title>Queue Screen &mdash; Anki Card Gen 1.0.8 documentation</title>
 
 
 
@@ -102,6 +102,9 @@
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.click_on_item">click_on_item</a></li>
 </ul>
 <ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.dequeue_all">dequeue_all</a></li>
+</ul>
+<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.dequeue_word">dequeue_word</a></li>
 </ul>
 <ul>
@@ -126,13 +129,13 @@
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.is_queued">is_queued</a></li>
 </ul>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.open_file_manager">open_file_manager</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.pause_downloading">pause_downloading</a></li>
 </ul>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.queue">queue</a></li>
+</ul>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.queue_all">queue_all</a></li>
 </ul>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.queued.QueuedRoot.queue_word">queue_word</a></li>
@@ -266,6 +269,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt id="acg.screens.queued.QueuedRoot.dequeue_all">
+<code class="sig-name descname">dequeue_all</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/queued.html#QueuedRoot.dequeue_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.queued.QueuedRoot.dequeue_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="acg.screens.queued.QueuedRoot.dequeue_word">
 <code class="sig-name descname">dequeue_word</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/queued.html#QueuedRoot.dequeue_word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.queued.QueuedRoot.dequeue_word" title="Permalink to this definition">¶</a></dt>
 <dd><p>Change state to <code class="docutils literal notranslate"><span class="pre">&quot;waiting&quot;</span></code> and adds <code class="docutils literal notranslate"><span class="pre">word</span></code> to <a class="reference internal" href="#acg.screens.queued.QueuedRoot.stale" title="acg.screens.queued.QueuedRoot.stale"><code class="xref py py-attr docutils literal notranslate"><span class="pre">stale</span></code></a> so it will be skipped in <a class="reference internal" href="#acg.screens.queued.QueuedRoot.queue" title="acg.screens.queued.QueuedRoot.queue"><code class="xref py py-attr docutils literal notranslate"><span class="pre">queue</span></code></a>.</p>
@@ -323,12 +332,6 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="acg.screens.queued.QueuedRoot.open_file_manager">
-<code class="sig-name descname">open_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'/'</span></em>, <em class="sig-param"><span class="n">select_path</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/queued.html#QueuedRoot.open_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.queued.QueuedRoot.open_file_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open file manager at <code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code> and calls <code class="xref py py-attr docutils literal notranslate"><span class="pre">select_path</span></code> with path of selected file.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt id="acg.screens.queued.QueuedRoot.pause_downloading">
 <code class="sig-name descname">pause_downloading</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/queued.html#QueuedRoot.pause_downloading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.queued.QueuedRoot.pause_downloading" title="Permalink to this definition">¶</a></dt>
 <dd><p>Empty the queue. Worker stop after finishing current task.</p>
@@ -338,6 +341,12 @@
 <dt id="acg.screens.queued.QueuedRoot.queue">
 <code class="sig-name descname">queue</code><a class="reference internal" href="../_modules/acg/screens/queued.html#QueuedRoot.queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.queued.QueuedRoot.queue" title="Permalink to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="#acg.screens.queued.CheckableQueue" title="acg.screens.queued.CheckableQueue"><code class="xref py py-class docutils literal notranslate"><span class="pre">CheckableQueue</span></code></a> object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.queued.QueuedRoot.queue_all">
+<code class="sig-name descname">queue_all</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/queued.html#QueuedRoot.queue_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.queued.QueuedRoot.queue_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
 </dd></dl>
 
 <dl class="py method">

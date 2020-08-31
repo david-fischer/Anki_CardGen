@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.custom_widgets.main_menu &mdash; Anki Card Gen 1.0.6 documentation</title>
+  <title>acg.custom_widgets.main_menu &mdash; Anki Card Gen 1.0.8 documentation</title>
 
 
 
@@ -330,7 +330,15 @@
 
 <div class="viewcode-block" id="MainMenu.get_screen_names"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_screen_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return screen names.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">screen</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">]</span></div></div>
+        <span class="k">return</span> <span class="p">[</span><span class="n">screen</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">]</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="MainMenu.get_right_action_items"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_right_action_items">[docs]</a>    <span class="k">def</span> <span class="nf">get_right_action_items</span><span class="p">(</span><span class="n">screen</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return ``right_action_items`` attribute of ``screen``\ s root widget if present. Else return empty list.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">screen</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">right_action_items</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span></div></div>
 
 
 <div class="viewcode-block" id="KvScreen"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen">[docs]</a><span class="k">class</span> <span class="nc">KvScreen</span><span class="p">(</span><span class="n">Screen</span><span class="p">):</span>
