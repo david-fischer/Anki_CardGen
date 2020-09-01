@@ -50,4 +50,4 @@ jobs:
       run: cd master/acg/dist/linux; zip -r AnkiCardGen.zip AnkiCardGen; cd -
 
     - name: Push zipped app to data branch
-      run: python master/.ci/move_binary.py "master/acg/dist/linux/AnkiCardGen.zip" master data linux
+      run: python master/.utils/move_binary.py "master/acg/dist/linux/AnkiCardGen.zip" master data linux

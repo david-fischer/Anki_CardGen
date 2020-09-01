@@ -18,7 +18,7 @@ repos:
 #        name: pylint
 #        entry: pylint
 #        language: system
-        args: [--rcfile=.pre-commit/.pylintrc]
+        args: [--rcfile=./.pylintrc]
         files: acg
         types: [python]
         exclude: (google_images_download|__init__.py)
@@ -37,19 +37,19 @@ repos:
         verbose: True
         exclude: (google_images_download|_build)
         types: [text]
-        args: [-q, "4",-D, -, -D, .pre-commit/dictionary.txt, -H]
+        args: [-q, "4",-D, -, -D, .codespell_dict.txt, -H]
   - repo: local
     hooks:
       - id: take_screenshots
         name: screenshots
-        entry: .pre-commit/screenshots.py
+        entry: .utils/screenshots.py
         stages: [push,merge-commit]
         language: system
         pass_filenames: False
         always_run: True
       - id: render_readme
         name: render_readme.py
-        entry: .pre-commit/render_readme.py
+        entry: .utils/render_readme.py
         language: system
         stages: [commit]
         always_run: True
