@@ -19,8 +19,32 @@ Currently supported languages:
 * **Brazilian Portuguese**
 
 ### Screenshots
+<!-- jinja-block screenshots
+$ for file in img_files
+$ if loop.index ==4
+{{ comment_tag }}
 
-<img src="screenshots/0-nav-drawer-open.png" width=270>&nbsp;<img src="screenshots/1-word.png" width=270>&nbsp;<img src="screenshots/2-word.png" width=270>&nbsp;<!--  -->
+<details>
+<summary>More screenshots</summary>
+$ endif
+<img src="{{ file }}" width=270>&nbsp;{#- this comment removes whitespace (because of the - sign) #}
+$ if loop.last and loop.length >=4
+</details>
+$ endif
+$ endfor
+
+<details>
+<summary>Example Cards</summary>
+$for word in words
+<h3>{{ word.name }}</h3>
+$for side in word.sides
+    <img src="{{ side }}" width=270>
+$ endfor
+$ endfor
+</details>
+jinja-block screenshots-->
+<!-- jinja-out screenshots start-->
+<img src="screenshots/0-nav-drawer-open.png" width=270>&nbsp;<img src="screenshots/1-word.png" width=270>&nbsp;<img src="screenshots/2-word.png" width=270>&nbsp;<!-- -->
 
 <details>
 <summary>More screenshots</summary>
@@ -40,7 +64,7 @@ Currently supported languages:
     <img src="screenshots/convite/meaning-pt_front.png" width=270>
     <img src="screenshots/convite/pt-meaning_front.png" width=270>
 </details>
-
+<!-- jinja-out screenshots end-->
 
 ## ❓ About
 
