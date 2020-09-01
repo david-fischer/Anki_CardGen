@@ -30,4 +30,4 @@ deploy:
 	buildozer android debug deploy run; adb logcat | grep python &
 
 run:
-	./run_and_unlock.sh
+	.utils/run_and_unlock.sh
