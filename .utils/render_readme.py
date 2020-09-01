@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """Script to render jinja-blocks in ``README.md``."""
 import glob
-import os
 import re
 
 import jinja2
-
 
 JINJA_BLOCK_REGEX = r"<!-- jinja-block (\w*)(.*)jinja-block \1-->"
 JINJA_OUT_REGEX = r"<!-- jinja-out %s.*-->"

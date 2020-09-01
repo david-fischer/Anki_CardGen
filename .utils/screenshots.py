@@ -169,7 +169,7 @@ def make_recordings():
     toast(f"Screenshot with F8.")
     for i, name in enumerate(names):
         print(i, name)
-        rec = Recorder(filename=f"../.pre-commit/recordings/{name}.kvi")
+        rec = Recorder(filename=f"recordings/{name}.kvi")
         stop_rec = partial(stop_recording, recorder=rec)
         Window.bind(on_keyboard=stop_rec)
         rec.record = True
@@ -216,9 +216,7 @@ def main(command_fn):
 
 
 def play():
-    play_fn = partial(
-        start_thread, partial(play_recordings, "../.pre-commit/recordings/")
-    )
+    play_fn = partial(start_thread, partial(play_recordings, "../.utils/recordings/"))
     main(play_fn)
 
 
