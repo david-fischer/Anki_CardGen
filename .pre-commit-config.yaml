@@ -40,13 +40,6 @@ repos:
         args: [-q, "4",-D, -, -D, .codespell_dict.txt, -H]
   - repo: local
     hooks:
-      - id: take_screenshots
-        name: screenshots
-        entry: .utils/screenshots.py
-        stages: [push,merge-commit]
-        language: system
-        pass_filenames: False
-        always_run: True
       - id: render_readme
         name: render_readme.py
         entry: .utils/render_readme.py
