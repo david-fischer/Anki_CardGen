@@ -39,7 +39,9 @@ class HtmlLoader:
         Returns:
             Set[str]: Field names.
         """
-        return set(re.findall("{{([^}]*)}}", self.string))
+        matches = re.findall("{{(type:|/|#)*([^}]*)}}", self.string)
+        fields = {match[1] for match in matches}
+        return fields
 
     def replace_includes_with_content(self):
         """
