@@ -192,7 +192,7 @@ def export_cards(card_list, out_folder, anki_template_dir):
     if not card_list:
         print("Empty list.")
         return False
-    folder_name = f"temp_{now_string()}"
+    folder_name = os.path.join(out_folder, f"temp_{now_string()}")
     os.makedirs(folder_name, exist_ok=True)
     for card in card_list:
         card.write_media_files_to_folder(folder_name)
