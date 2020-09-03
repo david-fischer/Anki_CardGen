@@ -22,7 +22,7 @@ from pony.orm import (
 
 from generate_anki_card import AnkiObject
 from paths import ANKI_DIR, MAIN_DIR
-from utils import CD, now_string
+from utils import CD, now_string, set_word_state
 
 TEMPLATE_DICTS = [
     {
@@ -98,6 +98,8 @@ class Card(db.Entity):
         if key == "fields":
             self.dt_generated = datetime.now()
             self.state = "done"
+        if key == "state":
+            set_word_state(self.name, self.state)
 
     @db_session
     def get_media(self, field_key):
