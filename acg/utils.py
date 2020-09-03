@@ -457,3 +457,8 @@ def app_busy(func):
         return run_in_thread(AppBusyContext()(func))(*args, **kwargs)
 
     return wrapper
+
+
+def set_word_state(word, state):
+    """Set entry in app.word_state_dict."""
+    MDApp.get_running_app().word_state_dict[word] = state
