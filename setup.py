@@ -13,7 +13,7 @@ def get_requirements():
 
 setup(
     name="acg",
-    version="1.0.8",
+    version="1.0.9",
     package_dir={"acg": "acg"},
     packages=find_packages(include=["acg*"]),
     include_package_data=True,
