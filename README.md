@@ -96,7 +96,8 @@ Furthermore you can find the packaged application as zip-files for [linux](https
 * Setup new virtual environment with python 3.7, e.g. with conda
 
 ```
-conda create -n "environment_name" python==3.7
+conda create -n "<environment_name>" python==3.7
+conda activate <environment_name>
 ```
 
 * install application

@@ -10,9 +10,9 @@ from kivy import platform
 from kivy.clock import mainthread
 from kivy.lang import Builder
 from kivy.properties import (
-    AliasProperty,
     BooleanProperty,
     ConfigParserProperty,
+    DictProperty,
     ObjectProperty,
     StringProperty,
 )
@@ -81,6 +81,7 @@ class AnkiCardGenApp(MDApp):
     def build(self):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         add_missing_templates()
+        self.word_state_dict = self.get_word_states()
         self.bind_theme_cls_and_config()
         self.file_manager = MDFileManager()
         self.apkg_export_dir = self.apkg_export_dir or os.path.join(
@@ -101,9 +102,9 @@ class AnkiCardGenApp(MDApp):
                 card.name: card.state for card in self.get_current_template_db().cards
             }
 
-    word_state_dict = AliasProperty(
-        getter=get_word_states, setter=None, bind=["current_template_name"]
-    )
+    word_state_dict = DictProperty()  # AliasProperty(
+    # getter=get_word_states, setter=None, bind=["current_template_name"]
+    # )
 
     def setup_template(self):
         """Initialize :class:`templates.Template` and adds it to the single_word screen."""
