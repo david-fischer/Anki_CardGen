@@ -121,13 +121,19 @@ python -m spacy download pt_core_news_sm
 
 ## 🔧 Usage
 
+### Following Installation
+
 After installation you should be able to start the app from the command line:
 ```
 acg
 ```
 
+### Following Quickstart
+
+If you downloaded the packaged application, unzip the folder, make `AnkiCardGen` (or `AnkiCardGen.exe`) executable and start it by double-click or from the terminal.
 
 ## 🚀 Contribute
+
 * So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
   Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
 * Unfortunately, I had problems building SpaCy (more precisely its dependency blis) on arm. I therefore removed it from the dependencies in buildozer.spec and built the code to work around it if the package is not present.
