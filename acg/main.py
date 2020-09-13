@@ -106,20 +106,24 @@ class AnkiCardGenApp(MDApp):
     # getter=get_word_states, setter=None, bind=["current_template_name"]
     # )
 
-    def setup_template(self):
-        """Initialize :class:`templates.Template` and adds it to the single_word screen."""
+    def new_template_instance(self):
+        """Return new instance of current template class."""
         template_cls_name = self.get_current_template_db().cls_name
         template_cls = pydoc.locate(template_cls_name)
-        self.template = template_cls()
+        return template_cls()
+
+    def init_template(self):
+        """Set :attr:`template` to new instance of class corresponding to :attr:`current_template_name`."""
+        self.template = self.new_template_instance()
 
     def on_current_template_name(self, *_):
         """Set up new template if :attr:`current_template_name` changes."""
-        self.setup_template()
+        self.init_template()
 
     def on_start(self):
         """Set up template on start of app."""
         super(AnkiCardGenApp, self).on_start()
-        self.setup_template()
+        self.init_template()
         self.request_permissions()
 
     def on_pause(self):  # pylint: disable=no-self-use
