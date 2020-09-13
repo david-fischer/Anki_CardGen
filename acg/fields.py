@@ -397,3 +397,4 @@ class ImgField(OptionsField, MediaField):
         """Remove urls that could not be loaded from :attr:`template`.data."""
         self.template.data[self.field_name].remove(child.source)
         self.update()
+        self.template.save_base_data_to_db()
