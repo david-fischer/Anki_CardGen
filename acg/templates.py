@@ -112,6 +112,11 @@ class Template(BoxLayout):
         """Write content to card."""
         self.current_card_db().fields = self.content
 
+    @db_session
+    def save_base_data_to_db(self):
+        """Save base_data to card."""
+        self.current_card_db().base_data = self.data
+
     @app_busy
     def get_results(self):
         """Get final results for the card fields as dictionary."""
@@ -143,9 +148,7 @@ class Template(BoxLayout):
             if current_card.base_data:
                 self.data = current_card.base_data
                 try:
-                    print("1")
                     self.update_fields()
-                    print("2")
                     current_card.base_data = self.data
                     return
                 except ValueError:
@@ -153,7 +156,7 @@ class Template(BoxLayout):
             try:
                 self.set_data_from_parsers()
                 self.update_fields()
-                current_card.base_data = self.data
+                self.save_base_data_to_db()
             except NoMatchError:
                 current_card.state = "error"
                 toast(f"Could not obtain data for {search_term}.")
