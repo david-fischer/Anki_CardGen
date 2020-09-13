@@ -208,6 +208,30 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
         }
         self.on_data()
 
+    def on_data(self, *_):
+        """Override :meth:`behaviors.ChildrenFromDataBehavior.on_data` with correct list of children.
+
+        The children are in ``carousel.slides`` as opposed to ``carousel.children``.
+        """
+        diff = len(self.data) - len(getattr(self.carousel, "slides", []))
+        if diff > 0:
+            for _ in range(abs(diff)):
+                self.add_child()
+        else:
+            for _ in range(abs(diff)):
+                self.remove_child()
+        for i, child_dict in enumerate(self.data):
+            for key, val in child_dict.items():
+                setattr(self.carousel.slides[i], key, val)
+
+    def remove_child(self):
+        """Override :meth:`behaviors.ChildrenFromDataBehavior.remove_child` with correct list of children.
+
+        The children are in ``carousel.slides`` as opposed to ``carousel.children``.
+        """
+        last_slide = self.carousel.slides[-1]
+        self.carousel.remove_widget(last_slide)
+
     def before_add_child(self, child):
         """Bind :meth:`set_child_width` to change of :attr:`width`."""
         self.bind(width=lambda *_: self.set_child_width(child))
@@ -293,13 +317,6 @@ class CardCarousel(MyCarousel):
             if self.height != new_height:
                 anim = Animation(height=new_height, duration=0.2)
                 anim.start(self)
-
-    def on_data(self, *_):
-        """Fix size-issue on first init."""
-        super(CardCarousel, self).on_data(*_)
-        if self.carousel:
-            self.carousel.index = 1
-            self.carousel.index = 0
 
 
 class RecycleCarousel(FloatLayout):
