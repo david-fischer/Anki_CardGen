@@ -98,19 +98,17 @@ class QueuedRoot(FloatLayout):
 
         Repeat as long as app.queue is not empty.
         """
+        local = threading.local()
+        local.template = MDApp.get_running_app().new_template_instance()
         while not self.queue.empty():
             word = self.queue.get()
             if word not in self.stale:
                 MDApp.get_running_app().word_state_dict[word] = "loading"
                 try:
-                    local = threading.local()
-                    local.template = MDApp.get_running_app().template
                     local.template.search(word)
                     MDApp.get_running_app().word_state_dict[word] = "ready"
                 except (NoMatchError, KeyError):
                     MDApp.get_running_app().word_state_dict[word] = "error"
-                    # MDApp.get_running_app().queue_words.remove(word)
-                    # MDApp.get_running_app().error_words.append(word)
             else:
                 self.stale.remove(word)
 
