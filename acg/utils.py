@@ -17,6 +17,7 @@ from itertools import chain
 import toolz
 from bs4 import BeautifulSoup
 from kivymd.app import MDApp
+from kivymd.toast import toast
 from PIL import Image
 
 try:
@@ -460,3 +461,8 @@ def app_busy(func):
 def set_word_state(word, state):
     """Set entry in app.word_state_dict."""
     MDApp.get_running_app().word_state_dict[word] = state
+
+
+def not_implemented_toast(*_):
+    """Display toast notifying user that the function is not implemented."""
+    toast("Not implemented yet.")

@@ -10,6 +10,7 @@ from kivymd.toast import toast
 from pony.orm import db_session
 
 from db import export_cards
+from utils import not_implemented_toast
 
 
 class HistoryRoot(FloatLayout):
@@ -61,3 +62,13 @@ class HistoryRoot(FloatLayout):
             export_cards(cards, app.apkg_export_dir, app.get_anki_template_dir())
         toast(f"Exported cards to {app.apkg_export_dir}.", 5)
         return True
+
+    @staticmethod
+    def filter(*_):
+        """Placeholder-function."""
+        not_implemented_toast()
+
+    @staticmethod
+    def sort(*_):
+        """Placeholder-function."""
+        not_implemented_toast()
