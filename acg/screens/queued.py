@@ -12,6 +12,7 @@ from custom_widgets.dialogs import CustomDialog, ReplacementContent
 from parsers import NoMatchError
 from utils import (
     clean_up,
+    not_implemented_toast,
     set_screen,
     start_thread,
     start_workers,
@@ -62,11 +63,15 @@ class QueuedRoot(FloatLayout):
             if state in ["queued", "loading"]:
                 self.queue_word(word)
 
-    def queue_all(self, *_):
+    @staticmethod
+    def queue_all(*_):
         """Placeholder-function."""
+        not_implemented_toast()
 
-    def dequeue_all(self, *_):
+    @staticmethod
+    def dequeue_all(*_):
         """Placeholder-function."""
+        not_implemented_toast()
 
     def _init_dialog(self):
         """Initialize :attr:`dialog` as instance of :class:`custom_widgets.dialogs.CustomDialog`."""
@@ -226,3 +231,13 @@ class QueuedRoot(FloatLayout):
         ]
         print(self.dialog.content_cls.data)
         self.dialog.open()
+
+    @staticmethod
+    def sort(*_):
+        """Placeholder-function."""
+        not_implemented_toast()
+
+    @staticmethod
+    def filter(*_):
+        """Placeholder-function."""
+        not_implemented_toast()

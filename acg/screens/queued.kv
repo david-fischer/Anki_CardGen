@@ -9,8 +9,8 @@ QueuedRoot:
         [\
         ["download", self.queue_all],\
         ["close", self.dequeue_all],\
-        ["filter", lambda *_: None],\
-        ["sort-variant", lambda *_: None],\
+        ["filter", self.filter],\
+        ["sort-variant", self.sort],\
         ]
 
     RecycleList:
