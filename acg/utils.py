@@ -284,8 +284,6 @@ def tag_word_in_sentence(sentence, tag_word):
     # get unique, non-empty strings:
     words = [word for word in set(words) if word]
     lemmas = clean_up(words, lemmatize=True)
-    print(words)
-    print(lemmas)
     tag_lemma = clean_up([tag_word])[0]
     words_found = [
         word
