@@ -35,7 +35,7 @@ from parsers import (
     Parser,
     ReversoParser,
 )
-from utils import app_busy, smart_dict_merge
+from utils import app_busy, smart_dict_merge, tag_word_in_sentence
 
 
 class Template(BoxLayout):
@@ -236,6 +236,13 @@ class PtTemplate(Template):
     def translate(self, string):
         """Translate string from :attr:`from_lang` to :attr:`to_lang`."""
         return translator.translate(string, src=self.from_lang, dest=self.to_lang).text
+
+    def post_process(self):
+        """Tag :attr:`search_term` in ``"explanation"`` and ``"example"`` fields."""
+        for field in ["explanation", "example"]:
+            self.content[field] = tag_word_in_sentence(
+                self.content[field], self.search_term
+            )
 
 
 Builder.load_string(
