@@ -1,5 +1,5 @@
 """Contains the Main App :class:`AnkiCardGenApp`."""
-__version__ = "1.0.10"
+__version__ = "1.0.11"
 
 import os
 import pydoc

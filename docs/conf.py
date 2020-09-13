@@ -29,7 +29,7 @@ author = "David Fischer"
 
 master_doc = "index"
 # The full version, including alpha/beta/rc tags
-release = "1.0.10"
+release = "1.0.11"
 
 # -- General configuration ---------------------------------------------------
 
