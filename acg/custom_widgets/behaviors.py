@@ -183,17 +183,34 @@ class ChildrenFromDataBehavior:
             self.root_for_children = self
         self.on_data()
 
+    def add_child(self, child_dict=None):
+        """Add one child-widget."""
+        child_cls = Factory.get(self.child_class_name)
+        child_dict = child_dict or {}
+        new_child = child_cls(**child_dict)
+        if self.child_bindings:
+            new_child.bind(**self.child_bindings)
+        self.before_add_child(new_child)
+        self.root_for_children.add_widget(new_child)
+        self.after_add_child(new_child)
+
+    def remove_child(self):
+        """Remove one child-widget."""
+        last_child = self.root_for_children.children[-1]
+        self.root_for_children.remove_widget(last_child)
+
     def on_data(self, *_):
-        """Construct children on change of :attr:`data`."""
-        self.root_for_children.clear_widgets()
-        for child_dict in self.data:
-            child_cls = Factory.get(self.child_class_name)
-            new_child = child_cls(**child_dict)
-            if self.child_bindings:
-                new_child.bind(**self.child_bindings)
-            self.before_add_child(new_child)
-            self.root_for_children.add_widget(new_child)
-            self.after_add_child(new_child)
+        """Update children on change of :attr:`data`."""
+        diff = len(self.data) - len(self.root_for_children.children)
+        if diff > 0:
+            for _ in range(abs(diff)):
+                self.add_child()
+        else:
+            for _ in range(abs(diff)):
+                self.remove_child()
+        for i, child_dict in enumerate(self.data):
+            for key, val in child_dict.items():
+                setattr(self.root_for_children.children[-i - 1], key, val)
 
     def before_add_child(self, child):
         """Do something before child is added to :attr:`parent_widget`. Placeholder."""
