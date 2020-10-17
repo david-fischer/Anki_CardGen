@@ -12,7 +12,7 @@ from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.toast import toast
-from pony.orm import db_session
+from pony.orm import commit, db_session
 
 from custom_widgets.scroll_widgets import ScrollBox
 from custom_widgets.selection_widgets import ImageCarousel, SeparatorWithHeading
@@ -111,11 +111,13 @@ class Template(BoxLayout):
     def add_content_to_db(self):
         """Write content to card."""
         self.current_card_db().fields = self.content
+        commit()
 
     @db_session
     def save_base_data_to_db(self):
         """Save base_data to card."""
         self.current_card_db().base_data = self.data
+        commit()
 
     @app_busy
     def get_results(self):
