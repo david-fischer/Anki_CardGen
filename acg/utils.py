@@ -270,6 +270,14 @@ def word_list_from_txt(path):
     return words
 
 
+def word_list_from_kobo(path):
+    """Parse kobos .annot-file and return list of notations."""
+    with open(path, "r") as file:
+        soup = BeautifulSoup(file, "lxml")
+    words = [tag.text for tag in soup.select("annotation text")]
+    return words
+
+
 def tag_word_in_sentence(sentence, tag_word):
     """
     Use regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.
