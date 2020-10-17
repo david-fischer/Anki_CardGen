@@ -3,12 +3,12 @@ import threading
 from queue import Queue
 
 from kivy.clock import Clock
-from kivy.properties import DictProperty, ObjectProperty
+from kivy.properties import ListProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from pony.orm import db_session
 
-from custom_widgets.dialogs import CustomDialog, ReplacementContent
+from custom_widgets.dialogs import CustomDialog, ReplacementItemsContent
 from parsers import NoMatchError
 from utils import (
     clean_up,
@@ -18,6 +18,7 @@ from utils import (
     start_workers,
     widget_by_id,
     word_list_from_kindle,
+    word_list_from_kobo,
     word_list_from_txt,
 )
 
@@ -42,11 +43,30 @@ class QueuedRoot(FloatLayout):
     """:class:`CheckableQueue` object."""
     stale = set()
     """Set of stale words, i.e. words that have been dequeued and will be skipped if appearing in the queue."""
-    import_options = DictProperty(
-        {
-            "script-text-outline": "Import from Kindle",
-            "note-text": "Import from Text File",
-        }
+    import_dicts = ListProperty(
+        [
+            {
+                "icon": "book-open",
+                "text": "Import from Kindle",
+                "exts": [".html"],
+                "import_fn": word_list_from_kindle,
+                "import_dir": MDApp.get_running_app().getter("import_dir"),
+            },
+            {
+                "icon": "book-open-variant",
+                "text": "Import from Kobo Annotations",
+                "exts": [".annot"],
+                "import_fn": word_list_from_kobo,
+                "import_dir": MDApp.get_running_app().getter("kobo_import_dir"),
+            },
+            {
+                "icon": "note-text",
+                "text": "Import from txt-file",
+                "exts": [".txt"],
+                "import_fn": word_list_from_txt,
+                "import_dir": MDApp.get_running_app().getter("import_dir"),
+            },
+        ]
     )
     """: : :class:`~kivy.properties.DictProperty` of the form ``{"icon_name":"Help text"}``."""
     dialog = ObjectProperty()
@@ -63,10 +83,11 @@ class QueuedRoot(FloatLayout):
             if state in ["queued", "loading"]:
                 self.queue_word(word)
 
-    @staticmethod
-    def queue_all(*_):
-        """Placeholder-function."""
-        not_implemented_toast()
+    def queue_all(self, *_):
+        """Queue all words that are currently in ``waiting``-state."""
+        for word, state in MDApp.get_running_app().word_state_dict.items():
+            if state == "waiting":
+                self.queue_word(word)
 
     @staticmethod
     def dequeue_all(*_):
@@ -75,7 +96,7 @@ class QueuedRoot(FloatLayout):
 
     def _init_dialog(self):
         """Initialize :attr:`dialog` as instance of :class:`custom_widgets.dialogs.CustomDialog`."""
-        content = ReplacementContent()
+        content = ReplacementItemsContent()
         self.dialog = CustomDialog(
             title="Some words are not in their dictionary form. The following replacements are suggested:",
             content_cls=content,
@@ -146,7 +167,6 @@ class QueuedRoot(FloatLayout):
         if "worker" not in [thread.name for thread in threading.enumerate()]:
             print("starting a worker")
             start_workers(self.worker_single_word, 1)
-        print(threading.enumerate())
 
     def pause_downloading(self):
         """Empty the queue. Worker stop after finishing current task."""
@@ -178,22 +198,29 @@ class QueuedRoot(FloatLayout):
         Binds function to clicking on file, so the import is started in separate thread.
         """
         self.speed_dial.close_stack()
-        text = self.import_options[button.icon]
-        if text == "Import from Kindle":
-            extensions = [".html"]
-            source = "kindle"
-        else:  # elif text == "Import from Text File":
-            extensions = [".txt"]
-            source = "txt"
+        import_dict = [
+            imp_dict
+            for imp_dict in self.import_dicts
+            if imp_dict["icon"] == button.icon
+        ][0]
+        print(import_dict["import_dir"])
+        # if text == "Import from Kindle":
+        #     extensions = [".html"]
+        #     source = "kindle"
+        # else:  # elif text == "Import from Text File":
+        #     extensions = [".txt"]
+        #     source = "txt"
         import_function = start_thread(  # pylint: disable=no-value-for-parameter
-            self.import_from, source=source, name="import_thread"
+            self.import_from, import_fn=import_dict["import_fn"], name="import_thread"
         )
         app = MDApp.get_running_app()
         app.open_file_manager(
-            ext=extensions, path=app.import_dir, callback=import_function,
+            ext=import_dict["exts"],
+            path=import_dict["import_dir"](self),
+            callback=import_function,
         )
 
-    def import_from(self, path, source="kindle"):
+    def import_from(self, path, import_fn=word_list_from_kindle):
         """
         Import, process and queue words from file.
 
@@ -201,14 +228,10 @@ class QueuedRoot(FloatLayout):
 
         Args:
           path: Path to file.
-          source: Type of source. Options=["kindle","txt"] (Default value = "kindle")
+          import_fn: function that returns list of words
         """
         MDApp.get_running_app().file_manager.close()
-        import_function_dict = {
-            "kindle": word_list_from_kindle,
-            "txt": word_list_from_txt,
-        }
-        words = import_function_dict[source](path)
+        words = import_fn(path)
         words = clean_up(words, lemmatize=False, remove_punct=True, lower_case=True)
         lemmas = clean_up(words, lemmatize=True, remove_punct=False, lower_case=False)
         new_pairs = [
@@ -229,7 +252,6 @@ class QueuedRoot(FloatLayout):
         self.dialog.content_cls.data = [
             {**rep_dict, "height": 45} for rep_dict in replacements
         ]
-        print(self.dialog.content_cls.data)
         self.dialog.open()
 
     @staticmethod

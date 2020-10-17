@@ -25,5 +25,5 @@ QueuedRoot:
 
     MyFloatingActionButtonSpeedDial:
         id: speed_dial
-        data: root.import_options
+        data: {import_dict["icon"]: import_dict["text"] for import_dict in root.import_dicts}
         callback: root.choose_file_to_import
