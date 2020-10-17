@@ -1,4 +1,4 @@
-"""Provides :class:`CustomDialog` and :class:`ReplacementContent`."""
+"""Provides :class:`CustomDialog` and :class:`ReplacementItemsContent`."""
 import os
 from functools import partial
 
@@ -21,6 +21,59 @@ from paths import CUSTOM_WIDGET_DIR
 Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
 
 
+class CustomContentBase:
+    """Base-class to be used for instances of :attr:`CustomDialog.content_cls`."""
+
+    def get_result(self):
+        """Placeholder-function."""
+
+
+class TextFieldContent(CustomContentBase, BoxLayout):
+    """:class:`kivy.uix.BoxLayout` containing a :class:`kivymd.uix.MDTextField`.
+
+    For use as:attr:`kivymd.uix.dialog.content_cls`.
+    """
+
+    default_text = StringProperty("")
+
+    def get_result(self):
+        """Return current entry of the text_field."""
+        return self.ids.text_field.text
+
+
+class ItemsContent(ScrollList, CustomContentBase):
+    """Scrollable list of items.
+
+    Items dispatch ``on_press``-events and itself dispatches ``on_item_press`` event.
+    """
+
+    child_class_name = "BaseListItem"
+    data = ListProperty()
+    """:class:`~kivy.properties.ListProperty`."""
+
+    def __init__(self, **kwargs):
+        self.register_event_type("on_item_press")
+        self.child_bindings["on_press"] = partial(self.dispatch, "on_item_press")
+        super(ItemsContent, self).__init__(**kwargs)
+
+    def on_item_press(self, *_):
+        """Placeholder-function."""
+
+
+class ReplacementItemsContent(ItemsContent):
+    """Content for the ReplacementDialog."""
+
+    child_class_name = StringProperty("ReplacementItem")
+    """:class:`~kivy.properties.StringProperty` defaults to ``"ReplacementItem"``."""
+
+    def get_result(self):
+        """Get user selection."""
+        return [
+            (child.lemma if child.take_lemma else child.word)
+            for child in self.root_for_children.children[::-1]
+        ]
+
+
 class ReplacementItem(ButtonBehavior, BoxLayout):
     """
     Item displaying a word (:attr:`word`) and a possible replacement (:attr:`lemma`).
@@ -40,41 +93,6 @@ class ReplacementItem(ButtonBehavior, BoxLayout):
 
     def on_press(self, *_):
         """Placeholder-function."""
-
-
-class DialogContent(ScrollList):
-    """Content for the :class:`CustomDialog` class."""
-
-    child_class_name = "ReplacementItem"
-    data = ListProperty(
-        [{"word": f"word_{i}", "lemma": f"lemma{i}"} for i in range(10)]
-    )
-    """:class:`~kivy.properties.ListProperty`.``"""
-
-    def __init__(self, **kwargs):
-        self.register_event_type("on_item_press")
-        self.child_bindings["on_press"] = partial(self.dispatch, "on_item_press")
-        super(DialogContent, self).__init__(**kwargs)
-
-    def on_item_press(self, *_):
-        """Placeholder-function."""
-
-    def get_result(self):
-        """Placeholder-function."""
-
-
-class ReplacementContent(DialogContent):
-    """Content for the ReplacementDialog."""
-
-    child_class_name = StringProperty("ReplacementItem")
-    """:class:`~kivy.properties.StringProperty` defaults to ``"ReplacementItem"``."""
-
-    def get_result(self):
-        """Get user selection."""
-        return [
-            (child.lemma if child.take_lemma else child.word)
-            for child in self.root_for_children.children[::-1]
-        ]
 
 
 class CustomDialog(MDDialog):
@@ -101,12 +119,32 @@ class CustomDialog(MDDialog):
         self.content_cls.bind(on_item_press=self.on_item_press)
 
     def on_button_press(self, obj):
-        """Placeholder-function."""
+        """Call :meth:`CustomDialog.callback`.
+
+        The arguments are the text of the pressed button and the result of :attr:`content_cls`.``get_result``.
+        """
         self.callback(obj.text, self.content_cls.get_result())
         self.dismiss()
 
-    def on_item_press(self, *_):
+    def on_item_press(self, content, item):
         """Placeholder-function."""
+
+
+class TextInputDialog(CustomDialog):
+    """Dialog with one text field."""
+
+    default_text = StringProperty("")
+    """:~kivy.properties.StringProperty: defaults to "", the default text entry in the :~kivymd.uix.MDTextField:."""
+
+    def __init__(self, **kwargs):
+        default_text = kwargs.pop("default_text") if "default_text" in kwargs else ""
+        self.content_cls = TextFieldContent(default_text=default_text)
+        self.bind(
+            default_text=self.content_cls.setter(  # pylint: disable=no-member
+                "default_text"
+            )
+        )
+        super(TextInputDialog, self).__init__(**kwargs)
 
 
 # pylint: disable = W,C,R,I,E
@@ -121,17 +159,21 @@ if __name__ == "__main__":
 FloatLayout:
 
     MDFlatButton:
-        text: "ALERT DIALOG"
-        pos_hint: {'center_x': .5, 'center_y': .5}
-        on_release: app.show_confirmation_dialog()
+        text: "REPLACEMENT DIALOG"
+        pos_hint: {'center_x': .5, 'center_y': .3}
+        on_release: app.show_repl_dialog()
+
+    MDFlatButton:
+        text: "TEXT DIALOG"
+        pos_hint: {'center_x': .5, 'center_y': .6}
+        on_release: app.show_text_dialog()
 """
             )
 
-        def show_confirmation_dialog(self):
-            if not self.dialog:
-                self.dialog = CustomDialog(
-                    title="test", content_cls=ReplacementContent(), callback=print
-                )
+        def show_repl_dialog(self):
+            self.dialog = CustomDialog(
+                title="test", content_cls=ReplacementItemsContent(), callback=print
+            )
             self.dialog.content_cls.data = [
                 {"word": "aguento", "lemma": "aguentar"},
                 {"word": "deixa", "lemma": "deixar"},
@@ -142,6 +184,15 @@ FloatLayout:
                 {"word": "quedas d’água", "lemma": "quedo d’água"},
                 {"word": "ansiosos", "lemma": "ansioso"},
             ]
+            self.dialog.open()
+
+        def show_text_dialog(self):
+            if isinstance(self.dialog, TextInputDialog):
+                self.dialog.default_text = "second call to text_input_dialog"
+            else:
+                self.dialog = TextInputDialog(
+                    title="test", default_text="this is a test", callback=print,
+                )
             self.dialog.open()
 
     _Example().run()
