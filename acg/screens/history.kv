@@ -13,7 +13,7 @@ HistoryRoot:
         viewclass: "LeftStatusIndicatorListItem"
         data:
             [\
-            {"text": word, "current_state":word_state} for word, word_state in\
+            {"text": word, "current_state":word_state, "callbacks":{"on_press": root.click_on_item}} for word, word_state in\
             pick_val(["error","done","exported"],app.word_state_dict).items()\
             ]
 
