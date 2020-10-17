@@ -42,6 +42,7 @@ class AnkiCardGenApp(MDApp):
     # Config
     apkg_export_dir = ConfigParserProperty("", "Paths", "apkg_export_dir", "app",)
     import_dir = ConfigParserProperty("", "Paths", "import_dir", "app")
+    kobo_import_dir = ConfigParserProperty("", "Paths", "kobo_import_dir", "app")
     anki_template_dir = ConfigParserProperty(
         "vocab_card", "Paths", "anki_template_dir", "app"
     )
