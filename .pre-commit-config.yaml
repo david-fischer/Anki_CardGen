@@ -11,13 +11,9 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/PyCQA/pylint
-#  - repo: local
     rev: pylint-2.5.0
     hooks:
       - id: pylint
-#        name: pylint
-#        entry: pylint
-#        language: system
         args: [--rcfile=./.pylintrc]
         files: acg
         types: [python]
