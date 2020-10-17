@@ -66,7 +66,7 @@
                 root.edit = True;\
                 Clock.schedule_once(lambda t: setattr(lemma_text_field,"focus",True))
 
-<ReplacementContent>:
+<ReplacementItemsContent>:
     height: 300
     size_hint: 1, None
 
@@ -74,3 +74,12 @@
     size_hint_x: 0.8
     size_hint_y: 0.8
 #     size: 500,500
+
+<TextFieldContent>:
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+
+    MDTextField:
+        id: text_field
+        text: root.default_text
