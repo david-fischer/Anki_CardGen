@@ -109,7 +109,11 @@ def model_from_html(name, template_names, model_id, css_path):
         css = file.read()
 
     return genanki.Model(
-        model_id=model_id, name=name, fields=fields, templates=templates, css=css,
+        model_id=model_id,
+        name=name,
+        fields=fields,
+        templates=templates,
+        css=css,
     )
 
 

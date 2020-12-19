@@ -35,7 +35,8 @@ from parsers import (
     Parser,
     ReversoParser,
 )
-from utils import app_busy, smart_dict_merge, tag_word_in_sentence
+from utils import app_busy, smart_dict_merge
+from acg.language_processing import tag_word_in_sentence
 
 
 class Template(BoxLayout):
@@ -59,7 +60,7 @@ class Template(BoxLayout):
     """The field that should be unique on all cards. For language cards e.g. the word to learn."""
 
     def __init__(self, **kwargs):
-        super(Template, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.parsers = self.parsers or {}
         self.fields = self.fields or []
 
@@ -181,7 +182,7 @@ class PtTemplate(Template):
     to_lang: str = "de"
 
     def __init__(self, **kwargs):
-        super(PtTemplate, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         parser_attrs = {
             "from_lang": self.from_lang,
             "to_lang": self.to_lang,

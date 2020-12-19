@@ -18,7 +18,11 @@ setup(
     packages=find_packages(include=["acg*"]),
     include_package_data=True,
     install_requires=get_requirements(),
-    entry_points={"gui_scripts": ["acg = acg.main:main",]},
+    entry_points={
+        "gui_scripts": [
+            "acg = acg.main:main",
+        ]
+    },
     url="https://github.com/david-fischer/Anki_CardGen",
     keywords="kivy, anki, flash cards, languages, portuguese, learning",
     license="MIT",

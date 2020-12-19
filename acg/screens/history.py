@@ -28,7 +28,7 @@ class HistoryRoot(FloatLayout):
     speed_dial = ObjectProperty()
 
     def __init__(self, **kwargs):
-        super(HistoryRoot, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         Clock.schedule_once(self.__post_init__)
 
     def __post_init__(self, *_):
@@ -37,7 +37,11 @@ class HistoryRoot(FloatLayout):
             caller=self.ids.history_list,
             position="center",
             width_mult=4,
-            items=[{"text": "back to queue"}, {"text": "delete"}, {"text": "edit"},],
+            items=[
+                {"text": "back to queue"},
+                {"text": "delete"},
+                {"text": "edit"},
+            ],
         )
         self.dropdown_menu.on_release = self.on_dropdown_item
         self.text_input_dialog = TextInputDialog(title="Edit Word:")

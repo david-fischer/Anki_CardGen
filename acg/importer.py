@@ -13,11 +13,10 @@ from acg.custom_widgets.dialogs import CustomDialog
 from acg.design_patterns.callback_chain import CallChain, CallNode
 from acg.utils import (
     get_file_manager,
-    lemma_dict,
     pop_unchanged,
-    remove_punctuation,
     word_list_from_kobo,
 )
+from acg.language_processing import lemma_dict, remove_punctuation
 
 
 @attr.s(auto_attribs=True)
@@ -91,10 +90,13 @@ class DialogNode(CallNode):
     def process(self, unchanged, replacements):  # pylint: disable=arguments-differ
         """Open Dialog with received suggested replacements and sends unchanged words + chosen words to next node."""
         self.unchanged = unchanged
-        if not self.dialog:
-            self._init_dialog()
-        self.dialog.set_data(self.get_dialog_data(replacements))
-        self.dialog.open()
+        if replacements:
+            if not self.dialog:
+                self._init_dialog()
+            self.dialog.set_data(self.get_dialog_data(replacements))
+            self.dialog.open()
+        else:
+            self.send(unchanged)
 
 
 # pylint: disable = W,C,R,I,E
@@ -104,6 +106,7 @@ if __name__ == "__main__":
         dialog = None
         file_manager = None
         importer = None
+        target_language = "pt"
 
         def build(self):
             self.file_manager = MDFileManager()
