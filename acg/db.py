@@ -37,7 +37,9 @@ TEMPLATE_DICTS = [
 db = Database()
 db_path = os.path.join(MAIN_DIR, "db.sqlite")
 db.bind(
-    provider="sqlite", filename=db_path, create_db=not os.path.exists(db_path),
+    provider="sqlite",
+    filename=db_path,
+    create_db=not os.path.exists(db_path),
 )
 
 
@@ -91,7 +93,7 @@ class Card(db.Entity):
 
     def __setattr__(self, key, value):
         """Change state according to values set."""
-        super(Card, self).__setattr__(key, value)
+        super().__setattr__(key, value)
         if key == "base_data":
             self.dt_queried = datetime.now()
             self.state = "ready"

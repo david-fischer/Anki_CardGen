@@ -5,8 +5,6 @@ import json
 import os
 import pickle
 import pwd
-import re
-import subprocess
 import threading
 from collections import defaultdict
 from contextlib import ContextDecorator, contextmanager
@@ -22,23 +20,6 @@ from kivymd.toast import toast
 from kivymd.uix.filemanager import MDFileManager
 from PIL import Image
 from pony.orm import db_session
-
-try:
-    import spacy
-
-    try:
-        nlp = spacy.load("pt")
-    except OSError:
-        subprocess.run(["python", "-m", "spacy", "download", "pt"], check=True)
-        nlp = spacy.load("pt")
-    SPACY_IS_AVAILABLE = True
-    """``True`` if spacy could be imported, else ``False``"""
-except ModuleNotFoundError:
-    print(
-        "Spacy is not available, fall back to limited version. "
-        "This means, words will not be lemmatized in the clean-up"
-    )
-    SPACY_IS_AVAILABLE = False
 
 COLOR2MEANING = {
     "highlight_yellow": "words",
@@ -225,48 +206,9 @@ def split_on_condition(seq, condition):
     return (i for p, i in condition_true if p), (i for p, i in condition_false if not p)
 
 
-def remove_punctuation(string):
-    """Return string without punctuation and whitespace."""
-    return string.strip(",.;:-–—!?¿¡\"' ()[]/\n")
-
-
-def lemma_dict(phrases):
-    """Return dictionary with original_phrase: lemmatized_phrase}."""
-    return {
-        phrase: "".join((token.lemma_ + token.whitespace_ for token in nlp(phrase)))
-        for phrase in phrases
-    }
-
-
 def pop_unchanged(dictionary):
     """Pop all values from dict where key=val."""
     return [dictionary.pop(key) for key in list(dictionary) if dictionary[key] == key]
-
-
-def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
-    """
-    Preprocess a list of words (or phrases).
-
-    Args:
-      words: List of words
-      remove_punct: If True, removes trailing and leading punctuation. (Default value = True)
-      lower_case: If True, converts everything to lower case. (Default value = True)
-      lemmatize: If True, tries to convert each word to its dictionary-form. (Default value = True)
-
-    Returns:
-        : List of processed words (or phrases).
-    """
-    if remove_punct:
-        words = [word.strip(",.;:-–—!?¿¡\"'") for word in words]
-    if lower_case:
-        words = [word.lower() for word in words]
-    if lemmatize:
-        if SPACY_IS_AVAILABLE:
-            words = [" ".join([lemma.lemma_ for lemma in nlp(word)]) for word in words]
-            print(words)
-        else:
-            print("Lemmatization skipped. Spacy module is not installed.")
-    return words
 
 
 def word_list_from_kindle(path):
@@ -301,38 +243,6 @@ def word_list_from_kobo(path):
         soup = BeautifulSoup(file, "lxml")
     words = [tag.text for tag in soup.select("annotation text")]
     return words
-
-
-def tag_word_in_sentence(sentence, tag_word):
-    """
-    Use regex to wrap every derived form of a given ``tag_word`` in ``sentence`` in an html-tag.
-
-    Args:
-      sentence: String containing of multiple words.
-      tag_word: Word that should be wrapped.
-
-    Returns:
-      : Sentence with replacements.
-    """
-    words = sentence.split()
-    words = clean_up(words, lemmatize=False)
-    # get unique, non-empty strings:
-    words = [word for word in set(words) if word]
-    lemmas = clean_up(words, lemmatize=True)
-    tag_lemma = clean_up([tag_word])[0]
-    words_found = [
-        word
-        for word, lemma in zip(words, lemmas)
-        if lemma == tag_lemma or word == tag_word
-    ]
-    for word in words_found:
-        sentence = re.sub(
-            f"([^>])({word})([^<])",
-            r'\1<span class="word">\2</span>\3',
-            sentence,
-            flags=re.IGNORECASE,
-        )
-    return sentence
 
 
 # Image resizing

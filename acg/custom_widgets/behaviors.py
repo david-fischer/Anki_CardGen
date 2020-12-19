@@ -54,7 +54,7 @@ class LongPressBehavior(ButtonBehavior):
     """:class:`~kivy.properties.NumericProperty`"""
 
     def __init__(self, **kwargs):
-        super(LongPressBehavior, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self._clockev = None
         self.register_event_type("on_long_press")
         self.register_event_type("on_short_press")
@@ -62,7 +62,7 @@ class LongPressBehavior(ButtonBehavior):
     def on_state(self, instance, value):
         """Dispatches ``on_long_press`` if the :attr:`state` stays down for longer than :attr:`long_press_time`."""
         try:
-            super(LongPressBehavior, self).on_state(instance, value)
+            super().on_state(instance, value)
         except AttributeError:
             pass
         if value == "down":
@@ -110,7 +110,7 @@ class MultiStateBehavior:
     """:class:`~kivy.properties.ListProperty` containing the list of property-names that get changed via animation."""
 
     def __init__(self, **kwargs):
-        super(MultiStateBehavior, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         clock.Clock.schedule_once(self.__post_init__)
 
     def on_current_state(self, *_):
@@ -147,7 +147,7 @@ class CheckBehavior(MultiStateBehavior):
             {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
         )
         """: : :class:`~kivy.properties.DictProperty`, defaults to ``{False:{}, True:{}}`` ."""
-        super(CheckBehavior, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
 
 class ChildrenFromDataBehavior:
@@ -178,7 +178,7 @@ class ChildrenFromDataBehavior:
     """:class:`~kivy.properties.DictProperty` of the form {"on_event": binding_fn}."""
 
     def __init__(self, **kwargs):
-        super(ChildrenFromDataBehavior, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         if self.root_for_children is None:
             self.root_for_children = self
         self.on_data()
@@ -232,7 +232,7 @@ class TranslationOnCheckBehavior(CheckBehavior):
         """Initialize widget after kv-file is loaded."""
         self.state_dicts[True]["text"] = self.text_orig
         self.state_dicts[False]["text"] = self.text_trans
-        super(TranslationOnCheckBehavior, self).__post_init__(*_)
+        super().__post_init__(*_)
 
 
 class ThemableColorChangeBehavior(CheckBehavior):
@@ -247,7 +247,7 @@ class ThemableColorChangeBehavior(CheckBehavior):
     animated_properties = ["bg_color", "text_color"]
 
     def __init__(self, **kwargs):
-        super(ThemableColorChangeBehavior, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.theme_cls.bind(theme_style=self.__post_init__)
         self.theme_cls.bind(primary_palette=self.__post_init__)
 
@@ -260,4 +260,4 @@ class ThemableColorChangeBehavior(CheckBehavior):
         )
         self.state_dicts[True]["text_color"] = [1, 1, 1, 1]
         self.state_dicts[False]["text_color"] = self.theme_cls.secondary_text_color
-        super(ThemableColorChangeBehavior, self).__post_init__()
+        super().__post_init__()

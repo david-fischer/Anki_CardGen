@@ -61,7 +61,10 @@ def screenshot(path, root_widget=None):
     if root_widget is None:
         root_widget = MDApp.get_running_app().root
 
-    fbo = Fbo(size=(root_widget.width, root_widget.height), with_stencilbuffer=True,)
+    fbo = Fbo(
+        size=(root_widget.width, root_widget.height),
+        with_stencilbuffer=True,
+    )
 
     with fbo:
         ClearColor(*MDApp.get_running_app().theme_cls.bg_normal)
@@ -135,7 +138,10 @@ def save_card_pngs(word="casa", size=(540, 960)):
         imgkit.from_string(
             string,
             f'../screenshots/{word}/{os.path.basename(path).replace(".html", ".png")}',
-            options={"width": int(size[0]), "height": int(size[1]),},
+            options={
+                "width": int(size[0]),
+                "height": int(size[1]),
+            },
         )
 
 
@@ -227,5 +233,8 @@ def record():
 
 if __name__ == "__main__":
     fire.Fire(
-        {"play": play, "record": record,}
+        {
+            "play": play,
+            "record": record,
+        }
     )

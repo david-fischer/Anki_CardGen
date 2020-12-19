@@ -18,7 +18,7 @@ class SettingsRoot(BoxLayout):
     snackbar = ObjectProperty()
 
     def __init__(self, **kwargs):
-        super(SettingsRoot, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.theme_dialog = MDThemePicker()
         self.snackbar = Snackbar()
 

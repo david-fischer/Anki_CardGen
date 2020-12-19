@@ -49,7 +49,7 @@ class TranslationMixin:
         Handles the cases that source and target are strings or list of strings.
         """
         if hasattr(self, "pre_process"):
-            super(TranslationMixin, self).pre_process()
+            super().pre_process()
         if self.template.data and self.src_field in self.template.data:
             src_data = self.template.data[self.src_field]
             if isinstance(src_data, str):
@@ -189,7 +189,7 @@ class TextInputField(Field):
 
     def construct_widget(self):
         """Furthermore add :attr:`field_name` as hint-text and bind ``on_text_validate``."""
-        super(TextInputField, self).construct_widget()
+        super().construct_widget()
         self.widget.hint_text = self.field_name
         self.widget.bind(on_text_validate=self.on_text_validate)
 
@@ -376,7 +376,7 @@ class ImgField(OptionsField, MediaField):
 
     def construct_widget(self):
         """Bind :meth:`on_error` to child's ``on_error`` event."""
-        super(ImgField, self).construct_widget()
+        super().construct_widget()
         self.widget.bind(on_error=self.on_error)
 
     @_kv_bidict.default
@@ -391,7 +391,7 @@ class ImgField(OptionsField, MediaField):
             if img_file:
                 img_file = compress_img_bytes(img_file)
                 self.save_media_file(media_file=img_file)
-        return super(ImgField, self).post_process(content)
+        return super().post_process(content)
 
     def on_error(self, _widget, child, *_):
         """Remove urls that could not be loaded from :attr:`template`.data."""

@@ -127,9 +127,9 @@ class LingueeParser(Parser):
         print(response)
         try:
             match = response["exact_matches"][0]
-        except (TypeError, IndexError, KeyError):
+        except (TypeError, IndexError, KeyError) as error:
             print("Got no valid response.")
-            raise NoMatchError
+            raise NoMatchError from error
         audio_ids = [
             link["url_part"]
             for mat in response["exact_matches"]
@@ -335,11 +335,11 @@ class RandTopicWikiParser(Parser):
         Because we only use content-pages and not category-pages ``try`` specifies how often we draw a random page.
         """
         if url:
-            return super(RandTopicWikiParser, self).make_request(url=url)
+            return super().make_request(url=url)
         category = category or self.phrase
         for _ in range(tries):
             self.page = get_random_wiki_topic(category)
-            resp = super(RandTopicWikiParser, self).make_request()
+            resp = super().make_request()
             if resp.status_code == 200:
                 return resp
             print(resp.status_code, resp.content)
@@ -387,7 +387,7 @@ class NoMatchError(Exception):
     """Error if no match can be found for the current search."""
 
     def __init__(self, site=""):
-        super(NoMatchError, self).__init__()
+        super().__init__()
         self.site = site
 
 

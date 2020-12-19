@@ -123,7 +123,8 @@ if __name__ == "__main__":
         if obj.current_state == "queued":
             sl.data[obj.number]["current_state"] = "loading"
             Clock.schedule_once(
-                lambda dt: sl.data[obj.number].__setitem__("current_state", "ready"), 5,
+                lambda dt: sl.data[obj.number].__setitem__("current_state", "ready"),
+                5,
             )
         elif obj.current_state == "ready":
             sl.data[obj.number]["current_state"] = choice(["done", "error"])
@@ -145,7 +146,9 @@ if __name__ == "__main__":
             sl.data = [
                 {
                     "text": f"test_{i}",
-                    "callbacks": {"on_press": _schedule(sl),},
+                    "callbacks": {
+                        "on_press": _schedule(sl),
+                    },
                     "current_state": "queued",
                     "number": i,
                 }

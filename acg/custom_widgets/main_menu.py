@@ -41,7 +41,7 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
     """:class:`~kivy.properties.StringProperty`: name of the screens kv-file."""
 
     def __init__(self, **kwargs):
-        super(DrawerItem, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.current_state = False
         self.theme_cls.bind(theme_style=self.on_current_state)
         self.theme_cls.bind(primary_palette=self.on_current_state)
@@ -69,7 +69,7 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
 
     def conditional_uncheck(self, instance, value):
         """Change color of clicked item and updates :attr:`current`."""
-        super(DrawerList, self).conditional_uncheck(instance, value)
+        super().conditional_uncheck(instance, value)
         if value:
             self.current = instance.name
 
@@ -120,7 +120,7 @@ class MainMenu(StackLayout):
     screens = ListProperty()
 
     def __init__(self, **kwargs):
-        super(MainMenu, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         print(get_template_names())
         self.dropdown_menu = MDDropdownMenu(
             caller=self.ids.current_template_drop,
@@ -198,7 +198,7 @@ class KvScreen(Screen):
     """:class:`~kivy.properties.StringProperty` defaults to ``"screen_default.kv"`` """
 
     def __init__(self, **kwargs):
-        super(KvScreen, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.path = os.path.join(SCREEN_DIR, self.kv_file_name)
         self.size_hint = None, 1
         self.width = Window.width

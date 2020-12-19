@@ -40,7 +40,12 @@ class AnkiCardGenApp(MDApp):
     template = ObjectProperty()
 
     # Config
-    apkg_export_dir = ConfigParserProperty("", "Paths", "apkg_export_dir", "app",)
+    apkg_export_dir = ConfigParserProperty(
+        "",
+        "Paths",
+        "apkg_export_dir",
+        "app",
+    )
     import_dir = ConfigParserProperty("", "Paths", "import_dir", "app")
     kobo_import_dir = ConfigParserProperty("", "Paths", "kobo_import_dir", "app")
     anki_template_dir = ConfigParserProperty(
@@ -49,6 +54,8 @@ class AnkiCardGenApp(MDApp):
     primary_palette = ConfigParserProperty("Red", "Theme", "primary_palette", "app")
     accent_palette = ConfigParserProperty("Amber", "Theme", "accent_palette", "app")
     theme_style = ConfigParserProperty("Light", "Theme", "theme_style", "app")
+    source_language = ConfigParserProperty("en", "Languages", "source_language", "app")
+    target_language = ConfigParserProperty("pt", "Languages", "target_language", "app")
 
     busy = BooleanProperty(False)
     busy_modal = ObjectProperty(None)
@@ -123,7 +130,7 @@ class AnkiCardGenApp(MDApp):
 
     def on_start(self):
         """Set up template on start of app."""
-        super(AnkiCardGenApp, self).on_start()
+        super().on_start()
         self.init_template()
         self.request_permissions()
 
@@ -136,7 +143,9 @@ class AnkiCardGenApp(MDApp):
         """Set up :attr:`busy_modal` if necessary. Then open or close it depending on state of :attr:`busy`."""
         if not self.busy_modal:
             self.busy_modal = ModalView(
-                auto_dismiss=False, size_hint=(1.2, 1.2), opacity=0.5,
+                auto_dismiss=False,
+                size_hint=(1.2, 1.2),
+                opacity=0.5,
             )
             spinner = MDSpinner(active=False, size_hint=(0.5, 0.5))
             self.busy_modal.add_widget(spinner)

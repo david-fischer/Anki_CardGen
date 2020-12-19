@@ -54,7 +54,7 @@ class CheckContainer(ChildrenFromDataBehavior):
     """:class:`~kivy.properties.BooleanProperty` defaults to ``False``. If ``True`` only one child can be selected."""
 
     def __init__(self, **kwargs):
-        super(CheckContainer, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.child_bindings["current_state"] = self.conditional_uncheck
 
     def conditional_uncheck(self, instance, value):
@@ -152,7 +152,7 @@ class MyCheckImageTile(CheckBehavior, SmartTile):
             True: {"opacity": 1, "border_width": 3},
             False: {"opacity": 0.8, "border_width": 0.01},
         }
-        super(MyCheckImageTile, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def on_press(self):
         """Change boolean value of current state on press."""
@@ -201,7 +201,7 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
     modal = ModalView()
 
     def __init__(self, **kwargs):
-        super(MyCarousel, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.child_bindings = {
             "height": self.update_height,
             "on_press": self.open_menu,
@@ -286,14 +286,14 @@ class ImageCarousel(MyCarousel):
     """Carousel of images."""
 
     def __init__(self, **kwargs):
-        super(ImageCarousel, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self.child_bindings["on_error"] = lambda *_: self.dispatch("on_error", *_)
         self.register_event_type("on_error")
         self.on_data()
 
     def get_modal_content(self, size_hint=(1, 1)):
         """Call :meth:`MyCarousel.get_modal_content` with ``size_hint=(1,1)``."""
-        return super(ImageCarousel, self).get_modal_content(size_hint=size_hint)
+        return super().get_modal_content(size_hint=size_hint)
 
     def on_error(self, *_):
         """Placeholder-function."""
@@ -307,7 +307,7 @@ class CardCarousel(MyCarousel):
     """
 
     def __init__(self, **kwargs):
-        super(CardCarousel, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         del self.child_bindings["on_press"]
 
     def update_height(self, *_):
