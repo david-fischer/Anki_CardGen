@@ -34,11 +34,11 @@ repos:
         exclude: (google_images_download|_build)
         types: [text]
         args: [-q, "4",-D, -, -D, .codespell_dict.txt, -H]
-  - repo: local
-    hooks:
-      - id: render_readme
-        name: render_readme.py
-        entry: .utils/render_readme.py
-        language: system
-        stages: [commit]
-        always_run: True
+#  - repo: local
+#    hooks:
+#      - id: render_readme
+#        name: render_readme.py
+#        entry: .utils/render_readme.py
+#        language: system
+#        stages: [commit]
+#        always_run: True
