@@ -6,9 +6,10 @@ def route_call_to_member(cls, member, method):
     setattr(
         cls,
         method,
-        lambda x, *args, **kwargs: getattr(getattr(x, member), method,)(
-            *args, **kwargs
-        ),
+        lambda x, *args, **kwargs: getattr(
+            getattr(x, member),
+            method,
+        )(*args, **kwargs),
     )
 
 
