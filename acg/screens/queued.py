@@ -73,7 +73,7 @@ class QueuedRoot(FloatLayout):
     """:class:`~kivy.properties.ObjectProperty`. Instance of :class:`custom_widgets.dialogs.CustomDialog`."""
 
     def __init__(self, **kwargs):
-        super(QueuedRoot, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         self._init_queue()
         self._init_dialog()
 
@@ -204,12 +204,6 @@ class QueuedRoot(FloatLayout):
             if imp_dict["icon"] == button.icon
         ][0]
         print(import_dict["import_dir"])
-        # if text == "Import from Kindle":
-        #     extensions = [".html"]
-        #     source = "kindle"
-        # else:  # elif text == "Import from Text File":
-        #     extensions = [".txt"]
-        #     source = "txt"
         import_function = start_thread(  # pylint: disable=no-value-for-parameter
             self.import_from, import_fn=import_dict["import_fn"], name="import_thread"
         )
