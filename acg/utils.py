@@ -1,29 +1,36 @@
 """This module contains lots of helper functions."""
-
 import csv
 import inspect
 import json
 import os
 import pickle
+import pwd
 import re
+import subprocess
 import threading
 from collections import defaultdict
-from contextlib import ContextDecorator
+from contextlib import ContextDecorator, contextmanager
 from datetime import datetime
 from functools import partial, wraps
 from io import BytesIO
-from itertools import chain
+from itertools import chain, tee
 
 import toolz
 from bs4 import BeautifulSoup
 from kivymd.app import MDApp
 from kivymd.toast import toast
+from kivymd.uix.filemanager import MDFileManager
 from PIL import Image
 from pony.orm import db_session
 
 try:
     import spacy
 
+    try:
+        nlp = spacy.load("pt")
+    except OSError:
+        subprocess.run(["python", "-m", "spacy", "download", "pt"], check=True)
+        nlp = spacy.load("pt")
     SPACY_IS_AVAILABLE = True
     """``True`` if spacy could be imported, else ``False``"""
 except ModuleNotFoundError:
@@ -44,9 +51,6 @@ Dictionary relating highlight colors to the things that are highlighted with the
 Currently only ``COLOR2MEANING["highlight_yellow"] = "words"`` is used.
 """
 MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
-
-nlp = None  # pylint: disable = invalid-name
-
 
 # GENERAL
 
@@ -215,6 +219,30 @@ def dict_from_kindle_export(file_path):
     return highlight_dict
 
 
+def split_on_condition(seq, condition):
+    """Return two lazy generators for ``True`` and ``False`` respectively."""
+    condition_true, condition_false = tee((condition(item), item) for item in seq)
+    return (i for p, i in condition_true if p), (i for p, i in condition_false if not p)
+
+
+def remove_punctuation(string):
+    """Return string without punctuation and whitespace."""
+    return string.strip(",.;:-–—!?¿¡\"' ()[]/\n")
+
+
+def lemma_dict(phrases):
+    """Return dictionary with original_phrase: lemmatized_phrase}."""
+    return {
+        phrase: "".join((token.lemma_ + token.whitespace_ for token in nlp(phrase)))
+        for phrase in phrases
+    }
+
+
+def pop_unchanged(dictionary):
+    """Pop all values from dict where key=val."""
+    return [dictionary.pop(key) for key in list(dictionary) if dictionary[key] == key]
+
+
 def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
     """
     Preprocess a list of words (or phrases).
@@ -234,9 +262,6 @@ def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
         words = [word.lower() for word in words]
     if lemmatize:
         if SPACY_IS_AVAILABLE:
-            global nlp  # pylint: disable=global-statement,invalid-name
-            if nlp is None:
-                nlp = spacy.load("pt_core_news_sm")
             words = [" ".join([lemma.lemma_ for lemma in nlp(word)]) for word in words]
             print(words)
         else:
@@ -319,7 +344,9 @@ def compress_img_bytes(bytes_image, width=512):
         img = img.resize(resize, Image.ANTIALIAS)
     output = BytesIO()
     img.save(
-        output, format="JPEG", optimize=True,
+        output,
+        format="JPEG",
+        optimize=True,
     )
     return output.getvalue()
 
@@ -481,3 +508,44 @@ def set_word_state(word, state):
 def not_implemented_toast(*_):
     """Display toast notifying user that the function is not implemented."""
     toast("Not implemented yet.")
+
+
+def get_username():
+    """Return name of currently active user."""
+    return pwd.getpwuid(os.getuid())[0]
+
+
+def is_duplicate(word):
+    """Check if word is already present in the app.word_state_dict."""
+    return word in MDApp.get_running_app().word_state_dict
+
+
+@contextmanager
+def get_file_manager(ext=None, callback=None):
+    """Get file manager.
+
+    Context manager to temporarily set `ext` and `callback` of file_manager.
+    """
+    app = MDApp.get_running_app()
+    if getattr(app, "file_manager") is None:
+        app.file_manager = MDFileManager()
+    file_manager = app.file_manager
+    file_manager.ext, ext = ext, app.file_manager.ext
+    file_manager.select_path = partial(
+        close_and_callback,
+        file_manager=file_manager,
+        callback=callback,
+        old_callback=file_manager.select_path,
+    )
+    try:
+        yield file_manager
+    finally:
+        file_manager.ext, ext = ext, app.file_manager.ext
+
+
+def close_and_callback(file_path, file_manager=None, callback=None, old_callback=None):
+    """Helper-function for :func:`get_file_manager`."""
+    file_manager.close()
+    callback(file_path)
+    if old_callback:
+        file_manager.select_path = old_callback
