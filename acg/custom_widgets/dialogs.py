@@ -2,6 +2,7 @@
 import os
 from functools import partial
 
+from custom_widgets.scroll_widgets import ScrollList
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
@@ -14,8 +15,6 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
-
-from custom_widgets.scroll_widgets import ScrollList
 from paths import CUSTOM_WIDGET_DIR
 
 Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
@@ -54,7 +53,7 @@ class ItemsContent(ScrollList, CustomContentBase):
     def __init__(self, **kwargs):
         self.register_event_type("on_item_press")
         self.child_bindings["on_press"] = partial(self.dispatch, "on_item_press")
-        super(ItemsContent, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     def on_item_press(self, *_):
         """Placeholder-function."""
@@ -99,6 +98,7 @@ class CustomDialog(MDDialog):
     """Custom dialog."""
 
     type = "custom"
+    content_cls_name = StringProperty("CustomContentBase")
     button_cls_name = StringProperty("DialogButton")
     """:class:`~kivy.properties.StringProperty` defaults to ``"DialogButton"``."""
     button_texts = ListProperty(["OK", "CANCEL"])
@@ -115,7 +115,11 @@ class CustomDialog(MDDialog):
         ]
         for button in self.buttons:
             button.bind(on_press=self.on_button_press)
-        super(CustomDialog, self).__init__(**kwargs)
+        if kwargs.get("content_cls_name"):
+            kwargs.setdefault(
+                "content_cls", Factory.get(kwargs.get("content_cls_name"))()
+            )
+        super().__init__(**kwargs)
         self.content_cls.bind(on_item_press=self.on_item_press)
 
     def on_button_press(self, obj):
@@ -128,6 +132,10 @@ class CustomDialog(MDDialog):
 
     def on_item_press(self, content, item):
         """Placeholder-function."""
+
+    def set_data(self, data):
+        """Set data of :attr:`content_cls`."""
+        self.content_cls.data = data
 
 
 class TextInputDialog(CustomDialog):
@@ -144,8 +152,12 @@ class TextInputDialog(CustomDialog):
                 "default_text"
             )
         )
-        super(TextInputDialog, self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
+
+Factory.register("CustomContentBase", CustomContentBase)
+Factory.register("CustomDialog", CustomDialog)
+Factory.register("ReplacementItemsContent", ReplacementItemsContent)
 
 # pylint: disable = W,C,R,I,E
 if __name__ == "__main__":
@@ -191,7 +203,9 @@ FloatLayout:
                 self.dialog.default_text = "second call to text_input_dialog"
             else:
                 self.dialog = TextInputDialog(
-                    title="test", default_text="this is a test", callback=print,
+                    title="test",
+                    default_text="this is a test",
+                    callback=print,
                 )
             self.dialog.open()
 
