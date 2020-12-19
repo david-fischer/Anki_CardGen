@@ -1,17 +1,17 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.1.0
+    rev: v3.4.0
     hooks:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: requirements-txt-fixer
   - repo: https://github.com/psf/black
-    rev: 19.10b0
+    rev: 20.8b1
     hooks:
       - id: black
   - repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.5.0
+    rev: pylint-2.6.0
     hooks:
       - id: pylint
         args: [--rcfile=./.pylintrc]
@@ -19,14 +19,14 @@ repos:
         types: [python]
         exclude: (google_images_download|__init__.py)
   - repo: https://github.com/PyCQA/pydocstyle
-    rev: 5.0.2
+    rev: 5.1.1
     hooks:
       - id: pydocstyle
         exclude: (google_images_download|__init__.py)
         files: acg
         args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
   - repo: https://github.com/codespell-project/codespell
-    rev: "v1.17.1"
+    rev: "v2.0.0"
     hooks:
       - id: codespell
         files: acg
