@@ -8,6 +8,8 @@ from typing import Callable, List
 
 import attr
 
+from design_patterns.factory import CookBook
+
 
 class CallNode:
     """Base class to be used in :attr:`CallChain.members`."""
@@ -28,22 +30,22 @@ class CallNode:
             self.next.receive(*args, **kwargs)
 
 
-@attr.s(auto_attribs=True)
+@attr.s(auto_attribs=True, repr=False)
 class CallChain:
     """Container for CallNodes.
 
     Can be initialized with functions or CallNodes as :attr:`nodes`.
     """
 
-    nodes: List[CallNode or Callable] = None
+    nodes: List[CallNode or Callable or str] = None
+    cookbook: CookBook = None
 
     def __attrs_post_init__(self):
         """Transform functions to `CallNodes` and connect nodes."""
         if self.nodes is None:
             self.nodes = []
-        for i, member in enumerate(self.nodes):
-            if not isinstance(member, CallNode) and callable(member):
-                self.nodes[i] = LambdaNode(function=member)
+        for i, node in enumerate(self.nodes):
+            self.nodes[i] = self.get_node(node)
         self.connect_nodes()
 
     def connect_nodes(self):
@@ -62,6 +64,26 @@ class CallChain:
         """Concatenate two :class:`CallChains` by copying and concatenating their nodes."""
         nodes = copy.deepcopy(self.nodes) + copy.deepcopy(other.nodes)
         return self.__class__(nodes=nodes)
+
+    def __repr__(self):
+        return "\n".join(
+            [self.__class__.__name__ + "("]
+            + [f"\t({i}) {node}" for i, node in enumerate(self.nodes)]
+            + [")"]
+        )
+
+    def get_node(self, node: CallNode or Callable or str):
+        """Construct CallNode from ``node``."""
+        if isinstance(node, CallNode):
+            return copy.deepcopy(node)
+        if callable(node):
+            return LambdaNode(function=node)
+        return self.cookbook.cook(node)
+
+    def append(self, node: CallNode or Callable or str):
+        """Append node and connect to chain."""
+        self.nodes.append(self.get_node(node))
+        self.connect_nodes()
 
 
 @attr.s(auto_attribs=True)

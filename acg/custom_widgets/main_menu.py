@@ -21,13 +21,6 @@ from paths import SCREEN_DIR
 from utils import widget_by_id
 
 
-# print(SCREEN_DIR)
-# print(__file__)
-# print(os.getcwd())
-# print(os.listdir("."))
-# input()
-
-
 class DrawerItem(CheckBehavior, OneLineIconListItem):
     """List item that changes color based on :attr:`current_state`."""
 
@@ -87,34 +80,7 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
 class MainMenu(StackLayout):
     """Contains everything related to the NavigationDrawer and the Screens."""
 
-    screen_dicts = ListProperty(
-        [
-            {
-                "icon": "form-textbox",
-                "text": "Manual Input",
-                "name": "single_word",
-                "kv_file_name": "single_word.kv",
-            },
-            {
-                "icon": "format-list-checkbox",
-                "text": "Queue",
-                "name": "queue",
-                "kv_file_name": "queued.kv",
-            },
-            {
-                "icon": "history",
-                "text": "History",
-                "name": "history",
-                "kv_file_name": "history.kv",
-            },
-            {
-                "icon": "cogs",
-                "text": "Settings",
-                "name": "settings",
-                "kv_file_name": "settings.kv",
-            },
-        ]
-    )
+    screen_dicts = ListProperty()
     """:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens."""
 
     screens = ListProperty()
