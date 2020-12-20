@@ -1,5 +1,4 @@
 #:import pick_val utils.pick_val
-#:import QueuedRoot screens.QueuedRoot
 #:import RecycleList custom_widgets.scroll_widgets.RecycleList
 QueuedRoot:
     id: queued_root
@@ -23,7 +22,6 @@ QueuedRoot:
             ]
 
 
-    MyFloatingActionButtonSpeedDial:
+    CustomSpeedDial:
         id: speed_dial
-        data: {import_dict["icon"]: import_dict["text"] for import_dict in root.import_dicts}
-        callback: root.choose_file_to_import
+        button_dict: root.speed_dial_buttons

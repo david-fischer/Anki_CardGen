@@ -17,6 +17,7 @@ from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from paths import CUSTOM_WIDGET_DIR
 
+Builder.unload_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
 Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
 
 
@@ -138,6 +139,14 @@ class CustomDialog(MDDialog):
         self.content_cls.data = data
 
 
+class ReplacementDialog(CustomDialog):
+    """Dialog with optional replacements."""
+
+    def __init__(self, **kwargs):
+        kwargs["content_cls_name"] = "ReplacementItemsContent"
+        super().__init__(**kwargs)
+
+
 class TextInputDialog(CustomDialog):
     """Dialog with one text field."""
 
@@ -155,9 +164,11 @@ class TextInputDialog(CustomDialog):
         super().__init__(**kwargs)
 
 
+Factory.register("TextInputDialog", TextInputDialog)
 Factory.register("CustomContentBase", CustomContentBase)
 Factory.register("CustomDialog", CustomDialog)
 Factory.register("ReplacementItemsContent", ReplacementItemsContent)
+Factory.register("ReplacementDialog", ReplacementDialog)
 
 # pylint: disable = W,C,R,I,E
 if __name__ == "__main__":

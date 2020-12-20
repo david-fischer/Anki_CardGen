@@ -30,6 +30,7 @@ from custom_widgets.behaviors import (
 )
 from paths import CUSTOM_WIDGET_DIR
 
+Builder.unload_file(os.path.join(CUSTOM_WIDGET_DIR, "scroll_widgets.kv"))
 Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "scroll_widgets.kv"))
 
 

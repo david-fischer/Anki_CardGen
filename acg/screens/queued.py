@@ -11,7 +11,6 @@ from pony.orm import db_session
 from custom_widgets.dialogs import CustomDialog, ReplacementItemsContent
 from parsers import NoMatchError
 from utils import (
-    clean_up,
     not_implemented_toast,
     set_screen,
     start_thread,
@@ -21,6 +20,7 @@ from utils import (
     word_list_from_kobo,
     word_list_from_txt,
 )
+from language_processing import clean_up
 
 
 class CheckableQueue(Queue):
@@ -50,21 +50,21 @@ class QueuedRoot(FloatLayout):
                 "text": "Import from Kindle",
                 "exts": [".html"],
                 "import_fn": word_list_from_kindle,
-                "import_dir": MDApp.get_running_app().getter("import_dir"),
+                # "import_dir": MDApp.get_running_app().getter("import_dir"),
             },
             {
                 "icon": "book-open-variant",
                 "text": "Import from Kobo Annotations",
                 "exts": [".annot"],
                 "import_fn": word_list_from_kobo,
-                "import_dir": MDApp.get_running_app().getter("kobo_import_dir"),
+                # "import_dir": MDApp.get_running_app().getter("kobo_import_dir"),
             },
             {
                 "icon": "note-text",
                 "text": "Import from txt-file",
                 "exts": [".txt"],
                 "import_fn": word_list_from_txt,
-                "import_dir": MDApp.get_running_app().getter("import_dir"),
+                # "import_dir": MDApp.get_running_app().getter("import_dir"),
             },
         ]
     )

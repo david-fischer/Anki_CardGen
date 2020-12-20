@@ -25,6 +25,7 @@ from pony.orm import db_session
 from custom_widgets.main_menu import MainMenu
 from db import add_missing_templates, get_template
 from paths import ANKI_DIR, CUSTOM_WIDGET_DIR, ROOT_DATA_DIR
+import screens
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
@@ -97,7 +98,7 @@ class AnkiCardGenApp(MDApp):
         )
         self.import_dir = self.import_dir or os.path.abspath(ROOT_DATA_DIR)
         os.makedirs(self.apkg_export_dir, exist_ok=True)
-        return MainMenu()
+        return MainMenu(screen_dicts=screens.screen_dicts)
 
     def get_current_template_db(self):
         """Return data-base object for :attr:`current_template_name`."""
