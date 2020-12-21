@@ -2,3 +2,4 @@ eles->else, disabled because of portuguese pronoun
 scr->src,
 datas->data, disabled because of keyword in pyinstaller spec file
 juxt->just, disabled bc function
+nd->and, disabled bc class in html
