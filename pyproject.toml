@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "acg"
-version = "0.1.0"
-description = "description"
+version = "1.0.11"
+description = "Kivy application to generate flash cards for Anki."
 authors = ["David Fischer <d.fischer.git@posteo.de>"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/david-fischer/acg"
+repository = "https://github.com/david-fischer/Anki_CardGen"
+keywords = ["kivy, anki, flash cards, languages, portuguese, learning"]
 packages = [{ include = "acg" }]
 
 
@@ -15,6 +16,22 @@ appdirs = "^1.4.4"
 click = "^7.1.2"
 pyfzf = "^0.2.2"
 titlecase = "^1.1.1"
+attrs = "^20.3.0"
+beautifulsoup4 = "^4.9.3"
+bidict = "^0.21.2"
+certifi = "^2020.12.5"
+genanki = "^0.10.1"
+kivymd = "^0.104.1"
+googletrans = "^3.0.0"
+Kivy = "^2.0.0"
+lxml = "^4.6.2"
+pandas = "^1.1.5"
+Pillow = "^8.0.1"
+pony = "^0.7.14"
+requests = "^2.25.1"
+spacy = "^2.3.5"
+toolz = "^0.11.1"
+Unidecode = "^1.1.2"
 
 [tool.poetry.dev-dependencies]
 Jinja2 = "^2.11.2"
@@ -24,7 +41,7 @@ pre-commit = "^2.9.2"
 toml = "^0.10.2"
 
 [tool.poetry.scripts]
-acg = "acg.cli:cli"
+acg = "acg.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
