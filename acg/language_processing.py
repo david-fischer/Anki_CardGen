@@ -28,7 +28,7 @@ def remove_punctuation(some_string):
 
 def join_lemmas(doc):
     """Return joined lemmas with appropriate whitespace."""
-    return "".join((token.lemma_ + token.whitespace_ for token in doc))
+    return "".join(token.lemma_ + token.whitespace_ for token in doc)
 
 
 def lemma_dict(phrases):

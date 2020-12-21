@@ -199,15 +199,18 @@ class ChildrenFromDataBehavior:
         last_child = self.root_for_children.children[-1]
         self.root_for_children.remove_widget(last_child)
 
+    def update_num_children(self):
+        """Add/remove children until correct number is reached."""
+        diff = len(self.data) - len(self.root_for_children.children)
+        for _ in range(abs(diff)):
+            if diff > 0:
+                self.add_child()
+            else:
+                self.remove_child()
+
     def on_data(self, *_):
         """Update children on change of :attr:`data`."""
-        diff = len(self.data) - len(self.root_for_children.children)
-        if diff > 0:
-            for _ in range(abs(diff)):
-                self.add_child()
-        else:
-            for _ in range(abs(diff)):
-                self.remove_child()
+        self.update_num_children()
         for i, child_dict in enumerate(self.data):
             for key, val in child_dict.items():
                 setattr(self.root_for_children.children[-i - 1], key, val)

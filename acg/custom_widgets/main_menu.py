@@ -3,8 +3,10 @@
 import os
 
 import toolz
+from custom_widgets.behaviors import CheckBehavior
+from custom_widgets.selection_widgets import CheckContainer
+from db import get_template_names
 from kivy.core.window import Window
-from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import ListProperty, StringProperty
 from kivy.uix.screenmanager import Screen
@@ -13,10 +15,6 @@ from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 from kivymd.uix.menu import MDDropdownMenu
-
-from custom_widgets.behaviors import CheckBehavior
-from custom_widgets.selection_widgets import CheckContainer
-from db import get_template_names
 from paths import SCREEN_DIR
 from utils import widget_by_id
 
@@ -43,9 +41,6 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
         """Close drawer and sets :attr:`current_state` to ``True``."""
         self.current_state = True
         widget_by_id("nav_drawer").set_state("close")
-
-
-Factory.register("DrawerItem", DrawerItem)
 
 
 class DrawerList(ThemableBehavior, CheckContainer, MDList):
@@ -179,6 +174,3 @@ class KvScreen(Screen):
     def _create_content_file(self):
         with open(self.path, "w") as file:
             file.write(f'MDLabel:\n\ttext:"{self.name}"')
-
-
-Factory.register("KvScreen", KvScreen)

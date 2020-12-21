@@ -1,4 +1,3 @@
-"""Init.py"""
 import os
 import pathlib
 import sys

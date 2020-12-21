@@ -68,7 +68,7 @@ def load_dicts_from_csv(path):
     Returns:
         : List of dictionaries.
     """
-    with open(path, "r") as read_obj:
+    with open(path) as read_obj:
         return list(csv.DictReader(read_obj))
 
 
@@ -91,7 +91,7 @@ def smart_loader(path):
     if ext == "p":
         with open(path, "rb") as file:
             return pickle.load(file)
-    with open(path, "r") as file:
+    with open(path) as file:
         if ext == "json":
             return json.load(file)
         if ext == "csv":
@@ -191,7 +191,7 @@ def dict_from_kindle_export(file_path):
     Returns:
         :Dictionary `{"highlight_color_1" : ["list", "of" , "highlighted parts", ...],...}`
     """
-    with open(file_path, "r") as file:
+    with open(file_path) as file:
         soup = BeautifulSoup(file, "lxml")
     heading_tags = soup.select("div.noteHeading span")
     highlight_dict = defaultdict(list)
@@ -232,14 +232,14 @@ def word_list_from_txt(path):
     Args:
       path: Path to txt-file. Each line should correspond to a word (or phrase).
     """
-    with open(path, "r") as file:
+    with open(path) as file:
         words = file.read().splitlines()
     return words
 
 
 def word_list_from_kobo(path):
     """Parse kobos .annot-file and return list of notations."""
-    with open(path, "r") as file:
+    with open(path) as file:
         soup = BeautifulSoup(file, "lxml")
     words = [tag.text for tag in soup.select("annotation text")]
     return words

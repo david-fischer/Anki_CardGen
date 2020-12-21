@@ -1,5 +1,4 @@
 """Provides :class:`CustomDialog` and :class:`ReplacementItemsContent`."""
-import os
 from functools import partial
 
 from custom_widgets.scroll_widgets import ScrollList
@@ -15,10 +14,6 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
-from paths import CUSTOM_WIDGET_DIR
-
-Builder.unload_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
-Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "dialogs.kv"))
 
 
 class CustomContentBase:
@@ -163,12 +158,6 @@ class TextInputDialog(CustomDialog):
         )
         super().__init__(**kwargs)
 
-
-Factory.register("TextInputDialog", TextInputDialog)
-Factory.register("CustomContentBase", CustomContentBase)
-Factory.register("CustomDialog", CustomDialog)
-Factory.register("ReplacementItemsContent", ReplacementItemsContent)
-Factory.register("ReplacementDialog", ReplacementDialog)
 
 # pylint: disable = W,C,R,I,E
 if __name__ == "__main__":
