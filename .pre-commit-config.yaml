@@ -32,14 +32,14 @@ repos:
       - id: pylint
         files: acg
         types: [python]
-        exclude: google_images_download
+        exclude: (google_images_download|__init__.py)
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 5.1.1
     hooks:
       - id: pydocstyle
         files: acg
         args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
-        exclude: google_images_download
+        exclude: (google_images_download|__init__.py)
   - repo: https://github.com/codespell-project/codespell
     rev: v2.0.0
     hooks:
