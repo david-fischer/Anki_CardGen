@@ -673,7 +673,6 @@ class googleimagesdownload:
         except OSError as e:
             if e.errno != 17:
                 raise
-            pass
         req = Request(
             url,
             headers={
@@ -1051,7 +1050,6 @@ class googleimagesdownload:
         except OSError as e:
             if e.errno != 17:
                 raise
-            pass
         return
 
     # Download Image thumbnails
