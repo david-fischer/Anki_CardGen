@@ -53,11 +53,12 @@ build-backend = "poetry.core.masonry.api"
 disable = [
     "C0330, C0326", #black compatibility
     "import-error,no-name-in-module,no-member", #compatibility with pre-commit-hook in pycharm
+    "too-few-public-methods"
 ]
 good-names = ["i,j,k,v,x,y,id,_,d"]
 
 [tool.pylint.format]
-max-line-length = "88" #black compatibility
+max-line-length = "120" #increased
 
 [tool.isort]
 multi_line_output = 3                   #black compatibility
