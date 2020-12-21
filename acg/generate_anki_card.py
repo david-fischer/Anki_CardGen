@@ -9,13 +9,15 @@ Its purpose is to handle everything Anki-related:
     * saving apgk-file
 """
 
+
 import re
 
 import attr
 import bs4
 import genanki
-from paths import ANKI_DIR
-from utils import CD, smart_loader
+
+from .paths import ANKI_DIR
+from .utils import CD, smart_loader
 
 
 @attr.s

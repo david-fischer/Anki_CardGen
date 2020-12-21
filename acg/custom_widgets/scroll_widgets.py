@@ -3,14 +3,10 @@ Implements Different classes to display elements in a scroll view.
 
 :class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.
 """
+
 from random import choice
 
 import toolz
-from custom_widgets.behaviors import (
-    CallbackBehavior,
-    ChildrenFromDataBehavior,
-    MultiStateBehavior,
-)
 from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.properties import (
@@ -25,6 +21,8 @@ from kivy.uix.recycleview import RecycleView
 from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
 from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
+
+from .behaviors import CallbackBehavior, ChildrenFromDataBehavior, MultiStateBehavior
 
 
 class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):

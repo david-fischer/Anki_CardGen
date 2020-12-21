@@ -1,13 +1,7 @@
 """Implements various elements to get user selection."""
+
 from functools import partial
 
-from custom_widgets.behaviors import (
-    CheckBehavior,
-    ChildrenFromDataBehavior,
-    LongPressBehavior,
-    ThemableColorChangeBehavior,
-    TranslationOnCheckBehavior,
-)
 from kivy.animation import Animation
 from kivy.factory import Factory
 from kivy.lang import Builder
@@ -30,6 +24,14 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.behaviors import CircularRippleBehavior, RectangularRippleBehavior
 from kivymd.uix.card import MDCard
 from kivymd.uix.imagelist import SmartTile
+
+from .behaviors import (
+    CheckBehavior,
+    ChildrenFromDataBehavior,
+    LongPressBehavior,
+    ThemableColorChangeBehavior,
+    TranslationOnCheckBehavior,
+)
 
 
 class SeparatorWithHeading(FloatLayout):

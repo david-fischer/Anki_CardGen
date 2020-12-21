@@ -1,10 +1,12 @@
 """This module defines constants for the different paths used in the application."""
 
+
 import os
 
 from kivy import platform
 
 if platform == "android":
+
     from android.storage import primary_external_storage_path
 
 MAIN_DIR = os.path.abspath(os.path.dirname(__file__))

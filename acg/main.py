@@ -1,14 +1,12 @@
 """Contains the Main App :class:`AnkiCardGenApp`."""
 __version__ = "1.0.11"
 
+
 import os
 import pydoc
 
 import certifi
-import screens
 import toolz
-from custom_widgets.main_menu import MainMenu
-from db import add_missing_templates, get_template
 from kivy import platform
 from kivy.clock import mainthread
 from kivy.properties import (
@@ -22,8 +20,12 @@ from kivy.uix.modalview import ModalView
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.spinner import MDSpinner
-from paths import ANKI_DIR, ROOT_DATA_DIR
 from pony.orm import db_session
+
+from . import screens
+from .custom_widgets.main_menu import MainMenu
+from .db import add_missing_templates, get_template
+from .paths import ANKI_DIR, ROOT_DATA_DIR
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
 
@@ -168,6 +170,7 @@ class AnkiCardGenApp(MDApp):
     def request_permissions():
         """Request storage permissions on android."""
         if platform == "android":
+
             from android.permissions import (  # pylint: disable=import-outside-toplevel
                 Permission,
                 request_permissions,

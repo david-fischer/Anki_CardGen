@@ -1,4 +1,5 @@
 """Provides various mixin-classes for kivy widgets."""
+
 from functools import partial
 from threading import Thread
 

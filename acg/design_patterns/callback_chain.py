@@ -3,12 +3,13 @@
 This is useful, for chaining callbacks of objects, that are not living in the main-thread.
 """
 
+
 import copy
 from typing import Callable, List
 
 import attr
 
-from design_patterns.factory import CookBook
+from .factory import CookBook
 
 
 class CallNode:

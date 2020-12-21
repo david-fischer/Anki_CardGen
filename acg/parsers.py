@@ -5,6 +5,7 @@ Each parser returns a dict, that can directly be used by the :meth:`pt_word.Word
 :class:`pt_word.Word`
 class.
 """
+
 import re
 from collections import defaultdict
 from pprint import pprint
