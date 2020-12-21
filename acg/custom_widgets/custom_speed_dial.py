@@ -1,6 +1,4 @@
 """CustomSpeedDial."""
-from kivy.factory import Factory
-from kivy.lang import Builder
 from kivy.properties import AliasProperty, DictProperty
 from kivymd.uix import SpecificBackgroundColorBehavior
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial
@@ -24,13 +22,3 @@ class CustomSpeedDial(MDFloatingActionButtonSpeedDial, SpecificBackgroundColorBe
         """Callback-function when any button is pressed."""
         self.close_stack()
         self.button_dict[button.icon]["callback"]()
-
-
-Factory.register("CustomSpeedDial", CustomSpeedDial)
-Builder.load_string(
-    """
-<CustomSpeedDial>:
-    label_text_color: self.specific_text_color
-    background_palette: "Accent"
-"""
-)

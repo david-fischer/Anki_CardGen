@@ -1,7 +1,13 @@
 """Implements various elements to get user selection."""
-import os
 from functools import partial
 
+from custom_widgets.behaviors import (
+    CheckBehavior,
+    ChildrenFromDataBehavior,
+    LongPressBehavior,
+    ThemableColorChangeBehavior,
+    TranslationOnCheckBehavior,
+)
 from kivy.animation import Animation
 from kivy.factory import Factory
 from kivy.lang import Builder
@@ -21,24 +27,9 @@ from kivy.uix.modalview import ModalView
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.behaviors import (
-    CircularRippleBehavior,
-    RectangularRippleBehavior,
-)
+from kivymd.uix.behaviors import CircularRippleBehavior, RectangularRippleBehavior
 from kivymd.uix.card import MDCard
 from kivymd.uix.imagelist import SmartTile
-
-from custom_widgets.behaviors import (
-    CheckBehavior,
-    ChildrenFromDataBehavior,
-    LongPressBehavior,
-    ThemableColorChangeBehavior,
-    TranslationOnCheckBehavior,
-)
-from paths import CUSTOM_WIDGET_DIR
-
-Builder.unload_file(os.path.join(CUSTOM_WIDGET_DIR, "selection_widgets.kv"))
-Builder.load_file(os.path.join(CUSTOM_WIDGET_DIR, "selection_widgets.kv"))
 
 
 class SeparatorWithHeading(FloatLayout):
@@ -214,13 +205,7 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
 
         The children are in ``carousel.slides`` as opposed to ``carousel.children``.
         """
-        diff = len(self.data) - len(getattr(self.carousel, "slides", []))
-        if diff > 0:
-            for _ in range(abs(diff)):
-                self.add_child()
-        else:
-            for _ in range(abs(diff)):
-                self.remove_child()
+        self.update_num_children()
         for i, child_dict in enumerate(self.data):
             for key, val in child_dict.items():
                 setattr(self.carousel.slides[i], key, val)

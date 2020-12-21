@@ -7,7 +7,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.picker import MDThemePicker
 from kivymd.uix.snackbar import Snackbar
-
 from utils import app_busy
 
 

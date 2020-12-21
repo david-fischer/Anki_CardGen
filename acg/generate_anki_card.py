@@ -14,7 +14,6 @@ import re
 import attr
 import bs4
 import genanki
-
 from paths import ANKI_DIR
 from utils import CD, smart_loader
 
@@ -29,7 +28,7 @@ class HtmlLoader:
     """Content of the file at :attr:`path`."""
 
     def __attrs_post_init__(self):
-        with open(self.path, "r") as file:
+        with open(self.path) as file:
             self.string = file.read()
 
     def set_of_fields(self):
@@ -58,7 +57,7 @@ class HtmlLoader:
         for tag in soup.select("script[src]"):
             src = tag["src"]
             del tag.attrs["src"]
-            with open(src, "r") as file:
+            with open(src) as file:
                 tag.string = file.read()
         for tag in soup.select("script[defer]"):
             del tag.attrs["defer"]
@@ -105,7 +104,7 @@ def model_from_html(name, template_names, model_id, css_path):
         for temp_name in templates_html
     ]
 
-    with open(css_path, "r") as file:
+    with open(css_path) as file:
         css = file.read()
 
     return genanki.Model(
@@ -118,7 +117,7 @@ def model_from_html(name, template_names, model_id, css_path):
 
 
 @attr.s
-class AnkiObject:
+class AnkiObject:  # pylint: disable=too-many-instance-attributes
     """
     Class containing all necessary objects from the `genanki <https://github.com/kerrickstaley/genanki>`_-module.
 

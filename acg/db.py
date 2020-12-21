@@ -8,20 +8,19 @@ import shutil
 from datetime import datetime
 
 import toolz
+from generate_anki_card import AnkiObject
+from paths import ANKI_DIR, MAIN_DIR
 from pony.orm import (
-    buffer,
     Database,
-    db_session,
     Json,
     Optional,
     PrimaryKey,
     Required,
-    select,
     Set,
+    buffer,
+    db_session,
+    select,
 )
-
-from generate_anki_card import AnkiObject
-from paths import ANKI_DIR, MAIN_DIR
 from utils import CD, now_string, update_word_state_dict
 
 TEMPLATE_DICTS = [

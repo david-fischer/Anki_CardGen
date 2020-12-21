@@ -8,12 +8,6 @@ from functools import partial
 from pprint import pprint
 from typing import Dict, List
 
-from kivy.factory import Factory
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-from kivymd.toast import toast
-from pony.orm import commit, db_session
-
 from custom_widgets.scroll_widgets import ScrollBox
 from custom_widgets.selection_widgets import ImageCarousel, SeparatorWithHeading
 from db import get_template, new_template
@@ -27,6 +21,11 @@ from fields import (
     TransChipOptionsField,
     translator,
 )
+from kivy.factory import Factory
+from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivymd.toast import toast
+from language_processing import tag_word_in_sentence
 from parsers import (
     DicioParser,
     GoogleImagesParser,
@@ -35,8 +34,8 @@ from parsers import (
     Parser,
     ReversoParser,
 )
+from pony.orm import commit, db_session
 from utils import app_busy, smart_dict_merge
-from acg.language_processing import tag_word_in_sentence
 
 
 class Template(BoxLayout):
