@@ -1,7 +1,7 @@
 """Provides :class:`CustomDialog` and :class:`ReplacementItemsContent`."""
+
 from functools import partial
 
-from custom_widgets.scroll_widgets import ScrollList
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
@@ -14,6 +14,8 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
+
+from .scroll_widgets import ScrollList
 
 
 class CustomContentBase:

@@ -1,9 +1,8 @@
 """Implements :class:`HistoryMain`, the root widget of the history screen."""
+
 import os
 
 from bidict import bidict
-from custom_widgets.dialogs import TextInputDialog
-from db import export_cards
 from kivy.clock import Clock
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
@@ -11,7 +10,10 @@ from kivymd.app import MDApp
 from kivymd.toast import toast
 from kivymd.uix.menu import MDDropdownMenu
 from pony.orm import db_session
-from utils import app_busy, not_implemented_toast, set_word_state, widget_by_id
+
+from ..custom_widgets.dialogs import TextInputDialog
+from ..db import export_cards
+from ..utils import app_busy, not_implemented_toast, set_word_state, widget_by_id
 
 
 class HistoryRoot(FloatLayout):

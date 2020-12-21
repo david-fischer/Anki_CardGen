@@ -3,12 +3,13 @@
 import os
 import sys
 
+from kivymd import hooks_path as kivymd_hooks_path
+
 sys.setrecursionlimit(5000)
 
 kivymd_hidden_imports = ["kivymd.vendor.circularTimePicker"]
 # from kivy_deps import sdl2, glew
 
-from kivymd import hooks_path as kivymd_hooks_path
 
 path = os.path.abspath(".")
 

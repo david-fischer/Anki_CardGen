@@ -1,4 +1,5 @@
 """Provide :class:`CookBook`."""
+
 import attr
 
 

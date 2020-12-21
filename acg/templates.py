@@ -4,14 +4,21 @@ Implementation of :class:`Template` class and sub-classes.
 To add a new template, inherit from Template or a subclass and define the :attr:`parsers` and :attr:`fields` attributes.
 See e.g. the definition of :class:`PtTemplate`.
 """
+
 from functools import partial
 from pprint import pprint
 from typing import Dict, List
 
-from custom_widgets.scroll_widgets import ScrollBox
-from custom_widgets.selection_widgets import ImageCarousel, SeparatorWithHeading
-from db import get_template, new_template
-from fields import (
+from kivy.factory import Factory
+from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivymd.toast import toast
+from pony.orm import commit, db_session
+
+from .custom_widgets.scroll_widgets import ScrollBox
+from .custom_widgets.selection_widgets import ImageCarousel, SeparatorWithHeading
+from .db import get_template, new_template
+from .fields import (
     CheckChipOptionsField,
     DualLongTextField,
     Field,
@@ -21,12 +28,8 @@ from fields import (
     TransChipOptionsField,
     translator,
 )
-from kivy.factory import Factory
-from kivy.lang import Builder
-from kivy.uix.boxlayout import BoxLayout
-from kivymd.toast import toast
-from language_processing import tag_word_in_sentence
-from parsers import (
+from .language_processing import tag_word_in_sentence
+from .parsers import (
     DicioParser,
     GoogleImagesParser,
     LingueeParser,
@@ -34,8 +37,7 @@ from parsers import (
     Parser,
     ReversoParser,
 )
-from pony.orm import commit, db_session
-from utils import app_busy, smart_dict_merge
+from .utils import app_busy, smart_dict_merge
 
 
 class Template(BoxLayout):
@@ -260,12 +262,14 @@ Builder.load_string(
 
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
+
     from kivymd.app import MDApp
 
     Factory.register("ImageCarousel", ImageCarousel)
     Factory.register("ScrollBox", ScrollBox)
 
     class _TestApp(MDApp):
+
         from custom_widgets.selection_widgets import SeparatorWithHeading
 
         def build(self):

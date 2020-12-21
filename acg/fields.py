@@ -14,7 +14,7 @@ from kivy.clock import mainthread
 from kivy.lang import Builder
 from pony.orm import db_session
 
-from utils import compress_img_bytes
+from .utils import compress_img_bytes
 
 translator = Translator()
 

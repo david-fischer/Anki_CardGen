@@ -1,4 +1,5 @@
 """Init."""
+
 import json
 import pathlib
 

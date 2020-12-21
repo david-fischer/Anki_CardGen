@@ -1,11 +1,9 @@
 """Implements :class:`MainMenu`."""
 
+
 import os
 
 import toolz
-from custom_widgets.behaviors import CheckBehavior
-from custom_widgets.selection_widgets import CheckContainer
-from db import get_template_names
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.properties import ListProperty, StringProperty
@@ -15,8 +13,12 @@ from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 from kivymd.uix.menu import MDDropdownMenu
-from paths import SCREEN_DIR
-from utils import widget_by_id
+
+from ..db import get_template_names
+from ..paths import SCREEN_DIR
+from ..utils import widget_by_id
+from .behaviors import CheckBehavior
+from .selection_widgets import CheckContainer
 
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):

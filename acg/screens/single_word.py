@@ -1,8 +1,10 @@
 """Implements root widget of the single_word screen."""
 
+
 from kivy.properties import ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
-from utils import set_screen
+
+from ..utils import set_screen
 
 
 class SingleWordRoot(FloatLayout):

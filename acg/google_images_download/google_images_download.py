@@ -4,8 +4,17 @@
 
 ###### Searching and Downloading Google Images to the local disk ######
 
+import argparse
+import codecs
+import datetime
+import json
+import os
+import re
+import ssl
+
 # Import Libraries
 import sys
+import time  # Importing the time library to check the time of code execution
 
 version = (3, 0)
 cur_version = sys.version_info
@@ -27,14 +36,6 @@ else:  # If the Current Version of Python is 2.x
     from httplib import IncompleteRead, BadStatusLine
 
     httplib._MAXHEADERS = 1000
-import time  # Importing the time library to check the time of code execution
-import os
-import argparse
-import ssl
-import datetime
-import json
-import re
-import codecs
 
 args_list = [
     "keywords",
