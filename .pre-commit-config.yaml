@@ -8,6 +8,7 @@ repos:
       - id: requirements-txt-fixer
       - id: check-toml
       - id: pretty-format-json
+        args: ["--autofix"]
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:

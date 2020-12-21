@@ -1,17 +1,17 @@
 {
-  "zh": "Chinese",
   "da": "Danish",
-  "nl": "Dutch",
-  "en": "English",
-  "fr": "French",
   "de": "German",
   "el": "Greek",
+  "en": "English",
+  "es": "Spanish",
+  "fr": "French",
   "it": "Italian",
   "ja": "Japanese",
   "lt": "Lithuanian",
-  "nb": "Norwegian Bokmål",
+  "nb": "Norwegian Bokm\u00e5l",
+  "nl": "Dutch",
   "pl": "Polish",
   "pt": "Portuguese",
   "ro": "Romanian",
-  "es": "Spanish"
+  "zh": "Chinese"
 }
