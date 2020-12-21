@@ -1,0 +1,51 @@
+[tool.poetry]
+name = "acg"
+version = "0.1.0"
+description = "description"
+authors = ["David Fischer <d.fischer.git@posteo.de>"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/david-fischer/acg"
+packages = [{ include = "acg" }]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+appdirs = "^1.4.4"
+click = "^7.1.2"
+pyfzf = "^0.2.2"
+titlecase = "^1.1.1"
+
+[tool.poetry.dev-dependencies]
+Jinja2 = "^2.11.2"
+pylint = "^2.6.0"
+black = "^20.8b1"
+pre-commit = "^2.9.2"
+toml = "^0.10.2"
+
+[tool.poetry.scripts]
+acg = "acg.cli:cli"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+#LINTERS ETC
+
+[tool.pylint.messages_control]
+disable = [
+    "C0330, C0326", #black compatibility
+    "import-error,no-name-in-module,no-member", #compatibility with pre-commit-hook in pycharm
+]
+good-names = ["i,j,k,v,x,y,id,_,d"]
+
+[tool.pylint.format]
+max-line-length = "88" #black compatibility
+
+[tool.isort]
+multi_line_output = 3                   #black compatibility
+include_trailing_comma = true           #black compatibility
+force_grid_wrap = 0                     #black compatibility
+use_parentheses = true                  #black compatibility
+ensure_newline_before_comments = true   #black compatibility
+line_length = 88                        #black compatibility
