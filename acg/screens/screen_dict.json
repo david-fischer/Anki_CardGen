@@ -1,26 +1,26 @@
 [
   {
     "icon": "form-textbox",
-    "text": "Manual Input",
+    "kv_file_name": "single_word.kv",
     "name": "single_word",
-    "kv_file_name": "single_word.kv"
+    "text": "Manual Input"
   },
   {
     "icon": "format-list-checkbox",
-    "text": "Queue",
+    "kv_file_name": "queued.kv",
     "name": "queue",
-    "kv_file_name": "queued.kv"
+    "text": "Queue"
   },
   {
     "icon": "history",
-    "text": "History",
+    "kv_file_name": "history.kv",
     "name": "history",
-    "kv_file_name": "history.kv"
+    "text": "History"
   },
   {
     "icon": "cogs",
-    "text": "Settings",
+    "kv_file_name": "settings.kv",
     "name": "settings",
-    "kv_file_name": "settings.kv"
+    "text": "Settings"
   }
 ]
