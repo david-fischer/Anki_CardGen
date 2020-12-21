@@ -67,3 +67,4 @@ max-line-length = "120" #increased
 
 [tool.isort]
 profile = "black"
+known_third_party=["kivy","kivymd","googletrans","genanki"]
