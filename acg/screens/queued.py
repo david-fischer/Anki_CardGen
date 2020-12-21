@@ -1,26 +1,17 @@
 """Contains the functions needed on the screen queue."""
+
 import threading
 from queue import Queue
 
 from kivy.clock import Clock
-from kivy.properties import ListProperty, ObjectProperty
+from kivy.properties import DictProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
 from pony.orm import db_session
 
-from custom_widgets.dialogs import CustomDialog, ReplacementItemsContent
-from parsers import NoMatchError
-from utils import (
-    not_implemented_toast,
-    set_screen,
-    start_thread,
-    start_workers,
-    widget_by_id,
-    word_list_from_kindle,
-    word_list_from_kobo,
-    word_list_from_txt,
-)
-from language_processing import clean_up
+from ..importer import import_chain_cookbook
+from ..parsers import NoMatchError
+from ..utils import not_implemented_toast, set_screen, start_workers, widget_by_id
 
 
 class CheckableQueue(Queue):
@@ -43,44 +34,22 @@ class QueuedRoot(FloatLayout):
     """:class:`CheckableQueue` object."""
     stale = set()
     """Set of stale words, i.e. words that have been dequeued and will be skipped if appearing in the queue."""
-    import_dicts = ListProperty(
-        [
-            {
-                "icon": "book-open",
-                "text": "Import from Kindle",
-                "exts": [".html"],
-                "import_fn": word_list_from_kindle,
-                # "import_dir": MDApp.get_running_app().getter("import_dir"),
-            },
-            {
-                "icon": "book-open-variant",
-                "text": "Import from Kobo Annotations",
-                "exts": [".annot"],
-                "import_fn": word_list_from_kobo,
-                # "import_dir": MDApp.get_running_app().getter("kobo_import_dir"),
-            },
-            {
-                "icon": "note-text",
-                "text": "Import from txt-file",
-                "exts": [".txt"],
-                "import_fn": word_list_from_txt,
-                # "import_dir": MDApp.get_running_app().getter("import_dir"),
-            },
-        ]
-    )
+    speed_dial_buttons = DictProperty()
     """: : :class:`~kivy.properties.DictProperty` of the form ``{"icon_name":"Help text"}``."""
     dialog = ObjectProperty()
     """:class:`~kivy.properties.ObjectProperty`. Instance of :class:`custom_widgets.dialogs.CustomDialog`."""
 
     def __init__(self, **kwargs):
+        self.speed_dial_buttons = import_chain_cookbook.to_button_dict()
+        for button_dict in self.speed_dial_buttons.values():
+            button_dict["callback"].append(self.queue_words)
         super().__init__(**kwargs)
         self._init_queue()
-        self._init_dialog()
 
     def _init_queue(self):
         """Queue all words in ``"queued"`` and ``"loading"`` state."""
         for word, state in MDApp.get_running_app().word_state_dict.items():
-            if state in ["queued", "loading"]:
+            if state in {"queued", "loading"}:
                 self.queue_word(word)
 
     def queue_all(self, *_):
@@ -93,21 +62,6 @@ class QueuedRoot(FloatLayout):
     def dequeue_all(*_):
         """Placeholder-function."""
         not_implemented_toast()
-
-    def _init_dialog(self):
-        """Initialize :attr:`dialog` as instance of :class:`custom_widgets.dialogs.CustomDialog`."""
-        content = ReplacementItemsContent()
-        self.dialog = CustomDialog(
-            title="Some words are not in their dictionary form. The following replacements are suggested:",
-            content_cls=content,
-            callback=self.dialog_callback,
-        )
-
-    def dialog_callback(self, btn_txt, words):
-        """Add ``words`` to :attr:`queue` if ``"OK"``-button was pressed."""
-        if btn_txt == "OK":
-            for word in words:
-                self.queue_word(word)
 
     @staticmethod
     def is_duplicate(word):
@@ -156,6 +110,11 @@ class QueuedRoot(FloatLayout):
             self.stale.remove(word)
         self.start_downloading()
 
+    def queue_words(self, words):
+        """Queue list of words."""
+        for word in words:
+            self.queue_word(word)
+
     def dequeue_word(self, word):
         """Change state to ``"waiting"`` and adds ``word`` to :attr:`stale` so it will be skipped in :attr:`queue`."""
         MDApp.get_running_app().word_state_dict[word] = "waiting"
@@ -190,63 +149,6 @@ class QueuedRoot(FloatLayout):
             self.generate_card(item.text)
         elif item.current_state == "waiting":
             self.queue_word(item.text)
-
-    def choose_file_to_import(self, button):
-        """
-        Open an instance of :class:`~kivymd.uix.filemanager.MDFileManager` to let user choose a file to import.
-
-        Binds function to clicking on file, so the import is started in separate thread.
-        """
-        self.speed_dial.close_stack()
-        import_dict = [
-            imp_dict
-            for imp_dict in self.import_dicts
-            if imp_dict["icon"] == button.icon
-        ][0]
-        print(import_dict["import_dir"])
-        import_function = start_thread(  # pylint: disable=no-value-for-parameter
-            self.import_from, import_fn=import_dict["import_fn"], name="import_thread"
-        )
-        app = MDApp.get_running_app()
-        app.open_file_manager(
-            ext=import_dict["exts"],
-            path=import_dict["import_dir"](self),
-            callback=import_function,
-        )
-
-    def import_from(self, path, import_fn=word_list_from_kindle):
-        """
-        Import, process and queue words from file.
-
-        If non-dictionary forms are detected, prompts the user with suggestions for replacement.
-
-        Args:
-          path: Path to file.
-          import_fn: function that returns list of words
-        """
-        MDApp.get_running_app().file_manager.close()
-        words = import_fn(path)
-        words = clean_up(words, lemmatize=False, remove_punct=True, lower_case=True)
-        lemmas = clean_up(words, lemmatize=True, remove_punct=False, lower_case=False)
-        new_pairs = [
-            (word, lemma)
-            for word, lemma in zip(words, lemmas)
-            if not (self.is_duplicate(word) or self.is_duplicate(lemma))
-        ]
-        suggested_replacements = [
-            {"word": word, "lemma": lemma} for word, lemma in new_pairs if word != lemma
-        ]
-        unchanged_words = [word for word, lemma in new_pairs if word == lemma]
-        self.show_replacements_dialog(replacements=suggested_replacements)
-        for word in unchanged_words:
-            self.add_waiting(word)
-
-    def show_replacements_dialog(self, replacements):
-        """Open dialog to show user possible corrections for the imported words."""
-        self.dialog.content_cls.data = [
-            {**rep_dict, "height": 45} for rep_dict in replacements
-        ]
-        self.dialog.open()
 
     @staticmethod
     def sort(*_):
