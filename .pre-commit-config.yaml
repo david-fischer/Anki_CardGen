@@ -6,39 +6,59 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: requirements-txt-fixer
+      - id: check-toml
+      - id: pretty-format-json
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
       - id: black
+  - repo: https://github.com/myint/autoflake
+    rev: v1.4
+    hooks:
+      - id: autoflake
+        files: acg
+        args: [ "--in-place" ]
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.6.4
+    hooks:
+      - id: isort
+        files: acg
+        types: [python]
+        exclude: google_images_download
   - repo: https://github.com/PyCQA/pylint
     rev: pylint-2.6.0
     hooks:
       - id: pylint
-        args: [--rcfile=./.pylintrc]
         files: acg
         types: [python]
-        exclude: (google_images_download|__init__.py)
+        exclude: google_images_download
   - repo: https://github.com/PyCQA/pydocstyle
     rev: 5.1.1
     hooks:
       - id: pydocstyle
-        exclude: (google_images_download|__init__.py)
         files: acg
         args: [--add-ignore,"D105,D107"] #Docstrings for __init__ and other magic functions.
+        exclude: google_images_download
   - repo: https://github.com/codespell-project/codespell
-    rev: "v2.0.0"
+    rev: v2.0.0
     hooks:
       - id: codespell
         files: acg
-        verbose: True
-        exclude: (google_images_download|_build)
         types: [text]
         args: [-q, "4",-D, -, -D, .codespell_dict.txt, -H]
-#  - repo: local
-#    hooks:
-#      - id: render_readme
-#        name: render_readme.py
-#        entry: .utils/render_readme.py
-#        language: system
-#        stages: [commit]
-#        always_run: True
+        exclude: google_images_download
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.7.4
+    hooks:
+      - id: pyupgrade
+        files: acg
+        types: [python]
+        args: [--py38-plus]
+        exclude: google_images_download
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v0.14.3
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: package.lock.json, google_images_download
+        files: acg
