@@ -53,17 +53,17 @@ build-backend = "poetry.core.masonry.api"
 disable = [
     "C0330, C0326", #black compatibility
     "import-error,no-name-in-module,no-member", #compatibility with pre-commit-hook in pycharm
-    "too-few-public-methods"
+    "fixme"
 ]
-good-names = ["i,j,k,v,x,y,id,_,d"]
+good-names = ["i,j,k,v,x,y,id,_,d,bs"]
+min-public-methods = 0
+defining-attr-methods =["__init__","__new__","setUp","__post_init__","__attrs_post_init__"]
+
+[tool.pylint.similarities]
+ignore-imports=true
 
 [tool.pylint.format]
 max-line-length = "120" #increased
 
 [tool.isort]
-multi_line_output = 3                   #black compatibility
-include_trailing_comma = true           #black compatibility
-force_grid_wrap = 0                     #black compatibility
-use_parentheses = true                  #black compatibility
-ensure_newline_before_comments = true   #black compatibility
-line_length = 88                        #black compatibility
+profile = "black"
