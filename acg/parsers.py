@@ -19,6 +19,8 @@ import toolz
 from bs4 import BeautifulSoup
 from google_images_download import google_images_download
 
+from .design_patterns.factory import CookBook
+
 LANGUAGES = {"pt": "Portuguese", "de": "German", "en": "English", "es": "Spanish"}
 
 
@@ -49,6 +51,8 @@ LINGUEE_HEADERS = {
     # "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
 }
+
+parser_cookbook = CookBook()
 
 
 @attr.s(auto_attribs=True)
@@ -112,6 +116,7 @@ class Parser:
         return self.parse_response(resp)
 
 
+@parser_cookbook.register("linguee")
 @attr.s(auto_attribs=True)
 class LingueeParser(Parser):
     """Use Linguee to obtain: translation, word_type, gender and audio_url."""
@@ -154,6 +159,7 @@ class LingueeParser(Parser):
         }
 
 
+@parser_cookbook.register("dicio")
 @attr.s(auto_attribs=True)
 class DicioParser(Parser):
     """Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html."""
@@ -244,12 +250,15 @@ class DicioParser(Parser):
         )
 
 
+@parser_cookbook.register("reverso")
 @attr.s(auto_attribs=True)
 class ReversoParser(Parser):
     """Use Reverso to obtain: examples."""
 
     base_url = "https://context.reverso.net/{language_string}/{phrase}"
-    lang_dict = {"pt": {"de": "traducao/portugues-alemao"}}
+    lang_dict = {
+        "pt": {"de": "traducao/portugues-alemao", "en": "traducao/portugues-ingles"}
+    }
     language_string = None
     headers = REVERSO_HEADERS
 
@@ -268,6 +277,7 @@ class ReversoParser(Parser):
         }
 
 
+@parser_cookbook.register("google_images")
 @attr.s
 class GoogleImagesParser(Parser):
     """Uses google_images_download to get img_urls."""
@@ -316,6 +326,7 @@ class GoogleImagesParser(Parser):
 #         return {"title": title, "summary": summary, "img_urls": image}
 
 
+@parser_cookbook.register("rand_wiki")
 @attr.s(auto_attribs=True)
 class RandTopicWikiParser(Parser):
     """Get title, summary and a list of image-urls for given random topic."""

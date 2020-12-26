@@ -4,20 +4,20 @@ Implementation of :class:`Template` class and sub-classes.
 To add a new template, inherit from Template or a subclass and define the :attr:`parsers` and :attr:`fields` attributes.
 See e.g. the definition of :class:`PtTemplate`.
 """
-
 from functools import partial
 from pprint import pprint
 from typing import Dict, List
 
-from kivy.factory import Factory
+import attr
+from googletrans import Translator
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.toast import toast
 from pony.orm import commit, db_session
 
-from .custom_widgets.scroll_widgets import ScrollBox
-from .custom_widgets.selection_widgets import ImageCarousel, SeparatorWithHeading
-from .db import get_template, new_template
+from .custom_widgets.selection_widgets import SeparatorWithHeading
+from .db import db
+from .design_patterns.factory import CookBook
 from .fields import (
     CheckChipOptionsField,
     DualLongTextField,
@@ -26,20 +26,17 @@ from .fields import (
     MediaField,
     TextInputField,
     TransChipOptionsField,
-    translator,
+    field_cookbook,
 )
 from .language_processing import tag_word_in_sentence
-from .parsers import (
-    DicioParser,
-    GoogleImagesParser,
-    LingueeParser,
-    NoMatchError,
-    Parser,
-    ReversoParser,
-)
+from .parsers import NoMatchError, Parser, parser_cookbook
 from .utils import app_busy, smart_dict_merge
 
+template_cookbook = CookBook()
+translator = Translator()
 
+
+@attr.s(auto_attribs=True)
 class Template(BoxLayout):
     """Main class handling the data for the card-generation, database-access and user-selection."""
 
@@ -59,15 +56,40 @@ class Template(BoxLayout):
     """Name of the template as saved in database."""
     sort_field: str = None
     """The field that should be unique on all cards. For language cards e.g. the word to learn."""
+    field_cookbook: CookBook = field_cookbook
+    parser_cookbook: CookBook = parser_cookbook
+    parser_kwargs: dict = None
+    _parser_names: list = None
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.parsers = self.parsers or {}
+    def __attrs_post_init__(self):
         self.fields = self.fields or []
+        self.parser_kwargs = self.parser_kwargs or {}
+        if self._parser_names:
+            self._init_parsers(self._parser_names)
+        super().__init__()
+
+    def _init_parsers(self, parser_names):
+        self.parsers = {}
+        for parser_name in parser_names:
+            self.add_parser(parser_name, **self.parser_kwargs)
+
+    # def _init_fields(self, field_dict):
+    #     self.fields = []
+    #     for field_type, kwargs in field_dict.items():
+    #         self.add_field(field_type, **kwargs)
+    #     self.add_field_widgets()
+    #
+    # def add_field(self, field_type, **kwargs):
+    #     field = self.field_cookbook.cook(field_type, template=self, **kwargs)
+    #     self.fields.append(field)
+
+    def add_parser(self, parser_name, **kwargs):
+        """Add a parser to :attr:`parsers` by construction from parser_cookbook."""
+        self.parsers[parser_name] = self.parser_cookbook.cook(parser_name, **kwargs)
 
     def template_db(self):
         """If existent, get entry in the database by name, else create new one."""
-        return get_template(self.name) or new_template(self)
+        return db.Template.get(name=self.name) or db.Template(name=self.name)
 
     def current_card_db(self):
         """If existent get card by name, else create new one."""
@@ -136,6 +158,7 @@ class Template(BoxLayout):
         self.data.update(result_dict)
         self.update_fields()
 
+    @db_session
     def search(self, search_term, make_suggestion=False):
         """
         Look up card with name ``search_term`` in data-base.
@@ -144,29 +167,28 @@ class Template(BoxLayout):
         data-base.
         """
         self.search_term = search_term
-        with db_session:
-            template_db = get_template(self.name)
-            current_card = template_db.get_card(search_term) or template_db.add_card(
-                search_term
-            )
-            if current_card.base_data:
-                self.data = current_card.base_data
-                try:
-                    self.update_fields()
-                    current_card.base_data = self.data
-                    return
-                except ValueError:
-                    print("Could not load previously saved data. Request data anew...")
+        template_db = db.Template.get(name=self.name)
+        current_card = template_db.get_card(search_term) or template_db.add_card(
+            search_term
+        )
+        if current_card.base_data:
+            self.data = current_card.base_data
             try:
-                self.set_data_from_parsers()
                 self.update_fields()
-                self.save_base_data_to_db()
-            except NoMatchError:
-                current_card.state = "error"
-                toast(f"Could not obtain data for {search_term}.")
-                if make_suggestion:
-                    # choose suggestion dialog here.
-                    pass
+                current_card.base_data = self.data
+                return
+            except ValueError:
+                print("Could not load previously saved data. Request data anew...")
+        try:
+            self.set_data_from_parsers()
+            self.update_fields()
+            self.save_base_data_to_db()
+        except NoMatchError:
+            current_card.state = "error"
+            toast(f"Could not obtain data for {search_term}.")
+            if make_suggestion:
+                # choose suggestion dialog here.
+                pass
 
     @app_busy
     def manual_search(self, search_term):
@@ -174,26 +196,34 @@ class Template(BoxLayout):
         self.search(search_term, make_suggestion=True)
 
 
-class PtTemplate(Template):
+@template_cookbook.register(
+    "pt-en",
+    name="pt-en",
+    from_lang="pt",
+    to_lang="en",
+)
+@template_cookbook.register(
+    "Portuguese Vocabulary",
+    name="Portuguese Vocabulary",
+    from_lang="pt",
+    to_lang="de",
+)
+class VocabTemplate(Template):
     """Template to generate vocabulary cards for brazilian portuguese."""
 
-    name = "Portuguese Vocab"
-    sort_field = "word"
-    from_lang: str = "pt"
-    to_lang: str = "de"
+    from_lang = None
+    to_lang = None
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        parser_attrs = {
-            "from_lang": self.from_lang,
-            "to_lang": self.to_lang,
-        }
-        self.parsers = {
-            "linguee": LingueeParser(**parser_attrs),
-            "dicio": DicioParser(**parser_attrs),
-            "reverso": ReversoParser(**parser_attrs),
-            "image": GoogleImagesParser(**parser_attrs),
-        }
+    def __init__(self, from_lang, to_lang, **kwargs):
+        self.from_lang = from_lang
+        self.to_lang = to_lang
+
+        super().__init__(
+            sort_field="word",
+            parser_names=["linguee", "dicio", "reverso", "google_images"],
+            parser_kwargs={"from_lang": from_lang, "to_lang": to_lang},
+            **kwargs,
+        )
         self.fields = [
             TextInputField(
                 field_name="word", callback=self.manual_search, template=self
@@ -265,28 +295,10 @@ if __name__ == "__main__":
 
     from kivymd.app import MDApp
 
-    Factory.register("ImageCarousel", ImageCarousel)
-    Factory.register("ScrollBox", ScrollBox)
-
     class _TestApp(MDApp):
-
-        from custom_widgets.selection_widgets import SeparatorWithHeading
-
         def build(self):
             self.theme_cls.primary_palette = "Red"  # "Purple", "Red"
             self.theme_cls.theme_style = "Light"  # "Purple", "Red"
-            return Builder.load_string(
-                """#
-FloatLayout:
-    size_hint: 1,1
-    SeparatorWithHeading:
-        heading: "Test"
-
-
-# PtTemplate:
-#     MDFlatButton:
-#         text: "Get Results"
-#         on_press: app.root.get_results()"""
-            )
+            return template_cookbook.cook("Portuguese Vocabulary")
 
     _TestApp().run()

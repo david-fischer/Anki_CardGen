@@ -9,14 +9,14 @@ from typing import Callable
 import attr
 import requests
 from bidict import bidict
-from googletrans import Translator
 from kivy.clock import mainthread
 from kivy.lang import Builder
 from pony.orm import db_session
 
+from .design_patterns.factory import CookBook
 from .utils import compress_img_bytes
 
-translator = Translator()
+field_cookbook = CookBook()
 
 
 @attr.s

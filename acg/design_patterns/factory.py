@@ -13,11 +13,15 @@ class CookBook:
         if self.recipes is None:
             self.recipes = {}
 
-    def register(self, name, info=None, **kwargs):
+    def register(self, recipe_name, info=None, **kwargs):
         """Add recipe to :attr:`recipes`."""
 
         def wrapper(func):
-            self.recipes[name] = {"obj": func, "info": info, "default_kwargs": kwargs}
+            self.recipes[recipe_name] = {
+                "obj": func,
+                "info": info,
+                "default_kwargs": kwargs,
+            }
             return func
 
         return wrapper
@@ -40,6 +44,10 @@ class CookBook:
     def get_recipes(self):
         """Return :attr:`recipes`."""
         return self.recipes
+
+    def get_recipe_names(self):
+        """Return list of all registered recipes."""
+        return list(self.recipes.keys())
 
     def to_button_dict(self):
         """Return dict in a form as used in :attr:`custom_widgets.CustomSpeedDial.button_dicts`."""
