@@ -1,25 +1,21 @@
 [
   {
     "icon": "form-textbox",
-    "kv_file_name": "single_word.kv",
     "name": "single_word",
     "text": "Manual Input"
   },
   {
     "icon": "format-list-checkbox",
-    "kv_file_name": "queued.kv",
     "name": "queue",
     "text": "Queue"
   },
   {
     "icon": "history",
-    "kv_file_name": "history.kv",
     "name": "history",
     "text": "History"
   },
   {
     "icon": "cogs",
-    "kv_file_name": "settings.kv",
     "name": "settings",
     "text": "Settings"
   }

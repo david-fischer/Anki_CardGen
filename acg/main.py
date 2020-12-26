@@ -95,7 +95,9 @@ class AnkiCardGenApp(MDApp):
         )
         self.import_dir = self.import_dir or os.path.abspath(ROOT_DATA_DIR)
         os.makedirs(self.apkg_export_dir, exist_ok=True)
-        return MainMenu(screen_dicts=screens.screen_dicts)
+        return MainMenu(
+            screen_dicts=screens.screen_dicts, screen_dir=str(screens.SCREEN_DIR)
+        )
 
     def get_current_template_db(self):
         """Return data-base object for :attr:`current_template_name`."""

@@ -6,7 +6,7 @@ import pathlib
 from kivy.factory import Factory
 
 from .history import HistoryRoot
-from .queued import QueuedRoot
+from .queue import QueuedRoot
 from .settings import SettingsRoot
 from .single_word import SingleWordRoot
 
