@@ -4,9 +4,8 @@
 import os
 
 import toolz
-from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.properties import ListProperty, StringProperty
+from kivy.properties import DictProperty, ListProperty, ObjectProperty, StringProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.stacklayout import StackLayout
 from kivymd.app import MDApp
@@ -14,9 +13,6 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 from kivymd.uix.menu import MDDropdownMenu
 
-from ..db import get_template_names
-from ..paths import SCREEN_DIR
-from ..utils import widget_by_id
 from .behaviors import CheckBehavior
 from .selection_widgets import CheckContainer
 
@@ -39,11 +35,6 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
         self.theme_cls.bind(theme_style=self.on_current_state)
         self.theme_cls.bind(primary_palette=self.on_current_state)
 
-    def on_release(self):
-        """Close drawer and sets :attr:`current_state` to ``True``."""
-        self.current_state = True
-        widget_by_id("nav_drawer").set_state("close")
-
 
 class DrawerList(ThemableBehavior, CheckContainer, MDList):
     """
@@ -56,22 +47,30 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
     child_class_name = "DrawerItem"
     current = StringProperty("")
     """:class:`~kivy.properties.StringProperty` of currently active :attr:`DrawerItem.screen_name`."""
+    nav_drawer = ObjectProperty()
 
-    def conditional_uncheck(self, instance, value):
-        """Change color of clicked item and updates :attr:`current`."""
-        super().conditional_uncheck(instance, value)
-        if value:
-            self.current = instance.name
+    def on_child_release(self, instance):
+        """Set states of child's according to :attr:`check_one`.
+
+        Gets called if a child dispatches `on_release`-event.
+        """
+        if self.check_one:
+            for child in self.children:
+                child.current_state = child == instance
+        else:
+            instance.current_state = not instance.current_state
+        self.current = instance.name
+        self.nav_drawer.set_state("close")
+
+    def get_child(self, name):
+        """Return child with name ``name``."""
+        return toolz.first(c for c in self.children if c.name == name)
 
     def on_current(self, *_):
-        """Change the state of the children respectively to :attr:`current`."""
-        current_widget = [
-            child
-            for child in self.root_for_children.children
-            if child.name == self.current
-        ][0]
-        current_widget.current_state = True
-        self.conditional_uncheck(current_widget, False)
+        """Update state of :attr:`current` by calling :meth:´on_child_release´."""
+        current_child = self.get_child(self.current)
+        if not current_child.current_state:
+            self.on_child_release(current_child)
 
 
 class MainMenu(StackLayout):
@@ -80,14 +79,14 @@ class MainMenu(StackLayout):
     screen_dicts = ListProperty()
     """:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens."""
 
-    screens = ListProperty()
+    screens = DictProperty()
+    screen_dir = StringProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        print(get_template_names())
         self.dropdown_menu = MDDropdownMenu(
             caller=self.ids.current_template_drop,
-            items=[{"text": name} for name in get_template_names()],
+            items=[{"text": name} for name in MDApp.get_running_app().templates],
             position="center",
             width_mult=4,
         )
@@ -99,6 +98,12 @@ class MainMenu(StackLayout):
         MDApp.get_running_app().current_template_name = item.text
         self.dropdown_menu.dismiss()
 
+    def _init_screens(self):
+        for screen_dict in self.screen_dicts:
+            name = screen_dict["name"]
+            kv_path = os.path.join(self.screen_dir, name) + ".kv"
+            self.screens[name] = KvScreen(name=name, kv_path=kv_path)
+
     def on_parent(self, *_):
         """
         Set up screen using ``name`` and ``path`` from :attr:`screen_dicts`.
@@ -106,25 +111,20 @@ class MainMenu(StackLayout):
         The screens are added to the screen_man and corresponding entries to the drawer_list.
         Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.
         """
-        # for screen_dict in self.screen_dicts:
-        self.screens = [
-            KvScreen(**{key: screen_dict[key] for key in ["name", "kv_file_name"]})
-            for screen_dict in self.screen_dicts
-        ]
-        # self.ids.screen_man.add_widget(screen)
+        self._init_screens()
         self.ids.drawer_list.data = self.screen_dicts
         self.ids.drawer_list.bind(current=self.set_screen)
-        # self.ids.drawer_list.bind(current=self.ids.screen_man.setter("current"))
         self.ids.screen_man.bind(current=self.ids.drawer_list.setter("current"))
-        self.ids.drawer_list.children[-1].on_release()
+        current_screen = self.ids.drawer_list.children[-1].name
+        self.set_screen(screen_name=current_screen)
 
-    def set_screen(self, _, screen_name):
+    def set_screen(self, _=None, screen_name=""):
         """Switch screens dynamically."""
         self.ids.screen_man.switch_to(self.get_screen(screen_name))
 
     def get_screen(self, screen_name):
         """Return screen by name."""
-        return [screen for screen in self.screens if screen.name == screen_name][0]
+        return self.screens[screen_name]
 
     def get_item_text(self, screen):
         """Get the text of the :class:`DrawerItem` corresponding to a screen."""
@@ -139,7 +139,7 @@ class MainMenu(StackLayout):
 
     def get_screen_names(self):
         """Return screen names."""
-        return [screen.name for screen in self.screens]
+        return list(self.screens)
 
     @staticmethod
     def get_right_action_items(screen):
@@ -157,22 +157,22 @@ class KvScreen(Screen):
     If :attr:`path` does not exist, create file.
     """
 
-    kv_file_name = StringProperty("screen_default.kv")
+    kv_path = StringProperty("screen_default.kv")
     """:class:`~kivy.properties.StringProperty` defaults to ``"screen_default.kv"`` """
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.path = os.path.join(SCREEN_DIR, self.kv_file_name)
-        self.size_hint = None, 1
-        self.width = Window.width
-        Window.bind(width=self.setter("width"))
-        if not os.path.exists(self.path):
+        # TODO: TEST WEATHER THIS HAS A USE!!
+        # self.size_hint = None, 1
+        # self.width = Window.width
+        # Window.bind(width=self.setter("width"))
+        if not os.path.exists(self.kv_path):
             self._create_content_file()
         self._load_content()
 
     def _load_content(self):
-        self.add_widget(Builder.load_file(self.path))
+        self.add_widget(Builder.load_file(self.kv_path))
 
     def _create_content_file(self):
-        with open(self.path, "w") as file:
+        with open(self.kv_path, "w") as file:
             file.write(f'MDLabel:\n\ttext:"{self.name}"')
