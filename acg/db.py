@@ -24,14 +24,14 @@ from .generate_anki_card import AnkiObject
 from .paths import ANKI_DIR, MAIN_DIR
 from .utils import CD, now_string, update_word_state_dict
 
-TEMPLATE_DICTS = [
-    {
-        "name": "Portuguese Vocab",
-        "cls_name": "templates.PtTemplate",
-        "description": "Generate beautiful cards to learn brazilian portuguese vocabulary.\n"
-        "Sources: Dicio,Reverso,Linguee and Google Images.",
-    }
-]
+# TEMPLATE_DICTS = [
+#     {
+#         "name": "Portuguese Vocab",
+#         "cls_name": "templates.PtTemplate",
+#         "description": "Generate beautiful cards to learn brazilian portuguese vocabulary.\n"
+#         "Sources: Dicio,Reverso,Linguee and Google Images.",
+#     }
+# ]
 
 
 db = Database()
@@ -48,8 +48,6 @@ class Template(db.Entity):
 
     id = PrimaryKey(int, auto=True)
     """Id."""
-    cls_name = Required(str)
-    """The "module.class" to construct the template from."""
     name = Required(str, unique=True)
     """A unique name for the template."""
     description = Optional(str)
@@ -75,6 +73,12 @@ class Template(db.Entity):
         """Create a new :class:`Card` with relation to this template."""
         card = Card(name=name, state="waiting", template=self)
         return card
+
+    @classmethod
+    @db_session
+    def names(cls):
+        """Return list of all Templates in database."""
+        return [template.name for template in cls.select()]
 
 
 class Card(db.Entity):
@@ -166,30 +170,6 @@ class MediaFile(db.Entity):
 db.generate_mapping(create_tables=True)
 
 
-@db_session
-def get_template(name):
-    """Get :class:`Template` by unique ``name``-attribute."""
-    templates = select(t for t in Template if t.name == name)
-    return toolz.first(templates) if templates else None
-
-
-@db_session
-def new_template(template_obj):
-    """Create a new entry in the database from an :class:`fields.Template`-object."""
-    return Template(
-        name=template_obj.name,
-        cls_name=f"fields.{type(template_obj).__name__}",
-        description="A template.",
-    )
-
-
-@db_session
-def get_card_by_id(card_id):
-    """Get card from database by id."""
-    card_list = select(c for c in Card if c.id == card_id)
-    return toolz.first(card_list) if card_list else None
-
-
 def export_cards(card_list, out_folder, anki_template_dir):
     """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
     anki_obj = AnkiObject(root_dir=anki_template_dir)
@@ -220,15 +200,6 @@ def get_template_names():
     return list(select(t.name for t in Template))
 
 
-@db_session
-def add_missing_templates():
-    """Add templates from :data:`TEMPLATE_DICTS` to database if not already present."""
-    template_names = get_template_names()
-    for template_dict in TEMPLATE_DICTS:
-        if template_dict["name"] not in template_names:
-            Template(**template_dict)
-
-
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
     #
@@ -246,7 +217,7 @@ if __name__ == "__main__":
     #         "Linguee and Google Images.",
     #     )
     with db_session:
-        template = get_template("Portuguese Vocab")
+        template = Template.get(name="Portuguese Vocab")
         cards = select(c for c in template.cards if c.state == ("done" or "exported"))
         export_cards(
             cards, "/home/david/Schreibtisch/", os.path.join(ANKI_DIR, "vocab_card")

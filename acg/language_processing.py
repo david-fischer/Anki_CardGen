@@ -61,7 +61,7 @@ def clean_up(words, remove_punct=True, lower_case=True, lemmatize=True):
     if lower_case:
         words = [word.lower() for word in words]
     if lemmatize:
-        words = lemma_dict(words).values()
+        words = list(lemma_dict(words).values())
     return words
 
 
