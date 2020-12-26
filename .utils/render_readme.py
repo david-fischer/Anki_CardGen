@@ -48,7 +48,7 @@ def get_render_kwargs():
     return {**locals()}
 
 
-def new_main():
+def main():
     file_name = "README.md"
     with open(file_name, "r") as file:
         file_string = file.read()
@@ -62,4 +62,4 @@ def new_main():
 
 
 if __name__ == "__main__":
-    new_main()
+    main()
