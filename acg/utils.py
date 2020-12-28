@@ -1,10 +1,12 @@
 """This module contains lots of helper functions."""
+import asyncio
 import csv
 import inspect
 import json
 import os
 import pickle
 import pwd
+import re
 import threading
 from collections import defaultdict
 from contextlib import ContextDecorator, contextmanager
@@ -12,6 +14,8 @@ from datetime import datetime
 from functools import partial, wraps
 from io import BytesIO
 from itertools import chain, tee
+from timeit import default_timer
+from typing import Any, Callable
 
 import toolz
 from bs4 import BeautifulSoup
@@ -329,44 +333,6 @@ def start_thread(func, fn_arg, **kwargs):
     thread.start()
 
 
-if __name__ == "__main__":
-    pass
-    #
-    # doctest.run_docstring_examples(start_thread)
-    # out = word_list_from_kindle("test/test_data/kindle_export.html")
-    # print(out)
-    # with open("test/test_data/words.txt", "w") as file:
-    #     file.write("\n".join(out))
-
-    # example = ("Construção em alvenaria usada como moradia, com distintos formatos ou tamanhos,"
-    #            "normalmente térrea ou com dois andares. - Voltaire")
-    # expl = ("Os homens que procuram a felicidade são como os embriagados que não conseguem encontrar a própria casa, "
-    #         "apesar de saberem que a têm. Test Casas, casa, casa.")
-    #
-    # print(tag_word(expl, "casa"))
-    # compress_img("screenshots/casa/casa.jpg")
-    # save_card_htmls("casa")#
-    # save_card_pngs("comecar", size=(270 * 1.4, 480 * 1.4))
-
-    #
-    # done, error, words, queue = [
-    #     smart_loader(path) for path in sorted(glob("../app_data/*.json"))
-    # ]
-    # all_words = set(done + error + queue + list(words.keys()))
-    # word_dict = {
-    #     word: "done"
-    #     if word in done
-    #     else "error"
-    #     if word in error
-    #     else "ready"
-    #     if word in queue
-    #     else None
-    #     for word in all_words
-    # }
-    # word_dict["cachorro"] = "queued"
-    # smart_saver(word_dict, "../app_data/word_state_dict.json")
-
-
 def run_in_thread(func):
     """Call ``func`` in new thread."""
 
@@ -459,3 +425,31 @@ def close_and_callback(file_path, file_manager=None, callback=None, old_callback
     callback(file_path)
     if old_callback:
         file_manager.select_path = old_callback
+
+
+def contains_newline(match):
+    r"""Return '\n' or " "."""
+    return "\n" if "\n" in match[0] else " "
+
+
+def remove_whitespace(some_string):
+    """Replace each group of whitespaces by a simple space (or by a newline if at least one is in the match)."""
+    return re.sub(r"\s+", contains_newline, some_string).strip()
+
+
+@contextmanager
+def timer():
+    """Print execution time."""
+    start = default_timer()
+    yield lambda: print(default_timer() - start)
+    print(default_timer() - start)
+
+
+async def async_wrapper(functions, *args):
+    """Gather async functions."""
+    return await asyncio.gather(*[a(*args) for a in functions])
+
+
+def async_get_results(functions: Callable[[Any], dict], *args):
+    """Get merged dict from gathered async-run."""
+    return smart_dict_merge(asyncio.run(async_wrapper(functions, *args)))

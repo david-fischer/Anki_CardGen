@@ -1,4 +1,5 @@
 """File to place unused functions for future use."""
+import toolz
 
 
 def route_call_to_member(cls, member, method):
@@ -61,3 +62,12 @@ def route_calls_to_member(member, calls):
 #
 #     def process_dialog_data(self, raw_dialog_data):
 #         return raw_dialog_data
+def star(func):
+    """Wrapper-function. Call a function with unpacked arguments."""
+    return lambda args: func(*args)
+
+
+def json2list(filter_fn, map_fn, dictionary):
+    """Filter and map dictionary in succession to obtain list."""
+    filtered = toolz.itemfilter(star(filter_fn), dictionary)
+    return toolz.itemmap(star(map_fn), filtered, factory=list)
