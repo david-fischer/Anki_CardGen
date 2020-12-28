@@ -14,6 +14,7 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.toast import toast
 from pony.orm import commit, db_session
+from utils import async_get_results
 
 from .custom_widgets.selection_widgets import SeparatorWithHeading
 from .db import db
@@ -29,7 +30,7 @@ from .fields import (
     field_cookbook,
 )
 from .language_processing import tag_word_in_sentence
-from .parsers import NoMatchError, Parser, parser_cookbook
+from .parsers import AsyncParser, NoMatchError, Parser, parser_cookbook
 from .utils import app_busy, smart_dict_merge
 
 template_cookbook = CookBook()
@@ -62,6 +63,7 @@ class Template(BoxLayout):
     _parser_names: list = None
 
     def __attrs_post_init__(self):
+        self.data = self.data or {}
         self.fields = self.fields or []
         self.parser_kwargs = self.parser_kwargs or {}
         if self._parser_names:
@@ -94,14 +96,23 @@ class Template(BoxLayout):
     def current_card_db(self):
         """If existent get card by name, else create new one."""
         t_db = self.template_db()
-        return t_db.get_card(self.search_term) or t_db.add_card(self)
+        return t_db.get_card(self.search_term) or t_db.add_card(self.search_term)
 
     def set_data_from_parsers(self):
         """Collect all data obtained by the :class:`parsers.parser` in :attr:`data`."""
-        self.data = {self.sort_field: self.search_term}
-        for parser in self.parsers.values():
-            parser_res_dict = parser.result_dict(self.search_term)
-            self.data = smart_dict_merge(self.data, parser_res_dict)
+        async_parsers = [
+            async_parser
+            for async_parser in self.parsers.values()
+            if isinstance(async_parser, AsyncParser)
+        ]
+        self.data = async_get_results(async_parsers, self.search_term)
+        self.data[self.sort_field] = self.search_term
+        sync_parsers = [
+            parser for parser in self.parsers.values() if isinstance(parser, Parser)
+        ]
+        self.data = smart_dict_merge(
+            self.data, *(p.result_dict(self.search_term) for p in sync_parsers)
+        )
 
     def update_fields(self):
         """Update all fields."""
@@ -197,14 +208,14 @@ class Template(BoxLayout):
 
 
 @template_cookbook.register(
-    "pt-en",
-    name="pt-en",
+    "Portuguese Vocabulary (en)",
+    name="Portuguese Vocabulary (en)",
     from_lang="pt",
     to_lang="en",
 )
 @template_cookbook.register(
-    "Portuguese Vocabulary",
-    name="Portuguese Vocabulary",
+    "Portuguese Vocabulary (de)",
+    name="Portuguese Vocabulary (de)",
     from_lang="pt",
     to_lang="de",
 )
@@ -220,7 +231,12 @@ class VocabTemplate(Template):
 
         super().__init__(
             sort_field="word",
-            parser_names=["linguee", "dicio", "reverso", "google_images"],
+            parser_names=[
+                "async_linguee",
+                "async_dicio",
+                "async_reverso",
+                "async_google_images",
+            ],
             parser_kwargs={"from_lang": from_lang, "to_lang": to_lang},
             **kwargs,
         )
@@ -230,7 +246,9 @@ class VocabTemplate(Template):
             ),
             TextInputField(
                 field_name="image_search_keywords",
-                callback=partial(self.update_from_single_parser, parser_key="image"),
+                callback=partial(
+                    self.update_from_single_parser, parser_key="async_google_images"
+                ),
                 template=self,
             ),
             ImgField(field_name="image", file_type="jpg", template=self),
