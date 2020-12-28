@@ -52,8 +52,9 @@ class AnkiCardGenApp(MDApp):
     source_language = ConfigParserProperty("en", "Template", "source_language", "app")
     target_language = ConfigParserProperty("pt", "Template", "target_language", "app")
     current_template_name = ConfigParserProperty(
-        "Portuguese Vocabulary", "Template", "name", "app"
+        "Portuguese Vocabulary (en)", "Template", "name", "app"
     )
+    # TODO: fix bug where default value has to be a valid recipe
     templates = AliasProperty(getter=lambda *_: template_cookbook.get_recipe_names())
 
     word_state_dict = DictProperty()
