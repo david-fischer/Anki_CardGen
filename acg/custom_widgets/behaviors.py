@@ -234,9 +234,19 @@ class TranslationOnCheckBehavior(CheckBehavior):
 
     def __post_init__(self, *_):
         """Initialize widget after kv-file is loaded."""
-        self.state_dicts[True]["text"] = self.text_orig
-        self.state_dicts[False]["text"] = self.text_trans
+        self.on_text_trans()
+        self.on_text_orig()
         super().__post_init__(*_)
+
+    def on_text_trans(self, *_):
+        """Update :attr:`state_dict` with new :attr:`text_trans`."""
+        self.state_dicts[False]["text"] = self.text_trans
+        self.on_current_state()
+
+    def on_text_orig(self, *_):
+        """Update :attr:`state_dict` with new :attr:`text_orig`."""
+        self.state_dicts[True]["text"] = self.text_orig
+        self.on_current_state()
 
 
 class ThemableColorChangeBehavior(CheckBehavior):
