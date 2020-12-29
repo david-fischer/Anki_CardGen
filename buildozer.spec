@@ -10,7 +10,7 @@ package.name = ankicardgenapp
 package.domain = org.ankicardgen
 
 # (str) Source code where the main.py live
-source.dir = acg
+source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg,sqlite
@@ -22,31 +22,22 @@ source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg,sqlite
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-source.exclude_dirs = bin, test, .buildozer, docs
+source.exclude_dirs = tests, bin, venv, docs, .buildozer, .github, .utils, python-for-android, screenshots
 
 # (list) List of exclusions using pattern matching
 #source.exclude_patterns = license,images/*/*.jpg
 
-# (str) Application versioning (method 1)
-# version = 0.5.0
-
 # (str) Application versioning (method 2)
-version.regex = __version__ = ['"](.*)['"]
-version.filename = %(source.dir)s/main.py
+version.regex = version = ['"](.*)['"]
+version.filename = pyproject.toml
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = hostpython3==3.7.6,python3==3.7.6,attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,googletrans,pillow,cached_property,pyyaml,soupsieve,urllib3,chardet,idna,certifi,lxml,toolz,sdl2_ttf==2.0.15,pony,bidict,pystache
-#,spacy
-#,setuptools,preshed,thinc,blis,tqdm,murmurhash,numpy,wasabi,plac,catalogue,cymem,srsly,importlib_metadata,zipp
-
+requirements =
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
-
-# (list) Garden requirements
-#garden_requirements =
 
 # (str) Presplash of the application
 presplash.filename = acg/assets/AnkiCardGen.png
@@ -68,10 +59,10 @@ orientation = portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3.7.6
+osx.python_version = 3
 
 # Kivy version to use
-osx.kivy_version = 1.11.1
+osx.kivy_version = 1.9.1
 
 #
 # Android specific
@@ -80,15 +71,25 @@ osx.kivy_version = 1.11.1
 # (bool) Indicate if the application should be fullscreen or not
 fullscreen = 0
 
-# (string) Presplash background color (for new android toolchain)
+# (string) Presplash background color (for android toolchain)
 # Supported formats are: #RRGGBB #AARRGGBB or one of the following names:
 # red, blue, green, black, white, gray, cyan, magenta, yellow, lightgray,
 # darkgray, grey, lightgrey, darkgrey, aqua, fuchsia, lime, maroon, navy,
 # olive, purple, silver, teal.
 #android.presplash_color = #FFFFFF
 
+# (string) Presplash animation using Lottie format.
+# see https://lottiefiles.com/ for examples and https://airbnb.design/lottie/
+# for general documentation.
+# Lottie files can be created using various tools, like Adobe After Effect or Synfig.
+#android.presplash_lottie = "path/to/lottie/file.json"
+
 # (list) Permissions
 android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+
+
+# (list) features (adds uses-feature -tags to manifest)
+#android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
 #android.api = 27
@@ -100,7 +101,7 @@ android.permissions = INTERNET, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
 #android.sdk = 20
 
 # (str) Android NDK version to use
-#android.ndk = 17c
+#android.ndk = 19b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
@@ -153,12 +154,10 @@ android.accept_sdk_license = True
 # directory containing the files)
 #android.add_src =
 
-# (list) Android AAR archives to add (currently works only with sdl2_gradle
-# bootstrap)
+# (list) Android AAR archives to add
 #android.add_aars =
 
-# (list) Gradle dependencies to add (currently works only with sdl2_gradle
-# bootstrap)
+# (list) Gradle dependencies to add
 #android.gradle_dependencies =
 
 # (list) add java compile options
@@ -176,10 +175,10 @@ android.accept_sdk_license = True
 # can be necessary to solve conflicts in gradle_dependencies
 # please enclose in double quotes
 # e.g. android.add_packaging_options = "exclude 'META-INF/common.kotlin_module'", "exclude 'META-INF/*.kotlin_module'"
-#android.add_gradle_repositories =
+#android.add_packaging_options =
 
 # (list) Java classes to add as activities to the manifest.
-#android.add_activites = com.example.ExampleActivity
+#android.add_activities = com.example.ExampleActivity
 
 # (str) OUYA Console category. Should be one of GAME or APP
 # If you leave this blank, OUYA support will not be enabled
@@ -224,6 +223,22 @@ android.accept_sdk_license = True
 # (str) The Android arch to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 android.arch = armeabi-v7a
 
+# (int) overrides automatic versionCode computation (used in build.gradle)
+# this is not the same as app version and should only be edited if you know what you're doing
+# android.numeric_version = 1
+
+# (bool) enables Android auto backup feature (Android API >=23)
+android.allow_backup = True
+
+# (str) XML file for custom backup rules (see official auto backup documentation)
+# android.backup_rules =
+
+# (str) If you need to insert variables into your AndroidManifest.xml file,
+# you can do so with the manifestPlaceholders property.
+# This property takes a map of key-value pairs. (via a string)
+# Usage example : android.manifest_placeholders = [myCustomUrl:\"org.kivy.customurl\"]
+# android.manifest_placeholders = [:]
+
 #
 # Python for android (p4a) specific
 #
@@ -249,6 +264,13 @@ p4a.local_recipes = ./python-for-android/recipes/
 # (int) port number to specify an explicit --port= p4a argument (eg for bootstrap flask)
 #p4a.port =
 
+# Control passing the --use-setup-py vs --ignore-setup-py to p4a
+# "in the future" --use-setup-py is going to be the default behaviour in p4a, right now it is not
+# Setting this to false will pass --ignore-setup-py, true will pass --use-setup-py
+# NOTE: this is general setuptools integration, having pyproject.toml is enough, no need to generate
+# setup.py if you're using Poetry, but you need to add "toml" to source.include_exts.
+# p4a.setup_py = False
+
 
 #
 # iOS specific
@@ -265,7 +287,10 @@ ios.kivy_ios_branch = master
 #ios.ios_deploy_dir = ../ios_deploy
 # Or specify URL and branch
 ios.ios_deploy_url = https://github.com/phonegap/ios-deploy
-ios.ios_deploy_branch = 1.7.0
+ios.ios_deploy_branch = 1.10.0
+
+# (bool) Whether or not to sign the code
+ios.codesign.allowed = false
 
 # (str) Name of the certificate to use for signing the debug version
 # Get a list of available identities: buildozer ios list_identities
