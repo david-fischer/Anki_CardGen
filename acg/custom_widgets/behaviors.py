@@ -211,10 +211,11 @@ class ChildrenFromDataBehavior:
 
     def on_data(self, *_):
         """Update children on change of :attr:`data`."""
-        self.update_num_children()
-        for i, child_dict in enumerate(self.data):
-            for key, val in child_dict.items():
-                setattr(self.root_for_children.children[-i - 1], key, val)
+        if self.root_for_children:
+            self.update_num_children()
+            for i, child_dict in enumerate(self.data):
+                for key, val in child_dict.items():
+                    setattr(self.root_for_children.children[-i - 1], key, val)
 
     def before_add_child(self, child):
         """Do something before child is added to :attr:`parent_widget`. Placeholder."""
