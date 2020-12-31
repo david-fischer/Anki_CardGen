@@ -39,8 +39,8 @@ black = "^20.8b1"
 pre-commit = "^2.9.2"
 toml = "^0.10.2"
 pyinstaller = "^4.1"
-buildozer = "^1.2.0"
-python-for-android = "^2020.6.2"
+buildozer = {url = "https://github.com/kivy/buildozer/archive/master.zip"}
+python-for-android = {git = "https://github.com/kivy/python-for-android.git"}
 invoke = "^1.4.1"
 Sphinx = "^3.4.1"
 sphinx-autoapi = "^1.5.1"
