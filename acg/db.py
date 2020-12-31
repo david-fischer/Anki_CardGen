@@ -20,26 +20,17 @@ from pony.orm import (
     select,
 )
 
+from . import APP_DIR
 from .generate_anki_card import AnkiObject
-from .paths import ANKI_DIR, MAIN_DIR
+from .paths import ANKI_DIR
 from .utils import CD, now_string, update_word_state_dict
 
-# TEMPLATE_DICTS = [
-#     {
-#         "name": "Portuguese Vocab",
-#         "cls_name": "templates.PtTemplate",
-#         "description": "Generate beautiful cards to learn brazilian portuguese vocabulary.\n"
-#         "Sources: Dicio,Reverso,Linguee and Google Images.",
-#     }
-# ]
-
-
 db = Database()
-db_path = os.path.join(MAIN_DIR, "db.sqlite")
+db_path = APP_DIR / "db.sqlite"
 db.bind(
     provider="sqlite",
-    filename=db_path,
-    create_db=not os.path.exists(db_path),
+    filename=str(db_path),
+    create_db=not db_path.exists(),
 )
 
 
@@ -130,22 +121,6 @@ class Card(db.Entity):
                     file.write(m_file.content)
 
 
-## UNUSED FOR THE MOMENT:
-# class Parser(db.Entity):
-#     id = PrimaryKey(int, auto=True)
-#     name = Required(str)
-#     cls_name = Required(str)
-#     init_json = Optional(Json)
-#
-#
-# class Field(db.Entity):
-#     id = PrimaryKey(int, auto=True)
-#     name = Required(str)
-#     cls_name = Required(str)
-#     init_json = Optional(Json)
-#     callback_str = Optional(str)
-
-
 class MediaFile(db.Entity):
     """Class containing a media-file."""
 
@@ -202,20 +177,6 @@ def get_template_names():
 
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
-    #
-
-    # with db_session:
-    #     # rand_wiki_template = Template(
-    #     #     name="Random Wiki Template",
-    #     #     cls_name="fields.Template",
-    #     #     description="Generate cards from random articles of a topic on Wikipedia.",
-    #     # )
-    #     rand_wiki_template = Template(
-    #         name="Portuguese Vocab",
-    #         cls_name="fields.PtTemplate",
-    #         description="Generate beautiful cards to learn brazilian portuguese vocabulary.\nSources: Dicio,Reverso,"
-    #         "Linguee and Google Images.",
-    #     )
     with db_session:
         template = Template.get(name="Portuguese Vocab")
         cards = select(c for c in template.cards if c.state == ("done" or "exported"))
