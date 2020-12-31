@@ -66,7 +66,7 @@ class HistoryRoot(FloatLayout):
         elif option == "export all cards":
             states = ["done", "exported"]
         else:
-            toast("NOT IMPLEMENTED YET.", 10)
+            toast("NOT IMPLEMENTED YET.", duration=10)
             return False
         with db_session:
             app = MDApp.get_running_app()
@@ -77,7 +77,7 @@ class HistoryRoot(FloatLayout):
                 return False
             print(os.path.exists(app.apkg_export_dir))
             export_cards(cards, app.apkg_export_dir, app.get_anki_template_dir())
-        toast(f"Exported cards to {app.apkg_export_dir}.", 5)
+        toast(f"Exported cards to {app.apkg_export_dir}.", duration=5)
         return True
 
     @staticmethod
