@@ -27,4 +27,4 @@ class BlisRecipe(CppCompiledComponentsPythonRecipe):
     depends = []
 
 
-recipe = CythonBlisRecipe()
+recipe = BlisRecipe()
