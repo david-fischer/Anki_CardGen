@@ -16,7 +16,6 @@ HistoryRoot:
             pick_val(["error","done","exported"],app.word_state_dict).items()\
             ]
 
-    MDFloatingActionButtonSpeedDial:
+    CustomSpeedDial:
         id: speed_dial
-        data: root.action_button_data
-        callback: root.export_cards
+        button_dict: root.speed_dial_buttons

@@ -4,7 +4,6 @@ The app uses :mod:`pony` to manage a sqlite-database. The database is structured
 .. image:: ../docs/ponyorm_diagram.png
 """
 import os
-import shutil
 from datetime import datetime
 
 import toolz
@@ -21,9 +20,7 @@ from pony.orm import (
 )
 
 from . import APP_DIR
-from .generate_anki_card import AnkiObject
-from .paths import ANKI_DIR
-from .utils import CD, now_string, update_word_state_dict
+from .utils import CD, update_word_state_dict
 
 db = Database()
 db_path = APP_DIR / "db.sqlite"
@@ -145,38 +142,11 @@ class MediaFile(db.Entity):
 db.generate_mapping(create_tables=True)
 
 
-def export_cards(card_list, out_folder, anki_template_dir):
-    """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
-    anki_obj = AnkiObject(root_dir=anki_template_dir)
-    if not card_list:
-        print("Empty list.")
-        return False
-    folder_name = os.path.join(out_folder, f"temp_{now_string()}")
-    os.makedirs(folder_name, exist_ok=True)
-    for card in card_list:
-        card.write_media_files_to_folder(folder_name)
-        content_dict = card.fields
-        anki_obj.add_card(**content_dict)
-    with CD(folder_name):
-        file_name = f'{toolz.first(card_list).template.name.replace(" ", "_")}_{now_string()}.apkg'
-        anki_obj.write_apkg(file_name)
-    os.rename(os.path.join(folder_name, file_name), os.path.join(out_folder, file_name))
-    now = datetime.now()
-    for card in card_list:
-        card.state = "exported"
-        card.dt_exported = now
-    shutil.rmtree(folder_name)
-    return True
-
-
-@db_session
-def get_template_names():
-    """Get list of all templates in database."""
-    return list(select(t.name for t in Template))
-
-
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
+    from .exporter import export_cards
+    from .paths import ANKI_DIR
+
     with db_session:
         template = Template.get(name="Portuguese Vocab")
         cards = select(c for c in template.cards if c.state == ("done" or "exported"))

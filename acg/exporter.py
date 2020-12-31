@@ -1,5 +1,5 @@
 """
-Implements :class:`AnkiObject`.
+Implements :class:`AnkiObject` and :class:`ApkgExporter`.
 
 Relies heavily on `genanki <https://github.com/kerrickstaley/genanki>`_.
 
@@ -10,14 +10,26 @@ Its purpose is to handle everything Anki-related:
 """
 
 
+import os
 import re
+import shutil
+from datetime import datetime
+from typing import Callable
 
 import attr
 import bs4
 import genanki
+import toolz
+from kivymd.app import MDApp
+from kivymd.toast import toast
+from pony.orm import db_session
 
+from .design_patterns.callback_chain import CallNode
+from .design_patterns.factory import CookBook
 from .paths import ANKI_DIR
-from .utils import CD, smart_loader
+from .utils import CD, now_string, smart_loader
+
+export_cookbook = CookBook()
 
 
 @attr.s
@@ -181,6 +193,74 @@ class AnkiObject:  # pylint: disable=too-many-instance-attributes
           out_path: Path wherer .apkg-file is saved.
         """
         self.package.write_to_file(out_path)
+
+
+def is_new(card):
+    """Return True if state is done."""
+    return card.state == "done"
+
+
+def is_in_history(card):
+    """Return True if state state is done/exported."""
+    return card.state in {"done", "exported"}
+
+
+@export_cookbook.register(
+    "import_select",
+    selector=lambda c: False,
+    info={"icon": "check-box-multiple-outline", "text": "select cards to export"},
+)
+@export_cookbook.register(
+    "import_all",
+    selector=is_in_history,
+    info={"icon": "content-save-all", "text": "export all cards"},
+)
+@export_cookbook.register(
+    "import_new",
+    selector=is_new,
+    info={"icon": "new-box", "text": "export new cards"},
+)
+@attr.s(auto_attribs=True)
+class APKGExporter(CallNode):
+    """Exports cards to .apkg-format."""
+
+    selector: Callable = None
+
+    @db_session
+    def process(self, *args, **kwargs):
+        """Main-function."""
+        app = MDApp.get_running_app()
+        current_template = app.get_current_template_db()
+        cards = current_template.get_cards_by_selector(self.selector)
+        if cards:
+            export_cards(cards, app.apkg_export_dir, app.get_anki_template_dir())
+            toast(f"Exported cards to {app.apkg_export_dir}.", duration=5)
+        else:
+            toast("Empty selection.", duration=5)
+
+
+def export_cards(card_list, out_folder, anki_template_dir):
+    """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
+    anki_obj = AnkiObject(root_dir=anki_template_dir)
+    if not card_list:
+        print("Empty list.")
+        return False
+    folder_name = os.path.join(out_folder, f"temp_{now_string()}")
+    os.makedirs(folder_name, exist_ok=True)
+    for card in card_list:
+        card.write_media_files_to_folder(folder_name)
+        content_dict = card.fields
+        anki_obj.add_card(**content_dict)
+    with CD(folder_name):
+        file_name = f'{toolz.first(card_list).template.name.replace(" ", "_")}_{now_string()}.apkg'
+        anki_obj.write_apkg(file_name)
+    os.rename(os.path.join(folder_name, file_name), os.path.join(out_folder, file_name))
+    now = datetime.now()
+    for card in card_list:
+        card.state = "exported"
+        card.dt_exported = now
+    shutil.rmtree(folder_name)
+    return True
 
 
 # pylint: disable = W,C,R,I
