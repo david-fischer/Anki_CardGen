@@ -16,7 +16,7 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,html,js,css,apkg,sqlite
 
 # (list) List of inclusions using pattern matching
-#source.include_patterns = assets/*,images/*.png
+source.include_patterns = acg/*
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -33,8 +33,7 @@ version.filename = pyproject.toml
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements =
-
+requirements = attrs,requests,kivymd,pandas,kivy,Unidecode,beautifulsoup4,genanki,googletrans,pillow,cached_property,pyyaml,soupsieve,urllib3,chardet,idna,certifi,lxml,toolz,sdl2_ttf==2.0.15,pony,bidict,pystache,acg
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
 # requirements.source.kivy = ../../kivy
@@ -253,7 +252,7 @@ android.allow_backup = True
 #p4a.source_dir =
 
 # (str) The directory in which python-for-android should look for your own build recipes (if any)
-p4a.local_recipes = ./python-for-android/recipes/
+#p4a.local_recipes = ./python-for-android/recipes/
 
 # (str) Filename to the hook for p4a
 #p4a.hook =
@@ -269,7 +268,7 @@ p4a.local_recipes = ./python-for-android/recipes/
 # Setting this to false will pass --ignore-setup-py, true will pass --use-setup-py
 # NOTE: this is general setuptools integration, having pyproject.toml is enough, no need to generate
 # setup.py if you're using Poetry, but you need to add "toml" to source.include_exts.
-# p4a.setup_py = False
+p4a.setup_py = False
 
 
 #
