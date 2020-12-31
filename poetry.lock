@@ -177,7 +177,7 @@ cffi = ">=1.0.0"
 
 [[package]]
 name = "buildozer"
-version = "1.2.0"
+version = "1.2.0.dev0"
 description = "Generic Python packager for Android / iOS and Desktop"
 category = "dev"
 optional = false
@@ -187,6 +187,10 @@ python-versions = "*"
 pexpect = "*"
 sh = "*"
 virtualenv = "*"
+
+[package.source]
+type = "url"
+url = "https://github.com/kivy/buildozer/archive/master.zip"
 
 [[package]]
 name = "cached-property"
@@ -576,7 +580,6 @@ docs = ["sphinx", "sphinx-autoapi (==1.4.0)", "sphinx-rtd-theme", "sphinx-notfou
 [package.source]
 type = "url"
 url = "https://github.com/kivymd/KivyMD/archive/master.zip"
-
 [[package]]
 name = "lazy-object-proxy"
 version = "1.4.3"
@@ -913,6 +916,7 @@ description = "Android APK packager for Python scripts and apps"
 category = "dev"
 optional = false
 python-versions = ">=3.6.0"
+develop = false
 
 [package.dependencies]
 appdirs = "*"
@@ -922,6 +926,12 @@ pep517 = "<0.7.0"
 sh = {version = ">=1.10", markers = "sys_platform != \"nt\""}
 six = "*"
 toml = "*"
+
+[package.source]
+type = "git"
+url = "https://github.com/kivy/python-for-android.git"
+reference = "master"
+resolved_reference = "5a94d0740e3a0623407b49b2cbb4ef106eea959e"
 
 [[package]]
 name = "pytoml"
@@ -1389,7 +1399,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "b9748b7ad107aa092c87912351dd375caad92e9ea8c6daaab6c8a7102a08c83d"
+content-hash = "985b2b3b7857f14bc8ede7d2c5f1806f48149939ae64870bdab16883e8977c7c"
 
 [metadata.files]
 aiodns = [
@@ -1529,10 +1539,7 @@ brotlipy = [
     {file = "brotlipy-0.7.0-pp37-pypy37_pp73-manylinux1_x86_64.whl", hash = "sha256:4864ac52c116ea3e3a844248a9c9fbebb8797891cbca55484ecb6eed3ebeba24"},
     {file = "brotlipy-0.7.0.tar.gz", hash = "sha256:36def0b859beaf21910157b4c33eb3b06d8ce459c942102f16988cca6ea164df"},
 ]
-buildozer = [
-    {file = "buildozer-1.2.0-py3-none-any.whl", hash = "sha256:dd73cb9ade229b99d555c54cea82c4ea7969061b585c1bb07bc76619df53f6c9"},
-    {file = "buildozer-1.2.0.tar.gz", hash = "sha256:39c9511fa5313c2aa5df6f0761ac568a7fd6773ebf81ee14a16ab5fea6f27fe4"},
-]
+buildozer = []
 cached-property = [
     {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
     {file = "cached_property-1.5.2-py2.py3-none-any.whl", hash = "sha256:df4f613cf7ad9a588cc381aaf4a512d26265ecebd5eb9e1ba12f1319eb85a6a0"},
@@ -2199,10 +2206,7 @@ python-dateutil = [
     {file = "python-dateutil-2.8.1.tar.gz", hash = "sha256:73ebfe9dbf22e832286dafa60473e4cd239f8592f699aa5adaf10050e6e1823c"},
     {file = "python_dateutil-2.8.1-py2.py3-none-any.whl", hash = "sha256:75bb3f31ea686f1197762692a9ee6a7550b59fc6ca3a1f4b5d7e32fb98e2da2a"},
 ]
-python-for-android = [
-    {file = "python-for-android-2020.6.2.tar.gz", hash = "sha256:b7de258a9ef89b6dd60732920086e129c1255428a12c9e6f45df0ae077fb3e90"},
-    {file = "python_for_android-2020.6.2-py3-none-any.whl", hash = "sha256:c152a6eb42ce75d08a1a0e016851957d21c156e21f5ec23fcc0ea85e156bce6c"},
-]
+python-for-android = []
 pytoml = [
     {file = "pytoml-0.1.21-py2.py3-none-any.whl", hash = "sha256:57a21e6347049f73bfb62011ff34cd72774c031b9828cb628a752225136dfc33"},
     {file = "pytoml-0.1.21.tar.gz", hash = "sha256:8eecf7c8d0adcff3b375b09fe403407aa9b645c499e5ab8cac670ac4a35f61e7"},
