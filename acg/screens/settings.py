@@ -1,6 +1,5 @@
 """Implements :class:`SettingsRoot`, the root widget for the settings screen."""
 from ..custom_widgets import PathSection, SectionBase, SettingsWidget, ThemeSection
-from ..custom_widgets.behaviors import ChildrenFromDataBehavior
 from ..design_patterns.factory import CookBook
 
 section_cookbook = CookBook()
@@ -9,10 +8,14 @@ section_cookbook.register("Paths")(PathSection)
 
 
 @section_cookbook.register("Template")
-class TemplateSection(SectionBase, ChildrenFromDataBehavior):
+class TemplateSection(SectionBase):
     """Not implemented yet."""
 
-    # TODO: implement
+    section = "Template"
+
+
+#
+#     TODO: implement
 
 
 class SettingsRoot(SettingsWidget):
