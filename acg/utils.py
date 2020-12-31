@@ -406,6 +406,10 @@ def get_file_manager(ext=None, callback=None):
     if getattr(app, "file_manager") is None:
         app.file_manager = MDFileManager()
     file_manager = app.file_manager
+    try:
+        file_manager.close()
+    except AttributeError:
+        pass
     file_manager.ext, ext = ext, app.file_manager.ext
     file_manager.select_path = partial(
         close_and_callback,
