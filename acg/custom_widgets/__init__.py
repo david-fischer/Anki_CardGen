@@ -21,6 +21,8 @@ from .scroll_widgets import (
 from .selection_widgets import LongPressImage, TransCard
 
 # selection_widgets
+from .settings import PathSection, SectionBase, SettingsWidget, ThemeSection
+
 Factory.register("LongPressImage", LongPressImage)
 Factory.register("TransCard", TransCard)
 Factory.register("CustomSpeedDial", CustomSpeedDial)
@@ -38,6 +40,11 @@ Factory.register("ReplacementDialog", ReplacementDialog)
 # main_menu
 Factory.register("DrawerItem", DrawerItem)
 Factory.register("KvScreen", KvScreen)
+# settings
+Factory.register("SettingsWidget", SettingsWidget)
+Factory.register("PathSection", PathSection)
+Factory.register("ThemeSection", ThemeSection)
+Factory.register("SectionBase", SectionBase)
 
 for kv_file in pathlib.Path(__file__).parent.glob("**/*.kv"):
     Builder.unload_file(str(kv_file))
