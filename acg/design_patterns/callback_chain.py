@@ -30,6 +30,10 @@ class CallNode:
         if self.next is not None:
             self.next.receive(*args, **kwargs)
 
+    def __call__(self, *args, **kwargs):
+        """Call :meth:`receive`."""
+        self.receive(*args, **kwargs)
+
 
 @attr.s(auto_attribs=True, repr=False)
 class CallChain:
