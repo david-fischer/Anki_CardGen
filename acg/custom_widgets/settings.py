@@ -37,13 +37,6 @@ class SectionBase(BoxLayout):
     section = StringProperty()
     _config_update = BooleanProperty()
 
-    def _get_data(self):
-        return [
-            {"key": key, "val": val} for key, val in self.config[self.section].items()
-        ]
-
-    data = AliasProperty(getter=_get_data, bind=["config", "_config_update"])
-
     def update_config(self, *_, key=None, val=None):
         """Set :attr:`config` value if `key` and `val` are specified."""
         if key and val:
@@ -120,8 +113,17 @@ class ThemeSection(SectionBase):
 class PathSection(ChildrenFromDataBehavior, SectionBase):
     """Section ``"Paths"`` of the config."""
 
+    # TODO: fix collision between data = ListProperty and data = AliasProperty
+
     child_class_name = "PathChooser"
     section = "Paths"
+
+    def _get_data(self):
+        return [
+            {"key": key, "val": val} for key, val in self.config[self.section].items()
+        ]
+
+    data = AliasProperty(getter=_get_data, bind=["config", "_config_update"])
 
     def __init__(self, **kwargs):
         self.child_bindings = {"on_update": self.update_config}
