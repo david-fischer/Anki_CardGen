@@ -8,3 +8,5 @@ test/
 __pycache__/
 acg/db.sqlite
 acg/ankicardgen.ini
+dist
+build
