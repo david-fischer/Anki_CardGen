@@ -1,5 +1,4 @@
 """Contains the Main App :class:`AnkiCardGenApp`."""
-__version__ = "1.0.11"
 
 
 import os
@@ -20,7 +19,7 @@ from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.spinner import MDSpinner
 from pony.orm import db_session
 
-from . import db, screens
+from . import CONFIG_PATH, db, screens
 from .custom_widgets.main_menu import MainMenu
 from .paths import ANKI_DIR, ROOT_DATA_DIR
 from .templates import template_cookbook
@@ -67,6 +66,11 @@ class AnkiCardGenApp(MDApp):
     def get_anki_template_dir(self):
         """Return absolute path where html-, css- and js-files for anki-card is located."""
         return os.path.join(ANKI_DIR, self.anki_template_dir)
+
+    @staticmethod
+    def get_application_config():
+        """Return default path for the config."""
+        return str(CONFIG_PATH)
 
     def build_config(self, config):  # pylint: disable=no-self-use
         """If no config-file exists, sets the default."""
