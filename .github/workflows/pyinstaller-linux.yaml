@@ -20,10 +20,21 @@ jobs:
         path: master
         ref: master
 
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+
+    - name: Install Dependencies
+      run: ls
+
+
+
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
       with:
-        path: master/acg
+        path: master
         spec: pyinstaller.spec
 
 #    - uses: actions/upload-artifact@v2
@@ -37,11 +48,6 @@ jobs:
         path: data
         ref: data # Branch name
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.7
-        architecture: x64
 
 #    - name: debug
 #      run: ls master/acg/dist/linux
