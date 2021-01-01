@@ -30,7 +30,7 @@ jobs:
       run: cd master; pip install poetry; poetry install
 
     - name: PyInstaller
-      run: cd master; pyinstaller --distpath ./dist/linux pyinstaller.spec; cd ..
+      run: cd master; python -m PyInstaller --distpath ./dist/linux pyinstaller.spec; cd ..
 
 #    - name: Package Application
 #      uses: JackMcKew/pyinstaller-action-linux@main
