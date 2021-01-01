@@ -3,7 +3,7 @@ from pythonforandroid.recipe import PythonRecipe
 
 class AcgRecipe(PythonRecipe):
     version = "master"
-    url = "https://api.github.com/repos/Rabtman/AcgClub/tarball/{version}"
+    url = "https://github.com/david-fischer/Anki_CardGen/archive/{version}.zip"
 
     # call_hostpython_via_targetpython = True
     """If True, tries to install the module using the hostpython binary
@@ -35,7 +35,6 @@ class AcgRecipe(PythonRecipe):
         "cymem",
         "pystache",
         "pony",
-        "acg",
         "hstspreload",
         "httpx",
         "Pygments",
