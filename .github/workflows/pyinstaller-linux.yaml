@@ -27,9 +27,7 @@ jobs:
         architecture: x64
 
     - name: Install Dependencies
-      run: ls
-
-
+      run: pip install master
 
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
