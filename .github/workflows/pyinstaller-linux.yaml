@@ -27,7 +27,7 @@ jobs:
         architecture: x64
 
     - name: Install Dependencies
-      run: pip install ./master
+      run: pip install poetry; poetry install
 
     - name: PyInstaller
       run: cd master; pyinstaller --distpath ./dist/linux pyinstaller.spec; cd ..
