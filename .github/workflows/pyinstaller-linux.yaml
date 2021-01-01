@@ -29,11 +29,14 @@ jobs:
     - name: Install Dependencies
       run: pip install ./master
 
-    - name: Package Application
-      uses: JackMcKew/pyinstaller-action-linux@main
-      with:
-        path: master
-        spec: pyinstaller.spec
+    - name: PyInstaller
+      run: cd master; pyinstaller --distpath ./dist/linux pyinstaller.spec; cd ..
+
+#    - name: Package Application
+#      uses: JackMcKew/pyinstaller-action-linux@main
+#      with:
+#        path: master
+#        spec: pyinstaller.spec
 
 #    - uses: actions/upload-artifact@v2
 #      with:
@@ -51,7 +54,7 @@ jobs:
 #      run: ls master/acg/dist/linux
 
     - name: zip
-      run: cd master/acg/dist/linux; zip -r AnkiCardGen.zip AnkiCardGen; cd -
+      run: cd master/dist/linux/AnkiCardGen; zip -r AnkiCardGen.zip AnkiCardGen; cd -
 
     - name: Push zipped app to data branch
       run: python master/.utils/move_binary.py "master/acg/dist/linux/AnkiCardGen.zip" master data linux
