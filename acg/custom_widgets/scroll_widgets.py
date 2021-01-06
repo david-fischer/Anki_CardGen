@@ -14,7 +14,6 @@ from kivy.properties import (
     ListProperty,
     ObjectProperty,
     OptionProperty,
-    StringProperty,
 )
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.recycleview import RecycleView
@@ -30,19 +29,6 @@ class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
 
     spinner_active = BooleanProperty()
     """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`."""
-
-    icon = StringProperty()
-    """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.label.MDIcon`"""
-
-    icon_color = ListProperty()
-    """:class:`~kivy.properties.ListProperty` defaults to :attr:`main.AnkiCardGenApp.theme_cls.text_color`."""
-
-    current_state = OptionProperty(
-        "queued",
-        options=["loading", "queued", "waiting", "ready", "done", "error", "exported"],
-    )
-    """:class:`~kivy.properties.OptionProperty` with options
-    ``["loading", "queued", "waiting", "ready", "done", "error", "exported"]``."""
 
 
 class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):

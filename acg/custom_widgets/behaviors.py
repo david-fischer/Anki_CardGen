@@ -3,13 +3,13 @@
 from functools import partial
 from threading import Thread
 
-from kivy import clock
+import toolz
 from kivy.animation import Animation
 from kivy.clock import Clock
 from kivy.event import EventDispatcher
 from kivy.factory import Factory
 from kivy.properties import (
-    BooleanProperty,
+    AliasProperty,
     DictProperty,
     ListProperty,
     ObjectProperty,
@@ -17,6 +17,8 @@ from kivy.properties import (
     StringProperty,
 )
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.widget import Widget
+from kivymd.theming import ThemableBehavior
 
 
 class CallbackBehavior(EventDispatcher):
@@ -86,7 +88,7 @@ class LongPressBehavior(ButtonBehavior):
         """Implement in sub class. Placeholder."""
 
 
-class MultiStateBehavior:
+class MultiStateBehavior(Widget):
     """
     Changes properties of widget based on :attr:`current_state` and the corresponding entry in :attr:`state_dict`.
 
@@ -95,8 +97,10 @@ class MultiStateBehavior:
 
     current_state = Property(None)
     """:class:`~kivy.properties.Property` current state of the widget."""
+    default_state = Property(None)
+    """:class:`~kivy.properties.Property` current state of the widget."""
 
-    state_dicts = DictProperty(None)
+    state_dicts = DictProperty({})
     """
     :class:`~kivy.properties.DictProperty`. E.g.,
     ::
@@ -110,44 +114,64 @@ class MultiStateBehavior:
     animated_properties = ListProperty()
     """:class:`~kivy.properties.ListProperty` containing the list of property-names that get changed via animation."""
 
+    animation_kwargs = DictProperty({"duration": 0.5, "t": "out_circ"})
+
+    def _get_current_property(self):
+        defaults = (
+            self.state_dicts[self.default_state]
+            if self.default_state in self.state_dicts
+            else {}
+        )
+        current = (
+            self.state_dicts[self.current_state]
+            if self.current_state in self.state_dicts
+            else {}
+        )
+        return {**defaults, **current}
+
+    current_properties = AliasProperty(
+        _get_current_property,
+        bind=["state_dicts", "current_state", "default_state"],
+    )
+
+    def _get_properties_to_update(self):
+        props = self.properties()
+        props = {
+            key
+            for key, val in self.current_properties.items()
+            if key in props and val != getattr(self, key)
+        }
+        animated = set(self.animated_properties)
+        return props & animated, props - animated
+
+    def _animated_update(self, keys):
+        if keys:
+            animation = Animation(
+                **{key: self.current_properties[key] for key in keys},
+                **self.animation_kwargs
+            )
+            animation.start(self)
+
+    def update_properties(self, *_):
+        """Update properties if they differ from the corresponding entry in :attr:`current_properties`."""
+        animated, not_animated = self._get_properties_to_update()
+        for key in not_animated:
+            setattr(self, key, self.current_properties[key])
+        self._animated_update(animated)
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        clock.Clock.schedule_once(self.__post_init__)
-
-    def on_current_state(self, *_):
-        """
-        Change widgets properties based on new :attr:`current_state`.
-
-        The properties whose names are in :attr:`animated_properties` are changed via animation.
-        """
-        animation_dict = {
-            key: val
-            for key, val in self.state_dicts[self.current_state].items()
-            if key in self.animated_properties
-        }
-        for key, val in self.state_dicts[self.current_state].items():
-            if key not in self.animated_properties:
-                setattr(self, key, val)
-        if animation_dict:
-            anim = Animation(**animation_dict, duration=0.5, t="out_circ")
-            anim.start(self)
-
-    def __post_init__(self, *_):
-        """Do init after kv-file is applied."""
-        self.on_current_state()
+        self.bind(current_properties=self.update_properties)
+        Clock.schedule_once(self.update_properties)
 
 
 class CheckBehavior(MultiStateBehavior):
     """Two-State-Behavior with states ``True`` and ``False``."""
 
-    current_state = BooleanProperty(False)
-    """:class:`~kivy.properties.BooleanProperty` defaults to ``False``. State of widget."""
-
     def __init__(self, **kwargs):
-        self.state_dicts = (
-            {True: {}, False: {}} if self.state_dicts is None else self.state_dicts
-        )
-        """: : :class:`~kivy.properties.DictProperty`, defaults to ``{False:{}, True:{}}`` ."""
+        kwargs.setdefault("state_dicts", {False: {}, True: {}})
+        kwargs.setdefault("current_state", False)
+        kwargs.setdefault("default_state", False)
         super().__init__(**kwargs)
 
 
@@ -195,6 +219,10 @@ class ChildrenFromDataBehavior:
         self.root_for_children.add_widget(new_child)
         self.after_add_child(new_child)
 
+    def get_child(self, name):
+        """Return child with name ``name``."""
+        return toolz.first(c for c in self.root_for_children.children if c.name == name)
+
     def remove_child(self):
         """Remove one child-widget."""
         last_child = self.root_for_children.children[-1]
@@ -233,24 +261,16 @@ class TranslationOnCheckBehavior(CheckBehavior):
     text_trans = StringProperty("trans")
     """:class:`~kivy.properties.StringProperty`. Translated Text."""
 
-    def __post_init__(self, *_):
-        """Initialize widget after kv-file is loaded."""
-        self.on_text_trans()
-        self.on_text_orig()
-        super().__post_init__(*_)
-
     def on_text_trans(self, *_):
         """Update :attr:`state_dict` with new :attr:`text_trans`."""
-        self.state_dicts[False]["text"] = self.text_trans
-        self.on_current_state()
+        self.state_dicts[False] |= {"text": self.text_trans}
 
     def on_text_orig(self, *_):
         """Update :attr:`state_dict` with new :attr:`text_orig`."""
-        self.state_dicts[True]["text"] = self.text_orig
-        self.on_current_state()
+        self.state_dicts[True] |= {"text": self.text_orig}
 
 
-class ThemableColorChangeBehavior(CheckBehavior):
+class ThemableColorChangeBehavior(ThemableBehavior, CheckBehavior):
     """Changes :attr:`bg_color` :attr:`text_color` based on :attr:`current_state`."""
 
     text_color = ListProperty([0, 0, 0, 1])
@@ -263,16 +283,20 @@ class ThemableColorChangeBehavior(CheckBehavior):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.theme_cls.bind(theme_style=self.__post_init__)
-        self.theme_cls.bind(primary_palette=self.__post_init__)
-
-    def __post_init__(self, *_):
-        self.state_dicts[True]["bg_color"] = self.theme_cls.primary_color
-        self.state_dicts[False]["bg_color"] = (
-            self.theme_cls.bg_darkest
-            if self.theme_cls.theme_style == "Light"
-            else self.theme_cls.bg_light
+        self.theme_cls.bind(
+            theme_style=self.set_colors, primary_palette=self.set_colors
         )
-        self.state_dicts[True]["text_color"] = [1, 1, 1, 1]
-        self.state_dicts[False]["text_color"] = self.theme_cls.secondary_text_color
-        super().__post_init__()
+        self.set_colors()
+
+    def set_colors(self, *_):
+        """Update :attr:`state_dicts` with colors from theme."""
+        self.state_dicts[True].update(
+            bg_color=self.theme_cls.primary_color, text_color=[1, 1, 1, 1]
+        )
+        self.state_dicts[False].update(
+            bg_color=self.theme_cls.bg_darkest
+            if self.theme_cls.theme_style == "Light"
+            else self.theme_cls.bg_light,
+            text_color=self.theme_cls.secondary_text_color,
+        )
+        self.update_properties()

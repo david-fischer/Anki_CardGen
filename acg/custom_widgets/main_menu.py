@@ -13,8 +13,7 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import MDList, OneLineIconListItem
 from kivymd.uix.menu import MDDropdownMenu
 
-from .behaviors import CheckBehavior
-from .selection_widgets import CheckContainer
+from .behaviors import CheckBehavior, ChildrenFromDataBehavior
 
 
 class DrawerItem(CheckBehavior, OneLineIconListItem):
@@ -29,14 +28,8 @@ class DrawerItem(CheckBehavior, OneLineIconListItem):
     kv_file_name = StringProperty("")
     """:class:`~kivy.properties.StringProperty`: name of the screens kv-file."""
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.current_state = False
-        self.theme_cls.bind(theme_style=self.on_current_state)
-        self.theme_cls.bind(primary_palette=self.on_current_state)
 
-
-class DrawerList(ThemableBehavior, CheckContainer, MDList):
+class DrawerList(ThemableBehavior, ChildrenFromDataBehavior, MDList):
     """
     List containing :class:`DrawerItem`.
 
@@ -61,10 +54,6 @@ class DrawerList(ThemableBehavior, CheckContainer, MDList):
             instance.current_state = not instance.current_state
         self.current = instance.name
         self.nav_drawer.set_state("close")
-
-    def get_child(self, name):
-        """Return child with name ``name``."""
-        return toolz.first(c for c in self.children if c.name == name)
 
     def on_current(self, *_):
         """Update state of :attr:`current` by calling :meth:´on_child_release´."""

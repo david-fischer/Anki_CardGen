@@ -80,7 +80,7 @@ class CheckContainer(ChildrenFromDataBehavior):
         ]
 
 
-class MyCheckCard(ThemableColorChangeBehavior, CheckBehavior, MDCard):
+class MyCheckCard(ThemableColorChangeBehavior, MDCard):
     """Selectable :~kivymd.uix.card.MDCard`. Select by click. Changes color on selection."""
 
     text = StringProperty("test " * 15)
@@ -101,8 +101,6 @@ class MyCheckChip(
     CircularRippleBehavior,
     ButtonBehavior,
     ThemableColorChangeBehavior,
-    CheckBehavior,
-    ThemableBehavior,
     BoxLayout,
 ):
     """Selectable Chip. Select by click. Change color on selection."""

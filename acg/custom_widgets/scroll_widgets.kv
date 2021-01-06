@@ -1,23 +1,22 @@
 <LeftStatusIndicator>:
     spinner_active: False
-    icon: ""
-    icon_color: app.theme_cls.text_color
     state_dicts:
         {\
         "waiting": {"icon":"download", "icon_color":app.theme_cls.text_color, "spinner_active": False},\
-        "queued": {"icon":"close", "icon_color":app.theme_cls.text_color, "spinner_active": False},\
-        "loading": {"icon":"", "icon_color":[0,0,0,0], "spinner_active": True},\
-        "done": {"icon":"new-box", "icon_color":[.55,.71,0,1], "spinner_active": False},\
-        "ready": {"icon":"open-in-new", "icon_color":app.theme_cls.text_color, "spinner_active": False},\
-        "error": {"icon":"close-circle", "icon_color":[.8,0,0,1], "spinner_active": False},\
-        "exported": {"icon":"check-circle", "icon_color":[.31,.47,.26,1], "spinner_active": False},\
+        "queued": {"icon":"close"},\
+        "loading": {"icon":"", "spinner_active": True},\
+        "done": {"icon":"new-box", "icon_color":[.55,.71,0,1]},\
+        "ready": {"icon":"open-in-new"},\
+        "error": {"icon":"close-circle", "icon_color":[.8,0,0,1]},\
+        "exported": {"icon":"check-circle", "icon_color":[.31,.47,.26,1]},\
         }
+    default_state: "waiting"
 
 
     MDIcon:
         id: _icon
-        icon: root.icon
-        color: root.icon_color
+        icon: root.current_properties["icon"]
+        color: root.current_properties["icon_color"]
         size_hint: 1,1
         font_size: dp(30)
         texture_size: self.size
