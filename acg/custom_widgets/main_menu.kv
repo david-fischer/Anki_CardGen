@@ -1,6 +1,4 @@
 #:import NoTransition kivy.uix.screenmanager.NoTransition
-#:import ASSETS_DIR paths.ASSETS_DIR
-#:import os os
 
 <DrawerItem>:
     theme_text_color: "Custom"
@@ -22,6 +20,7 @@
     orientation: "vertical"
     padding: "8dp"
     spacing: "8dp"
+    image_source: "test"
 
     AnchorLayout:
         anchor_x: "left"
@@ -32,7 +31,7 @@
             id: avatar
             size_hint: None, None
             size: "112dp", "112dp"
-            source: os.path.join(ASSETS_DIR,"AnkiCardGen.png")
+            source: root.image_source
 
     MDLabel:
         text: "Anki CardGen"
@@ -80,6 +79,7 @@
 
             DrawerContent:
                 id: drawer_content
+                image_source: root.image_source
                 canvas.before:
                     Color:
                         rgba: app.theme_cls.primary_color

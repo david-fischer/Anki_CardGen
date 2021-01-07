@@ -70,6 +70,7 @@ class MainMenu(StackLayout):
 
     screens = DictProperty()
     screen_dir = StringProperty()
+    image_source = StringProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

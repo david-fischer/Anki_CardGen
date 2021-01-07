@@ -6,9 +6,9 @@ such that the settings file ``ankicardgen.ini`` is placed in the folder of the m
 from which the script is called.
 """
 
+from . import BASE_PATH
 from .main import main
-from .paths import MAIN_DIR
 from .utils import CD
 
-with CD(MAIN_DIR):
+with CD(BASE_PATH):
     main()

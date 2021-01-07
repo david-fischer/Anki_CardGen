@@ -19,9 +19,8 @@ from kivymd.uix.filemanager import MDFileManager
 from kivymd.uix.spinner import MDSpinner
 from pony.orm import db_session
 
-from . import CONFIG_PATH, db, screens
+from . import ANKI_DIR, ASSETS_DIR, CONFIG_PATH, HOME, db, screens
 from .custom_widgets.main_menu import MainMenu
-from .paths import ANKI_DIR, ROOT_DATA_DIR
 from .templates import template_cookbook
 
 os.environ["SSL_CERT_FILE"] = certifi.where()
@@ -35,13 +34,13 @@ class AnkiCardGenApp(MDApp):
 
     # Config
     apkg_export_dir = ConfigParserProperty(
-        "",
+        HOME / "ankicardgen",
         "Paths",
         "apkg_export_dir",
         "app",
     )
-    import_dir = ConfigParserProperty("", "Paths", "import_dir", "app")
-    kobo_import_dir = ConfigParserProperty("", "Paths", "kobo_import_dir", "app")
+    import_dir = ConfigParserProperty(HOME, "Paths", "import_dir", "app")
+    kobo_import_dir = ConfigParserProperty(HOME, "Paths", "kobo_import_dir", "app")
     anki_template_dir = ConfigParserProperty(
         "vocab_card", "Paths", "anki_template_dir", "app"
     )
@@ -96,13 +95,11 @@ class AnkiCardGenApp(MDApp):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         self.bind_theme_cls_and_config()
         self.file_manager = MDFileManager()
-        self.apkg_export_dir = self.apkg_export_dir or os.path.join(
-            ROOT_DATA_DIR, "ankicardgen"
-        )
-        self.import_dir = self.import_dir or os.path.abspath(ROOT_DATA_DIR)
         os.makedirs(self.apkg_export_dir, exist_ok=True)
         return MainMenu(
-            screen_dicts=screens.screen_dicts, screen_dir=str(screens.SCREEN_DIR)
+            screen_dicts=screens.screen_dicts,
+            screen_dir=str(screens.SCREEN_DIR),
+            image_source=str(ASSETS_DIR / "AnkiCardGen.png"),
         )
 
     @db_session
