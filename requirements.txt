@@ -5,8 +5,8 @@ beautifulsoup4
 bidict
 certifi
 genanki
+git+https://github.com/kivymd/KivyMD/archive/master.zip
 googletrans
-https://github.com/kivymd/KivyMD/archive/master.zip
 Kivy
 lxml
 pandas
