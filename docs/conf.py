@@ -14,23 +14,25 @@ import os
 import sys
 
 # sys.path.insert(0, '/home/david/coding/python/Anki_CardGen')
+import toml
+
 sys.path.append(os.path.abspath("sphinxext"))
 sys.path.append(os.path.abspath("../../"))
 sys.path.append(os.path.abspath(".."))
-sys.path.append(os.path.abspath("../src/"))
 
 print(sys.path)
 
 # -- Project information -----------------------------------------------------
+with open("../pyproject.toml") as file:
+    meta = toml.load(file)["tool"]["poetry"]
 
-project = "Anki Card Gen"
-copyright = "2020, David Fischer"
-author = "David Fischer"
+project = meta["name"]
+author = meta["authors"][0].split(" <")[0]
+copyright = f"2020, {author}"
+release = meta["version"]
 
 master_doc = "index"
 # The full version, including alpha/beta/rc tags
-release = "1.0.11"
-
 # -- General configuration ---------------------------------------------------
 
 # Add any Sphinx extension module names here, as strings. They can be

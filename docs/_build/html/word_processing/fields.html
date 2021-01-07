@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Fields &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Fields &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -88,135 +87,70 @@
 <li class="toctree-l2"><a class="reference internal" href="anki.html">Generate Anki Cards</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Fields</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.CheckChipOptionsField">CheckChipOptionsField</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.CookBook">CookBook</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.CookBook.cook">cook</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.CookBook.get_recipe_names">get_recipe_names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.CookBook.get_recipes">get_recipes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.CookBook.register">register</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.fields.CookBook.to_button_dict">to_button_dict</a></li>
 </ul>
-<ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.DisplayTextField">DisplayTextField</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.DualLongTextField">DualLongTextField</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.Field">Field</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.construct_widget">construct_widget</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.field_name">field_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.get_content">get_content</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.get_data">get_data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.heading">heading</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.kv_bidict">kv_bidict</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.post_process">post_process</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.pre_process">pre_process</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.template">template</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.update">update</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.update_widget_data">update_widget_data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.widget">widget</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.Field.widget_kv">widget_kv</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.ImgField">ImgField</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.ImgField.construct_widget">construct_widget</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.ImgField.on_error">on_error</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.ImgField.post_process">post_process</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.MediaField">MediaField</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.file_type">file_type</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.get_file_strings">get_file_strings</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.get_media_file">get_media_file</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.post_process">post_process</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.pre_process">pre_process</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.MediaField.save_media_file">save_media_file</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.OptionsField">OptionsField</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.OptionsField.get_content">get_content</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.OptionsField.get_data">get_data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.OptionsField.update_widget_data">update_widget_data</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.TextInputField">TextInputField</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.callback">callback</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.construct_widget">construct_widget</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.on_text_validate">on_text_validate</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TextInputField.widget_kv">widget_kv</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.TransChipOptionsField">TransChipOptionsField</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.fields.TranslationMixin">TranslationMixin</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.pre_process">pre_process</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.src_field">src_field</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.target_field">target_field</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.template">template</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.fields.TranslationMixin.trans_callback">trans_callback</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.fields.compress_img_bytes">compress_img_bytes</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="parsers.html">Parsers</a></li>
@@ -243,7 +177,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -305,6 +239,43 @@ customization of <code class="xref py py-class docutils literal notranslate"><sp
 <em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">CheckChipOptionsField</code><a class="reference internal" href="../_modules/acg/fields.html#CheckChipOptionsField"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.CheckChipOptionsField" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#acg.fields.OptionsField" title="acg.fields.OptionsField"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.fields.OptionsField</span></code></a></p>
 <p>Pick multiple options using <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.selection_widgets.CheckChip</span></code>s.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.fields.CookBook">
+<em class="property">class </em><code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">CookBook</code><a class="reference internal" href="../_modules/acg/design_patterns/factory.html#CookBook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.CookBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save recipes for construction of Classes with default values.</p>
+<dl class="py method">
+<dt id="acg.fields.CookBook.cook">
+<code class="sig-name descname">cook</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.fields.CookBook.cook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate object from recipe.</p>
+<p>default_kwargs in recipe can be overridden by kwargs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.fields.CookBook.get_recipe_names">
+<code class="sig-name descname">get_recipe_names</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.fields.CookBook.get_recipe_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of all registered recipes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.fields.CookBook.get_recipes">
+<code class="sig-name descname">get_recipes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.fields.CookBook.get_recipes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="xref py py-attr docutils literal notranslate"><span class="pre">recipes</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.fields.CookBook.register">
+<code class="sig-name descname">register</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">recipe_name</span></em>, <em class="sig-param"><span class="n">info</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.fields.CookBook.register" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add recipe to <code class="xref py py-attr docutils literal notranslate"><span class="pre">recipes</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.fields.CookBook.to_button_dict">
+<code class="sig-name descname">to_button_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.fields.CookBook.to_button_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dict in a form as used in <code class="xref py py-attr docutils literal notranslate"><span class="pre">custom_widgets.CustomSpeedDial.button_dicts</span></code>.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -583,6 +554,12 @@ focus.</p>
 <dd><p>Function that is applied to the data in source field to obtain a translation.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.fields.compress_img_bytes">
+<code class="sig-prename descclassname">acg.fields.</code><code class="sig-name descname">compress_img_bytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bytes_image</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/utils.html#compress_img_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.fields.compress_img_bytes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compress image given as bytes (e.g. as content of <a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.25.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">requests.Response</span></code></a>).</p>
 </dd></dl>
 
 </div>

@@ -26,22 +26,14 @@ jobs:
         python-version: 3.9
         architecture: x64
 
-    - name: Install Dependencies
-      run: cd master; pip install poetry; poetry install
+    - name: generate requirements.txt for pyinstaller
+      run: cd master; pip install poetry; poetry export -f requirements.txt --without-hashes
 
-    - name: PyInstaller
-      run: cd master; poetry run python -m PyInstaller --distpath ./dist/linux pyinstaller.spec; cd ..
-
-#    - name: Package Application
-#      uses: JackMcKew/pyinstaller-action-linux@main
-#      with:
-#        path: master
-#        spec: pyinstaller.spec
-
-#    - uses: actions/upload-artifact@v2
-#      with:
-#        name: AnkiCardGen
-#        path: acg/dist/linux
+    - name: Package Application
+      uses: JackMcKew/pyinstaller-action-linux@main
+      with:
+        path: master
+        spec: pyinstaller.spec
 
     - name: Checkout
       uses: actions/checkout@v2

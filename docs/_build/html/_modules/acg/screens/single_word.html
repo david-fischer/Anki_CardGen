@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.screens.single_word &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.screens.single_word &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Anki Card Gen</a>
+          <a href="../../../index.html">acg</a>
 
       </nav>
 
@@ -154,8 +153,11 @@
   <h1>Source code for acg.screens.single_word</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Implements root widget of the single_word screen.&quot;&quot;&quot;</span>
 
+
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.floatlayout</span> <span class="kn">import</span> <span class="n">FloatLayout</span>
+
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">set_screen</span>
 
 
 <div class="viewcode-block" id="SingleWordRoot"><a class="viewcode-back" href="../../../screens/single_word.html#acg.screens.single_word.SingleWordRoot">[docs]</a><span class="k">class</span> <span class="nc">SingleWordRoot</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
@@ -169,7 +171,23 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">scroll_view</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">parent</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_view</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scroll_view</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SingleWordRoot.back_to_queue"><a class="viewcode-back" href="../../../screens/single_word.html#acg.screens.single_word.SingleWordRoot.back_to_queue">[docs]</a>    <span class="k">def</span> <span class="nf">back_to_queue</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set screen to ``&quot;queue&quot;``.&quot;&quot;&quot;</span>
+        <span class="n">set_screen</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleWordRoot.proceed"><a class="viewcode-back" href="../../../screens/single_word.html#acg.screens.single_word.SingleWordRoot.proceed">[docs]</a>    <span class="k">def</span> <span class="nf">proceed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Accept data and set screen to ``&quot;queue&quot;``.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">get_results</span><span class="p">()</span>
+        <span class="n">set_screen</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleWordRoot.refresh"><a class="viewcode-back" href="../../../screens/single_word.html#acg.screens.single_word.SingleWordRoot.refresh">[docs]</a>    <span class="k">def</span> <span class="nf">refresh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Crawl data and update database.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">set_data_from_parsers</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">update_fields</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">save_base_data_to_db</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Utils &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Utils &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -90,77 +89,41 @@
 <li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utils</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.AppBusyContext">AppBusyContext</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.CD">CD</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.COLOR2MEANING">COLOR2MEANING</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.utils.SPACY_IS_AVAILABLE">SPACY_IS_AVAILABLE</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.app_busy">app_busy</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.utils.clean_up">clean_up</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.async_get_results">async_get_results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.async_wrapper">async_wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.close_and_callback">close_and_callback</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.compress_img">compress_img</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.compress_img_bytes">compress_img_bytes</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.contains_newline">contains_newline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.dict_from_kindle_export">dict_from_kindle_export</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.get_file_manager">get_file_manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.get_username">get_username</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.is_duplicate">is_duplicate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.load_dicts_from_csv">load_dicts_from_csv</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.merge_or_last">merge_or_last</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.not_implemented_toast">not_implemented_toast</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.now_string">now_string</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.pick_val">pick_val</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.pop_unchanged">pop_unchanged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.remove_whitespace">remove_whitespace</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.run_in_thread">run_in_thread</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.save_dict_to_csv">save_dict_to_csv</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.set_screen">set_screen</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.set_word_state">set_word_state</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.smart_dict_merge">smart_dict_merge</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.smart_loader">smart_loader</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.smart_saver">smart_saver</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.split_on_condition">split_on_condition</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.start_thread">start_thread</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.start_workers">start_workers</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.utils.tag_word_in_sentence">tag_word_in_sentence</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.timer">timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.update_word_state_dict">update_word_state_dict</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.widget_by_id">widget_by_id</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.word_list_from_kindle">word_list_from_kindle</a></li>
-</ul>
-<ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.utils.word_list_from_kobo">word_list_from_kobo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.utils.word_list_from_txt">word_list_from_txt</a></li>
 </ul>
 </li>
@@ -180,7 +143,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Anki Card Gen</a>
+          <a href="index.html">acg</a>
 
       </nav>
 
@@ -236,7 +199,7 @@
 <dl class="py class">
 <dt id="acg.utils.AppBusyContext">
 <em class="property">class </em><code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">AppBusyContext</code><a class="reference internal" href="_modules/acg/utils.html#AppBusyContext"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.AppBusyContext" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/contextlib.html#contextlib.ContextDecorator" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">contextlib.ContextDecorator</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/contextlib.html#contextlib.ContextDecorator" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">contextlib.ContextDecorator</span></code></a></p>
 <p>Set app.busy to <code class="docutils literal notranslate"><span class="pre">True</span></code> and back to its previous value.</p>
 </dd></dl>
 
@@ -253,12 +216,6 @@
 Currently only <code class="docutils literal notranslate"><span class="pre">COLOR2MEANING[&quot;highlight_yellow&quot;]</span> <span class="pre">=</span> <span class="pre">&quot;words&quot;</span></code> is used.</p>
 </dd></dl>
 
-<dl class="py data">
-<dt id="acg.utils.SPACY_IS_AVAILABLE">
-<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">SPACY_IS_AVAILABLE</code><em class="property"> = True</em><a class="reference internal" href="_modules/acg/utils.html#SPACY_IS_AVAILABLE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.SPACY_IS_AVAILABLE" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if spacy could be imported, else <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
-</dd></dl>
-
 <dl class="py function">
 <dt id="acg.utils.app_busy">
 <code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">app_busy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#app_busy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.app_busy" title="Permalink to this definition">¶</a></dt>
@@ -266,22 +223,21 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
-<dt id="acg.utils.clean_up">
-<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">clean_up</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">words</span></em>, <em class="sig-param"><span class="n">remove_punct</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">lower_case</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">lemmatize</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#clean_up"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.clean_up" title="Permalink to this definition">¶</a></dt>
-<dd><p>Preprocess a list of words (or phrases).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>words</strong> – List of words</p></li>
-<li><p><strong>remove_punct</strong> – If True, removes trailing and leading punctuation. (Default value = True)</p></li>
-<li><p><strong>lower_case</strong> – If True, converts everything to lower case. (Default value = True)</p></li>
-<li><p><strong>lemmatize</strong> – If True, tries to convert each word to its dictionary-form. (Default value = True)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>List of processed words (or phrases).</p>
-</dd>
-</dl>
+<dt id="acg.utils.async_get_results">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">async_get_results</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">functions</span><span class="p">:</span> <span class="n">Callable<span class="p">[</span><span class="p">[</span>Any<span class="p">]</span><span class="p">, </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)">dict</a><span class="p">]</span></span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#async_get_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.async_get_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get merged dict from gathered async-run.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.async_wrapper">
+<em class="property">async </em><code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">async_wrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">functions</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#async_wrapper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.async_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gather async functions.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.close_and_callback">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">close_and_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_path</span></em>, <em class="sig-param"><span class="n">file_manager</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">old_callback</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#close_and_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.close_and_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Helper-function for <a class="reference internal" href="#acg.utils.get_file_manager" title="acg.utils.get_file_manager"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_file_manager()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -302,7 +258,13 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dl class="py function">
 <dt id="acg.utils.compress_img_bytes">
 <code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">compress_img_bytes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">bytes_image</span></em>, <em class="sig-param"><span class="n">width</span><span class="o">=</span><span class="default_value">512</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#compress_img_bytes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.compress_img_bytes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compress image given as bytes (e.g. as content of <a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.24.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">requests.Response</span></code></a>).</p>
+<dd><p>Compress image given as bytes (e.g. as content of <a class="reference external" href="https://requests.readthedocs.io/en/master/api/#requests.Response" title="(in Requests v2.25.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">requests.Response</span></code></a>).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.contains_newline">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">contains_newline</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">match</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#contains_newline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.contains_newline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ‘n’ or ” “.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -317,6 +279,25 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dd class="field-even"><p>Dictionary <cite>{“highlight_color_1” : [“list”, “of” , “highlighted parts”, …],…}</cite></p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.get_file_manager">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">get_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#get_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.get_file_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get file manager.</p>
+<p>Context manager to temporarily set <cite>ext</cite> and <cite>callback</cite> of file_manager.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.get_username">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">get_username</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#get_username"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.get_username" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return name of currently active user.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.is_duplicate">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">is_duplicate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#is_duplicate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.is_duplicate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if word is already present in the app.word_state_dict.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -337,6 +318,12 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
+<dt id="acg.utils.not_implemented_toast">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">not_implemented_toast</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#not_implemented_toast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.not_implemented_toast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display toast notifying user that the function is not implemented.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="acg.utils.now_string">
 <code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">now_string</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#now_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.now_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return current time in the format <code class="docutils literal notranslate"><span class="pre">YYYY-MM-DD_HH:MM:SS</span></code>.</p>
@@ -346,6 +333,18 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dt id="acg.utils.pick_val">
 <code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">pick_val</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">whitelist</span></em>, <em class="sig-param"><span class="n">dictionary</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#pick_val"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.pick_val" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return filtered dictionary, whose values are in <code class="docutils literal notranslate"><span class="pre">whitelist</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.pop_unchanged">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">pop_unchanged</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dictionary</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#pop_unchanged"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.pop_unchanged" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pop all values from dict where key=val.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.remove_whitespace">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">remove_whitespace</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">some_string</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#remove_whitespace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.remove_whitespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Replace each group of whitespaces by a simple space (or by a newline if at least one is in the match).</p>
 </dd></dl>
 
 <dl class="py function">
@@ -364,6 +363,12 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dt id="acg.utils.set_screen">
 <code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.set_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set current screen to the one with name <code class="docutils literal notranslate"><span class="pre">screen_name</span></code>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.set_word_state">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">set_word_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em>, <em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#set_word_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.set_word_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set state in the data-base entry of the card of the current template.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -417,11 +422,17 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
+<dt id="acg.utils.split_on_condition">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">split_on_condition</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">seq</span></em>, <em class="sig-param"><span class="n">condition</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#split_on_condition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.split_on_condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return two lazy generators for <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code> respectively.</p>
+</dd></dl>
+
+<dl class="py function">
 <dt id="acg.utils.start_thread">
 <code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">start_thread</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em>, <em class="sig-param"><span class="n">fn_arg</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#start_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.start_thread" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper-function to call <code class="docutils literal notranslate"><span class="pre">func</span></code> in new thread.</p>
 <p>Every kwarg that fits the signature of <code class="docutils literal notranslate"><span class="pre">func</span></code> is plugged into <code class="docutils literal notranslate"><span class="pre">func</span></code>, the others are used in the constructor of
-<a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></a>.</p>
+<a class="reference external" href="https://docs.python.org/3/library/threading.html#threading.Thread" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The <code class="xref py py-meth docutils literal notranslate"><span class="pre">toolz.curry()</span></code> decorator enables partial evaluation without extra use of partial.</p>
@@ -453,20 +464,15 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 </dd></dl>
 
 <dl class="py function">
-<dt id="acg.utils.tag_word_in_sentence">
-<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">tag_word_in_sentence</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">sentence</span></em>, <em class="sig-param"><span class="n">tag_word</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#tag_word_in_sentence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.tag_word_in_sentence" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use regex to wrap every derived form of a given <code class="docutils literal notranslate"><span class="pre">tag_word</span></code> in <code class="docutils literal notranslate"><span class="pre">sentence</span></code> in an html-tag.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>sentence</strong> – String containing of multiple words.</p></li>
-<li><p><strong>tag_word</strong> – Word that should be wrapped.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>Sentence with replacements.</p>
-</dd>
-</dl>
+<dt id="acg.utils.timer">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">timer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#timer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print execution time.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.update_word_state_dict">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">update_word_state_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em>, <em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#update_word_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.update_word_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set state in app.word_state_dict.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -503,6 +509,12 @@ Currently only <code class="docutils literal notranslate"><span class="pre">COLO
 <dd class="field-even"><p>List of highlighted words.</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.utils.word_list_from_kobo">
+<code class="sig-prename descclassname">acg.utils.</code><code class="sig-name descname">word_list_from_kobo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#word_list_from_kobo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.utils.word_list_from_kobo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse kobos .annot-file and return list of notations.</p>
 </dd></dl>
 
 <dl class="py function">

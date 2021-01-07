@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.custom_widgets.main_menu &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.custom_widgets.main_menu &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Anki Card Gen</a>
+          <a href="../../../index.html">acg</a>
 
       </nav>
 
@@ -154,13 +153,12 @@
   <h1>Source code for acg.custom_widgets.main_menu</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Implements :class:`MainMenu`.&quot;&quot;&quot;</span>
 
+
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">toolz</span>
-<span class="kn">from</span> <span class="nn">kivy.core.window</span> <span class="kn">import</span> <span class="n">Window</span>
-<span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ListProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span><span class="p">,</span> <span class="n">StringProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.screenmanager</span> <span class="kn">import</span> <span class="n">Screen</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.stacklayout</span> <span class="kn">import</span> <span class="n">StackLayout</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
@@ -168,18 +166,8 @@
 <span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineIconListItem</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.menu</span> <span class="kn">import</span> <span class="n">MDDropdownMenu</span>
 
-<span class="kn">from</span> <span class="nn">custom_widgets.behaviors</span> <span class="kn">import</span> <span class="n">CheckBehavior</span>
-<span class="kn">from</span> <span class="nn">custom_widgets.selection_widgets</span> <span class="kn">import</span> <span class="n">CheckContainer</span>
-<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">get_template_names</span>
-<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">SCREEN_DIR</span>
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">widget_by_id</span>
-
-
-<span class="c1"># print(SCREEN_DIR)</span>
-<span class="c1"># print(__file__)</span>
-<span class="c1"># print(os.getcwd())</span>
-<span class="c1"># print(os.listdir(&quot;.&quot;))</span>
-<span class="c1"># input()</span>
+<span class="kn">from</span> <span class="nn">.behaviors</span> <span class="kn">import</span> <span class="n">CheckBehavior</span>
+<span class="kn">from</span> <span class="nn">.selection_widgets</span> <span class="kn">import</span> <span class="n">CheckContainer</span>
 
 
 <div class="viewcode-block" id="DrawerItem"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerItem">[docs]</a><span class="k">class</span> <span class="nc">DrawerItem</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="n">OneLineIconListItem</span><span class="p">):</span>
@@ -195,18 +183,10 @@
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty`: name of the screens kv-file.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerItem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">theme_style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">)</span>
-
-<div class="viewcode-block" id="DrawerItem.on_release"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerItem.on_release">[docs]</a>    <span class="k">def</span> <span class="nf">on_release</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Close drawer and sets :attr:`current_state` to ``True``.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;nav_drawer&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span></div></div>
-
-
-<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;DrawerItem&quot;</span><span class="p">,</span> <span class="n">DrawerItem</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="DrawerList"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList">[docs]</a><span class="k">class</span> <span class="nc">DrawerList</span><span class="p">(</span><span class="n">ThemableBehavior</span><span class="p">,</span> <span class="n">CheckContainer</span><span class="p">,</span> <span class="n">MDList</span><span class="p">):</span>
@@ -220,65 +200,46 @@
     <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;DrawerItem&quot;</span>
 <div class="viewcode-block" id="DrawerList.current"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.current">[docs]</a>    <span class="n">current</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` of currently active :attr:`DrawerItem.screen_name`.&quot;&quot;&quot;</span>
+    <span class="n">nav_drawer</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
 
-<div class="viewcode-block" id="DrawerList.conditional_uncheck"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.conditional_uncheck">[docs]</a>    <span class="k">def</span> <span class="nf">conditional_uncheck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Change color of clicked item and updates :attr:`current`.&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DrawerList</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">value</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">name</span></div>
+<div class="viewcode-block" id="DrawerList.on_child_release"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.on_child_release">[docs]</a>    <span class="k">def</span> <span class="nf">on_child_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set states of child&#39;s according to :attr:`check_one`.</span>
+
+<span class="sd">        Gets called if a child dispatches `on_release`-event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_one</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">:</span>
+                <span class="n">child</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="n">child</span> <span class="o">==</span> <span class="n">instance</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">instance</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">instance</span><span class="o">.</span><span class="n">current_state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current</span> <span class="o">=</span> <span class="n">instance</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nav_drawer</span><span class="o">.</span><span class="n">set_state</span><span class="p">(</span><span class="s2">&quot;close&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DrawerList.get_child"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.get_child">[docs]</a>    <span class="k">def</span> <span class="nf">get_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return child with name ``name``.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DrawerList.on_current"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.on_current">[docs]</a>    <span class="k">def</span> <span class="nf">on_current</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Change the state of the children respectively to :attr:`current`.&quot;&quot;&quot;</span>
-        <span class="n">current_widget</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">child</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span>
-            <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">current</span>
-        <span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">current_widget</span><span class="o">.</span><span class="n">current_state</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">conditional_uncheck</span><span class="p">(</span><span class="n">current_widget</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Update state of :attr:`current` by calling :meth:´on_child_release´.&quot;&quot;&quot;</span>
+        <span class="n">current_child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_child</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_child</span><span class="o">.</span><span class="n">current_state</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_child_release</span><span class="p">(</span><span class="n">current_child</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="MainMenu"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu">[docs]</a><span class="k">class</span> <span class="nc">MainMenu</span><span class="p">(</span><span class="n">StackLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="MainMenu"><a class="viewcode-back" href="../../../main.html#acg.custom_widgets.main_menu.MainMenu">[docs]</a><span class="k">class</span> <span class="nc">MainMenu</span><span class="p">(</span><span class="n">StackLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Contains everything related to the NavigationDrawer and the Screens.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="MainMenu.screen_dicts"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.screen_dicts">[docs]</a>    <span class="n">screen_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
-        <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;form-textbox&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Manual Input&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;single_word&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;kv_file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;single_word.kv&quot;</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;format-list-checkbox&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Queue&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;queue&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;kv_file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;queued.kv&quot;</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;history&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;History&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;history&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;kv_file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;history.kv&quot;</span><span class="p">,</span>
-            <span class="p">},</span>
-            <span class="p">{</span>
-                <span class="s2">&quot;icon&quot;</span><span class="p">:</span> <span class="s2">&quot;cogs&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;Settings&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;settings&quot;</span><span class="p">,</span>
-                <span class="s2">&quot;kv_file_name&quot;</span><span class="p">:</span> <span class="s2">&quot;settings.kv&quot;</span><span class="p">,</span></div>
-            <span class="p">},</span>
-        <span class="p">]</span>
-    <span class="p">)</span>
+<div class="viewcode-block" id="MainMenu.screen_dicts"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.screen_dicts">[docs]</a>    <span class="n">screen_dicts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the dictionaries describing all screens.&quot;&quot;&quot;</span>
 
-    <span class="n">screens</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span>
+    <span class="n">screens</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
+    <span class="n">screen_dir</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MainMenu</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">get_template_names</span><span class="p">())</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span> <span class="o">=</span> <span class="n">MDDropdownMenu</span><span class="p">(</span>
             <span class="n">caller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">current_template_drop</span><span class="p">,</span>
-            <span class="n">items</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">get_template_names</span><span class="p">()],</span>
+            <span class="n">items</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">}</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">templates</span><span class="p">],</span>
             <span class="n">position</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
             <span class="n">width_mult</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
         <span class="p">)</span>
@@ -290,6 +251,12 @@
         <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">current_template_name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
 
+    <span class="k">def</span> <span class="nf">_init_screens</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">screen_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">screen_dict</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+            <span class="n">kv_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screen_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;.kv&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">KvScreen</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">kv_path</span><span class="o">=</span><span class="n">kv_path</span><span class="p">)</span>
+
 <div class="viewcode-block" id="MainMenu.on_parent"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.on_parent">[docs]</a>    <span class="k">def</span> <span class="nf">on_parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set up screen using ``name`` and ``path`` from :attr:`screen_dicts`.</span>
@@ -297,25 +264,20 @@
 <span class="sd">        The screens are added to the screen_man and corresponding entries to the drawer_list.</span>
 <span class="sd">        Then :attr:`DrawerList.current` is bound to screen_man.current and vice-versa.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># for screen_dict in self.screen_dicts:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">KvScreen</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">screen_dict</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;kv_file_name&quot;</span><span class="p">]})</span>
-            <span class="k">for</span> <span class="n">screen_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
-        <span class="p">]</span>
-        <span class="c1"># self.ids.screen_man.add_widget(screen)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_init_screens</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_dicts</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">set_screen</span><span class="p">)</span>
-        <span class="c1"># self.ids.drawer_list.bind(current=self.ids.screen_man.setter(&quot;current&quot;))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">current</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;current&quot;</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">on_release</span><span class="p">()</span></div>
+        <span class="n">current_screen</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">drawer_list</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="o">=</span><span class="n">current_screen</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="MainMenu.set_screen"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.set_screen">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
+<div class="viewcode-block" id="MainMenu.set_screen"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.set_screen">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">screen_name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Switch screens dynamically.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">screen_man</span><span class="o">.</span><span class="n">switch_to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_screen</span><span class="p">(</span><span class="n">screen_name</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="MainMenu.get_screen"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_screen">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen_name</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return screen by name.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">screen</span> <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span> <span class="k">if</span> <span class="n">screen</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">screen_name</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">[</span><span class="n">screen_name</span><span class="p">]</span></div>
 
 <div class="viewcode-block" id="MainMenu.get_item_text"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_item_text">[docs]</a>    <span class="k">def</span> <span class="nf">get_item_text</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">screen</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Get the text of the :class:`DrawerItem` corresponding to a screen.&quot;&quot;&quot;</span>
@@ -330,7 +292,7 @@
 
 <div class="viewcode-block" id="MainMenu.get_screen_names"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_screen_names">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return screen names.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">screen</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">screen</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">screens</span><span class="p">)</span></div>
 
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="MainMenu.get_right_action_items"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_right_action_items">[docs]</a>    <span class="k">def</span> <span class="nf">get_right_action_items</span><span class="p">(</span><span class="n">screen</span><span class="p">):</span>
@@ -348,28 +310,25 @@
 <span class="sd">    If :attr:`path` does not exist, create file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="KvScreen.kv_file_name"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen.kv_file_name">[docs]</a>    <span class="n">kv_file_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;screen_default.kv&quot;</span><span class="p">)</span></div>
+<div class="viewcode-block" id="KvScreen.kv_path"><a class="viewcode-back" href="../../../custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen.kv_path">[docs]</a>    <span class="n">kv_path</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;screen_default.kv&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;screen_default.kv&quot;`` &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">KvScreen</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">SCREEN_DIR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">kv_file_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">size_hint</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">1</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">Window</span><span class="o">.</span><span class="n">width</span>
-        <span class="n">Window</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># TODO: TEST WEATHER THIS HAS A USE!!</span>
+        <span class="c1"># self.size_hint = None, 1</span>
+        <span class="c1"># self.width = Window.width</span>
+        <span class="c1"># Window.bind(width=self.setter(&quot;width&quot;))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kv_path</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_create_content_file</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_load_content</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">_load_content</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kv_path</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_create_content_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kv_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
             <span class="n">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MDLabel:</span><span class="se">\n\t</span><span class="s1">text:&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span></div>
-
-
-<span class="n">Factory</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;KvScreen&quot;</span><span class="p">,</span> <span class="n">KvScreen</span><span class="p">)</span>
 </pre></div>
 
            </div>

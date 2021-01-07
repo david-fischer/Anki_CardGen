@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Single Word Screen &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Single Word Screen &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -91,9 +90,13 @@
 <li class="toctree-l2"><a class="reference internal" href="queued.html">Queue Screen</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Single Word Screen</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot">SingleWordRoot</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot.back_to_queue">back_to_queue</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot.on_template">on_template</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot.proceed">proceed</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.single_word.SingleWordRoot.refresh">refresh</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.single_word.set_screen">set_screen</a></li>
 </ul>
 </li>
 </ul>
@@ -116,7 +119,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -174,14 +177,38 @@
 <dl class="py class">
 <dt id="acg.screens.single_word.SingleWordRoot">
 <em class="property">class </em><code class="sig-prename descclassname">acg.screens.single_word.</code><code class="sig-name descname">SingleWordRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
 <p>Root widget of the single_word screen.</p>
+<dl class="py method">
+<dt id="acg.screens.single_word.SingleWordRoot.back_to_queue">
+<em class="property">static </em><code class="sig-name descname">back_to_queue</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot.back_to_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot.back_to_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set screen to <code class="docutils literal notranslate"><span class="pre">&quot;queue&quot;</span></code>.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="acg.screens.single_word.SingleWordRoot.on_template">
 <code class="sig-name descname">on_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot.on_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot.on_template" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update <code class="xref py py-attr docutils literal notranslate"><span class="pre">scroll_view</span></code> if self.template changes.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="acg.screens.single_word.SingleWordRoot.proceed">
+<code class="sig-name descname">proceed</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot.proceed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot.proceed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accept data and set screen to <code class="docutils literal notranslate"><span class="pre">&quot;queue&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.single_word.SingleWordRoot.refresh">
+<code class="sig-name descname">refresh</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/single_word.html#SingleWordRoot.refresh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.SingleWordRoot.refresh" title="Permalink to this definition">¶</a></dt>
+<dd><p>Crawl data and update database.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.screens.single_word.set_screen">
+<code class="sig-prename descclassname">acg.screens.single_word.</code><code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/utils.html#set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.single_word.set_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set current screen to the one with name <code class="docutils literal notranslate"><span class="pre">screen_name</span></code>.</p>
 </dd></dl>
 
 </div>

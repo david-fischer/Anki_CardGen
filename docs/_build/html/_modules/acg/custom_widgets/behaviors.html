@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.custom_widgets.behaviors &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.custom_widgets.behaviors &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Anki Card Gen</a>
+          <a href="../../../index.html">acg</a>
 
       </nav>
 
@@ -153,6 +152,7 @@
 
   <h1>Source code for acg.custom_widgets.behaviors</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Provides various mixin-classes for kivy widgets.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
 
@@ -172,7 +172,7 @@
 <span class="kn">from</span> <span class="nn">kivy.uix.behaviors</span> <span class="kn">import</span> <span class="n">ButtonBehavior</span>
 
 
-<div class="viewcode-block" id="CallbackBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior">[docs]</a><span class="k">class</span> <span class="nc">CallbackBehavior</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
+<div class="viewcode-block" id="CallbackBehavior"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.behaviors.CallbackBehavior">[docs]</a><span class="k">class</span> <span class="nc">CallbackBehavior</span><span class="p">(</span><span class="n">EventDispatcher</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Mixin Class to implement a number of callbacks.</span>
 
@@ -201,14 +201,14 @@
         <span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="LongPressBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior">[docs]</a><span class="k">class</span> <span class="nc">LongPressBehavior</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="LongPressBehavior"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.behaviors.LongPressBehavior">[docs]</a><span class="k">class</span> <span class="nc">LongPressBehavior</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Dispatches &quot;on_long_press&quot; if pressed for longer than :attr:`long_press_time` else &quot;on_short_press&quot;.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="LongPressBehavior.long_press_time"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.long_press_time">[docs]</a>    <span class="n">long_press_time</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">NumericProperty</span><span class="p">(</span><span class="mf">0.4</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.NumericProperty`&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clockev</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_long_press&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_short_press&quot;</span><span class="p">)</span>
@@ -216,7 +216,7 @@
 <div class="viewcode-block" id="LongPressBehavior.on_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Dispatches ``on_long_press`` if the :attr:`state` stays down for longer than :attr:`long_press_time`.&quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">LongPressBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_state</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span>
         <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="s2">&quot;down&quot;</span><span class="p">:</span>
@@ -239,7 +239,7 @@
         <span class="sd">&quot;&quot;&quot;Implement in sub class. Placeholder.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="MultiStateBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior">[docs]</a><span class="k">class</span> <span class="nc">MultiStateBehavior</span><span class="p">:</span>
+<div class="viewcode-block" id="MultiStateBehavior"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.behaviors.MultiStateBehavior">[docs]</a><span class="k">class</span> <span class="nc">MultiStateBehavior</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Changes properties of widget based on :attr:`current_state` and the corresponding entry in :attr:`state_dict`.</span>
 
@@ -264,7 +264,7 @@
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the list of property-names that get changed via animation.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">clock</span><span class="o">.</span><span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
 
 <div class="viewcode-block" id="MultiStateBehavior.on_current_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.on_current_state">[docs]</a>    <span class="k">def</span> <span class="nf">on_current_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
@@ -290,7 +290,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="CheckBehavior"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.behaviors.CheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">CheckBehavior</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Two-State-Behavior with states ``True`` and ``False``.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="CheckBehavior.current_state"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span></div>
@@ -301,10 +301,10 @@
             <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="p">{},</span> <span class="kc">False</span><span class="p">:</span> <span class="p">{}}</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span></div>
         <span class="p">)</span>
         <span class="sd">&quot;&quot;&quot;: : :class:`~kivy.properties.DictProperty`, defaults to ``{False:{}, True:{}}`` .&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="ChildrenFromDataBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior">[docs]</a><span class="k">class</span> <span class="nc">ChildrenFromDataBehavior</span><span class="p">:</span>
+<div class="viewcode-block" id="ChildrenFromDataBehavior"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior">[docs]</a><span class="k">class</span> <span class="nc">ChildrenFromDataBehavior</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates widgets dynamically from :attr:`data` and adds them to :attr:`root_for_children`.</span>
 
@@ -332,22 +332,43 @@
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.DictProperty` of the form {&quot;on_event&quot;: binding_fn}.&quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span> <span class="o">=</span> <span class="bp">self</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_data</span><span class="p">()</span>
 
+<div class="viewcode-block" id="ChildrenFromDataBehavior.add_child"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.add_child">[docs]</a>    <span class="k">def</span> <span class="nf">add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add one child-widget.&quot;&quot;&quot;</span>
+        <span class="n">child_cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">child_class_name</span><span class="p">)</span>
+        <span class="n">child_dict</span> <span class="o">=</span> <span class="n">child_dict</span> <span class="ow">or</span> <span class="p">{}</span>
+        <span class="n">new_child</span> <span class="o">=</span> <span class="n">child_cls</span><span class="p">(</span><span class="o">**</span><span class="n">child_dict</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">:</span>
+            <span class="n">new_child</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">before_add_child</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">after_add_child</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChildrenFromDataBehavior.remove_child"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.remove_child">[docs]</a>    <span class="k">def</span> <span class="nf">remove_child</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Remove one child-widget.&quot;&quot;&quot;</span>
+        <span class="n">last_child</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">remove_widget</span><span class="p">(</span><span class="n">last_child</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ChildrenFromDataBehavior.update_num_children"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.update_num_children">[docs]</a>    <span class="k">def</span> <span class="nf">update_num_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add/remove children until correct number is reached.&quot;&quot;&quot;</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">diff</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_child</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">remove_child</span><span class="p">()</span></div>
+
 <div class="viewcode-block" id="ChildrenFromDataBehavior.on_data"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.on_data">[docs]</a>    <span class="k">def</span> <span class="nf">on_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Construct children on change of :attr:`data`.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">clear_widgets</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">child_dict</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
-            <span class="n">child_cls</span> <span class="o">=</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">child_class_name</span><span class="p">)</span>
-            <span class="n">new_child</span> <span class="o">=</span> <span class="n">child_cls</span><span class="p">(</span><span class="o">**</span><span class="n">child_dict</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">:</span>
-                <span class="n">new_child</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">before_add_child</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">after_add_child</span><span class="p">(</span><span class="n">new_child</span><span class="p">)</span></div>
+        <span class="sd">&quot;&quot;&quot;Update children on change of :attr:`data`.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">update_num_children</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">child_dict</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">child_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">],</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ChildrenFromDataBehavior.before_add_child"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.before_add_child">[docs]</a>    <span class="k">def</span> <span class="nf">before_add_child</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">child</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Do something before child is added to :attr:`parent_widget`. Placeholder.&quot;&quot;&quot;</span>
@@ -356,7 +377,7 @@
         <span class="sd">&quot;&quot;&quot;Do something after child is added to :attr:`parent_widget`. Placeholder.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="TranslationOnCheckBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">TranslationOnCheckBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="TranslationOnCheckBehavior"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior">[docs]</a><span class="k">class</span> <span class="nc">TranslationOnCheckBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Switches :attr:`text` between :attr:`text_orig` and :attr:`text_trans` depending on :attr:`current_state`.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TranslationOnCheckBehavior.text_orig"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.text_orig">[docs]</a>    <span class="n">text_orig</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;orig&quot;</span><span class="p">)</span></div>
@@ -367,12 +388,22 @@
 
     <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Initialize widget after kv-file is loaded.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">True</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_orig</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_text_trans</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_text_orig</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TranslationOnCheckBehavior.on_text_trans"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.on_text_trans">[docs]</a>    <span class="k">def</span> <span class="nf">on_text_trans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update :attr:`state_dict` with new :attr:`text_trans`.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">False</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_trans</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TranslationOnCheckBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TranslationOnCheckBehavior.on_text_orig"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.on_text_orig">[docs]</a>    <span class="k">def</span> <span class="nf">on_text_orig</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update :attr:`state_dict` with new :attr:`text_orig`.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">True</span><span class="p">][</span><span class="s2">&quot;text&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_orig</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_current_state</span><span class="p">()</span></div></div>
 
 
-<div class="viewcode-block" id="ThemableColorChangeBehavior"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior">[docs]</a><span class="k">class</span> <span class="nc">ThemableColorChangeBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
+<div class="viewcode-block" id="ThemableColorChangeBehavior"><a class="viewcode-back" href="../../../custom_widgets/selection_widget.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior">[docs]</a><span class="k">class</span> <span class="nc">ThemableColorChangeBehavior</span><span class="p">(</span><span class="n">CheckBehavior</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Changes :attr:`bg_color` :attr:`text_color` based on :attr:`current_state`.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="ThemableColorChangeBehavior.text_color"><a class="viewcode-back" href="../../../custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior.text_color">[docs]</a>    <span class="n">text_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span></div>
@@ -384,7 +415,7 @@
     <span class="n">animated_properties</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;bg_color&quot;</span><span class="p">,</span> <span class="s2">&quot;text_color&quot;</span><span class="p">]</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">theme_style</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">primary_palette</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
 
@@ -397,7 +428,7 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">True</span><span class="p">][</span><span class="s2">&quot;text_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">state_dicts</span><span class="p">[</span><span class="kc">False</span><span class="p">][</span><span class="s2">&quot;text_color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theme_cls</span><span class="o">.</span><span class="n">secondary_text_color</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ThemableColorChangeBehavior</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span></div>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">()</span></div>
 </pre></div>
 
            </div>

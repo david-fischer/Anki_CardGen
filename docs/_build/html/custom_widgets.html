@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Custom Widgets &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Custom Widgets &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -112,7 +111,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Anki Card Gen</a>
+          <a href="index.html">acg</a>
 
       </nav>
 
@@ -167,11 +166,72 @@
 <p>Implementation of a collection of widgets.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="custom_widgets/behaviors.html">Behaviors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_widgets/dialogs.html">Dialogs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_widgets/main_menu.html">Main Menu</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_widgets/scroll_widgets.html">Scroll Widgets</a></li>
-<li class="toctree-l1"><a class="reference internal" href="custom_widgets/selection_widget.html">Selection Widgets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets/behaviors.html">Behaviors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior">CallbackBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior">CheckBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior">ChildrenFromDataBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior">LongPressBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior">MultiStateBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior">ThemableColorChangeBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior">TranslationOnCheckBehavior</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets/dialogs.html">Dialogs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomContentBase">CustomContentBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog">CustomDialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent">ItemsContent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementDialog">ReplacementDialog</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem">ReplacementItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent">ReplacementItemsContent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ScrollList">ScrollList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextFieldContent">TextFieldContent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextInputDialog">TextInputDialog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets/main_menu.html">Main Menu</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckBehavior">CheckBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckContainer">CheckContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerItem">DrawerItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList">DrawerList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen">KvScreen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu">MainMenu</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets/scroll_widgets.html">Scroll Widgets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.CallbackBehavior">CallbackBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior">ChildrenFromDataBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator">LeftStatusIndicator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem">LeftStatusIndicatorListItem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.MultiStateBehavior">MultiStateBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.RecycleList">RecycleList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.RecycleViewBox">RecycleViewBox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollBox">ScrollBox</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollGrid">ScrollGrid</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList">ScrollList</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="custom_widgets/selection_widget.html">Selection Widgets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CardCarousel">CardCarousel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckBehavior">CheckBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer">CheckContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior">ChildrenFromDataBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel">ImageCarousel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressBehavior">LongPressBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressImage">LongPressImage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel">MyCarousel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckCard">MyCheckCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChip">MyCheckChip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckChipContainer">MyCheckChipContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckImageTile">MyCheckImageTile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyTransCard">MyTransCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyTransChip">MyTransChip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel">RecycleCarousel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.SeparatorWithHeading">SeparatorWithHeading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior">ThemableColorChangeBehavior</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard">TransCard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior">TranslationOnCheckBehavior</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

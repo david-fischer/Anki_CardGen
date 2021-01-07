@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.parsers &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.parsers &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Anki Card Gen</a>
+          <a href="../../index.html">acg</a>
 
       </nav>
 
@@ -159,6 +158,7 @@
 <span class="sd">:class:`pt_word.Word`</span>
 <span class="sd">class.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">asyncio</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
@@ -168,11 +168,16 @@
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="kn">import</span> <span class="nn">toolz</span>
+<span class="kn">import</span> <span class="nn">unidecode</span>
+<span class="kn">from</span> <span class="nn">aiohttp</span> <span class="kn">import</span> <span class="n">ClientSession</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
-<span class="kn">from</span> <span class="nn">google_images_download</span> <span class="kn">import</span> <span class="n">google_images_download</span>
+<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">async_get_results</span>
 
-<span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="s2">&quot;Portuguese&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;German&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;English&quot;</span><span class="p">,</span> <span class="s2">&quot;es&quot;</span><span class="p">:</span> <span class="s2">&quot;Spanish&quot;</span><span class="p">}</span>
+<span class="kn">from</span> <span class="nn">.design_patterns.factory</span> <span class="kn">import</span> <span class="n">CookBook</span>
+<span class="kn">from</span> <span class="nn">.google_images_download</span> <span class="kn">import</span> <span class="n">google_images_download</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">remove_whitespace</span>
+
+<span class="n">LANGUAGES</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="s2">&quot;portuguese&quot;</span><span class="p">,</span> <span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;german&quot;</span><span class="p">,</span> <span class="s2">&quot;en&quot;</span><span class="p">:</span> <span class="s2">&quot;english&quot;</span><span class="p">,</span> <span class="s2">&quot;es&quot;</span><span class="p">:</span> <span class="s2">&quot;spanish&quot;</span><span class="p">}</span>
 
 
 <div class="viewcode-block" id="DEFAULT_HEADERS"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.DEFAULT_HEADERS">[docs]</a><span class="n">DEFAULT_HEADERS</span> <span class="o">=</span> <span class="p">{</span>
@@ -203,9 +208,19 @@
     <span class="s2">&quot;Accept-Language&quot;</span><span class="p">:</span> <span class="s2">&quot;de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7&quot;</span><span class="p">,</span>
 <span class="p">}</span>
 
+<span class="n">parser_cookbook</span> <span class="o">=</span> <span class="n">CookBook</span><span class="p">()</span>
 
-<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.Parser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">Parser</span><span class="p">:</span>
+
+<div class="viewcode-block" id="NoMatchError"><a class="viewcode-back" href="../../word_processing/templates.html#acg.parsers.NoMatchError">[docs]</a><span class="k">class</span> <span class="nc">NoMatchError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Error if no match can be found for the current search.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">site</span> <span class="o">=</span> <span class="n">site</span></div>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../word_processing/templates.html#acg.parsers.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Base class for parsers.</span>
 
 <span class="sd">    Main functionality is the result_dict function.</span>
@@ -265,32 +280,173 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_response</span><span class="p">(</span><span class="n">resp</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="LingueeParser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.LingueeParser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">LingueeParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Use Linguee to obtain: translation, word_type, gender and audio_url.&quot;&quot;&quot;</span>
+<span class="nd">@parser_cookbook</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;rand_wiki&quot;</span><span class="p">)</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="RandTopicWikiParser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.RandTopicWikiParser">[docs]</a><span class="k">class</span> <span class="nc">RandTopicWikiParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get title, summary and a list of image-urls for given random topic.&quot;&quot;&quot;</span>
 
-    <span class="n">base_url</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;https://linguee-api.herokuapp.com/api?q=</span><span class="si">{phrase}</span><span class="s2">&amp;src=</span><span class="si">{from_lang}</span><span class="s2">&amp;dst=</span><span class="si">{to_lang}</span><span class="s2">&quot;</span>
+    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://en.wikipedia.org/api/rest_v1/page/summary/</span><span class="si">{page}</span><span class="s2">&quot;</span>
+    <span class="n">media_url</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;https://en.wikipedia.org/api/rest_v1/page/media-list/</span><span class="si">{title}</span><span class="s2">?redirect=true&quot;</span>
     <span class="p">)</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+
+<div class="viewcode-block" id="RandTopicWikiParser.make_request"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.RandTopicWikiParser.make_request">[docs]</a>    <span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span>  <span class="c1"># pylint: disable=arguments-differ</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tries</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Call base method if url is set. Else obtain response from random wiki page.</span>
+
+<span class="sd">        Because we only use content-pages and not category-pages ``try`` specifies how often we draw a random page.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">category</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tries</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">get_random_wiki_topic</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">make_request</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">resp</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+            <span class="c1"># TODO: Error handling.</span>
+        <span class="k">raise</span> <span class="n">NoMatchError</span><span class="p">(</span><span class="n">site</span><span class="o">=</span><span class="s2">&quot;Wiki&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RandTopicWikiParser.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.RandTopicWikiParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Extract title, summary, image_urls and return in dict.&quot;&quot;&quot;</span>
+        <span class="n">json_resp</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;extract&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;titles&quot;</span><span class="p">][</span><span class="s2">&quot;canonical&quot;</span><span class="p">]</span>
+        <span class="n">media_json_resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">media_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">media_json_resp</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s2">&quot;https:&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;srcset&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">media_json_resp</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span>
+            <span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image</span><span class="p">}</span></div></div>
+
+
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="AsyncParser"><a class="viewcode-back" href="../../word_processing/templates.html#acg.parsers.AsyncParser">[docs]</a><span class="k">class</span> <span class="nc">AsyncParser</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Base-Class for asynchronous parsers.&quot;&quot;&quot;</span>
+
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">phrase</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">request_kwargs</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">DEFAULT_HEADERS</span>
+    <span class="n">from_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">to_lang</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="AsyncParser.format_str"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncParser.format_str">[docs]</a>    <span class="k">def</span> <span class="nf">format_str</span><span class="p">(</span><span class="n">some_str</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Replace spaces and special characters.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">quote</span><span class="p">(</span><span class="n">some_str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AsyncParser.url"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncParser.url">[docs]</a>    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return url for request.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span>
+        <span class="n">format_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">format_str</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="n">formatted_url</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">format_dict</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">formatted_url</span></div>
+
+<div class="viewcode-block" id="AsyncParser.request_params"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncParser.request_params">[docs]</a>    <span class="k">def</span> <span class="nf">request_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
+        <span class="sd">&quot;&quot;&quot;Return request-params.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{}</span></div>
+
+<div class="viewcode-block" id="AsyncParser.request"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncParser.request">[docs]</a>    <span class="k">async</span> <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">request_params</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make http-request using :package:`aiohttp`.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">url</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span><span class="p">()</span> <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">else</span> <span class="n">url</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">request_params</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">request_params</span><span class="p">()</span>
+        <span class="k">async</span> <span class="k">with</span> <span class="n">ClientSession</span><span class="p">()</span> <span class="k">as</span> <span class="n">session</span><span class="p">:</span>
+            <span class="k">async</span> <span class="k">with</span> <span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span>
+            <span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status</span> <span class="o">!=</span> <span class="mi">200</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="n">NoMatchError</span>
+                <span class="k">if</span> <span class="s2">&quot;html&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content_type</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+                <span class="k">if</span> <span class="s2">&quot;json&quot;</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">content_type</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="k">await</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AsyncParser.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span>  <span class="c1"># pylint: disable=no-self-use,unused-argument</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="nb">list</span> <span class="ow">or</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{}</span></div>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return results asynchronously.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AsyncParser.result_dict"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncParser.result_dict">[docs]</a>    <span class="k">def</span> <span class="nf">result_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return results synchronously.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="n">phrase</span><span class="p">))</span></div></div>
+
+
+<span class="nd">@parser_cookbook</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;async_reverso&quot;</span><span class="p">)</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="AsyncReverso"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncReverso">[docs]</a><span class="k">class</span> <span class="nc">AsyncReverso</span><span class="p">(</span><span class="n">AsyncParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Use Reverso to obtain: examples.&quot;&quot;&quot;</span>
+
+    <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="n">REVERSO_HEADERS</span>
+
+<div class="viewcode-block" id="AsyncReverso.url"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncReverso.url">[docs]</a>    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set up attributes.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">url</span> <span class="ow">or</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;https://context.reverso.net/translation/&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">LANGUAGES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">]</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">LANGUAGES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">to_lang</span><span class="p">]</span><span class="si">}</span><span class="s2">/&quot;</span>
+            <span class="s2">&quot;</span><span class="si">{phrase}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">url</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AsyncReverso.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncReverso.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="nb">list</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;Parse response and return dict of the form ``{&quot;examples&quot;:[ [ex_src_lang, ex_trg_lang],...]]}``.&quot;&quot;&quot;</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+        <span class="n">examples</span> <span class="o">=</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.example&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;example&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span>
+            <span class="s2">&quot;example_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.trg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span></div></div>
+        <span class="p">}</span>
+
+
+<span class="nd">@parser_cookbook</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;async_linguee&quot;</span><span class="p">)</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="AsyncLinguee"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncLinguee">[docs]</a><span class="k">class</span> <span class="nc">AsyncLinguee</span><span class="p">(</span><span class="n">AsyncParser</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get translation, word_type, gender, audio from Linguee.&quot;&quot;&quot;</span>
+
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://linguee-api.herokuapp.com/api&quot;</span>
     <span class="n">lang_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="s2">&quot;Brazilian Portuguese&quot;</span><span class="p">}</span>
     <span class="n">audio_base_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.linguee.de/mp3/</span><span class="si">%s</span><span class="s2">.mp3&quot;</span>
 
-<div class="viewcode-block" id="LingueeParser.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.LingueeParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<div class="viewcode-block" id="AsyncLinguee.request_params"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncLinguee.request_params">[docs]</a>    <span class="k">def</span> <span class="nf">request_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return request params.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span> <span class="s2">&quot;src&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">,</span> <span class="s2">&quot;dst&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_lang</span><span class="p">}</span></div>
+
+<div class="viewcode-block" id="AsyncLinguee.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncLinguee.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="nb">list</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Extract: translation, word_type, gender, audio_url.&quot;&quot;&quot;</span>
-        <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">match</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;exact_matches&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="ne">IndexError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Got no valid response.&quot;</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">NoMatchError</span>
+            <span class="k">raise</span> <span class="n">NoMatchError</span> <span class="kn">from</span> <span class="nn">error</span>
         <span class="n">audio_ids</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">link</span><span class="p">[</span><span class="s2">&quot;url_part&quot;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">mat</span> <span class="ow">in</span> <span class="n">response</span><span class="p">[</span><span class="s2">&quot;exact_matches&quot;</span><span class="p">]</span>
             <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">mat</span><span class="p">[</span><span class="s2">&quot;audio_links&quot;</span><span class="p">]</span>
             <span class="k">if</span> <span class="n">link</span><span class="p">[</span><span class="s2">&quot;lang&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">]</span>
         <span class="p">]</span>
-        <span class="c1"># audio_ids = {link[&quot;lang&quot;]: link[&quot;url_part&quot;] for link in match[&quot;audio_links&quot;]}</span>
         <span class="n">audio_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_base_url</span> <span class="o">%</span> <span class="n">audio_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">audio_ids</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">word_type</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;word_type&quot;</span><span class="p">][</span><span class="s2">&quot;pos&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;word_type&quot;</span><span class="p">]</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
         <span class="n">gender</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="s2">&quot;word_type&quot;</span><span class="p">][</span><span class="s2">&quot;gender&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">word_type</span> <span class="o">==</span> <span class="s2">&quot;noun&quot;</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
@@ -307,22 +463,23 @@
         <span class="p">}</span>
 
 
-<div class="viewcode-block" id="DicioParser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.DicioParser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">DicioParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+<span class="nd">@parser_cookbook</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;async_dicio&quot;</span><span class="p">)</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="AsyncDicio"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncDicio">[docs]</a><span class="k">class</span> <span class="nc">AsyncDicio</span><span class="p">(</span><span class="n">AsyncParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html.&quot;&quot;&quot;</span>
 
-    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://www.dicio.com.br/pesquisa.php?q=</span><span class="si">{phrase}</span><span class="s2">/&quot;</span>
+    <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;https://www.dicio.com.br/pesquisa.php&quot;</span>
 
-<div class="viewcode-block" id="DicioParser.setup"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.DicioParser.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set up attributes.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">))</span></div>
+<div class="viewcode-block" id="AsyncDicio.request_params"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncDicio.request_params">[docs]</a>    <span class="k">def</span> <span class="nf">request_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return request params.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;q&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">}</span></div>
 
-<div class="viewcode-block" id="DicioParser.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.DicioParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+<div class="viewcode-block" id="AsyncDicio.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncDicio.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="nb">list</span> <span class="ow">or</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;Extract: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html.&quot;&quot;&quot;</span>
-        <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
+        <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
         <span class="n">suggestion</span> <span class="o">=</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;a._sugg&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">suggestion</span><span class="p">:</span>
-            <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
                 <span class="n">url</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;https://www.dicio.com.br</span><span class="si">{</span><span class="n">suggestion</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;href&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
             <span class="p">)</span>
             <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
@@ -332,12 +489,16 @@
             <span class="k">for</span> <span class="n">phrase</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;.tit-frases + .frases div.frase&quot;</span><span class="p">)</span>
         <span class="p">]</span>
         <span class="n">synonyms</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;sin&quot;).sinonimos a&#39;</span><span class="p">)</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">text</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p.sinonimos:-soup-contains-own(&quot;sin&quot;) a&#39;</span><span class="p">)</span>
         <span class="p">]</span>
         <span class="n">antonyms</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p:contains(&quot;contr&quot;).sinonimos a&#39;</span><span class="p">)</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">text</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">&#39;p.sinonimos:-soup-contains-own(&quot;contr&quot;) a&#39;</span><span class="p">)</span>
         <span class="p">]</span>
-        <span class="n">add_info_dict</span> <span class="o">=</span> <span class="n">strip_multiline_str</span><span class="p">(</span><span class="n">get_element_after_regex</span><span class="p">(</span><span class="n">bs</span><span class="p">,</span> <span class="s2">&quot;Definição.*&quot;</span><span class="p">))</span>
+        <span class="n">add_info_dict</span> <span class="o">=</span> <span class="n">remove_whitespace</span><span class="p">(</span>
+            <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;h2.tit-section + p.adicional&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span>
+        <span class="p">)</span>
         <span class="n">conj_table_html</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">conj_table_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conj_df</span><span class="p">(</span><span class="n">bs</span><span class="p">)</span>
@@ -397,181 +558,42 @@
         <span class="p">)</span>
 
 
-<div class="viewcode-block" id="ReversoParser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.ReversoParser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">ReversoParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Use Reverso to obtain: examples.&quot;&quot;&quot;</span>
-
-    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://context.reverso.net/</span><span class="si">{language_string}</span><span class="s2">/</span><span class="si">{phrase}</span><span class="s2">&quot;</span>
-    <span class="n">lang_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;pt&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;de&quot;</span><span class="p">:</span> <span class="s2">&quot;traducao/portugues-alemao&quot;</span><span class="p">}}</span>
-    <span class="n">language_string</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="n">headers</span> <span class="o">=</span> <span class="n">REVERSO_HEADERS</span>
-
-<div class="viewcode-block" id="ReversoParser.setup"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.ReversoParser.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Set up attributes.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">quote</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">language_string</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lang_dict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">to_lang</span><span class="p">]</span></div>
-
-<div class="viewcode-block" id="ReversoParser.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.ReversoParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Parse response and return dict of the form ``{&quot;examples&quot;:[ [ex_src_lang, ex_trg_lang],...]]}``.&quot;&quot;&quot;</span>
-        <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
-        <span class="n">examples</span> <span class="o">=</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;div.example&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="s2">&quot;example&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.src&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span>
-            <span class="s2">&quot;example_trans&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">select_one</span><span class="p">(</span><span class="s2">&quot;div.trg&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">examples</span><span class="p">],</span></div></div>
-        <span class="p">}</span>
-
-
-<div class="viewcode-block" id="GoogleImagesParser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.GoogleImagesParser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">GoogleImagesParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+<span class="nd">@parser_cookbook</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s2">&quot;async_google_images&quot;</span><span class="p">)</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="AsyncGoogleImages"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.AsyncGoogleImages">[docs]</a><span class="k">class</span> <span class="nc">AsyncGoogleImages</span><span class="p">(</span><span class="n">AsyncParser</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Uses google_images_download to get img_urls.&quot;&quot;&quot;</span>
 
-    <span class="n">limit</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">15</span>
+    <span class="n">gid</span><span class="p">:</span> <span class="n">google_images_download</span><span class="o">.</span><span class="n">googleimagesdownload</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="GoogleImagesParser.result_dict"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.GoogleImagesParser.result_dict">[docs]</a>    <span class="k">def</span> <span class="nf">result_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__attrs_post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gid</span> <span class="o">=</span> <span class="n">google_images_download</span><span class="o">.</span><span class="n">googleimagesdownload</span><span class="p">()</span>
+
+    <span class="k">async</span> <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phrase</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return dictionary of the form ``{&quot;image&quot;:[url0,url1,...]}}``.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">phrase</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">phrase</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-        <span class="n">gid</span> <span class="o">=</span> <span class="n">google_images_download</span><span class="o">.</span><span class="n">googleimagesdownload</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span> <span class="o">=</span> <span class="n">unidecode</span><span class="o">.</span><span class="n">unidecode</span><span class="p">(</span><span class="n">phrase</span><span class="p">)</span>
         <span class="n">arguments</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">,</span>
-            <span class="c1"># &quot;no_directory&quot;: True,</span>
             <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">limit</span><span class="p">,</span>
             <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="s2">&quot;jpg&quot;</span><span class="p">,</span>
-            <span class="c1"># &quot;language&quot;: LANGUAGES[self.from_lang],</span>
+            <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="n">LANGUAGES</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">from_lang</span><span class="p">]</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span>
             <span class="s2">&quot;no_download&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
             <span class="s2">&quot;print_urls&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-            <span class="c1"># &quot;prefix&quot;: &quot;img_&quot;,</span>
         <span class="p">}</span>
-        <span class="n">paths</span> <span class="o">=</span> <span class="n">gid</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">arguments</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">]</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">paths</span><span class="p">}</span></div></div>
-
-
-<span class="c1"># @attr.s(auto_attribs=True)</span>
-<span class="c1"># class WikiParser(Parser):</span>
-<span class="c1">#     base_url = &quot;https://en.wikipedia.org/api/rest_v1/page/random/summary&quot;</span>
-<span class="c1">#     media_url = (</span>
-<span class="c1">#         &quot;https://en.wikipedia.org/api/rest_v1/page/media-list/{title}?redirect=true&quot;</span>
-<span class="c1">#     )</span>
-<span class="c1">#     title = &quot;&quot;</span>
-<span class="c1">#</span>
-<span class="c1">#     def parse_response(self, response: requests.Response) -&gt; Dict[str, Any]:</span>
-<span class="c1">#         json_resp = response.json()</span>
-<span class="c1">#         title = json_resp[&quot;title&quot;]</span>
-<span class="c1">#         summary = json_resp[&quot;extract&quot;]</span>
-<span class="c1">#         self.title = json_resp[&quot;titles&quot;][&quot;canonical&quot;]</span>
-<span class="c1">#         media_json_resp = self.make_request(self.media_url).json()</span>
-<span class="c1">#         image = [</span>
-<span class="c1">#             &quot;https:&quot; + item[&quot;srcset&quot;][0][&quot;src&quot;]</span>
-<span class="c1">#             for item in media_json_resp[&quot;items&quot;]</span>
-<span class="c1">#             if item[&quot;type&quot;] == &quot;image&quot;</span>
-<span class="c1">#         ]</span>
-<span class="c1">#         return {&quot;title&quot;: title, &quot;summary&quot;: summary, &quot;img_urls&quot;: image}</span>
-
-
-<div class="viewcode-block" id="RandTopicWikiParser"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.RandTopicWikiParser">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">RandTopicWikiParser</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get title, summary and a list of image-urls for given random topic.&quot;&quot;&quot;</span>
-
-    <span class="n">base_url</span> <span class="o">=</span> <span class="s2">&quot;https://en.wikipedia.org/api/rest_v1/page/summary/</span><span class="si">{page}</span><span class="s2">&quot;</span>
-    <span class="n">media_url</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="s2">&quot;https://en.wikipedia.org/api/rest_v1/page/media-list/</span><span class="si">{title}</span><span class="s2">?redirect=true&quot;</span>
-    <span class="p">)</span>
-    <span class="n">page</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-
-<div class="viewcode-block" id="RandTopicWikiParser.make_request"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.RandTopicWikiParser.make_request">[docs]</a>    <span class="k">def</span> <span class="nf">make_request</span><span class="p">(</span>  <span class="c1"># pylint: disable=arguments-differ</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tries</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Call base method if url is set. Else obtain response from random wiki page.</span>
-
-<span class="sd">        Because we only use content-pages and not category-pages ``try`` specifies how often we draw a random page.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">url</span><span class="p">:</span>
-            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">RandTopicWikiParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">)</span>
-        <span class="n">category</span> <span class="o">=</span> <span class="n">category</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">phrase</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">tries</span><span class="p">):</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">get_random_wiki_topic</span><span class="p">(</span><span class="n">category</span><span class="p">)</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">RandTopicWikiParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">make_request</span><span class="p">()</span>
-            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">resp</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="p">,</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
-            <span class="c1"># TODO: Error handling.</span>
-        <span class="k">raise</span> <span class="n">NoMatchError</span><span class="p">(</span><span class="n">site</span><span class="o">=</span><span class="s2">&quot;Wiki&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="RandTopicWikiParser.parse_response"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.RandTopicWikiParser.parse_response">[docs]</a>    <span class="k">def</span> <span class="nf">parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="n">requests</span><span class="o">.</span><span class="n">Response</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;Extract title, summary, image_urls and return in dict.&quot;&quot;&quot;</span>
-        <span class="n">json_resp</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="n">title</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
-        <span class="n">summary</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;extract&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">json_resp</span><span class="p">[</span><span class="s2">&quot;titles&quot;</span><span class="p">][</span><span class="s2">&quot;canonical&quot;</span><span class="p">]</span>
-        <span class="n">media_json_resp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">media_url</span><span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">media_json_resp</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]:</span>
-            <span class="n">image</span> <span class="o">=</span> <span class="p">[</span>
-                <span class="s2">&quot;https:&quot;</span> <span class="o">+</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;srcset&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;src&quot;</span><span class="p">]</span>
-                <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">media_json_resp</span><span class="p">[</span><span class="s2">&quot;items&quot;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;image&quot;</span>
-            <span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">image</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">title</span><span class="p">,</span> <span class="s2">&quot;summary&quot;</span><span class="p">:</span> <span class="n">summary</span><span class="p">,</span> <span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">image</span><span class="p">}</span></div></div>
-
-
-<span class="c1"># BS4 Helper Functions</span>
-
-
-<div class="viewcode-block" id="get_element_after_regex"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.get_element_after_regex">[docs]</a><span class="k">def</span> <span class="nf">get_element_after_regex</span><span class="p">(</span><span class="n">bs_obj</span><span class="p">,</span> <span class="n">regex</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Get bs_object after element which text-attribute matches a given regex.&quot;&quot;&quot;</span>
-    <span class="n">match</span> <span class="o">=</span> <span class="n">bs_obj</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">regex</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">features</span><span class="o">=</span><span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">find_next</span><span class="p">()</span></div>
-
-
-<div class="viewcode-block" id="strip_multiline_str"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.strip_multiline_str">[docs]</a><span class="k">def</span> <span class="nf">strip_multiline_str</span><span class="p">(</span><span class="n">bs_obj</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Strip each line of a string of leading and trailing whitespace.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">bs_obj</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()])</span></div>
-
-
-<span class="c1"># Error</span>
-
-
-<div class="viewcode-block" id="NoMatchError"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.NoMatchError">[docs]</a><span class="k">class</span> <span class="nc">NoMatchError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Error if no match can be found for the current search.&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">site</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">NoMatchError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">site</span> <span class="o">=</span> <span class="n">site</span></div>
+        <span class="n">paths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">gid</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="n">arguments</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">phrase</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;image&quot;</span><span class="p">:</span> <span class="n">paths</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="linguee_did_you_mean"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.linguee_did_you_mean">[docs]</a><span class="k">def</span> <span class="nf">linguee_did_you_mean</span><span class="p">(</span><span class="n">search_term</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Exctracts suggested corrections if the original search is not successful.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">      search_term: original search_term</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        List of possible corrections for the original search_term.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Extract suggested corrections if the original search is not successful.&quot;&quot;&quot;</span>
+    <span class="c1"># TODO: generalize to different languages</span>
     <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;https://www.linguee.de/deutsch-portugiesisch/search?source=portugiesisch&amp;query=</span><span class="si">{</span><span class="n">search_term</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="n">headers</span><span class="o">=</span><span class="n">LINGUEE_HEADERS</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">bs</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="s2">&quot;lxml&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">bs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;span.corrected&quot;</span><span class="p">)]</span></div>
-
-
-<div class="viewcode-block" id="star"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.star">[docs]</a><span class="k">def</span> <span class="nf">star</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Wrapper-function. Call a function with unpacked arguments.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="k">lambda</span> <span class="n">args</span><span class="p">:</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span></div>
-
-
-<div class="viewcode-block" id="json2list"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.json2list">[docs]</a><span class="k">def</span> <span class="nf">json2list</span><span class="p">(</span><span class="n">filter_fn</span><span class="p">,</span> <span class="n">map_fn</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Filter and map dictionary in succession to obtain list.&quot;&quot;&quot;</span>
-    <span class="n">filtered</span> <span class="o">=</span> <span class="n">toolz</span><span class="o">.</span><span class="n">itemfilter</span><span class="p">(</span><span class="n">star</span><span class="p">(</span><span class="n">filter_fn</span><span class="p">),</span> <span class="n">dictionary</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">toolz</span><span class="o">.</span><span class="n">itemmap</span><span class="p">(</span><span class="n">star</span><span class="p">(</span><span class="n">map_fn</span><span class="p">),</span> <span class="n">filtered</span><span class="p">,</span> <span class="n">factory</span><span class="o">=</span><span class="nb">list</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_random_wiki_topic"><a class="viewcode-back" href="../../word_processing/parsers.html#acg.parsers.get_random_wiki_topic">[docs]</a><span class="k">def</span> <span class="nf">get_random_wiki_topic</span><span class="p">(</span><span class="n">category</span><span class="p">):</span>
@@ -588,14 +610,14 @@
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">TEST_WORD</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="c1"># print(linguee_did_you_mean(&quot;comecar&quot;))</span>
-    <span class="n">PHRASE</span> <span class="o">=</span> <span class="s2">&quot;começar&quot;</span>
-    <span class="n">RP</span> <span class="o">=</span> <span class="n">ReversoParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="n">PHRASE</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
-    <span class="n">DP</span> <span class="o">=</span> <span class="n">DicioParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="n">PHRASE</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
-    <span class="n">LP</span> <span class="o">=</span> <span class="n">LingueeParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="n">PHRASE</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
-    <span class="n">WP</span> <span class="o">=</span> <span class="n">RandTopicWikiParser</span><span class="p">(</span><span class="n">phrase</span><span class="o">=</span><span class="s2">&quot;animal_rights&quot;</span><span class="p">,</span> <span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;xx&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;xx&quot;</span><span class="p">)</span>
-    <span class="n">pprint</span><span class="p">(</span><span class="n">WP</span><span class="o">.</span><span class="n">result_dict</span><span class="p">())</span>
-    <span class="c1"># pprint(LP.result_dict())</span>
+    <span class="n">PHRASE</span> <span class="o">=</span> <span class="s2">&quot;cão&quot;</span>
+    <span class="n">ap</span> <span class="o">=</span> <span class="n">AsyncReverso</span><span class="p">(</span><span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
+    <span class="n">al</span> <span class="o">=</span> <span class="n">AsyncLinguee</span><span class="p">(</span><span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="n">to_lang</span><span class="o">=</span><span class="s2">&quot;de&quot;</span><span class="p">)</span>
+    <span class="n">ad</span> <span class="o">=</span> <span class="n">AsyncDicio</span><span class="p">()</span>
+    <span class="n">ag</span> <span class="o">=</span> <span class="n">AsyncGoogleImages</span><span class="p">(</span><span class="n">from_lang</span><span class="o">=</span><span class="s2">&quot;pt&quot;</span><span class="p">)</span>
+    <span class="n">async_parsers</span> <span class="o">=</span> <span class="p">[</span><span class="n">ad</span><span class="p">,</span> <span class="n">al</span><span class="p">,</span> <span class="n">ap</span><span class="p">,</span> <span class="n">ag</span><span class="p">]</span>
+
+    <span class="n">pprint</span><span class="p">(</span><span class="n">async_get_results</span><span class="p">(</span><span class="n">async_parsers</span><span class="p">,</span> <span class="n">PHRASE</span><span class="p">))</span>
 </pre></div>
 
            </div>

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>History Screen &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>History Screen &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -89,9 +88,24 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../ui.html">User Interface</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">History Screen</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.HistoryRoot">HistoryRoot</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.export_cards">export_cards</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.click_on_item">click_on_item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.delete_item">delete_item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.edit_item">edit_item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.filter">filter</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.move_back_to_queue">move_back_to_queue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.on_dropdown_item">on_dropdown_item</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.sort">sort</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.HistoryRoot.text_input_dialog_callback">text_input_dialog_callback</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.TextInputDialog">TextInputDialog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.screens.history.TextInputDialog.default_text">default_text</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.app_busy">app_busy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.not_implemented_toast">not_implemented_toast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.set_word_state">set_word_state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.screens.history.widget_by_id">widget_by_id</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="queued.html">Queue Screen</a></li>
@@ -116,7 +130,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -174,22 +188,114 @@
 <dl class="py class">
 <dt id="acg.screens.history.HistoryRoot">
 <em class="property">class </em><code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">HistoryRoot</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
 <p>Root widget of the history screen.</p>
 <dl class="py method">
-<dt id="acg.screens.history.HistoryRoot.export_cards">
-<code class="sig-name descname">export_cards</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">button</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.export_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.export_cards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Depending on which button was pressed, exports one of the following.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>all cards</p></li>
-<li><p>all new cards (i.e. cards that have been generated but not exported)</p></li>
-<li><p>custom selection of cards (NOT YET IMPLEMENTED)</p></li>
-</ul>
-</div></blockquote>
-<p>TODO: IMPLEMENT</p>
+<dt id="acg.screens.history.HistoryRoot.click_on_item">
+<code class="sig-name descname">click_on_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">item</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.click_on_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.click_on_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open dropdown menu with <code class="docutils literal notranslate"><span class="pre">item</span></code> as caller.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.delete_item">
+<em class="property">static </em><code class="sig-name descname">delete_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.delete_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.delete_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete <code class="docutils literal notranslate"><span class="pre">text</span></code> from the current template in the data-base and from <code class="docutils literal notranslate"><span class="pre">app.word_state_dict</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.edit_item">
+<code class="sig-name descname">edit_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.edit_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.edit_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open <code class="xref py py-attr docutils literal notranslate"><span class="pre">text_input_dialog</span></code> to edit the word.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.filter">
+<em class="property">static </em><code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.move_back_to_queue">
+<em class="property">static </em><code class="sig-name descname">move_back_to_queue</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.move_back_to_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.move_back_to_queue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move item back to queue.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.on_dropdown_item">
+<code class="sig-name descname">on_dropdown_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">item</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.on_dropdown_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.on_dropdown_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call option corresponding to clicked item.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.sort">
+<em class="property">static </em><code class="sig-name descname">sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.sort" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.screens.history.HistoryRoot.text_input_dialog_callback">
+<code class="sig-name descname">text_input_dialog_callback</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">button_txt</span></em>, <em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/screens/history.html#HistoryRoot.text_input_dialog_callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.HistoryRoot.text_input_dialog_callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the <code class="docutils literal notranslate"><span class="pre">OK</span></code>-button is pressed, delete old entry and add edited entry to queue.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.screens.history.TextInputDialog">
+<em class="property">class </em><code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">TextInputDialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#TextInputDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.TextInputDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog" title="acg.custom_widgets.dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.CustomDialog</span></code></a></p>
+<p>Dialog with one text field.</p>
+<dl class="py attribute">
+<dt id="acg.screens.history.TextInputDialog.default_text">
+<code class="sig-name descname">default_text</code><a class="headerlink" href="#acg.screens.history.TextInputDialog.default_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>defaults to “”, the default text entry in the :~kivymd.uix.MDTextField:.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)">StringProperty</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.screens.history.app_busy">
+<code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">app_busy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/utils.html#app_busy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.app_busy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call function in new thread and set app.busy = <code class="docutils literal notranslate"><span class="pre">True</span></code> in the meantime.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.screens.history.not_implemented_toast">
+<code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">not_implemented_toast</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/utils.html#not_implemented_toast"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.not_implemented_toast" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display toast notifying user that the function is not implemented.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.screens.history.set_word_state">
+<code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">set_word_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em>, <em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/utils.html#set_word_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.set_word_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set state in the data-base entry of the card of the current template.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="acg.screens.history.widget_by_id">
+<code class="sig-prename descclassname">acg.screens.history.</code><code class="sig-name descname">widget_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/utils.html#widget_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.screens.history.widget_by_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get widget by string of ids, separated by “/”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>string</strong> – Strings of ids, separated by “/”. The first one can be a screen name.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>widget</p>
+</dd>
+</dl>
+<dl>
+<dt>Examples</dt><dd><div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;single_word/word_prop&quot;</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="go">MDApp.get_running_app().root.get_screen(&quot;single_word&quot;).children[</span>
+<span class="go">0].ids.word_prop</span>
+</pre></div>
+</div>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

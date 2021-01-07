@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Main Menu &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Main Menu &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -89,61 +88,42 @@
 <li class="toctree-l2"><a class="reference internal" href="behaviors.html">Behaviors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dialogs.html">Dialogs</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Main Menu</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem">DrawerItem</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.icon">icon</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.kv_file_name">kv_file_name</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.name">name</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.on_release">on_release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckBehavior">CheckBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckBehavior.current_state">current_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckBehavior.state_dicts">state_dicts</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckContainer">CheckContainer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckContainer.check_one">check_one</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckContainer.conditional_uncheck">conditional_uncheck</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.CheckContainer.get_checked">get_checked</a></li>
 </ul>
-<ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem">DrawerItem</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.icon">icon</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.kv_file_name">kv_file_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem.name">name</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList">DrawerList</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.conditional_uncheck">conditional_uncheck</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.current">current</a></li>
-</ul>
-<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.get_child">get_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.on_child_release">on_child_release</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.on_current">on_current</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.KvScreen">KvScreen</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.KvScreen.kv_file_name">kv_file_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.KvScreen.kv_path">kv_path</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu">MainMenu</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.get_item_text">get_item_text</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.get_right_action_items">get_right_action_items</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.get_screen">get_screen</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.get_screen_names">get_screen_names</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.on_dropdown_item">on_dropdown_item</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.on_parent">on_parent</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.screen_dicts">screen_dicts</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu.set_screen">set_screen</a></li>
 </ul>
 </li>
@@ -172,7 +152,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -228,9 +208,65 @@
 <span id="main-menu"></span><h1>Main Menu<a class="headerlink" href="#module-acg.custom_widgets.main_menu" title="Permalink to this headline">¶</a></h1>
 <p>Implements <a class="reference internal" href="#acg.custom_widgets.main_menu.MainMenu" title="acg.custom_widgets.main_menu.MainMenu"><code class="xref py py-class docutils literal notranslate"><span class="pre">MainMenu</span></code></a>.</p>
 <dl class="py class">
+<dt id="acg.custom_widgets.main_menu.CheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.main_menu.</code><code class="sig-name descname">CheckBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#CheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior" title="acg.custom_widgets.behaviors.MultiStateBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.MultiStateBehavior</span></code></a></p>
+<p>Two-State-Behavior with states <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.main_menu.CheckBehavior.current_state">
+<code class="sig-name descname">current_state</code><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckBehavior.current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. State of widget.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.main_menu.CheckBehavior.state_dicts">
+<code class="sig-name descname">state_dicts</code><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckBehavior.state_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">{False:{},</span> <span class="pre">True:{}}</span></code> .</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.main_menu.CheckContainer">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.main_menu.</code><code class="sig-name descname">CheckContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#CheckContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a></p>
+<p>Container for widgets with <code class="xref py py-class docutils literal notranslate"><span class="pre">CheckBehavior</span></code>.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.main_menu.CheckContainer.check_one">
+<code class="sig-name descname">check_one</code><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckContainer.check_one" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code> only one child can be selected.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.main_menu.CheckContainer.conditional_uncheck">
+<code class="sig-name descname">conditional_uncheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">instance</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckContainer.conditional_uncheck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uncheck other widgets if <a class="reference internal" href="#acg.custom_widgets.main_menu.CheckContainer.check_one" title="acg.custom_widgets.main_menu.CheckContainer.check_one"><code class="xref py py-attr docutils literal notranslate"><span class="pre">check_one</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.main_menu.CheckContainer.get_checked">
+<code class="sig-name descname">get_checked</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">attribute_name</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.main_menu.CheckContainer.get_checked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return current selection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attribute_name</strong> – Name of attribute to return. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">attribute_name</span></code> is None:  List of selected children</p></li>
+<li><p>Else: List of attribute values</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="acg.custom_widgets.main_menu.DrawerItem">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.main_menu.</code><code class="sig-name descname">DrawerItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineIconListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineIconListItem</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CheckBehavior" title="acg.custom_widgets.behaviors.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineIconListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineIconListItem</span></code></a></p>
 <p>List item that changes color based on <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code>.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.main_menu.DrawerItem.icon">
@@ -238,7 +274,7 @@
 <dd><p>name of icon.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -249,7 +285,7 @@
 <dd><p>name of the screens kv-file.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -260,15 +296,9 @@
 <dd><p>name of the screen.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
 </dd>
 </dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.custom_widgets.main_menu.DrawerItem.on_release">
-<code class="sig-name descname">on_release</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerItem.on_release"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerItem.on_release" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close drawer and sets <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -276,25 +306,32 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.main_menu.DrawerList">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.main_menu.</code><code class="sig-name descname">DrawerList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.selection_widgets.CheckContainer</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.MDList" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.MDList</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference internal" href="selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer" title="acg.custom_widgets.selection_widgets.CheckContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.CheckContainer</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.MDList" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.MDList</span></code></a></p>
 <p>List containing <a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerItem" title="acg.custom_widgets.main_menu.DrawerItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">DrawerItem</span></code></a>.</p>
 <p>It has one active element at all times whose screen_name attribute is saved in <a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.current" title="acg.custom_widgets.main_menu.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current</span></code></a>.</p>
-<dl class="py method">
-<dt id="acg.custom_widgets.main_menu.DrawerList.conditional_uncheck">
-<code class="sig-name descname">conditional_uncheck</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">instance</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerList.conditional_uncheck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerList.conditional_uncheck" title="Permalink to this definition">¶</a></dt>
-<dd><p>Change color of clicked item and updates <a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.current" title="acg.custom_widgets.main_menu.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current</span></code></a>.</p>
-</dd></dl>
-
 <dl class="py attribute">
 <dt id="acg.custom_widgets.main_menu.DrawerList.current">
 <code class="sig-name descname">current</code><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerList.current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerList.current" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> of currently active <code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerItem.screen_name</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> of currently active <code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerItem.screen_name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.main_menu.DrawerList.get_child">
+<code class="sig-name descname">get_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerList.get_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerList.get_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return child with name <code class="docutils literal notranslate"><span class="pre">name</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.main_menu.DrawerList.on_child_release">
+<code class="sig-name descname">on_child_release</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">instance</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerList.on_child_release"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerList.on_child_release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set states of child’s according to <code class="xref py py-attr docutils literal notranslate"><span class="pre">check_one</span></code>.</p>
+<p>Gets called if a child dispatches <cite>on_release</cite>-event.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="acg.custom_widgets.main_menu.DrawerList.on_current">
 <code class="sig-name descname">on_current</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#DrawerList.on_current"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.DrawerList.on_current" title="Permalink to this definition">¶</a></dt>
-<dd><p>Change the state of the children respectively to <a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.current" title="acg.custom_widgets.main_menu.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current</span></code></a>.</p>
+<dd><p>Update state of <a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerList.current" title="acg.custom_widgets.main_menu.DrawerList.current"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current</span></code></a> by calling :meth:´on_child_release´.</p>
 </dd></dl>
 
 </dd></dl>
@@ -302,13 +339,13 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.main_menu.KvScreen">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.main_menu.</code><code class="sig-name descname">KvScreen</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#KvScreen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.KvScreen" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.Screen" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.screenmanager.Screen</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.screenmanager.html#kivy.uix.screenmanager.Screen" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.screenmanager.Screen</span></code></a></p>
 <p>Screen that automatically adds content of kv-file at <code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code> as child.</p>
 <p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code> does not exist, create file.</p>
 <dl class="py attribute">
-<dt id="acg.custom_widgets.main_menu.KvScreen.kv_file_name">
-<code class="sig-name descname">kv_file_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#KvScreen.kv_file_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.KvScreen.kv_file_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;screen_default.kv&quot;</span></code></p>
+<dt id="acg.custom_widgets.main_menu.KvScreen.kv_path">
+<code class="sig-name descname">kv_path</code><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#KvScreen.kv_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.KvScreen.kv_path" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;screen_default.kv&quot;</span></code></p>
 </dd></dl>
 
 </dd></dl>
@@ -316,7 +353,7 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.main_menu.MainMenu">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.main_menu.</code><code class="sig-name descname">MainMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#MainMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.MainMenu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
 <p>Contains everything related to the NavigationDrawer and the Screens.</p>
 <dl class="py method">
 <dt id="acg.custom_widgets.main_menu.MainMenu.get_item_text">
@@ -359,12 +396,12 @@ Then <a class="reference internal" href="#acg.custom_widgets.main_menu.DrawerLis
 <dl class="py attribute">
 <dt id="acg.custom_widgets.main_menu.MainMenu.screen_dicts">
 <code class="sig-name descname">screen_dicts</code><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#MainMenu.screen_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.MainMenu.screen_dicts" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries describing all screens.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries describing all screens.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="acg.custom_widgets.main_menu.MainMenu.set_screen">
-<code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#MainMenu.set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.MainMenu.set_screen" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">_</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">screen_name</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/main_menu.html#MainMenu.set_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.main_menu.MainMenu.set_screen" title="Permalink to this definition">¶</a></dt>
 <dd><p>Switch screens dynamically.</p>
 </dd></dl>
 

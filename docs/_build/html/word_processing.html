@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Word Processing &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Word Processing &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -111,7 +110,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Anki Card Gen</a>
+          <a href="index.html">acg</a>
 
       </nav>
 
@@ -188,9 +187,57 @@ Each field uses a part of this data to do one or more of the following:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="word_processing/anki.html">Generate Anki Cards</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_processing/fields.html">Fields</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_processing/parsers.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="word_processing/templates.html">Templates</a></li>
+<li class="toctree-l1"><a class="reference internal" href="word_processing/fields.html">Fields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.CheckChipOptionsField">CheckChipOptionsField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.CookBook">CookBook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.DisplayTextField">DisplayTextField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.DualLongTextField">DualLongTextField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.Field">Field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.ImgField">ImgField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.MediaField">MediaField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.OptionsField">OptionsField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.TextInputField">TextInputField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.TransChipOptionsField">TransChipOptionsField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.TranslationMixin">TranslationMixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/fields.html#acg.fields.compress_img_bytes">compress_img_bytes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="word_processing/parsers.html">Parsers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.AsyncDicio">AsyncDicio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.AsyncGoogleImages">AsyncGoogleImages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.AsyncLinguee">AsyncLinguee</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.AsyncParser">AsyncParser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.AsyncReverso">AsyncReverso</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.CookBook">CookBook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.DEFAULT_HEADERS">DEFAULT_HEADERS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.NoMatchError">NoMatchError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.Parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.RandTopicWikiParser">RandTopicWikiParser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.get_random_wiki_topic">get_random_wiki_topic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.linguee_did_you_mean">linguee_did_you_mean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/parsers.html#acg.parsers.remove_whitespace">remove_whitespace</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="word_processing/templates.html">Templates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.AsyncParser">AsyncParser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.CheckChipOptionsField">CheckChipOptionsField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.CookBook">CookBook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.DualLongTextField">DualLongTextField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.Field">Field</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.ImgField">ImgField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.MediaField">MediaField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.NoMatchError">NoMatchError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.Parser">Parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.SeparatorWithHeading">SeparatorWithHeading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.Template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.TextInputField">TextInputField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.TransChipOptionsField">TransChipOptionsField</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.VocabTemplate">VocabTemplate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.app_busy">app_busy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.smart_dict_merge">smart_dict_merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="word_processing/templates.html#acg.templates.tag_word_in_sentence">tag_word_in_sentence</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Database &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Database &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -51,7 +50,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -89,85 +88,35 @@
 <li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
 <li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#acg.db.CD">CD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#acg.db.Card">Card</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Card.add_media">add_media</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Card.get_media">get_media</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Card.write_media_files_to_folder">write_media_files_to_folder</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.db.MediaFile">MediaFile</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.MediaFile.card">card</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.MediaFile.content">content</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.MediaFile.field_key">field_key</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.MediaFile.id">id</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.MediaFile.type">type</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.MediaFile.update">update</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.db.Template">Template</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.add_card">add_card</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.additional_info">additional_info</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.cards">cards</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.cls_name">cls_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.description">description</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.get_card">get_card</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.get_cards_by_selector">get_cards_by_selector</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.id">id</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.name">name</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.db.Template.names">names</a></li>
 </ul>
 </li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.db.add_missing_templates">add_missing_templates</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.db.export_cards">export_cards</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.db.get_card_by_id">get_card_by_id</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.db.get_template">get_template</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.db.get_template_names">get_template_names</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="#acg.db.new_template">new_template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.db.update_word_state_dict">update_word_state_dict</a></li>
 </ul>
 </li>
 </ul>
@@ -185,7 +134,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Anki Card Gen</a>
+          <a href="index.html">acg</a>
 
       </nav>
 
@@ -239,6 +188,12 @@
 <span id="database"></span><h1>Database<a class="headerlink" href="#module-acg.db" title="Permalink to this headline">¶</a></h1>
 <p>The app uses <code class="xref py py-mod docutils literal notranslate"><span class="pre">pony</span></code> to manage a sqlite-database. The database is structured as follows.</p>
 <img alt="_images/ponyorm_diagram.png" src="_images/ponyorm_diagram.png" />
+<dl class="py class">
+<dt id="acg.db.CD">
+<em class="property">class </em><code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">CD</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">new_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#CD"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.CD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager for changing the current working directory to <code class="xref py py-attr docutils literal notranslate"><span class="pre">new_path</span></code>.</p>
+</dd></dl>
+
 <dl class="py class">
 <dt id="acg.db.Card">
 <em class="property">class </em><code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">Card</code><a class="reference internal" href="_modules/acg/db.html#Card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.Card" title="Permalink to this definition">¶</a></dt>
@@ -331,12 +286,6 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt id="acg.db.Template.cls_name">
-<code class="sig-name descname">cls_name</code><a class="reference internal" href="_modules/acg/db.html#Template.cls_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.Template.cls_name" title="Permalink to this definition">¶</a></dt>
-<dd><p>The “module.class” to construct the template from.</p>
-</dd></dl>
-
-<dl class="py attribute">
 <dt id="acg.db.Template.description">
 <code class="sig-name descname">description</code><a class="reference internal" href="_modules/acg/db.html#Template.description"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.Template.description" title="Permalink to this definition">¶</a></dt>
 <dd><p>A short description of the template.</p>
@@ -366,42 +315,18 @@
 <dd><p>A unique name for the template.</p>
 </dd></dl>
 
+<dl class="py method">
+<dt id="acg.db.Template.names">
+<em class="property">classmethod </em><code class="sig-name descname">names</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cls</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#Template.names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.Template.names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of all Templates in database.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
-<dt id="acg.db.add_missing_templates">
-<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">add_missing_templates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#add_missing_templates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.add_missing_templates" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add templates from <code class="xref py py-data docutils literal notranslate"><span class="pre">TEMPLATE_DICTS</span></code> to database if not already present.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="acg.db.export_cards">
-<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">export_cards</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">card_list</span></em>, <em class="sig-param"><span class="n">out_folder</span></em>, <em class="sig-param"><span class="n">anki_template_dir</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#export_cards"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.export_cards" title="Permalink to this definition">¶</a></dt>
-<dd><p>Export cards to &lt;template_name&gt;_&lt;time-stamp&gt;.apkg file in out_folder.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="acg.db.get_card_by_id">
-<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">get_card_by_id</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">card_id</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#get_card_by_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.get_card_by_id" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get card from database by id.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="acg.db.get_template">
-<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">get_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#get_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.get_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get <a class="reference internal" href="#acg.db.Template" title="acg.db.Template"><code class="xref py py-class docutils literal notranslate"><span class="pre">Template</span></code></a> by unique <code class="docutils literal notranslate"><span class="pre">name</span></code>-attribute.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="acg.db.get_template_names">
-<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">get_template_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#get_template_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.get_template_names" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get list of all templates in database.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="acg.db.new_template">
-<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">new_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">template_obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/db.html#new_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.new_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a new entry in the database from an <code class="xref py py-class docutils literal notranslate"><span class="pre">fields.Template</span></code>-object.</p>
+<dt id="acg.db.update_word_state_dict">
+<code class="sig-prename descclassname">acg.db.</code><code class="sig-name descname">update_word_state_dict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">word</span></em>, <em class="sig-param"><span class="n">state</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/utils.html#update_word_state_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.db.update_word_state_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set state in app.word_state_dict.</p>
 </dd></dl>
 
 </div>
