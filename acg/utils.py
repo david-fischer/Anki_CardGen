@@ -8,7 +8,6 @@ import pickle
 import pwd
 import re
 import threading
-from collections import defaultdict
 from contextlib import ContextDecorator, contextmanager
 from datetime import datetime
 from functools import partial, wraps
@@ -18,24 +17,11 @@ from timeit import default_timer
 from typing import Any, Callable
 
 import toolz
-from bs4 import BeautifulSoup
 from kivymd.app import MDApp
 from kivymd.toast import toast
 from kivymd.uix.filemanager import MDFileManager
 from PIL import Image
 from pony.orm import db_session
-
-COLOR2MEANING = {
-    "highlight_yellow": "words",
-    "highlight_blue": "phrases",
-    "highlight_pink": "sentences",
-    "highlight_orange": "",
-}
-"""
-Dictionary relating highlight colors to the things that are highlighted with them.
-Currently only ``COLOR2MEANING["highlight_yellow"] = "words"`` is used.
-"""
-MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
 
 # GENERAL
 
@@ -185,25 +171,6 @@ def widget_by_id(string):
 # KINDLE EXPORT PARSING
 
 
-def dict_from_kindle_export(file_path):
-    """
-    Extract highlighted parts and sorts them by color in a dictionary.
-
-    Args:
-      file_path: Path to an html-file exported from kindle.
-
-    Returns:
-        :Dictionary `{"highlight_color_1" : ["list", "of" , "highlighted parts", ...],...}`
-    """
-    with open(file_path) as file:
-        soup = BeautifulSoup(file, "lxml")
-    heading_tags = soup.select("div.noteHeading span")
-    highlight_dict = defaultdict(list)
-    for tag in heading_tags:
-        highlight_dict[tag["class"][0]].append(tag.find_next().text.strip())
-    return highlight_dict
-
-
 def split_on_condition(seq, condition):
     """Return two lazy generators for ``True`` and ``False`` respectively."""
     condition_true, condition_false = tee((condition(item), item) for item in seq)
@@ -213,40 +180,6 @@ def split_on_condition(seq, condition):
 def pop_unchanged(dictionary):
     """Pop all values from dict where key=val."""
     return [dictionary.pop(key) for key in list(dictionary) if dictionary[key] == key]
-
-
-def word_list_from_kindle(path):
-    """
-    Use :const:`MEANING2COLOR` `["words"]` to extract the list of words highlighted in this specific color.
-
-    Args:
-      path: Path to html-file exported by kindle.
-
-    Returns:
-      : List of highlighted words.
-    """
-    color = MEANING2COLOR["words"]
-    return dict_from_kindle_export(path)[color]
-
-
-def word_list_from_txt(path):
-    """
-    Return list of words read as lines from txt-file.
-
-    Args:
-      path: Path to txt-file. Each line should correspond to a word (or phrase).
-    """
-    with open(path) as file:
-        words = file.read().splitlines()
-    return words
-
-
-def word_list_from_kobo(path):
-    """Parse kobos .annot-file and return list of notations."""
-    with open(path) as file:
-        soup = BeautifulSoup(file, "lxml")
-    words = [tag.text for tag in soup.select("annotation text")]
-    return words
 
 
 # Image resizing

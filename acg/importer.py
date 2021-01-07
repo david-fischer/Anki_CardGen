@@ -1,9 +1,10 @@
 """ImportChains."""
-
+from collections import defaultdict
 from typing import Callable
 
 import attr
 import toolz
+from bs4 import BeautifulSoup
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivymd.app import MDApp
@@ -14,13 +15,35 @@ from .custom_widgets.dialogs import CustomDialog
 from .design_patterns.callback_chain import CallChain, CallNode, PrinterNode
 from .design_patterns.factory import CookBook
 from .language_processing import lemma_dict, remove_punctuation
-from .utils import (
-    get_file_manager,
-    pop_unchanged,
-    word_list_from_kindle,
-    word_list_from_kobo,
-    word_list_from_txt,
-)
+from .utils import get_file_manager, pop_unchanged
+
+COLOR2MEANING = {
+    "highlight_yellow": "words",
+    "highlight_blue": "phrases",
+    "highlight_pink": "sentences",
+    "highlight_orange": "",
+}
+MEANING2COLOR = {val: key for key, val in COLOR2MEANING.items()}
+
+
+def dict_from_kindle_export(file_path):
+    """
+    Extract highlighted parts and sorts them by color in a dictionary.
+
+    Args:
+      file_path: Path to an html-file exported from kindle.
+
+    Returns:
+        :Dictionary `{"highlight_color_1" : ["list", "of" , "highlighted parts", ...],...}`
+    """
+    with open(file_path) as file:
+        soup = BeautifulSoup(file, "lxml")
+    heading_tags = soup.select("div.noteHeading span")
+    highlight_dict = defaultdict(list)
+    for tag in heading_tags:
+        highlight_dict[tag["class"][0]].append(tag.find_next().text.strip())
+    return highlight_dict
+
 
 node_cookbook = CookBook()
 import_chain_cookbook = CookBook()
@@ -137,7 +160,42 @@ class ReplacementDialogNode(DialogNode):
             self.send(unchanged)
 
 
+def word_list_from_kindle(path):
+    """
+    Use :const:`MEANING2COLOR` `["words"]` to extract the list of words highlighted in this specific color.
+
+    Args:
+      path: Path to html-file exported by kindle.
+
+    Returns:
+      : List of highlighted words.
+    """
+    color = MEANING2COLOR["words"]
+    return dict_from_kindle_export(path)[color]
+
+
+def word_list_from_txt(path):
+    """
+    Return list of words read as lines from txt-file.
+
+    Args:
+      path: Path to txt-file. Each line should correspond to a word (or phrase).
+    """
+    with open(path) as file:
+        words = file.read().splitlines()
+    return words
+
+
+def word_list_from_kobo(path):
+    """Parse kobos .annot-file and return list of notations."""
+    with open(path) as file:
+        soup = BeautifulSoup(file, "lxml")
+    words = [tag.text for tag in soup.select("annotation text")]
+    return words
+
+
 replace_lemmas_nodes = [clean_words, "Lemmatizer", "ReplacementDialog"]
+
 node_dict = {
     "kobo": {
         "nodes": ["FileManager", word_list_from_kobo] + replace_lemmas_nodes,
