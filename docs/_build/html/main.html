@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Main App &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Main App &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -90,46 +89,31 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Main App</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.main.AnkiCardGenApp">AnkiCardGenApp</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.bind_theme_cls_and_config">bind_theme_cls_and_config</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.build">build</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.build_config">build_config</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.get_anki_template_dir">get_anki_template_dir</a></li>
-</ul>
-<ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.get_application_config">get_application_config</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.get_current_template_db">get_current_template_db</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.get_word_states">get_word_states</a></li>
-</ul>
-<ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.new_template_instance">new_template_instance</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_busy">on_busy</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_current_template_name">on_current_template_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_pause">on_pause</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.on_start">on_start</a></li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.open_file_manager">open_file_manager</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.request_permissions">request_permissions</a></li>
 </ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.main.AnkiCardGenApp.setup_template">setup_template</a></li>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#acg.main.MainMenu">MainMenu</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.get_item_text">get_item_text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.get_right_action_items">get_right_action_items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.get_screen">get_screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.get_screen_names">get_screen_names</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.on_dropdown_item">on_dropdown_item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.on_parent">on_parent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.screen_dicts">screen_dicts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.main.MainMenu.set_screen">set_screen</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="#acg.main.main">main</a></li>
 </ul>
 </li>
@@ -150,7 +134,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Anki Card Gen</a>
+          <a href="index.html">acg</a>
 
       </nav>
 
@@ -233,6 +217,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt id="acg.main.AnkiCardGenApp.get_application_config">
+<em class="property">static </em><code class="sig-name descname">get_application_config</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.get_application_config"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.get_application_config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return default path for the config.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="acg.main.AnkiCardGenApp.get_current_template_db">
 <code class="sig-name descname">get_current_template_db</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.get_current_template_db"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.get_current_template_db" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return data-base object for <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_template_name</span></code>.</p>
@@ -242,6 +232,12 @@
 <dt id="acg.main.AnkiCardGenApp.get_word_states">
 <code class="sig-name descname">get_word_states</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.get_word_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.get_word_states" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return dict of word-states for current template from data-base.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.AnkiCardGenApp.new_template_instance">
+<code class="sig-name descname">new_template_instance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.new_template_instance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.new_template_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return new instance of current template class.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -269,21 +265,66 @@
 </dd></dl>
 
 <dl class="py method">
-<dt id="acg.main.AnkiCardGenApp.open_file_manager">
-<code class="sig-name descname">open_file_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">'.'</span></em>, <em class="sig-param"><span class="n">callback</span><span class="o">=</span><span class="default_value">print</span></em>, <em class="sig-param"><span class="n">ext</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">close_after</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.open_file_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.open_file_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open file manager at <code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code> and calls <code class="xref py py-attr docutils literal notranslate"><span class="pre">select_path</span></code> with path of selected file.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt id="acg.main.AnkiCardGenApp.request_permissions">
 <em class="property">static </em><code class="sig-name descname">request_permissions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.request_permissions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.request_permissions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Request storage permissions on android.</p>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.main.MainMenu">
+<em class="property">class </em><code class="sig-prename descclassname">acg.main.</code><code class="sig-name descname">MainMenu</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/custom_widgets/main_menu.html#MainMenu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.MainMenu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
+<p>Contains everything related to the NavigationDrawer and the Screens.</p>
 <dl class="py method">
-<dt id="acg.main.AnkiCardGenApp.setup_template">
-<code class="sig-name descname">setup_template</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/acg/main.html#AnkiCardGenApp.setup_template"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.main.AnkiCardGenApp.setup_template" title="Permalink to this definition">¶</a></dt>
-<dd><p>Initialize <code class="xref py py-class docutils literal notranslate"><span class="pre">templates.Template</span></code> and adds it to the single_word screen.</p>
+<dt id="acg.main.MainMenu.get_item_text">
+<code class="sig-name descname">get_item_text</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">screen</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.get_item_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the text of the <code class="xref py py-class docutils literal notranslate"><span class="pre">DrawerItem</span></code> corresponding to a screen.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.MainMenu.get_right_action_items">
+<em class="property">static </em><code class="sig-name descname">get_right_action_items</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">screen</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.get_right_action_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">right_action_items</span></code> attribute of <code class="docutils literal notranslate"><span class="pre">screen</span></code>s root widget if present. Else return empty list.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.MainMenu.get_screen">
+<code class="sig-name descname">get_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">screen_name</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.get_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return screen by name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.MainMenu.get_screen_names">
+<code class="sig-name descname">get_screen_names</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.get_screen_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return screen names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.MainMenu.on_dropdown_item">
+<code class="sig-name descname">on_dropdown_item</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">_</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.on_dropdown_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close menu and set app.current_template_name.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.MainMenu.on_parent">
+<code class="sig-name descname">on_parent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.on_parent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up screen using <code class="docutils literal notranslate"><span class="pre">name</span></code> and <code class="docutils literal notranslate"><span class="pre">path</span></code> from <a class="reference internal" href="#acg.main.MainMenu.screen_dicts" title="acg.main.MainMenu.screen_dicts"><code class="xref py py-attr docutils literal notranslate"><span class="pre">screen_dicts</span></code></a>.</p>
+<p>The screens are added to the screen_man and corresponding entries to the drawer_list.
+Then <code class="xref py py-attr docutils literal notranslate"><span class="pre">DrawerList.current</span></code> is bound to screen_man.current and vice-versa.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.main.MainMenu.screen_dicts">
+<code class="sig-name descname">screen_dicts</code><a class="headerlink" href="#acg.main.MainMenu.screen_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries describing all screens.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.main.MainMenu.set_screen">
+<code class="sig-name descname">set_screen</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">_</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">screen_name</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.main.MainMenu.set_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch screens dynamically.</p>
 </dd></dl>
 
 </dd></dl>

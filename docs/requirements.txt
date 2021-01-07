@@ -1,2 +1,3 @@
 kivy
 sphinx-autoapi
+toml

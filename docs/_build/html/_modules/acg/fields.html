@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.fields &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.fields &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Anki Card Gen</a>
+          <a href="../../index.html">acg</a>
 
       </nav>
 
@@ -163,18 +162,18 @@
 <span class="kn">import</span> <span class="nn">attr</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">from</span> <span class="nn">bidict</span> <span class="kn">import</span> <span class="n">bidict</span>
-<span class="kn">from</span> <span class="nn">googletrans</span> <span class="kn">import</span> <span class="n">Translator</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">mainthread</span>
 <span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
 
-<span class="kn">from</span> <span class="nn">utils</span> <span class="kn">import</span> <span class="n">compress_img_bytes</span>
+<span class="kn">from</span> <span class="nn">.design_patterns.factory</span> <span class="kn">import</span> <span class="n">CookBook</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">compress_img_bytes</span>
 
-<span class="n">translator</span> <span class="o">=</span> <span class="n">Translator</span><span class="p">()</span>
+<span class="n">field_cookbook</span> <span class="o">=</span> <span class="n">CookBook</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="TranslationMixin"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.TranslationMixin">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">TranslationMixin</span><span class="p">:</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<div class="viewcode-block" id="TranslationMixin"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.TranslationMixin">[docs]</a><span class="k">class</span> <span class="nc">TranslationMixin</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Mixin-Class that adds missing translations to the ``target_field`` of the ``template.data`` dict.&quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="TranslationMixin.template"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.TranslationMixin.template">[docs]</a>    <span class="n">template</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span></div>
@@ -203,7 +202,7 @@
 <span class="sd">        Handles the cases that source and target are strings or list of strings.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;pre_process&quot;</span><span class="p">):</span>
-            <span class="nb">super</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">pre_process</span><span class="p">()</span>
+            <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">pre_process</span><span class="p">()</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">src_field</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
             <span class="n">src_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">src_field</span><span class="p">]</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">src_data</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
@@ -222,8 +221,8 @@
                 <span class="p">]</span>
 
 
-<div class="viewcode-block" id="Field"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.Field">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">Field</span><span class="p">:</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<div class="viewcode-block" id="Field"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.Field">[docs]</a><span class="k">class</span> <span class="nc">Field</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Base-class for fields.</span>
 
@@ -314,19 +313,19 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="DisplayTextField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.DisplayTextField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">DisplayTextField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="DisplayTextField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.DisplayTextField">[docs]</a><span class="k">class</span> <span class="nc">DisplayTextField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Only displays text.&quot;&quot;&quot;</span>
 
-    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span></div>
 <span class="s2">MDLabel:</span>
 <span class="s2">    size_hint:1, None</span>
 <span class="s2">    size: self.texture_size</span>
-<span class="s2">&quot;&quot;&quot;</span></div>
+<span class="s2">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="TextInputField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.TextInputField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">TextInputField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<div class="viewcode-block" id="TextInputField"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.TextInputField">[docs]</a><span class="k">class</span> <span class="nc">TextInputField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Displays text and lets user edit it.</span>
 
@@ -343,7 +342,7 @@
 
 <div class="viewcode-block" id="TextInputField.construct_widget"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.TextInputField.construct_widget">[docs]</a>    <span class="k">def</span> <span class="nf">construct_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Furthermore add :attr:`field_name` as hint-text and bind ``on_text_validate``.&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">TextInputField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">construct_widget</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">construct_widget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">hint_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">field_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_text_validate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_text_validate</span><span class="p">)</span></div>
 
@@ -354,8 +353,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="OptionsField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.OptionsField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">OptionsField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<div class="viewcode-block" id="OptionsField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.OptionsField">[docs]</a><span class="k">class</span> <span class="nc">OptionsField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Base-class for a field with multiple options to choose from.&quot;&quot;&quot;</span>
 
     <span class="n">get_selection</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">Callable</span><span class="p">)</span>
@@ -416,29 +415,29 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="CheckChipOptionsField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.CheckChipOptionsField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">CheckChipOptionsField</span><span class="p">(</span><span class="n">OptionsField</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="CheckChipOptionsField"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.CheckChipOptionsField">[docs]</a><span class="k">class</span> <span class="nc">CheckChipOptionsField</span><span class="p">(</span><span class="n">OptionsField</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Pick multiple options using :class:`custom_widgets.selection_widgets.CheckChip`\ s.&quot;&quot;&quot;</span>
 
     <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;MyCheckChipContainer&quot;</span></div>
 
 
-<div class="viewcode-block" id="TransChipOptionsField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.TransChipOptionsField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">TransChipOptionsField</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="n">OptionsField</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="TransChipOptionsField"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.TransChipOptionsField">[docs]</a><span class="k">class</span> <span class="nc">TransChipOptionsField</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="n">OptionsField</span><span class="p">):</span>
     <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pick a single options using :class:`custom_widgets.selection_widgets.MyTransChip`\ s.</span>
 
 <span class="sd">    Inheritance from :class:`TranslationMixin` guarantees that translations are available.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+    <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span></div>
 <span class="s2">MyCheckChipContainer</span>
 <span class="s2">    child_class_name: &quot;MyTransChip&quot;</span>
-<span class="s2">    check_one: True&quot;&quot;&quot;</span></div>
+<span class="s2">    check_one: True&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="DualLongTextField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.DualLongTextField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">class</span> <span class="nc">DualLongTextField</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="n">OptionsField</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span><span class="p">(</span><span class="n">auto_attribs</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="DualLongTextField"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.DualLongTextField">[docs]</a><span class="k">class</span> <span class="nc">DualLongTextField</span><span class="p">(</span><span class="n">TranslationMixin</span><span class="p">,</span> <span class="n">OptionsField</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Pick a single options using :class:`custom_widgets.selection_widgets.CardCarousel`.</span>
 
@@ -450,8 +449,8 @@
     <span class="n">widget_kv</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CardCarousel&quot;</span></div>
 
 
-<div class="viewcode-block" id="MediaField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.MediaField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">MediaField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<div class="viewcode-block" id="MediaField"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.MediaField">[docs]</a><span class="k">class</span> <span class="nc">MediaField</span><span class="p">(</span><span class="n">Field</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Handles download of a single media-file and content of corresponding field.</span>
 
@@ -519,8 +518,8 @@
         <span class="k">return</span> <span class="n">content</span> <span class="k">if</span> <span class="n">media_file_db</span> <span class="k">else</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">}</span></div></div>
 
 
-<div class="viewcode-block" id="ImgField"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.ImgField">[docs]</a><span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
-<span class="k">class</span> <span class="nc">ImgField</span><span class="p">(</span><span class="n">OptionsField</span><span class="p">,</span> <span class="n">MediaField</span><span class="p">):</span>
+<span class="nd">@attr</span><span class="o">.</span><span class="n">s</span>
+<div class="viewcode-block" id="ImgField"><a class="viewcode-back" href="../../word_processing/templates.html#acg.fields.ImgField">[docs]</a><span class="k">class</span> <span class="nc">ImgField</span><span class="p">(</span><span class="n">OptionsField</span><span class="p">,</span> <span class="n">MediaField</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Let user choose between multiple images.&quot;&quot;&quot;</span>
 
     <span class="n">file_type</span> <span class="o">=</span> <span class="n">attr</span><span class="o">.</span><span class="n">ib</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s2">&quot;jpg&quot;</span><span class="p">)</span>
@@ -530,7 +529,7 @@
 
 <div class="viewcode-block" id="ImgField.construct_widget"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.ImgField.construct_widget">[docs]</a>    <span class="k">def</span> <span class="nf">construct_widget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Bind :meth:`on_error` to child&#39;s ``on_error`` event.&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">ImgField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">construct_widget</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">construct_widget</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_error</span><span class="p">)</span></div>
 
     <span class="nd">@_kv_bidict</span><span class="o">.</span><span class="n">default</span>
@@ -545,12 +544,13 @@
             <span class="k">if</span> <span class="n">img_file</span><span class="p">:</span>
                 <span class="n">img_file</span> <span class="o">=</span> <span class="n">compress_img_bytes</span><span class="p">(</span><span class="n">img_file</span><span class="p">)</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">save_media_file</span><span class="p">(</span><span class="n">media_file</span><span class="o">=</span><span class="n">img_file</span><span class="p">)</span>
-        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">ImgField</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">post_process</span><span class="p">(</span><span class="n">content</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ImgField.on_error"><a class="viewcode-back" href="../../word_processing/fields.html#acg.fields.ImgField.on_error">[docs]</a>    <span class="k">def</span> <span class="nf">on_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_widget</span><span class="p">,</span> <span class="n">child</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove urls that could not be loaded from :attr:`template`.data.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field_name</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">source</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span><span class="o">.</span><span class="n">save_base_data_to_db</span><span class="p">()</span></div></div>
 </pre></div>
 
            </div>

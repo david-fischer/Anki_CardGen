@@ -1,6 +1,5 @@
 
 
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -8,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Index &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Index &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -31,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -51,7 +49,7 @@
 
 
 
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -104,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Anki Card Gen</a>
+          <a href="index.html">acg</a>
 
       </nav>
 
@@ -165,14 +163,12 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#H"><strong>H</strong></a>
  | <a href="#I"><strong>I</strong></a>
- | <a href="#J"><strong>J</strong></a>
  | <a href="#K"><strong>K</strong></a>
  | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#O"><strong>O</strong></a>
  | <a href="#P"><strong>P</strong></a>
- | <a href="#Q"><strong>Q</strong></a>
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
@@ -234,13 +230,6 @@
 </li>
       </ul></li>
       <li>
-    acg.generate_anki_card
-
-      <ul>
-        <li><a href="word_processing/anki.html#module-acg.generate_anki_card">module</a>
-</li>
-      </ul></li>
-      <li>
     acg.main
 
       <ul>
@@ -261,15 +250,6 @@
         <li><a href="screens/history.html#module-acg.screens.history">module</a>
 </li>
       </ul></li>
-      <li>
-    acg.screens.queued
-
-      <ul>
-        <li><a href="screens/queued.html#module-acg.screens.queued">module</a>
-</li>
-      </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     acg.screens.single_word
 
@@ -292,9 +272,15 @@
 </li>
       </ul></li>
       <li><a href="db.html#acg.db.Template.add_card">add_card() (acg.db.Template method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.add_child">add_child() (acg.custom_widgets.behaviors.ChildrenFromDataBehavior method)</a>
 
       <ul>
-        <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject.add_card">(acg.generate_anki_card.AnkiObject method)</a>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.add_child">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.add_child">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior method)</a>
 </li>
       </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.add_content_to_db">add_content_to_db() (acg.templates.Template method)</a>
@@ -303,27 +289,55 @@
 </li>
       <li><a href="db.html#acg.db.Card.add_media">add_media() (acg.db.Card method)</a>
 </li>
-      <li><a href="db.html#acg.db.add_missing_templates">add_missing_templates() (in module acg.db)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.add_waiting">add_waiting() (acg.screens.queued.QueuedRoot static method)</a>
+      <li><a href="word_processing/templates.html#acg.templates.Template.add_parser">add_parser() (acg.templates.Template method)</a>
 </li>
       <li><a href="db.html#acg.db.Template.additional_info">additional_info (acg.db.Template attribute)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.after_add_child">after_add_child() (acg.custom_widgets.behaviors.ChildrenFromDataBehavior method)</a>
 
       <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.after_add_child">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.after_add_child">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior method)</a>
+</li>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.after_add_child">(acg.custom_widgets.selection_widgets.MyCarousel method)</a>
 </li>
       </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.animated_properties">animated_properties (acg.custom_widgets.behaviors.MultiStateBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties">(acg.custom_widgets.scroll_widgets.MultiStateBehavior attribute)</a>
 </li>
+      </ul></li>
       <li><a href="main.html#acg.main.AnkiCardGenApp">AnkiCardGenApp (class in acg.main)</a>
 </li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject">AnkiObject (class in acg.generate_anki_card)</a>
+      <li><a href="screens/history.html#acg.screens.history.app_busy">app_busy() (in module acg.screens.history)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.app_busy">(in module acg.templates)</a>
 </li>
-      <li><a href="utils.html#acg.utils.app_busy">app_busy() (in module acg.utils)</a>
+        <li><a href="utils.html#acg.utils.app_busy">(in module acg.utils)</a>
 </li>
+      </ul></li>
       <li><a href="utils.html#acg.utils.AppBusyContext">AppBusyContext (class in acg.utils)</a>
+</li>
+      <li><a href="utils.html#acg.utils.async_get_results">async_get_results() (in module acg.utils)</a>
+</li>
+      <li><a href="utils.html#acg.utils.async_wrapper">async_wrapper() (in module acg.utils)</a>
+</li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncDicio">AsyncDicio (class in acg.parsers)</a>
+</li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncGoogleImages">AsyncGoogleImages (class in acg.parsers)</a>
+</li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncLinguee">AsyncLinguee (class in acg.parsers)</a>
+</li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser">AsyncParser (class in acg.parsers)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser">(class in acg.templates)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncReverso">AsyncReverso (class in acg.parsers)</a>
 </li>
       <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.auto_dismiss">auto_dismiss (acg.custom_widgets.dialogs.CustomDialog attribute)</a>
 </li>
@@ -333,20 +347,34 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="word_processing/parsers.html#acg.parsers.Parser.base_url">base_url (acg.parsers.Parser attribute)</a>
+      <li><a href="screens/single_word.html#acg.screens.single_word.SingleWordRoot.back_to_queue">back_to_queue() (acg.screens.single_word.SingleWordRoot static method)</a>
 </li>
+      <li><a href="word_processing/parsers.html#acg.parsers.Parser.base_url">base_url (acg.parsers.Parser attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.base_url">(acg.templates.Parser attribute)</a>
+</li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.before_add_child">before_add_child() (acg.custom_widgets.behaviors.ChildrenFromDataBehavior method)</a>
 
       <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.before_add_child">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.before_add_child">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior method)</a>
+</li>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.before_add_child">(acg.custom_widgets.selection_widgets.MyCarousel method)</a>
 </li>
       </ul></li>
-      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior.bg_color">bg_color (acg.custom_widgets.behaviors.ThemableColorChangeBehavior attribute)</a>
-</li>
-      <li><a href="main.html#acg.main.AnkiCardGenApp.bind_theme_cls_and_config">bind_theme_cls_and_config() (acg.main.AnkiCardGenApp method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior.bg_color">bg_color (acg.custom_widgets.behaviors.ThemableColorChangeBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.bg_color">(acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="main.html#acg.main.AnkiCardGenApp.bind_theme_cls_and_config">bind_theme_cls_and_config() (acg.main.AnkiCardGenApp method)</a>
+</li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckImageTile.border_width">border_width (acg.custom_widgets.selection_widgets.MyCheckImageTile attribute)</a>
 </li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.build">build() (acg.main.AnkiCardGenApp method)</a>
@@ -368,13 +396,27 @@
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.TextInputField.callback">(acg.fields.TextInputField attribute)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.TextInputField.callback">(acg.templates.TextInputField attribute)</a>
+</li>
       </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior.callback_wrapper">callback_wrapper() (acg.custom_widgets.behaviors.CallbackBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.CallbackBehavior.callback_wrapper">(acg.custom_widgets.scroll_widgets.CallbackBehavior method)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior">CallbackBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.CallbackBehavior">(class in acg.custom_widgets.scroll_widgets)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior.callbacks">callbacks (acg.custom_widgets.behaviors.CallbackBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.CallbackBehavior.callbacks">(acg.custom_widgets.scroll_widgets.CallbackBehavior attribute)</a>
 </li>
+      </ul></li>
       <li><a href="db.html#acg.db.MediaFile.card">card (acg.db.MediaFile attribute)</a>
 </li>
       <li><a href="db.html#acg.db.Card">Card (class in acg.db)</a>
@@ -389,45 +431,81 @@
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel">(acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
       </ul></li>
-      <li><a href="utils.html#acg.utils.CD">CD (class in acg.utils)</a>
+      <li><a href="db.html#acg.db.CD">CD (class in acg.db)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.CD">(class in acg.utils)</a>
 </li>
-      <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.check_one">check_one (acg.custom_widgets.selection_widgets.CheckContainer attribute)</a>
+      </ul></li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckContainer.check_one">check_one (acg.custom_widgets.main_menu.CheckContainer attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.check_one">(acg.custom_widgets.selection_widgets.CheckContainer attribute)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.CheckableQueue">CheckableQueue (class in acg.screens.queued)</a>
-</li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CheckBehavior">CheckBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckBehavior">(class in acg.custom_widgets.main_menu)</a>
 </li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckBehavior">(class in acg.custom_widgets.selection_widgets)</a>
+</li>
+      </ul></li>
       <li><a href="word_processing/fields.html#acg.fields.CheckChipOptionsField">CheckChipOptionsField (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.CheckChipOptionsField">(class in acg.templates)</a>
 </li>
-      <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer">CheckContainer (class in acg.custom_widgets.selection_widgets)</a>
+      </ul></li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckContainer">CheckContainer (class in acg.custom_widgets.main_menu)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer">(class in acg.custom_widgets.selection_widgets)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.child_bindings">child_bindings (acg.custom_widgets.behaviors.ChildrenFromDataBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_bindings">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior attribute)</a>
 </li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_bindings">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior attribute)</a>
+</li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.child_class_name">child_class_name (acg.custom_widgets.behaviors.ChildrenFromDataBehavior attribute)</a>
 
       <ul>
-        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementContent.child_class_name">(acg.custom_widgets.dialogs.ReplacementContent attribute)</a>
+        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent.child_class_name">(acg.custom_widgets.dialogs.ReplacementItemsContent attribute)</a>
+</li>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_class_name">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior attribute)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_class_name">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior attribute)</a>
 </li>
       </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior">ChildrenFromDataBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior">(class in acg.custom_widgets.scroll_widgets)</a>
 </li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior">(class in acg.custom_widgets.selection_widgets)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.choose_file_to_import">choose_file_to_import() (acg.screens.queued.QueuedRoot method)</a>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.click_on_item">click_on_item() (acg.screens.history.HistoryRoot method)</a>
 </li>
-      <li><a href="utils.html#acg.utils.clean_up">clean_up() (in module acg.utils)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.click_on_item">click_on_item() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-      <li><a href="db.html#acg.db.Template.cls_name">cls_name (acg.db.Template attribute)</a>
+      <li><a href="utils.html#acg.utils.close_and_callback">close_and_callback() (in module acg.utils)</a>
 </li>
       <li><a href="utils.html#acg.utils.COLOR2MEANING">COLOR2MEANING (in module acg.utils)</a>
 </li>
       <li><a href="utils.html#acg.utils.compress_img">compress_img() (in module acg.utils)</a>
 </li>
-      <li><a href="utils.html#acg.utils.compress_img_bytes">compress_img_bytes() (in module acg.utils)</a>
+      <li><a href="word_processing/fields.html#acg.fields.compress_img_bytes">compress_img_bytes() (in module acg.fields)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.compress_img_bytes">(in module acg.utils)</a>
 </li>
-      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.conditional_uncheck">conditional_uncheck() (acg.custom_widgets.main_menu.DrawerList method)</a>
+      </ul></li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckContainer.conditional_uncheck">conditional_uncheck() (acg.custom_widgets.main_menu.CheckContainer method)</a>
 
       <ul>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.conditional_uncheck">(acg.custom_widgets.selection_widgets.CheckContainer method)</a>
@@ -440,11 +518,35 @@
 </li>
         <li><a href="word_processing/fields.html#acg.fields.TextInputField.construct_widget">(acg.fields.TextInputField method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.construct_widget">(acg.templates.Field method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.ImgField.construct_widget">(acg.templates.ImgField method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.TextInputField.construct_widget">(acg.templates.TextInputField method)</a>
+</li>
       </ul></li>
+      <li><a href="utils.html#acg.utils.contains_newline">contains_newline() (in module acg.utils)</a>
+</li>
       <li><a href="db.html#acg.db.MediaFile.content">content (acg.db.MediaFile attribute)</a>
 
       <ul>
         <li><a href="word_processing/templates.html#acg.templates.Template.content">(acg.templates.Template attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/fields.html#acg.fields.CookBook.cook">cook() (acg.fields.CookBook method)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.CookBook.cook">(acg.parsers.CookBook method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.CookBook.cook">(acg.templates.CookBook method)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/fields.html#acg.fields.CookBook">CookBook (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.CookBook">(class in acg.parsers)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.CookBook">(class in acg.templates)</a>
 </li>
       </ul></li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.current">current (acg.custom_widgets.main_menu.DrawerList attribute)</a>
@@ -458,11 +560,19 @@
       <ul>
         <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.current_state">(acg.custom_widgets.behaviors.MultiStateBehavior attribute)</a>
 </li>
+        <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckBehavior.current_state">(acg.custom_widgets.main_menu.CheckBehavior attribute)</a>
+</li>
         <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.current_state">(acg.custom_widgets.scroll_widgets.LeftStatusIndicator attribute)</a>
 </li>
         <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state">(acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem attribute)</a>
 </li>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state">(acg.custom_widgets.scroll_widgets.MultiStateBehavior attribute)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckBehavior.current_state">(acg.custom_widgets.selection_widgets.CheckBehavior attribute)</a>
+</li>
       </ul></li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomContentBase">CustomContentBase (class in acg.custom_widgets.dialogs)</a>
+</li>
       <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog">CustomDialog (class in acg.custom_widgets.dialogs)</a>
 </li>
   </ul></td>
@@ -474,34 +584,34 @@
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.data">data (acg.custom_widgets.behaviors.ChildrenFromDataBehavior attribute)</a>
 
       <ul>
-        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent.data">(acg.custom_widgets.dialogs.DialogContent attribute)</a>
+        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent.data">(acg.custom_widgets.dialogs.ItemsContent attribute)</a>
+</li>
+        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ScrollList.data">(acg.custom_widgets.dialogs.ScrollList attribute)</a>
+</li>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior attribute)</a>
 </li>
         <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList.data">(acg.custom_widgets.scroll_widgets.ScrollList attribute)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior attribute)</a>
 </li>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.data">(acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
         <li><a href="word_processing/templates.html#acg.templates.Template.data">(acg.templates.Template attribute)</a>
 </li>
       </ul></li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject.deck">deck (acg.generate_anki_card.AnkiObject attribute)</a>
-</li>
       <li><a href="word_processing/parsers.html#acg.parsers.DEFAULT_HEADERS">DEFAULT_HEADERS (in module acg.parsers)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.dequeue_all">dequeue_all() (acg.screens.queued.QueuedRoot method)</a>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextInputDialog.default_text">default_text (acg.custom_widgets.dialogs.TextInputDialog attribute)</a>
+
+      <ul>
+        <li><a href="screens/history.html#acg.screens.history.TextInputDialog.default_text">(acg.screens.history.TextInputDialog attribute)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.dequeue_word">dequeue_word() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-      <li><a href="db.html#acg.db.Template.description">description (acg.db.Template attribute)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.dialog">dialog (acg.screens.queued.QueuedRoot attribute)</a>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.delete_item">delete_item() (acg.screens.history.HistoryRoot static method)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.dialog_callback">dialog_callback() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent">DialogContent (class in acg.custom_widgets.dialogs)</a>
-</li>
-      <li><a href="word_processing/parsers.html#acg.parsers.DicioParser">DicioParser (class in acg.parsers)</a>
+      <li><a href="db.html#acg.db.Template.description">description (acg.db.Template attribute)</a>
 </li>
       <li><a href="utils.html#acg.utils.dict_from_kindle_export">dict_from_kindle_export() (in module acg.utils)</a>
 </li>
@@ -512,7 +622,11 @@
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList">DrawerList (class in acg.custom_widgets.main_menu)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.DualLongTextField">DualLongTextField (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.DualLongTextField">(class in acg.templates)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.dynamic_height">dynamic_height (acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
   </ul></td>
@@ -525,12 +639,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.export_cards">export_cards() (acg.screens.history.HistoryRoot method)</a>
-
-      <ul>
-        <li><a href="db.html#acg.db.export_cards">(in module acg.db)</a>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.edit_item">edit_item() (acg.screens.history.HistoryRoot method)</a>
 </li>
-      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -538,53 +648,81 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="word_processing/fields.html#acg.fields.Field">Field (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Field">(class in acg.templates)</a>
 </li>
+      </ul></li>
       <li><a href="db.html#acg.db.MediaFile.field_key">field_key (acg.db.MediaFile attribute)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.Field.field_name">field_name (acg.fields.Field attribute)</a>
-</li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject.fields">fields (acg.generate_anki_card.AnkiObject attribute)</a>
 
       <ul>
-        <li><a href="word_processing/templates.html#acg.templates.Template.fields">(acg.templates.Template attribute)</a>
+        <li><a href="word_processing/templates.html#acg.templates.Field.field_name">(acg.templates.Field attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/templates.html#acg.templates.Template.fields">fields (acg.templates.Template attribute)</a>
+</li>
+      <li><a href="word_processing/fields.html#acg.fields.MediaField.file_type">file_type (acg.fields.MediaField attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField.file_type">(acg.templates.MediaField attribute)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="word_processing/fields.html#acg.fields.MediaField.file_type">file_type (acg.fields.MediaField attribute)</a>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.filter">filter() (acg.screens.history.HistoryRoot static method)</a>
 </li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser.format_str">format_str() (acg.parsers.AsyncParser static method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser.format_str">(acg.templates.AsyncParser static method)</a>
+</li>
+      </ul></li>
       <li><a href="word_processing/parsers.html#acg.parsers.Parser.format_url_with_attribs">format_url_with_attribs() (acg.parsers.Parser method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.format_url_with_attribs">(acg.templates.Parser method)</a>
 </li>
+      </ul></li>
       <li><a href="word_processing/parsers.html#acg.parsers.Parser.from_lang">from_lang (acg.parsers.Parser attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.from_lang">(acg.templates.Parser attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
 <h2 id="G">G</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.generate_card">generate_card() (acg.screens.queued.QueuedRoot static method)</a>
-</li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.get_anki_template_dir">get_anki_template_dir() (acg.main.AnkiCardGenApp method)</a>
+</li>
+      <li><a href="main.html#acg.main.AnkiCardGenApp.get_application_config">get_application_config() (acg.main.AnkiCardGenApp static method)</a>
 </li>
       <li><a href="db.html#acg.db.Template.get_card">get_card() (acg.db.Template method)</a>
 </li>
-      <li><a href="db.html#acg.db.get_card_by_id">get_card_by_id() (in module acg.db)</a>
-</li>
       <li><a href="db.html#acg.db.Template.get_cards_by_selector">get_cards_by_selector() (acg.db.Template method)</a>
 </li>
-      <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.get_checked">get_checked() (acg.custom_widgets.selection_widgets.CheckContainer method)</a>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckContainer.get_checked">get_checked() (acg.custom_widgets.main_menu.CheckContainer method)</a>
 
       <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckContainer.get_checked">(acg.custom_widgets.selection_widgets.CheckContainer method)</a>
+</li>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.get_checked">(acg.custom_widgets.selection_widgets.MyCarousel method)</a>
 </li>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.get_checked">(acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
       </ul></li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.get_child">get_child() (acg.custom_widgets.main_menu.DrawerList method)</a>
+</li>
       <li><a href="word_processing/fields.html#acg.fields.Field.get_content">get_content() (acg.fields.Field method)</a>
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.OptionsField.get_content">(acg.fields.OptionsField method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.get_content">(acg.templates.Field method)</a>
 </li>
       </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.get_content_from_fields">get_content_from_fields() (acg.templates.Template method)</a>
@@ -596,19 +734,33 @@
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.OptionsField.get_data">(acg.fields.OptionsField method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.get_data">(acg.templates.Field method)</a>
+</li>
       </ul></li>
-      <li><a href="word_processing/parsers.html#acg.parsers.get_element_after_regex">get_element_after_regex() (in module acg.parsers)</a>
+      <li><a href="utils.html#acg.utils.get_file_manager">get_file_manager() (in module acg.utils)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.MediaField.get_file_strings">get_file_strings() (acg.fields.MediaField method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField.get_file_strings">(acg.templates.MediaField method)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_item_text">get_item_text() (acg.custom_widgets.main_menu.MainMenu method)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.get_item_text">(acg.main.MainMenu method)</a>
+</li>
+      </ul></li>
+      <li><a href="db.html#acg.db.Card.get_media">get_media() (acg.db.Card method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_item_text">get_item_text() (acg.custom_widgets.main_menu.MainMenu method)</a>
-</li>
-      <li><a href="db.html#acg.db.Card.get_media">get_media() (acg.db.Card method)</a>
-</li>
       <li><a href="word_processing/fields.html#acg.fields.MediaField.get_media_file">get_media_file() (acg.fields.MediaField static method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField.get_media_file">(acg.templates.MediaField static method)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel.get_modal_content">get_modal_content() (acg.custom_widgets.selection_widgets.ImageCarousel method)</a>
 
       <ul>
@@ -617,27 +769,53 @@
       </ul></li>
       <li><a href="word_processing/parsers.html#acg.parsers.get_random_wiki_topic">get_random_wiki_topic() (in module acg.parsers)</a>
 </li>
-      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent.get_result">get_result() (acg.custom_widgets.dialogs.DialogContent method)</a>
+      <li><a href="word_processing/fields.html#acg.fields.CookBook.get_recipe_names">get_recipe_names() (acg.fields.CookBook method)</a>
 
       <ul>
-        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementContent.get_result">(acg.custom_widgets.dialogs.ReplacementContent method)</a>
+        <li><a href="word_processing/parsers.html#acg.parsers.CookBook.get_recipe_names">(acg.parsers.CookBook method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.CookBook.get_recipe_names">(acg.templates.CookBook method)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/fields.html#acg.fields.CookBook.get_recipes">get_recipes() (acg.fields.CookBook method)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.CookBook.get_recipes">(acg.parsers.CookBook method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.CookBook.get_recipes">(acg.templates.CookBook method)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomContentBase.get_result">get_result() (acg.custom_widgets.dialogs.CustomContentBase method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent.get_result">(acg.custom_widgets.dialogs.ReplacementItemsContent method)</a>
+</li>
+        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextFieldContent.get_result">(acg.custom_widgets.dialogs.TextFieldContent method)</a>
 </li>
       </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.get_results">get_results() (acg.templates.Template method)</a>
 </li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_right_action_items">get_right_action_items() (acg.custom_widgets.main_menu.MainMenu static method)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.get_right_action_items">(acg.main.MainMenu static method)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_screen">get_screen() (acg.custom_widgets.main_menu.MainMenu method)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.get_screen">(acg.main.MainMenu method)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.get_screen_names">get_screen_names() (acg.custom_widgets.main_menu.MainMenu method)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.get_screen_names">(acg.main.MainMenu method)</a>
 </li>
-      <li><a href="db.html#acg.db.get_template">get_template() (in module acg.db)</a>
-</li>
-      <li><a href="db.html#acg.db.get_template_names">get_template_names() (in module acg.db)</a>
+      </ul></li>
+      <li><a href="utils.html#acg.utils.get_username">get_username() (in module acg.utils)</a>
 </li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.get_word_states">get_word_states() (acg.main.AnkiCardGenApp method)</a>
-</li>
-      <li><a href="word_processing/parsers.html#acg.parsers.GoogleImagesParser">GoogleImagesParser (class in acg.parsers)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -646,18 +824,24 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="word_processing/parsers.html#acg.parsers.Parser.headers">headers (acg.parsers.Parser attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.headers">(acg.templates.Parser attribute)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.SeparatorWithHeading.heading">heading (acg.custom_widgets.selection_widgets.SeparatorWithHeading attribute)</a>
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.Field.heading">(acg.fields.Field attribute)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.heading">(acg.templates.Field attribute)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.SeparatorWithHeading.heading">(acg.templates.SeparatorWithHeading attribute)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="screens/history.html#acg.screens.history.HistoryRoot">HistoryRoot (class in acg.screens.history)</a>
-</li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.HtmlLoader">HtmlLoader (class in acg.generate_anki_card)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -686,24 +870,16 @@
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel">ImageCarousel (class in acg.custom_widgets.selection_widgets)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.ImgField">ImgField (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.ImgField">(class in acg.templates)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.import_from">import_from() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.import_options">import_options (acg.screens.queued.QueuedRoot attribute)</a>
-</li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.index">index (acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.is_duplicate">is_duplicate() (acg.screens.queued.QueuedRoot static method)</a>
+      <li><a href="utils.html#acg.utils.is_duplicate">is_duplicate() (in module acg.utils)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.is_queued">is_queued() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="J">J</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="word_processing/parsers.html#acg.parsers.json2list">json2list() (in module acg.parsers)</a>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent">ItemsContent (class in acg.custom_widgets.dialogs)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -712,15 +888,17 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="word_processing/fields.html#acg.fields.Field.kv_bidict">kv_bidict() (acg.fields.Field method)</a>
-</li>
-      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerItem.kv_file_name">kv_file_name (acg.custom_widgets.main_menu.DrawerItem attribute)</a>
 
       <ul>
-        <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen.kv_file_name">(acg.custom_widgets.main_menu.KvScreen attribute)</a>
+        <li><a href="word_processing/templates.html#acg.templates.Field.kv_bidict">(acg.templates.Field method)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerItem.kv_file_name">kv_file_name (acg.custom_widgets.main_menu.DrawerItem attribute)</a>
+</li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen.kv_path">kv_path (acg.custom_widgets.main_menu.KvScreen attribute)</a>
+</li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.KvScreen">KvScreen (class in acg.custom_widgets.main_menu)</a>
 </li>
   </ul></td>
@@ -739,18 +917,28 @@
 </li>
       <li><a href="word_processing/parsers.html#acg.parsers.linguee_did_you_mean">linguee_did_you_mean() (in module acg.parsers)</a>
 </li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ScrollList.list">list (acg.custom_widgets.dialogs.ScrollList attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList.list">(acg.custom_widgets.scroll_widgets.ScrollList attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="word_processing/parsers.html#acg.parsers.LingueeParser">LingueeParser (class in acg.parsers)</a>
-</li>
-      <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList.list">list (acg.custom_widgets.scroll_widgets.ScrollList attribute)</a>
-</li>
       <li><a href="utils.html#acg.utils.load_dicts_from_csv">load_dicts_from_csv() (in module acg.utils)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.long_press_time">long_press_time (acg.custom_widgets.behaviors.LongPressBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time">(acg.custom_widgets.selection_widgets.LongPressBehavior attribute)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior">LongPressBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressBehavior">(class in acg.custom_widgets.selection_widgets)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressImage">LongPressImage (class in acg.custom_widgets.selection_widgets)</a>
 </li>
   </ul></td>
@@ -762,17 +950,27 @@
       <li><a href="main.html#acg.main.main">main() (in module acg.main)</a>
 </li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu">MainMenu (class in acg.custom_widgets.main_menu)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu">(class in acg.main)</a>
 </li>
+      </ul></li>
       <li><a href="word_processing/parsers.html#acg.parsers.Parser.make_request">make_request() (acg.parsers.Parser method)</a>
 
       <ul>
         <li><a href="word_processing/parsers.html#acg.parsers.RandTopicWikiParser.make_request">(acg.parsers.RandTopicWikiParser method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.make_request">(acg.templates.Parser method)</a>
+</li>
       </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.manual_search">manual_search() (acg.templates.Template method)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.MediaField">MediaField (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField">(class in acg.templates)</a>
 </li>
+      </ul></li>
       <li><a href="db.html#acg.db.MediaFile">MediaFile (class in acg.db)</a>
 </li>
       <li><a href="utils.html#acg.utils.merge_or_last">merge_or_last() (in module acg.utils)</a>
@@ -791,10 +989,6 @@
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_layout_name">(acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
       </ul></li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject.model">model (acg.generate_anki_card.AnkiObject attribute)</a>
-</li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.model_from_html">model_from_html() (in module acg.generate_anki_card)</a>
-</li>
       <li>
     module
 
@@ -813,15 +1007,11 @@
 </li>
         <li><a href="word_processing/fields.html#module-acg.fields">acg.fields</a>
 </li>
-        <li><a href="word_processing/anki.html#module-acg.generate_anki_card">acg.generate_anki_card</a>
-</li>
         <li><a href="main.html#module-acg.main">acg.main</a>
 </li>
         <li><a href="word_processing/parsers.html#module-acg.parsers">acg.parsers</a>
 </li>
         <li><a href="screens/history.html#module-acg.screens.history">acg.screens.history</a>
-</li>
-        <li><a href="screens/queued.html#module-acg.screens.queued">acg.screens.queued</a>
 </li>
         <li><a href="screens/single_word.html#module-acg.screens.single_word">acg.screens.single_word</a>
 </li>
@@ -832,8 +1022,14 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior">MultiStateBehavior (class in acg.custom_widgets.behaviors)</a>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.move_back_to_queue">move_back_to_queue() (acg.screens.history.HistoryRoot static method)</a>
 </li>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior">MultiStateBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.MultiStateBehavior">(class in acg.custom_widgets.scroll_widgets)</a>
+</li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel">MyCarousel (class in acg.custom_widgets.selection_widgets)</a>
 </li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckCard">MyCheckCard (class in acg.custom_widgets.selection_widgets)</a>
@@ -862,12 +1058,20 @@
         <li><a href="word_processing/templates.html#acg.templates.Template.name">(acg.templates.Template attribute)</a>
 </li>
       </ul></li>
+      <li><a href="db.html#acg.db.Template.names">names() (acg.db.Template class method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="db.html#acg.db.new_template">new_template() (in module acg.db)</a>
+      <li><a href="main.html#acg.main.AnkiCardGenApp.new_template_instance">new_template_instance() (acg.main.AnkiCardGenApp method)</a>
 </li>
-      <li><a href="word_processing/parsers.html#acg.parsers.NoMatchError">NoMatchError</a>
+      <li><a href="word_processing/parsers.html#acg.parsers.NoMatchError">NoMatchError</a>, <a href="word_processing/templates.html#acg.templates.NoMatchError">[1]</a>
 </li>
+      <li><a href="screens/history.html#acg.screens.history.not_implemented_toast">not_implemented_toast() (in module acg.screens.history)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.not_implemented_toast">(in module acg.utils)</a>
+</li>
+      </ul></li>
       <li><a href="utils.html#acg.utils.now_string">now_string() (in module acg.utils)</a>
 </li>
   </ul></td>
@@ -881,41 +1085,71 @@
       <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.on_button_press">on_button_press() (acg.custom_widgets.dialogs.CustomDialog method)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior.on_callbacks">on_callbacks() (acg.custom_widgets.behaviors.CallbackBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.CallbackBehavior.on_callbacks">(acg.custom_widgets.scroll_widgets.CallbackBehavior method)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.on_child_release">on_child_release() (acg.custom_widgets.main_menu.DrawerList method)</a>
 </li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerList.on_current">on_current() (acg.custom_widgets.main_menu.DrawerList method)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.on_current_state">on_current_state() (acg.custom_widgets.behaviors.MultiStateBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.MultiStateBehavior.on_current_state">(acg.custom_widgets.scroll_widgets.MultiStateBehavior method)</a>
 </li>
+      </ul></li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.on_current_template_name">on_current_template_name() (acg.main.AnkiCardGenApp method)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.on_data">on_data() (acg.custom_widgets.behaviors.ChildrenFromDataBehavior method)</a>
 
       <ul>
-        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CardCarousel.on_data">(acg.custom_widgets.selection_widgets.CardCarousel method)</a>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.on_data">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.on_data">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.on_data">(acg.custom_widgets.selection_widgets.MyCarousel method)</a>
 </li>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.on_data">(acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
       </ul></li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.on_dropdown_item">on_dropdown_item() (acg.custom_widgets.main_menu.MainMenu method)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.on_dropdown_item">(acg.main.MainMenu method)</a>
 </li>
+        <li><a href="screens/history.html#acg.screens.history.HistoryRoot.on_dropdown_item">(acg.screens.history.HistoryRoot method)</a>
+</li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ImageCarousel.on_error">on_error() (acg.custom_widgets.selection_widgets.ImageCarousel method)</a>
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.ImgField.on_error">(acg.fields.ImgField method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.ImgField.on_error">(acg.templates.ImgField method)</a>
+</li>
       </ul></li>
       <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.on_item_press">on_item_press() (acg.custom_widgets.dialogs.CustomDialog method)</a>
 
       <ul>
-        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent.on_item_press">(acg.custom_widgets.dialogs.DialogContent method)</a>
+        <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent.on_item_press">(acg.custom_widgets.dialogs.ItemsContent method)</a>
 </li>
       </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_long_press">on_long_press() (acg.custom_widgets.behaviors.LongPressBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressBehavior.on_long_press">(acg.custom_widgets.selection_widgets.LongPressBehavior method)</a>
 </li>
-      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.on_parent">on_parent() (acg.custom_widgets.main_menu.MainMenu method)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.on_parent">on_parent() (acg.custom_widgets.main_menu.MainMenu method)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.on_parent">(acg.main.MainMenu method)</a>
+</li>
+      </ul></li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.on_pause">on_pause() (acg.main.AnkiCardGenApp method)</a>
 </li>
       <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem.on_press">on_press() (acg.custom_widgets.dialogs.ReplacementItem method)</a>
@@ -928,20 +1162,40 @@
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCheckImageTile.on_press">(acg.custom_widgets.selection_widgets.MyCheckImageTile method)</a>
 </li>
       </ul></li>
-      <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.DrawerItem.on_release">on_release() (acg.custom_widgets.main_menu.DrawerItem method)</a>
-</li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_short_press">on_short_press() (acg.custom_widgets.behaviors.LongPressBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressBehavior.on_short_press">(acg.custom_widgets.selection_widgets.LongPressBehavior method)</a>
 </li>
+      </ul></li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.on_start">on_start() (acg.main.AnkiCardGenApp method)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior.on_state">on_state() (acg.custom_widgets.behaviors.LongPressBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.LongPressBehavior.on_state">(acg.custom_widgets.selection_widgets.LongPressBehavior method)</a>
 </li>
+      </ul></li>
       <li><a href="screens/single_word.html#acg.screens.single_word.SingleWordRoot.on_template">on_template() (acg.screens.single_word.SingleWordRoot method)</a>
 </li>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.on_text_orig">on_text_orig() (acg.custom_widgets.behaviors.TranslationOnCheckBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_orig">(acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior method)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.on_text_trans">on_text_trans() (acg.custom_widgets.behaviors.TranslationOnCheckBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_trans">(acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior method)</a>
+</li>
+      </ul></li>
       <li><a href="word_processing/fields.html#acg.fields.TextInputField.on_text_validate">on_text_validate() (acg.fields.TextInputField method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.TextInputField.on_text_validate">(acg.templates.TextInputField method)</a>
 </li>
-      <li><a href="main.html#acg.main.AnkiCardGenApp.open_file_manager">open_file_manager() (acg.main.AnkiCardGenApp method)</a>
-</li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.open_menu">open_menu() (acg.custom_widgets.selection_widgets.MyCarousel method)</a>
 
       <ul>
@@ -958,33 +1212,43 @@
 <h2 id="P">P</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject.package">package (acg.generate_anki_card.AnkiObject attribute)</a>
-</li>
-      <li><a href="word_processing/parsers.html#acg.parsers.DicioParser.parse_response">parse_response() (acg.parsers.DicioParser method)</a>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncDicio.parse_response">parse_response() (acg.parsers.AsyncDicio method)</a>
 
       <ul>
-        <li><a href="word_processing/parsers.html#acg.parsers.LingueeParser.parse_response">(acg.parsers.LingueeParser method)</a>
+        <li><a href="word_processing/parsers.html#acg.parsers.AsyncLinguee.parse_response">(acg.parsers.AsyncLinguee method)</a>
+</li>
+        <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser.parse_response">(acg.parsers.AsyncParser method)</a>
+</li>
+        <li><a href="word_processing/parsers.html#acg.parsers.AsyncReverso.parse_response">(acg.parsers.AsyncReverso method)</a>
 </li>
         <li><a href="word_processing/parsers.html#acg.parsers.Parser.parse_response">(acg.parsers.Parser method)</a>
 </li>
         <li><a href="word_processing/parsers.html#acg.parsers.RandTopicWikiParser.parse_response">(acg.parsers.RandTopicWikiParser method)</a>
 </li>
-        <li><a href="word_processing/parsers.html#acg.parsers.ReversoParser.parse_response">(acg.parsers.ReversoParser method)</a>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser.parse_response">(acg.templates.AsyncParser method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.parse_response">(acg.templates.Parser method)</a>
 </li>
       </ul></li>
       <li><a href="word_processing/parsers.html#acg.parsers.Parser">Parser (class in acg.parsers)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser">(class in acg.templates)</a>
 </li>
+      </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.parsers">parsers (acg.templates.Template attribute)</a>
 </li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.HtmlLoader.path">path (acg.generate_anki_card.HtmlLoader attribute)</a>
+      <li><a href="word_processing/parsers.html#acg.parsers.Parser.phrase">phrase (acg.parsers.Parser attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.phrase">(acg.templates.Parser attribute)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.pause_downloading">pause_downloading() (acg.screens.queued.QueuedRoot method)</a>
+      </ul></li>
+      <li><a href="utils.html#acg.utils.pick_val">pick_val() (in module acg.utils)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="word_processing/parsers.html#acg.parsers.Parser.phrase">phrase (acg.parsers.Parser attribute)</a>
-</li>
-      <li><a href="utils.html#acg.utils.pick_val">pick_val() (in module acg.utils)</a>
+      <li><a href="utils.html#acg.utils.pop_unchanged">pop_unchanged() (in module acg.utils)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.Field.post_process">post_process() (acg.fields.Field method)</a>
 
@@ -993,7 +1257,15 @@
 </li>
         <li><a href="word_processing/fields.html#acg.fields.MediaField.post_process">(acg.fields.MediaField method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.post_process">(acg.templates.Field method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.ImgField.post_process">(acg.templates.ImgField method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField.post_process">(acg.templates.MediaField method)</a>
+</li>
         <li><a href="word_processing/templates.html#acg.templates.Template.post_process">(acg.templates.Template method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.VocabTemplate.post_process">(acg.templates.VocabTemplate method)</a>
 </li>
       </ul></li>
       <li><a href="word_processing/fields.html#acg.fields.Field.pre_process">pre_process() (acg.fields.Field method)</a>
@@ -1003,24 +1275,12 @@
 </li>
         <li><a href="word_processing/fields.html#acg.fields.TranslationMixin.pre_process">(acg.fields.TranslationMixin method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.pre_process">(acg.templates.Field method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField.pre_process">(acg.templates.MediaField method)</a>
+</li>
       </ul></li>
-      <li><a href="word_processing/templates.html#acg.templates.PtTemplate">PtTemplate (class in acg.templates)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Q">Q</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.queue">queue (acg.screens.queued.QueuedRoot attribute)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.queue_all">queue_all() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.queue_word">queue_word() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot">QueuedRoot (class in acg.screens.queued)</a>
+      <li><a href="screens/single_word.html#acg.screens.single_word.SingleWordRoot.proceed">proceed() (acg.screens.single_word.SingleWordRoot method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1030,34 +1290,82 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="word_processing/parsers.html#acg.parsers.RandTopicWikiParser">RandTopicWikiParser (class in acg.parsers)</a>
 </li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.recycle_list">recycle_list (acg.screens.queued.QueuedRoot attribute)</a>
-</li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel">RecycleCarousel (class in acg.custom_widgets.selection_widgets)</a>
 </li>
       <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.RecycleList">RecycleList (class in acg.custom_widgets.scroll_widgets)</a>
 </li>
       <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.RecycleViewBox">RecycleViewBox (class in acg.custom_widgets.scroll_widgets)</a>
 </li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.HtmlLoader.replace_includes_with_content">replace_includes_with_content() (acg.generate_anki_card.HtmlLoader method)</a>
+      <li><a href="screens/single_word.html#acg.screens.single_word.SingleWordRoot.refresh">refresh() (acg.screens.single_word.SingleWordRoot method)</a>
 </li>
-      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementContent">ReplacementContent (class in acg.custom_widgets.dialogs)</a>
+      <li><a href="word_processing/fields.html#acg.fields.CookBook.register">register() (acg.fields.CookBook method)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.CookBook.register">(acg.parsers.CookBook method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.CookBook.register">(acg.templates.CookBook method)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.remove_child">remove_child() (acg.custom_widgets.behaviors.ChildrenFromDataBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.remove_child">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.remove_child">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.remove_child">(acg.custom_widgets.selection_widgets.MyCarousel method)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/parsers.html#acg.parsers.remove_whitespace">remove_whitespace() (in module acg.parsers)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.remove_whitespace">(in module acg.utils)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementDialog">ReplacementDialog (class in acg.custom_widgets.dialogs)</a>
+</li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem">ReplacementItem (class in acg.custom_widgets.dialogs)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem">ReplacementItem (class in acg.custom_widgets.dialogs)</a>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent">ReplacementItemsContent (class in acg.custom_widgets.dialogs)</a>
 </li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser.request">request() (acg.parsers.AsyncParser method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser.request">(acg.templates.AsyncParser method)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncDicio.request_params">request_params() (acg.parsers.AsyncDicio method)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.AsyncLinguee.request_params">(acg.parsers.AsyncLinguee method)</a>
+</li>
+        <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser.request_params">(acg.parsers.AsyncParser method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser.request_params">(acg.templates.AsyncParser method)</a>
+</li>
+      </ul></li>
       <li><a href="main.html#acg.main.AnkiCardGenApp.request_permissions">request_permissions() (acg.main.AnkiCardGenApp static method)</a>
 </li>
-      <li><a href="word_processing/parsers.html#acg.parsers.GoogleImagesParser.result_dict">result_dict() (acg.parsers.GoogleImagesParser method)</a>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser.result_dict">result_dict() (acg.parsers.AsyncParser method)</a>
 
       <ul>
         <li><a href="word_processing/parsers.html#acg.parsers.Parser.result_dict">(acg.parsers.Parser method)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser.result_dict">(acg.templates.AsyncParser method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.result_dict">(acg.templates.Parser method)</a>
+</li>
       </ul></li>
-      <li><a href="word_processing/parsers.html#acg.parsers.ReversoParser">ReversoParser (class in acg.parsers)</a>
-</li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.root_for_children">root_for_children (acg.custom_widgets.behaviors.ChildrenFromDataBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.root_for_children">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior attribute)</a>
 </li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.root_for_children">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior attribute)</a>
+</li>
+      </ul></li>
       <li><a href="utils.html#acg.utils.run_in_thread">run_in_thread() (in module acg.utils)</a>
 </li>
   </ul></td>
@@ -1066,77 +1374,97 @@
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="word_processing/templates.html#acg.templates.Template.save_base_data_to_db">save_base_data_to_db() (acg.templates.Template method)</a>
+</li>
       <li><a href="utils.html#acg.utils.save_dict_to_csv">save_dict_to_csv() (in module acg.utils)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.MediaField.save_media_file">save_media_file() (acg.fields.MediaField method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.MediaField.save_media_file">(acg.templates.MediaField method)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.screen_dicts">screen_dicts (acg.custom_widgets.main_menu.MainMenu attribute)</a>
+
+      <ul>
+        <li><a href="main.html#acg.main.MainMenu.screen_dicts">(acg.main.MainMenu attribute)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollBox">ScrollBox (class in acg.custom_widgets.scroll_widgets)</a>
 </li>
       <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollGrid">ScrollGrid (class in acg.custom_widgets.scroll_widgets)</a>
 </li>
-      <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList">ScrollList (class in acg.custom_widgets.scroll_widgets)</a>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ScrollList">ScrollList (class in acg.custom_widgets.dialogs)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList">(class in acg.custom_widgets.scroll_widgets)</a>
 </li>
+      </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.search">search() (acg.templates.Template method)</a>
 </li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.SeparatorWithHeading">SeparatorWithHeading (class in acg.custom_widgets.selection_widgets)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.SeparatorWithHeading">(class in acg.templates)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.MyCarousel.set_child_width">set_child_width() (acg.custom_widgets.selection_widgets.MyCarousel method)</a>
+</li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.set_data">set_data() (acg.custom_widgets.dialogs.CustomDialog method)</a>
 </li>
       <li><a href="word_processing/templates.html#acg.templates.Template.set_data_from_parsers">set_data_from_parsers() (acg.templates.Template method)</a>
 </li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.set_index">set_index() (acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.HtmlLoader.set_of_fields">set_of_fields() (acg.generate_anki_card.HtmlLoader method)</a>
-</li>
       <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.MainMenu.set_screen">set_screen() (acg.custom_widgets.main_menu.MainMenu method)</a>
 
       <ul>
+        <li><a href="main.html#acg.main.MainMenu.set_screen">(acg.main.MainMenu method)</a>
+</li>
+        <li><a href="screens/single_word.html#acg.screens.single_word.set_screen">(in module acg.screens.single_word)</a>
+</li>
         <li><a href="utils.html#acg.utils.set_screen">(in module acg.utils)</a>
 </li>
       </ul></li>
-      <li><a href="word_processing/parsers.html#acg.parsers.DicioParser.setup">setup() (acg.parsers.DicioParser method)</a>
+      <li><a href="screens/history.html#acg.screens.history.set_word_state">set_word_state() (in module acg.screens.history)</a>
 
       <ul>
-        <li><a href="word_processing/parsers.html#acg.parsers.Parser.setup">(acg.parsers.Parser method)</a>
+        <li><a href="utils.html#acg.utils.set_word_state">(in module acg.utils)</a>
 </li>
-        <li><a href="word_processing/parsers.html#acg.parsers.ReversoParser.setup">(acg.parsers.ReversoParser method)</a>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="word_processing/parsers.html#acg.parsers.Parser.setup">setup() (acg.parsers.Parser method)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.setup">(acg.templates.Parser method)</a>
 </li>
       </ul></li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal">setup_modal() (acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
-</li>
-      <li><a href="main.html#acg.main.AnkiCardGenApp.setup_template">setup_template() (acg.main.AnkiCardGenApp method)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.show_replacements_dialog">show_replacements_dialog() (acg.screens.queued.QueuedRoot method)</a>
 </li>
       <li><a href="screens/single_word.html#acg.screens.single_word.SingleWordRoot">SingleWordRoot (class in acg.screens.single_word)</a>
 </li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.slide_width">slide_width (acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
-      <li><a href="utils.html#acg.utils.smart_dict_merge">smart_dict_merge() (in module acg.utils)</a>
+      <li><a href="word_processing/templates.html#acg.templates.smart_dict_merge">smart_dict_merge() (in module acg.templates)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.smart_dict_merge">(in module acg.utils)</a>
 </li>
+      </ul></li>
       <li><a href="utils.html#acg.utils.smart_loader">smart_loader() (in module acg.utils)</a>
 </li>
       <li><a href="utils.html#acg.utils.smart_saver">smart_saver() (in module acg.utils)</a>
 </li>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.sort">sort() (acg.screens.history.HistoryRoot static method)</a>
+</li>
       <li><a href="word_processing/templates.html#acg.templates.Template.sort_field">sort_field (acg.templates.Template attribute)</a>
-</li>
-      <li><a href="utils.html#acg.utils.SPACY_IS_AVAILABLE">SPACY_IS_AVAILABLE (in module acg.utils)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.speed_dial">speed_dial (acg.screens.queued.QueuedRoot attribute)</a>
 </li>
       <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.spinner_active">spinner_active (acg.custom_widgets.scroll_widgets.LeftStatusIndicator attribute)</a>
 </li>
+      <li><a href="utils.html#acg.utils.split_on_condition">split_on_condition() (in module acg.utils)</a>
+</li>
       <li><a href="word_processing/fields.html#acg.fields.TranslationMixin.src_field">src_field (acg.fields.TranslationMixin attribute)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.stale">stale (acg.screens.queued.QueuedRoot attribute)</a>
-</li>
-      <li><a href="word_processing/parsers.html#acg.parsers.star">star() (in module acg.parsers)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.start_downloading">start_downloading() (acg.screens.queued.QueuedRoot method)</a>
 </li>
       <li><a href="utils.html#acg.utils.start_thread">start_thread() (in module acg.utils)</a>
 </li>
@@ -1147,18 +1475,20 @@
       <ul>
         <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior.state_dicts">(acg.custom_widgets.behaviors.MultiStateBehavior attribute)</a>
 </li>
+        <li><a href="custom_widgets/main_menu.html#acg.custom_widgets.main_menu.CheckBehavior.state_dicts">(acg.custom_widgets.main_menu.CheckBehavior attribute)</a>
+</li>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.MultiStateBehavior.state_dicts">(acg.custom_widgets.scroll_widgets.MultiStateBehavior attribute)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.CheckBehavior.state_dicts">(acg.custom_widgets.selection_widgets.CheckBehavior attribute)</a>
+</li>
       </ul></li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.HtmlLoader.string">string (acg.generate_anki_card.HtmlLoader attribute)</a>
-</li>
-      <li><a href="word_processing/parsers.html#acg.parsers.strip_multiline_str">strip_multiline_str() (in module acg.parsers)</a>
-</li>
   </ul></td>
 </tr></table>
 
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="utils.html#acg.utils.tag_word_in_sentence">tag_word_in_sentence() (in module acg.utils)</a>
+      <li><a href="word_processing/templates.html#acg.templates.tag_word_in_sentence">tag_word_in_sentence() (in module acg.templates)</a>
 </li>
       <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem.take_lemma">take_lemma (acg.custom_widgets.dialogs.ReplacementItem attribute)</a>
 </li>
@@ -1168,6 +1498,8 @@
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.TranslationMixin.template">(acg.fields.TranslationMixin attribute)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.template">(acg.templates.Field attribute)</a>
 </li>
       </ul></li>
       <li><a href="db.html#acg.db.Template">Template (class in acg.db)</a>
@@ -1185,39 +1517,87 @@
 </li>
       </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior.text_color">text_color (acg.custom_widgets.behaviors.ThemableColorChangeBehavior attribute)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.text_color">(acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="screens/history.html#acg.screens.history.HistoryRoot.text_input_dialog_callback">text_input_dialog_callback() (acg.screens.history.HistoryRoot method)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.text_orig">text_orig (acg.custom_widgets.behaviors.TranslationOnCheckBehavior attribute)</a>
 
       <ul>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard.text_orig">(acg.custom_widgets.selection_widgets.TransCard attribute)</a>
 </li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig">(acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior attribute)</a>
+</li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior.text_trans">text_trans (acg.custom_widgets.behaviors.TranslationOnCheckBehavior attribute)</a>
 
       <ul>
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard.text_trans">(acg.custom_widgets.selection_widgets.TransCard attribute)</a>
 </li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans">(acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextFieldContent">TextFieldContent (class in acg.custom_widgets.dialogs)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextInputDialog">TextInputDialog (class in acg.custom_widgets.dialogs)</a>
+
+      <ul>
+        <li><a href="screens/history.html#acg.screens.history.TextInputDialog">(class in acg.screens.history)</a>
+</li>
       </ul></li>
       <li><a href="word_processing/fields.html#acg.fields.TextInputField">TextInputField (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.TextInputField">(class in acg.templates)</a>
 </li>
+      </ul></li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior">ThemableColorChangeBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior">(class in acg.custom_widgets.selection_widgets)</a>
 </li>
+      </ul></li>
+      <li><a href="utils.html#acg.utils.timer">timer() (in module acg.utils)</a>
+</li>
+      <li><a href="word_processing/fields.html#acg.fields.CookBook.to_button_dict">to_button_dict() (acg.fields.CookBook method)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.CookBook.to_button_dict">(acg.parsers.CookBook method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.CookBook.to_button_dict">(acg.templates.CookBook method)</a>
+</li>
+      </ul></li>
       <li><a href="word_processing/parsers.html#acg.parsers.Parser.to_lang">to_lang (acg.parsers.Parser attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Parser.to_lang">(acg.templates.Parser attribute)</a>
 </li>
+      </ul></li>
       <li><a href="word_processing/fields.html#acg.fields.TranslationMixin.trans_callback">trans_callback (acg.fields.TranslationMixin attribute)</a>
 </li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TransCard">TransCard (class in acg.custom_widgets.selection_widgets)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.TransChipOptionsField">TransChipOptionsField (class in acg.fields)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.TransChipOptionsField">(class in acg.templates)</a>
 </li>
-      <li><a href="word_processing/templates.html#acg.templates.PtTemplate.translate">translate() (acg.templates.PtTemplate method)</a>
+      </ul></li>
+      <li><a href="word_processing/templates.html#acg.templates.VocabTemplate.translate">translate() (acg.templates.VocabTemplate method)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.TranslationMixin">TranslationMixin (class in acg.fields)</a>
 </li>
       <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior">TranslationOnCheckBehavior (class in acg.custom_widgets.behaviors)</a>
+
+      <ul>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior">(class in acg.custom_widgets.selection_widgets)</a>
 </li>
+      </ul></li>
       <li><a href="db.html#acg.db.MediaFile.type">type (acg.db.MediaFile attribute)</a>
 </li>
   </ul></td>
@@ -1230,6 +1610,8 @@
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.Field.update">(acg.fields.Field method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.update">(acg.templates.Field method)</a>
 </li>
       </ul></li>
       <li><a href="word_processing/templates.html#acg.templates.Template.update_fields">update_fields() (acg.templates.Template method)</a>
@@ -1244,18 +1626,42 @@
         <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_height">(acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_index">update_index() (acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_modal_content">update_modal_content() (acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
+      <li><a href="custom_widgets/behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior.update_num_children">update_num_children() (acg.custom_widgets.behaviors.ChildrenFromDataBehavior method)</a>
+
+      <ul>
+        <li><a href="custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.update_num_children">(acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+        <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.update_num_children">(acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.update_slide">update_slide() (acg.custom_widgets.selection_widgets.RecycleCarousel method)</a>
 </li>
       <li><a href="word_processing/fields.html#acg.fields.Field.update_widget_data">update_widget_data() (acg.fields.Field method)</a>
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.OptionsField.update_widget_data">(acg.fields.OptionsField method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.Field.update_widget_data">(acg.templates.Field method)</a>
+</li>
+      </ul></li>
+      <li><a href="db.html#acg.db.update_word_state_dict">update_word_state_dict() (in module acg.db)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.update_word_state_dict">(in module acg.utils)</a>
+</li>
+      </ul></li>
+      <li><a href="word_processing/parsers.html#acg.parsers.AsyncParser.url">url() (acg.parsers.AsyncParser method)</a>
+
+      <ul>
+        <li><a href="word_processing/parsers.html#acg.parsers.AsyncReverso.url">(acg.parsers.AsyncReverso method)</a>
+</li>
+        <li><a href="word_processing/templates.html#acg.templates.AsyncParser.url">(acg.templates.AsyncParser method)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -1267,32 +1673,46 @@
       <li><a href="custom_widgets/selection_widget.html#acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass">viewclass (acg.custom_widgets.selection_widgets.RecycleCarousel attribute)</a>
 </li>
   </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="word_processing/templates.html#acg.templates.VocabTemplate">VocabTemplate (class in acg.templates)</a>
+</li>
+  </ul></td>
 </tr></table>
 
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="word_processing/fields.html#acg.fields.Field.widget">widget (acg.fields.Field attribute)</a>
+
+      <ul>
+        <li><a href="word_processing/templates.html#acg.templates.Field.widget">(acg.templates.Field attribute)</a>
 </li>
-      <li><a href="utils.html#acg.utils.widget_by_id">widget_by_id() (in module acg.utils)</a>
+      </ul></li>
+      <li><a href="screens/history.html#acg.screens.history.widget_by_id">widget_by_id() (in module acg.screens.history)</a>
+
+      <ul>
+        <li><a href="utils.html#acg.utils.widget_by_id">(in module acg.utils)</a>
 </li>
+      </ul></li>
       <li><a href="word_processing/fields.html#acg.fields.Field.widget_kv">widget_kv (acg.fields.Field attribute)</a>
 
       <ul>
         <li><a href="word_processing/fields.html#acg.fields.TextInputField.widget_kv">(acg.fields.TextInputField attribute)</a>
 </li>
-      </ul></li>
-      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem.word">word (acg.custom_widgets.dialogs.ReplacementItem attribute)</a>
+        <li><a href="word_processing/templates.html#acg.templates.Field.widget_kv">(acg.templates.Field attribute)</a>
 </li>
+        <li><a href="word_processing/templates.html#acg.templates.TextInputField.widget_kv">(acg.templates.TextInputField attribute)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem.word">word (acg.custom_widgets.dialogs.ReplacementItem attribute)</a>
+</li>
       <li><a href="utils.html#acg.utils.word_list_from_kindle">word_list_from_kindle() (in module acg.utils)</a>
 </li>
+      <li><a href="utils.html#acg.utils.word_list_from_kobo">word_list_from_kobo() (in module acg.utils)</a>
+</li>
       <li><a href="utils.html#acg.utils.word_list_from_txt">word_list_from_txt() (in module acg.utils)</a>
-</li>
-      <li><a href="screens/queued.html#acg.screens.queued.QueuedRoot.worker_single_word">worker_single_word() (acg.screens.queued.QueuedRoot method)</a>
-</li>
-      <li><a href="word_processing/anki.html#acg.generate_anki_card.AnkiObject.write_apkg">write_apkg() (acg.generate_anki_card.AnkiObject method)</a>
 </li>
       <li><a href="db.html#acg.db.Card.write_media_files_to_folder">write_media_files_to_folder() (acg.db.Card method)</a>
 </li>

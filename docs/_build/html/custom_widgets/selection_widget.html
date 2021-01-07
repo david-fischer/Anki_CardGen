@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Selection Widgets &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Selection Widgets &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -92,187 +91,123 @@
 <li class="toctree-l2"><a class="reference internal" href="scroll_widgets.html">Scroll Widgets</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Selection Widgets</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CardCarousel">CardCarousel</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CardCarousel.on_data">on_data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CardCarousel.update_height">update_height</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckBehavior">CheckBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckBehavior.current_state">current_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckBehavior.state_dicts">state_dicts</a></li>
 </ul>
-<ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckContainer">CheckContainer</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckContainer.check_one">check_one</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckContainer.conditional_uncheck">conditional_uncheck</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckContainer.get_checked">get_checked</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior">ChildrenFromDataBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.add_child">add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.after_add_child">after_add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.before_add_child">before_add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_bindings">child_bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_class_name">child_class_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data">data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.on_data">on_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.remove_child">remove_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.root_for_children">root_for_children</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.update_num_children">update_num_children</a></li>
 </ul>
-<ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ImageCarousel">ImageCarousel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ImageCarousel.get_modal_content">get_modal_content</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ImageCarousel.on_error">on_error</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior">LongPressBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time">long_press_time</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.on_long_press">on_long_press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.on_short_press">on_short_press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.on_state">on_state</a></li>
 </ul>
-<ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressImage">LongPressImage</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel">MyCarousel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.after_add_child">after_add_child</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.before_add_child">before_add_child</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.carousel">carousel</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_checked">get_checked</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content">get_modal_content</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.modal_data_cls_name">modal_data_cls_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.modal_layout_name">modal_layout_name</a></li>
-</ul>
-<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.on_data">on_data</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.open_menu">open_menu</a></li>
-</ul>
-<ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.remove_child">remove_child</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.set_child_width">set_child_width</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.update_height">update_height</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckCard">MyCheckCard</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckCard.on_press">on_press</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckCard.text">text</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip">MyCheckChip</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip.icon">icon</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip.on_press">on_press</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip.text">text</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChipContainer">MyCheckChipContainer</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckImageTile">MyCheckImageTile</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckImageTile.border_width">border_width</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckImageTile.on_press">on_press</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyTransCard">MyTransCard</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyTransChip">MyTransChip</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel">RecycleCarousel</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel">carousel</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.current_slide">current_slide</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.data">data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.dynamic_height">dynamic_height</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.get_checked">get_checked</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.index">index</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.last_carousel_index">last_carousel_index</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal">modal</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_data_cls_name">modal_data_cls_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_layout_name">modal_layout_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.on_data">on_data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.open_menu">open_menu</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.set_index">set_index</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal">setup_modal</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.slide_width">slide_width</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.update_height">update_height</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.update_index">update_index</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.update_modal_content">update_modal_content</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.update_slide">update_slide</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass">viewclass</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.SeparatorWithHeading">SeparatorWithHeading</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.SeparatorWithHeading.heading">heading</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior">ThemableColorChangeBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.bg_color">bg_color</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.text_color">text_color</a></li>
 </ul>
-<ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard">TransCard</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard.orientation">orientation</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard.text_orig">text_orig</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard.text_trans">text_trans</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior">TranslationOnCheckBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_orig">on_text_orig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_trans">on_text_trans</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig">text_orig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans">text_trans</a></li>
 </ul>
 </li>
 </ul>
@@ -298,7 +233,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -360,12 +295,6 @@
 <p>Carousel of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard" title="acg.custom_widgets.selection_widgets.TransCard"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransCard</span></code></a>.</p>
 <p>To use it with different objects, change <code class="xref py py-attr docutils literal notranslate"><span class="pre">viewclass</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">modal_data_cls_name</span></code>.</p>
 <dl class="py method">
-<dt id="acg.custom_widgets.selection_widgets.CardCarousel.on_data">
-<code class="sig-name descname">on_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#CardCarousel.on_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CardCarousel.on_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Fix size-issue on first init.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt id="acg.custom_widgets.selection_widgets.CardCarousel.update_height">
 <code class="sig-name descname">update_height</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#CardCarousel.update_height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CardCarousel.update_height" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update height via animation, so that Widget has height of currently displayed card.</p>
@@ -374,14 +303,33 @@
 </dd></dl>
 
 <dl class="py class">
+<dt id="acg.custom_widgets.selection_widgets.CheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">CheckBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#CheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior" title="acg.custom_widgets.behaviors.MultiStateBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.MultiStateBehavior</span></code></a></p>
+<p>Two-State-Behavior with states <code class="docutils literal notranslate"><span class="pre">True</span></code> and <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.CheckBehavior.current_state">
+<code class="sig-name descname">current_state</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CheckBehavior.current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. State of widget.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.CheckBehavior.state_dicts">
+<code class="sig-name descname">state_dicts</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CheckBehavior.state_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a>, defaults to <code class="docutils literal notranslate"><span class="pre">{False:{},</span> <span class="pre">True:{}}</span></code> .</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.CheckContainer">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">CheckContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#CheckContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CheckContainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a></p>
 <p>Container for widgets with <code class="xref py py-class docutils literal notranslate"><span class="pre">CheckBehavior</span></code>.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.CheckContainer.check_one">
 <code class="sig-name descname">check_one</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#CheckContainer.check_one"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.CheckContainer.check_one" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code> only one child can be selected.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code> only one child can be selected.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -411,13 +359,89 @@
 </dd></dl>
 
 <dl class="py class">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">ChildrenFromDataBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#ChildrenFromDataBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates widgets dynamically from <a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data" title="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> and adds them to <a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.root_for_children" title="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.root_for_children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">root_for_children</span></code></a>.</p>
+<p>Bindings can be applied and other functions executed by the definition of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.before_add_child" title="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.before_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">before_add_child()</span></code></a> and
+<a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.after_add_child" title="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.after_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">after_add_child()</span></code></a>.</p>
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.add_child">
+<code class="sig-name descname">add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child_dict</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one child-widget.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.after_add_child">
+<code class="sig-name descname">after_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.after_add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do something after child is added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_widget</span></code>. Placeholder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.before_add_child">
+<code class="sig-name descname">before_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.before_add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do something before child is added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_widget</span></code>. Placeholder.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_bindings">
+<code class="sig-name descname">child_bindings</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_bindings" title="Permalink to this definition">¶</a></dt>
+<dd><p>binding_fn}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> of the form {“on_event”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_class_name">
+<code class="sig-name descname">child_class_name</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.child_class_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> class name for children. Needs to be available via
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries from which the child-widgets are
+constructed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.on_data">
+<code class="sig-name descname">on_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.on_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update children on change of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data" title="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.remove_child">
+<code class="sig-name descname">remove_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.remove_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove one child-widget.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.root_for_children">
+<code class="sig-name descname">root_for_children</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.root_for_children" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> the widget, where the children should be added to
+Defaults to self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.update_num_children">
+<code class="sig-name descname">update_num_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ChildrenFromDataBehavior.update_num_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add/remove children until correct number is reached.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.ImageCarousel">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">ImageCarousel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#ImageCarousel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ImageCarousel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel" title="acg.custom_widgets.selection_widgets.MyCarousel"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.MyCarousel</span></code></a></p>
 <p>Carousel of images.</p>
 <dl class="py method">
 <dt id="acg.custom_widgets.selection_widgets.ImageCarousel.get_modal_content">
-<code class="sig-name descname">get_modal_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">size_hint</span><span class="o">=</span><span class="default_value">1, 1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#ImageCarousel.get_modal_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ImageCarousel.get_modal_content" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_modal_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">size_hint</span><span class="o">=</span><span class="default_value">(1, 1)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#ImageCarousel.get_modal_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ImageCarousel.get_modal_content" title="Permalink to this definition">¶</a></dt>
 <dd><p>Call <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content" title="acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content"><code class="xref py py-meth docutils literal notranslate"><span class="pre">MyCarousel.get_modal_content()</span></code></a> with <code class="docutils literal notranslate"><span class="pre">size_hint=(1,1)</span></code>.</p>
 </dd></dl>
 
@@ -430,16 +454,47 @@
 </dd></dl>
 
 <dl class="py class">
+<dt id="acg.custom_widgets.selection_widgets.LongPressBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">LongPressBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#LongPressBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.LongPressBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a></p>
+<p>Dispatches “on_long_press” if pressed for longer than <a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time" title="acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time"><code class="xref py py-attr docutils literal notranslate"><span class="pre">long_press_time</span></code></a> else “on_short_press”.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time">
+<code class="sig-name descname">long_press_time</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.LongPressBehavior.on_long_press">
+<code class="sig-name descname">on_long_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">largs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.on_long_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement in sub class. Placeholder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.LongPressBehavior.on_short_press">
+<code class="sig-name descname">on_short_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">largs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.on_short_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implement in sub class. Placeholder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.LongPressBehavior.on_state">
+<code class="sig-name descname">on_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">instance</span></em>, <em class="sig-param"><span class="n">value</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.on_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dispatches <code class="docutils literal notranslate"><span class="pre">on_long_press</span></code> if the <code class="xref py py-attr docutils literal notranslate"><span class="pre">state</span></code> stays down for longer than <a class="reference internal" href="#acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time" title="acg.custom_widgets.selection_widgets.LongPressBehavior.long_press_time"><code class="xref py py-attr docutils literal notranslate"><span class="pre">long_press_time</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.LongPressImage">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">LongPressImage</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#LongPressImage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.LongPressImage" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.LongPressBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.image.html#kivy.uix.image.AsyncImage" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.image.AsyncImage</span></code></a></p>
-<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.image.html#kivy.uix.image.AsyncImage" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncImage</span></code></a> with additional “on_press” and “on_long_press” event.</p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior" title="acg.custom_widgets.behaviors.LongPressBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.LongPressBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.image.html#kivy.uix.image.AsyncImage" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.image.AsyncImage</span></code></a></p>
+<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.image.html#kivy.uix.image.AsyncImage" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AsyncImage</span></code></a> with additional “on_press” and “on_long_press” event.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyCarousel">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyCarousel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a>, <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a></p>
 <p>Carousel that constructs contents from <code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code>.</p>
 <p>On click, opens a modal with list of content.</p>
 <dl class="py method">
@@ -457,7 +512,7 @@
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCarousel.carousel">
 <code class="sig-name descname">carousel</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.carousel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.carousel" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a></p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a></p>
 </dd></dl>
 
 <dl class="py method">
@@ -468,26 +523,40 @@
 
 <dl class="py method">
 <dt id="acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content">
-<code class="sig-name descname">get_modal_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">size_hint</span><span class="o">=</span><span class="default_value">1, None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.get_modal_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_modal_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">size_hint</span><span class="o">=</span><span class="default_value">(1, None)</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.get_modal_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return root widget to display on the modal.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCarousel.modal_data_cls_name">
 <code class="sig-name descname">modal_data_cls_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.modal_data_cls_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.modal_data_cls_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCarousel.modal_layout_name">
 <code class="sig-name descname">modal_layout_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.modal_layout_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.modal_layout_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.MyCarousel.on_data">
+<code class="sig-name descname">on_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.on_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.on_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override <code class="xref py py-meth docutils literal notranslate"><span class="pre">behaviors.ChildrenFromDataBehavior.on_data()</span></code> with correct list of children.</p>
+<p>The children are in <code class="docutils literal notranslate"><span class="pre">carousel.slides</span></code> as opposed to <code class="docutils literal notranslate"><span class="pre">carousel.children</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="acg.custom_widgets.selection_widgets.MyCarousel.open_menu">
 <code class="sig-name descname">open_menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.open_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.open_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.modalview.ModalView</span></code></a> with content given by <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content" title="acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_modal_content()</span></code></a>.</p>
+<dd><p>Open <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.modalview.ModalView</span></code></a> with content given by <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content" title="acg.custom_widgets.selection_widgets.MyCarousel.get_modal_content"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_modal_content()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.MyCarousel.remove_child">
+<code class="sig-name descname">remove_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCarousel.remove_child"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCarousel.remove_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override <code class="xref py py-meth docutils literal notranslate"><span class="pre">behaviors.ChildrenFromDataBehavior.remove_child()</span></code> with correct list of children.</p>
+<p>The children are in <code class="docutils literal notranslate"><span class="pre">carousel.slides</span></code> as opposed to <code class="docutils literal notranslate"><span class="pre">carousel.children</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -507,7 +576,7 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckCard">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyCheckCard</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckCard" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ThemableColorChangeBehavior</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/card/index.html#kivymd.uix.card.MDCard" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.card.MDCard</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior" title="acg.custom_widgets.behaviors.ThemableColorChangeBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ThemableColorChangeBehavior</span></code></a>, <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CheckBehavior" title="acg.custom_widgets.behaviors.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/card/index.html#kivymd.uix.card.MDCard" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.card.MDCard</span></code></a></p>
 <p>Selectable :~kivymd.uix.card.MDCard`. Select by click. Changes color on selection.</p>
 <dl class="py method">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckCard.on_press">
@@ -518,7 +587,7 @@
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckCard.text">
 <code class="sig-name descname">text</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckCard.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckCard.text" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -526,12 +595,12 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckChip">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyCheckChip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckChip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckChip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.behaviors.CircularRippleBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ThemableColorChangeBehavior</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.behaviors.CircularRippleBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a>, <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ThemableColorChangeBehavior" title="acg.custom_widgets.behaviors.ThemableColorChangeBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ThemableColorChangeBehavior</span></code></a>, <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CheckBehavior" title="acg.custom_widgets.behaviors.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
 <p>Selectable Chip. Select by click. Change color on selection.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckChip.icon">
 <code class="sig-name descname">icon</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckChip.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckChip.icon" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to “”.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to “”.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -543,7 +612,7 @@
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckChip.text">
 <code class="sig-name descname">text</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckChip.text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckChip.text" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to “”.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to “”.</p>
 </dd></dl>
 
 </dd></dl>
@@ -551,20 +620,20 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckChipContainer">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyCheckChipContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckChipContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckChipContainer" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckContainer" title="acg.custom_widgets.selection_widgets.CheckContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.CheckContainer</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.selection_widgets.CheckContainer" title="acg.custom_widgets.selection_widgets.CheckContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.CheckContainer</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/themes/theming/index.html#kivymd.theming.ThemableBehavior" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.theming.ThemableBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.stacklayout.html#kivy.uix.stacklayout.StackLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.stacklayout.StackLayout</span></code></a></p>
 <p>Container for <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip" title="acg.custom_widgets.selection_widgets.MyCheckChip"><code class="xref py py-class docutils literal notranslate"><span class="pre">MyCheckChip</span></code></a>s. Use <code class="xref py py-attr docutils literal notranslate"><span class="pre">child_dict</span></code> to populate.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckImageTile">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyCheckImageTile</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckImageTile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckImageTile" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.CheckBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/image-list/index.html#kivymd.uix.imagelist.SmartTile" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.imagelist.SmartTile</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CheckBehavior" title="acg.custom_widgets.behaviors.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CheckBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/image-list/index.html#kivymd.uix.imagelist.SmartTile" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.imagelist.SmartTile</span></code></a></p>
 <p>Selectable <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/image-list/index.html#kivymd.uix.imagelist.SmartTile" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SmartTile</span></code></a>.</p>
 <p>Select by click. Changes <code class="xref py py-attr docutils literal notranslate"><span class="pre">opacity</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">boarder_width</span></code> on selection.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.MyCheckImageTile.border_width">
 <code class="sig-name descname">border_width</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyCheckImageTile.border_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyCheckImageTile.border_width" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> describing boarder-width of image tile.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericProperty</span></code></a> describing boarder-width of image tile.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -578,47 +647,47 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyTransCard">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyTransCard</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyTransCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyTransCard" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.TranslationOnCheckBehavior</span></code>, <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckCard" title="acg.custom_widgets.selection_widgets.MyCheckCard"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.MyCheckCard</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior" title="acg.custom_widgets.behaviors.TranslationOnCheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.TranslationOnCheckBehavior</span></code></a>, <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckCard" title="acg.custom_widgets.selection_widgets.MyCheckCard"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.MyCheckCard</span></code></a></p>
 <p>Selectable <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/card/index.html#kivymd.uix.card.MDCard" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">MDCard</span></code></a>. Select by click. Changes color and displayed text on click.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.MyTransChip">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">MyTransChip</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#MyTransChip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.MyTransChip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.TranslationOnCheckBehavior</span></code>, <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip" title="acg.custom_widgets.selection_widgets.MyCheckChip"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.MyCheckChip</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.TranslationOnCheckBehavior" title="acg.custom_widgets.behaviors.TranslationOnCheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.TranslationOnCheckBehavior</span></code></a>, <a class="reference internal" href="#acg.custom_widgets.selection_widgets.MyCheckChip" title="acg.custom_widgets.selection_widgets.MyCheckChip"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.selection_widgets.MyCheckChip</span></code></a></p>
 <p>Selectable Chip. Select by click. Change color and text on selection.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">RecycleCarousel</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
-<p>Wrapper class for a <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Carousel</span></code></a> that uses only 3 slides to update content dynamically.</p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
+<p>Wrapper class for a <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.carousel.html#kivy.uix.carousel.Carousel" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Carousel</span></code></a> that uses only 3 slides to update content dynamically.</p>
 <p>The <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.index" title="acg.custom_widgets.selection_widgets.RecycleCarousel.index"><code class="xref py py-attr docutils literal notranslate"><span class="pre">index</span></code></a> is updated according to the change of the carousel index and each time one of the slides is
 updated with data from <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.data" title="acg.custom_widgets.selection_widgets.RecycleCarousel.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>. The content of the slides is constructed as instances of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass" title="acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">viewclass</span></code></a>.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.carousel">
 <code class="sig-name descname">carousel</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.carousel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ObjectProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ObjectProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.current_slide">
 <code class="sig-name descname">current_slide</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.current_slide"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.current_slide" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ObjectProperty</span></code></a>. Reference to <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel" title="acg.custom_widgets.selection_widgets.RecycleCarousel.carousel"><code class="xref py py-attr docutils literal notranslate"><span class="pre">carousel</span></code></a>.current_slide.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ObjectProperty</span></code></a>. Reference to <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel" title="acg.custom_widgets.selection_widgets.RecycleCarousel.carousel"><code class="xref py py-attr docutils literal notranslate"><span class="pre">carousel</span></code></a>.current_slide.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.data">
 <code class="sig-name descname">data</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.data" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ListProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. List of dictionaries from which the content is
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ListProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. List of dictionaries from which the content is
 generated.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.dynamic_height">
 <code class="sig-name descname">dynamic_height</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.dynamic_height"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.dynamic_height" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code> updates the height of the root
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. If <code class="docutils literal notranslate"><span class="pre">True</span></code> updates the height of the root
 widget to the height of the object on the current slide + 24. Only possible if size_hint_y of the widget on the
 slide is not set.</p>
 </dd></dl>
@@ -632,32 +701,32 @@ slide is not set.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.index">
 <code class="sig-name descname">index</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.index" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.NumericProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Current (virtual) index.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.NumericProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Current (virtual) index.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.last_carousel_index">
 <code class="sig-name descname">last_carousel_index</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.last_carousel_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.last_carousel_index" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.NumericProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Last index that the <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel" title="acg.custom_widgets.selection_widgets.RecycleCarousel.carousel"><code class="xref py py-attr docutils literal notranslate"><span class="pre">carousel</span></code></a> had. Used to
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.NumericProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Last index that the <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.carousel" title="acg.custom_widgets.selection_widgets.RecycleCarousel.carousel"><code class="xref py py-attr docutils literal notranslate"><span class="pre">carousel</span></code></a> had. Used to
 determine whether the user did slide right or left.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.modal">
 <code class="sig-name descname">modal</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.modal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ObjectProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">ModalView()</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.ObjectProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">ModalView()</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.modal_data_cls_name">
 <code class="sig-name descname">modal_data_cls_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.modal_data_cls_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_data_cls_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Class name for children of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal" title="acg.custom_widgets.selection_widgets.RecycleCarousel.modal"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modal</span></code></a>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Class name for children of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal" title="acg.custom_widgets.selection_widgets.RecycleCarousel.modal"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modal</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.modal_layout_name">
 <code class="sig-name descname">modal_layout_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.modal_layout_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal_layout_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Class name for root widget of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal" title="acg.custom_widgets.selection_widgets.RecycleCarousel.modal"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modal</span></code></a>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Class name for root widget of <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.modal" title="acg.custom_widgets.selection_widgets.RecycleCarousel.modal"><code class="xref py py-attr docutils literal notranslate"><span class="pre">modal</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -669,7 +738,7 @@ determine whether the user did slide right or left.</p>
 <dl class="py method">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.open_menu">
 <code class="sig-name descname">open_menu</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.open_menu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.open_menu" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.modalview.ModalView</span></code></a> with content given by <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal" title="acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup_modal()</span></code></a>.</p>
+<dd><p>Open <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.modalview.html#kivy.uix.modalview.ModalView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.modalview.ModalView</span></code></a> with content given by <a class="reference internal" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal" title="acg.custom_widgets.selection_widgets.RecycleCarousel.setup_modal"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup_modal()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -687,7 +756,7 @@ determine whether the user did slide right or left.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.slide_width">
 <code class="sig-name descname">slide_width</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.slide_width"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.slide_width" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.NumericProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Width that the content of the slides should
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.NumericProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.NumericProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>. Width that the content of the slides should
 have.</p>
 </dd></dl>
 
@@ -719,7 +788,7 @@ have.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass">
 <code class="sig-name descname">viewclass</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#RecycleCarousel.viewclass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.RecycleCarousel.viewclass" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;TransCard&quot;</span></code>. Class name of the widgets that are added
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.properties.StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;TransCard&quot;</span></code>. Class name of the widgets that are added
 to the carousel.</p>
 </dd></dl>
 
@@ -728,12 +797,31 @@ to the carousel.</p>
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.SeparatorWithHeading">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">SeparatorWithHeading</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#SeparatorWithHeading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.SeparatorWithHeading" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.floatlayout.html#kivy.uix.floatlayout.FloatLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.floatlayout.FloatLayout</span></code></a></p>
 <p>Two <code class="xref py py-class docutils literal notranslate"><span class="pre">MDSeparator</span></code>s with a heading in between.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.SeparatorWithHeading.heading">
 <code class="sig-name descname">heading</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#SeparatorWithHeading.heading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.SeparatorWithHeading.heading" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> with string used as heading.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> with string used as heading.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">ThemableColorChangeBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#ThemableColorChangeBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CheckBehavior" title="acg.custom_widgets.behaviors.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CheckBehavior</span></code></a></p>
+<p>Changes <a class="reference internal" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.bg_color" title="acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.bg_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">bg_color</span></code></a> <a class="reference internal" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.text_color" title="acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.text_color"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_color</span></code></a> based on <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code>.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.bg_color">
+<code class="sig-name descname">bg_color</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.bg_color" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a>. Background color in rgba.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.text_color">
+<code class="sig-name descname">text_color</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.ThemableColorChangeBehavior.text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a>. Text color in rgba.</p>
 </dd></dl>
 
 </dd></dl>
@@ -741,24 +829,55 @@ to the carousel.</p>
 <dl class="py class">
 <dt id="acg.custom_widgets.selection_widgets.TransCard">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">TransCard</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#TransCard"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TransCard" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.LongPressBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/card/index.html#kivymd.uix.card.MDCard" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.card.MDCard</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.behaviors.RectangularRippleBehavior</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.LongPressBehavior" title="acg.custom_widgets.behaviors.LongPressBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.LongPressBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/card/index.html#kivymd.uix.card.MDCard" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.card.MDCard</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.behaviors.RectangularRippleBehavior</span></code></p>
 <p>Displays <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard.text_orig" title="acg.custom_widgets.selection_widgets.TransCard.text_orig"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_orig</span></code></a> and <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TransCard.text_trans" title="acg.custom_widgets.selection_widgets.TransCard.text_trans"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_trans</span></code></a>, separated by a line.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.TransCard.orientation">
 <code class="sig-name descname">orientation</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#TransCard.orientation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TransCard.orientation" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.OptionProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> possible values [“vertical”, “horizontal”] defaults to “vertical”.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.OptionProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> possible values [“vertical”, “horizontal”] defaults to “vertical”.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.TransCard.text_orig">
 <code class="sig-name descname">text_orig</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#TransCard.text_orig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TransCard.text_orig" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> first text.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> first text.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.selection_widgets.TransCard.text_trans">
 <code class="sig-name descname">text_trans</code><a class="reference internal" href="../_modules/acg/custom_widgets/selection_widgets.html#TransCard.text_trans"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TransCard.text_trans" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> second text.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> second text.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.selection_widgets.</code><code class="sig-name descname">TranslationOnCheckBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#TranslationOnCheckBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CheckBehavior" title="acg.custom_widgets.behaviors.CheckBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CheckBehavior</span></code></a></p>
+<p>Switches <code class="xref py py-attr docutils literal notranslate"><span class="pre">text</span></code> between <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig" title="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_orig</span></code></a> and <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans" title="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_trans</span></code></a> depending on <code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code>.</p>
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_orig">
+<code class="sig-name descname">on_text_orig</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_orig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update <code class="xref py py-attr docutils literal notranslate"><span class="pre">state_dict</span></code> with new <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig" title="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_orig</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_trans">
+<code class="sig-name descname">on_text_trans</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.on_text_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update <code class="xref py py-attr docutils literal notranslate"><span class="pre">state_dict</span></code> with new <a class="reference internal" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans" title="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans"><code class="xref py py-attr docutils literal notranslate"><span class="pre">text_trans</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig">
+<code class="sig-name descname">text_orig</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_orig" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>. Original Text.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans">
+<code class="sig-name descname">text_trans</code><a class="headerlink" href="#acg.custom_widgets.selection_widgets.TranslationOnCheckBehavior.text_trans" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a>. Translated Text.</p>
 </dd></dl>
 
 </dd></dl>

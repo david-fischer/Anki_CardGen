@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Dialogs &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Dialogs &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -88,62 +87,50 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../custom_widgets.html">Custom Widgets</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="behaviors.html">Behaviors</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Dialogs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomContentBase">CustomContentBase</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomContentBase.get_result">get_result</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog">CustomDialog</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.auto_dismiss">auto_dismiss</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.button_cls_name">button_cls_name</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.button_texts">button_texts</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.callback">callback</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.on_button_press">on_button_press</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.on_item_press">on_item_press</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.set_data">set_data</a></li>
 </ul>
 </li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.DialogContent">DialogContent</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.DialogContent.data">data</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.DialogContent.get_result">get_result</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.DialogContent.on_item_press">on_item_press</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.ItemsContent">ItemsContent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ItemsContent.data">data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ItemsContent.on_item_press">on_item_press</a></li>
 </ul>
 </li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementContent">ReplacementContent</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementContent.child_class_name">child_class_name</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementContent.get_result">get_result</a></li>
-</ul>
-</li>
-</ul>
-<ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementDialog">ReplacementDialog</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem">ReplacementItem</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.edit">edit</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.lemma">lemma</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.on_press">on_press</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.take_lemma">take_lemma</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.word">word</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItemsContent">ReplacementItemsContent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItemsContent.child_class_name">child_class_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItemsContent.get_result">get_result</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.ScrollList">ScrollList</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ScrollList.data">data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.ScrollList.list">list</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.TextFieldContent">TextFieldContent</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.TextFieldContent.get_result">get_result</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.dialogs.TextInputDialog">TextInputDialog</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.dialogs.TextInputDialog.default_text">default_text</a></li>
 </ul>
 </li>
 </ul>
@@ -172,7 +159,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -226,7 +213,19 @@
 
   <div class="section" id="module-acg.custom_widgets.dialogs">
 <span id="dialogs"></span><h1>Dialogs<a class="headerlink" href="#module-acg.custom_widgets.dialogs" title="Permalink to this headline">¶</a></h1>
-<p>Provides <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog" title="acg.custom_widgets.dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomDialog</span></code></a> and <a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementContent" title="acg.custom_widgets.dialogs.ReplacementContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReplacementContent</span></code></a>.</p>
+<p>Provides <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog" title="acg.custom_widgets.dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomDialog</span></code></a> and <a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItemsContent" title="acg.custom_widgets.dialogs.ReplacementItemsContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ReplacementItemsContent</span></code></a>.</p>
+<dl class="py class">
+<dt id="acg.custom_widgets.dialogs.CustomContentBase">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">CustomContentBase</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomContentBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomContentBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base-class to be used for instances of <code class="xref py py-attr docutils literal notranslate"><span class="pre">CustomDialog.content_cls</span></code>.</p>
+<dl class="py method">
+<dt id="acg.custom_widgets.dialogs.CustomContentBase.get_result">
+<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomContentBase.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomContentBase.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt id="acg.custom_widgets.dialogs.CustomDialog">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">CustomDialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog" title="Permalink to this definition">¶</a></dt>
@@ -241,96 +240,86 @@
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.CustomDialog.button_cls_name">
 <code class="sig-name descname">button_cls_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.button_cls_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.button_cls_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;DialogButton&quot;</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;DialogButton&quot;</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.CustomDialog.button_texts">
 <code class="sig-name descname">button_texts</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.button_texts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.button_texts" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">[&quot;OK&quot;,</span> <span class="pre">&quot;CANCEL&quot;]</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">[&quot;OK&quot;,</span> <span class="pre">&quot;CANCEL&quot;]</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.CustomDialog.callback">
 <code class="sig-name descname">callback</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.callback"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.callback" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="acg.custom_widgets.dialogs.CustomDialog.on_button_press">
 <code class="sig-name descname">on_button_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">obj</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.on_button_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.on_button_press" title="Permalink to this definition">¶</a></dt>
-<dd><p>Placeholder-function.</p>
+<dd><p>Call <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog.callback" title="acg.custom_widgets.dialogs.CustomDialog.callback"><code class="xref py py-meth docutils literal notranslate"><span class="pre">CustomDialog.callback()</span></code></a>.</p>
+<p>The arguments are the text of the pressed button and the result of <code class="xref py py-attr docutils literal notranslate"><span class="pre">content_cls</span></code>.``get_result``.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="acg.custom_widgets.dialogs.CustomDialog.on_item_press">
-<code class="sig-name descname">on_item_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.on_item_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.on_item_press" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">on_item_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">content</span></em>, <em class="sig-param"><span class="n">item</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.on_item_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.on_item_press" title="Permalink to this definition">¶</a></dt>
+<dd><p>Placeholder-function.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.dialogs.CustomDialog.set_data">
+<code class="sig-name descname">set_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#CustomDialog.set_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.CustomDialog.set_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set data of <code class="xref py py-attr docutils literal notranslate"><span class="pre">content_cls</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.dialogs.ItemsContent">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">ItemsContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ItemsContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ItemsContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList" title="acg.custom_widgets.scroll_widgets.ScrollList"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.scroll_widgets.ScrollList</span></code></a>, <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomContentBase" title="acg.custom_widgets.dialogs.CustomContentBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.CustomContentBase</span></code></a></p>
+<p>Scrollable list of items.</p>
+<p>Items dispatch <code class="docutils literal notranslate"><span class="pre">on_press</span></code>-events and itself dispatches <code class="docutils literal notranslate"><span class="pre">on_item_press</span></code> event.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.dialogs.ItemsContent.data">
+<code class="sig-name descname">data</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ItemsContent.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ItemsContent.data" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.dialogs.ItemsContent.on_item_press">
+<code class="sig-name descname">on_item_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ItemsContent.on_item_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ItemsContent.on_item_press" title="Permalink to this definition">¶</a></dt>
 <dd><p>Placeholder-function.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="acg.custom_widgets.dialogs.DialogContent">
-<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">DialogContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#DialogContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.DialogContent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.scroll_widgets.ScrollList</span></code></p>
-<p>Content for the <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog" title="acg.custom_widgets.dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">CustomDialog</span></code></a> class.</p>
-<dl class="py attribute">
-<dt id="acg.custom_widgets.dialogs.DialogContent.data">
-<code class="sig-name descname">data</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#DialogContent.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.DialogContent.data" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a>.``</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.custom_widgets.dialogs.DialogContent.get_result">
-<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#DialogContent.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.DialogContent.get_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Placeholder-function.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.custom_widgets.dialogs.DialogContent.on_item_press">
-<code class="sig-name descname">on_item_press</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#DialogContent.on_item_press"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.DialogContent.on_item_press" title="Permalink to this definition">¶</a></dt>
-<dd><p>Placeholder-function.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="acg.custom_widgets.dialogs.ReplacementContent">
-<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">ReplacementContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementContent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.dialogs.DialogContent" title="acg.custom_widgets.dialogs.DialogContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.DialogContent</span></code></a></p>
-<p>Content for the ReplacementDialog.</p>
-<dl class="py attribute">
-<dt id="acg.custom_widgets.dialogs.ReplacementContent.child_class_name">
-<code class="sig-name descname">child_class_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementContent.child_class_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementContent.child_class_name" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;ReplacementItem&quot;</span></code>.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.custom_widgets.dialogs.ReplacementContent.get_result">
-<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementContent.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementContent.get_result" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get user selection.</p>
-</dd></dl>
-
+<dt id="acg.custom_widgets.dialogs.ReplacementDialog">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">ReplacementDialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog" title="acg.custom_widgets.dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.CustomDialog</span></code></a></p>
+<p>Dialog with optional replacements.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.dialogs.ReplacementItem">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">ReplacementItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.behaviors.html#kivy.uix.behaviors.ButtonBehavior" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.behaviors.ButtonBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
 <p>Item displaying a word (<a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.word" title="acg.custom_widgets.dialogs.ReplacementItem.word"><code class="xref py py-attr docutils literal notranslate"><span class="pre">word</span></code></a>) and a possible replacement (<a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.lemma" title="acg.custom_widgets.dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a>).</p>
 <p><a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.lemma" title="acg.custom_widgets.dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a> can be edited and the selection of word vs replacement switches on click.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.ReplacementItem.edit">
 <code class="sig-name descname">edit</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItem.edit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItem.edit" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. While <code class="docutils literal notranslate"><span class="pre">True</span></code> the <a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.lemma" title="acg.custom_widgets.dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a> can be
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. While <code class="docutils literal notranslate"><span class="pre">True</span></code> the <a class="reference internal" href="#acg.custom_widgets.dialogs.ReplacementItem.lemma" title="acg.custom_widgets.dialogs.ReplacementItem.lemma"><code class="xref py py-attr docutils literal notranslate"><span class="pre">lemma</span></code></a> can be
 edited.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.ReplacementItem.lemma">
 <code class="sig-name descname">lemma</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItem.lemma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItem.lemma" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -342,13 +331,85 @@ edited.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.ReplacementItem.take_lemma">
 <code class="sig-name descname">take_lemma</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItem.take_lemma"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItem.take_lemma" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. Indicates user choice.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.BooleanProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BooleanProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. Indicates user choice.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.dialogs.ReplacementItem.word">
 <code class="sig-name descname">word</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItem.word"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItem.word" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;&quot;</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.dialogs.ReplacementItemsContent">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">ReplacementItemsContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItemsContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItemsContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.dialogs.ItemsContent" title="acg.custom_widgets.dialogs.ItemsContent"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.ItemsContent</span></code></a></p>
+<p>Content for the ReplacementDialog.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.dialogs.ReplacementItemsContent.child_class_name">
+<code class="sig-name descname">child_class_name</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItemsContent.child_class_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItemsContent.child_class_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> defaults to <code class="docutils literal notranslate"><span class="pre">&quot;ReplacementItem&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.dialogs.ReplacementItemsContent.get_result">
+<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#ReplacementItemsContent.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ReplacementItemsContent.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get user selection.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.dialogs.ScrollList">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">ScrollList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#ScrollList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.ScrollList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
+<p>Scrollable List whose items are constructed as instances of <code class="xref py py-attr docutils literal notranslate"><span class="pre">item_type</span></code> from <code class="xref py py-attr docutils literal notranslate"><span class="pre">item_dicts</span></code>.</p>
+<p>Automatically updates upon change of <code class="xref py py-attr docutils literal notranslate"><span class="pre">item_dicts</span></code>.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.dialogs.ScrollList.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#acg.custom_widgets.dialogs.ScrollList.data" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries from which the items are constructed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.dialogs.ScrollList.list">
+<code class="sig-name descname">list</code><a class="headerlink" href="#acg.custom_widgets.dialogs.ScrollList.list" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDList</span></code>.
+Contains the items.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.dialogs.TextFieldContent">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">TextFieldContent</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#TextFieldContent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.TextFieldContent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomContentBase" title="acg.custom_widgets.dialogs.CustomContentBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.CustomContentBase</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.boxlayout.BoxLayout</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.BoxLayout</span></code> containing a <code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.MDTextField</span></code>.</p>
+<p>For use as:attr:<cite>kivymd.uix.dialog.content_cls</cite>.</p>
+<dl class="py method">
+<dt id="acg.custom_widgets.dialogs.TextFieldContent.get_result">
+<code class="sig-name descname">get_result</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#TextFieldContent.get_result"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.TextFieldContent.get_result" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return current entry of the text_field.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.dialogs.TextInputDialog">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.dialogs.</code><code class="sig-name descname">TextInputDialog</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#TextInputDialog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.TextInputDialog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#acg.custom_widgets.dialogs.CustomDialog" title="acg.custom_widgets.dialogs.CustomDialog"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.dialogs.CustomDialog</span></code></a></p>
+<p>Dialog with one text field.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.dialogs.TextInputDialog.default_text">
+<code class="sig-name descname">default_text</code><a class="reference internal" href="../_modules/acg/custom_widgets/dialogs.html#TextInputDialog.default_text"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.dialogs.TextInputDialog.default_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>defaults to “”, the default text entry in the :~kivymd.uix.MDTextField:.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)">StringProperty</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

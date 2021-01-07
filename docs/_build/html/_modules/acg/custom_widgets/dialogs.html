@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.custom_widgets.dialogs &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.custom_widgets.dialogs &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Anki Card Gen</a>
+          <a href="../../../index.html">acg</a>
 
       </nav>
 
@@ -152,8 +151,8 @@
            <div itemprop="articleBody">
 
   <h1>Source code for acg.custom_widgets.dialogs</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Provides :class:`CustomDialog` and :class:`ReplacementContent`.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<span></span><span class="sd">&quot;&quot;&quot;Provides :class:`CustomDialog` and :class:`ReplacementItemsContent`.&quot;&quot;&quot;</span>
+
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
@@ -169,10 +168,60 @@
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.dialog</span> <span class="kn">import</span> <span class="n">MDDialog</span>
 
-<span class="kn">from</span> <span class="nn">custom_widgets.scroll_widgets</span> <span class="kn">import</span> <span class="n">ScrollList</span>
-<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">CUSTOM_WIDGET_DIR</span>
+<span class="kn">from</span> <span class="nn">.scroll_widgets</span> <span class="kn">import</span> <span class="n">ScrollList</span>
 
-<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;dialogs.kv&quot;</span><span class="p">))</span>
+
+<div class="viewcode-block" id="CustomContentBase"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomContentBase">[docs]</a><span class="k">class</span> <span class="nc">CustomContentBase</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Base-class to be used for instances of :attr:`CustomDialog.content_cls`.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CustomContentBase.get_result"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomContentBase.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="TextFieldContent"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextFieldContent">[docs]</a><span class="k">class</span> <span class="nc">TextFieldContent</span><span class="p">(</span><span class="n">CustomContentBase</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;:class:`kivy.uix.BoxLayout` containing a :class:`kivymd.uix.MDTextField`.</span>
+
+<span class="sd">    For use as:attr:`kivymd.uix.dialog.content_cls`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">default_text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="TextFieldContent.get_result"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextFieldContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return current entry of the text_field.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">text_field</span><span class="o">.</span><span class="n">text</span></div></div>
+
+
+<div class="viewcode-block" id="ItemsContent"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent">[docs]</a><span class="k">class</span> <span class="nc">ItemsContent</span><span class="p">(</span><span class="n">ScrollList</span><span class="p">,</span> <span class="n">CustomContentBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Scrollable list of items.</span>
+
+<span class="sd">    Items dispatch ``on_press``-events and itself dispatches ``on_item_press`` event.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;BaseListItem&quot;</span>
+<div class="viewcode-block" id="ItemsContent.data"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_item_press&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;on_press&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">,</span> <span class="s2">&quot;on_item_press&quot;</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ItemsContent.on_item_press"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ItemsContent.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="ReplacementItemsContent"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent">[docs]</a><span class="k">class</span> <span class="nc">ReplacementItemsContent</span><span class="p">(</span><span class="n">ItemsContent</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Content for the ReplacementDialog.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ReplacementItemsContent.child_class_name"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;ReplacementItem&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;ReplacementItem&quot;``.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ReplacementItemsContent.get_result"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItemsContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get user selection.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">lemma</span> <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">take_lemma</span> <span class="k">else</span> <span class="n">child</span><span class="o">.</span><span class="n">word</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div></div>
+        <span class="p">]</span>
 
 
 <div class="viewcode-block" id="ReplacementItem"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementItem">[docs]</a><span class="k">class</span> <span class="nc">ReplacementItem</span><span class="p">(</span><span class="n">ButtonBehavior</span><span class="p">,</span> <span class="n">BoxLayout</span><span class="p">):</span>
@@ -196,45 +245,11 @@
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="DialogContent"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent">[docs]</a><span class="k">class</span> <span class="nc">DialogContent</span><span class="p">(</span><span class="n">ScrollList</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Content for the :class:`CustomDialog` class.&quot;&quot;&quot;</span>
-
-    <span class="n">child_class_name</span> <span class="o">=</span> <span class="s2">&quot;ReplacementItem&quot;</span>
-<div class="viewcode-block" id="DialogContent.data"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">(</span>
-        <span class="p">[{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;word_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;lemma</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">}</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span></div>
-    <span class="p">)</span>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty`.``&quot;&quot;&quot;</span>
-
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">register_event_type</span><span class="p">(</span><span class="s2">&quot;on_item_press&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">child_bindings</span><span class="p">[</span><span class="s2">&quot;on_press&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dispatch</span><span class="p">,</span> <span class="s2">&quot;on_item_press&quot;</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">DialogContent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-<div class="viewcode-block" id="DialogContent.on_item_press"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div>
-        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="DialogContent.get_result"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.DialogContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div></div>
-        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
-
-
-<div class="viewcode-block" id="ReplacementContent"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementContent">[docs]</a><span class="k">class</span> <span class="nc">ReplacementContent</span><span class="p">(</span><span class="n">DialogContent</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Content for the ReplacementDialog.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="ReplacementContent.child_class_name"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementContent.child_class_name">[docs]</a>    <span class="n">child_class_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;ReplacementItem&quot;</span><span class="p">)</span></div>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;ReplacementItem&quot;``.&quot;&quot;&quot;</span>
-
-<div class="viewcode-block" id="ReplacementContent.get_result"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementContent.get_result">[docs]</a>    <span class="k">def</span> <span class="nf">get_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get user selection.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span>
-            <span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">lemma</span> <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">take_lemma</span> <span class="k">else</span> <span class="n">child</span><span class="o">.</span><span class="n">word</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">root_for_children</span><span class="o">.</span><span class="n">children</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div></div>
-        <span class="p">]</span>
-
-
 <div class="viewcode-block" id="CustomDialog"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog">[docs]</a><span class="k">class</span> <span class="nc">CustomDialog</span><span class="p">(</span><span class="n">MDDialog</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Custom dialog.&quot;&quot;&quot;</span>
 
     <span class="nb">type</span> <span class="o">=</span> <span class="s2">&quot;custom&quot;</span>
+    <span class="n">content_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;CustomContentBase&quot;</span><span class="p">)</span>
 <div class="viewcode-block" id="CustomDialog.button_cls_name"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.button_cls_name">[docs]</a>    <span class="n">button_cls_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;DialogButton&quot;</span><span class="p">)</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.StringProperty` defaults to ``&quot;DialogButton&quot;``.&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="CustomDialog.button_texts"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.button_texts">[docs]</a>    <span class="n">button_texts</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">([</span><span class="s2">&quot;OK&quot;</span><span class="p">,</span> <span class="s2">&quot;CANCEL&quot;</span><span class="p">])</span></div>
@@ -251,16 +266,52 @@
         <span class="p">]</span>
         <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">buttons</span><span class="p">:</span>
             <span class="n">button</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_press</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_button_press</span><span class="p">)</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">CustomDialog</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content_cls_name&quot;</span><span class="p">):</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span>
+                <span class="s2">&quot;content_cls&quot;</span><span class="p">,</span> <span class="n">Factory</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content_cls_name&quot;</span><span class="p">))()</span>
+            <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">on_item_press</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_item_press</span><span class="p">)</span>
 
 <div class="viewcode-block" id="CustomDialog.on_button_press"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.on_button_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_button_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Call :meth:`CustomDialog.callback`.</span>
+
+<span class="sd">        The arguments are the text of the pressed button and the result of :attr:`content_cls`.``get_result``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">get_result</span><span class="p">())</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="CustomDialog.on_item_press"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="CustomDialog.on_item_press"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.on_item_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_item_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="CustomDialog.set_data"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.CustomDialog.set_data">[docs]</a>    <span class="k">def</span> <span class="nf">set_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Set data of :attr:`content_cls`.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span></div></div>
+
+
+<div class="viewcode-block" id="ReplacementDialog"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.ReplacementDialog">[docs]</a><span class="k">class</span> <span class="nc">ReplacementDialog</span><span class="p">(</span><span class="n">CustomDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dialog with optional replacements.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s2">&quot;content_cls_name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ReplacementItemsContent&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="TextInputDialog"><a class="viewcode-back" href="../../../screens/history.html#acg.custom_widgets.dialogs.TextInputDialog">[docs]</a><span class="k">class</span> <span class="nc">TextInputDialog</span><span class="p">(</span><span class="n">CustomDialog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dialog with one text field.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="TextInputDialog.default_text"><a class="viewcode-back" href="../../../custom_widgets/dialogs.html#acg.custom_widgets.dialogs.TextInputDialog.default_text">[docs]</a>    <span class="n">default_text</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+    <span class="sd">&quot;&quot;&quot;:~kivy.properties.StringProperty: defaults to &quot;&quot;, the default text entry in the :~kivymd.uix.MDTextField:.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">default_text</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;default_text&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s2">&quot;default_text&quot;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span> <span class="o">=</span> <span class="n">TextFieldContent</span><span class="p">(</span><span class="n">default_text</span><span class="o">=</span><span class="n">default_text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span>
+            <span class="n">default_text</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">setter</span><span class="p">(</span>  <span class="c1"># pylint: disable=no-member</span>
+                <span class="s2">&quot;default_text&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <span class="c1"># pylint: disable = W,C,R,I,E</span>
@@ -275,17 +326,21 @@
 <span class="sd">FloatLayout:</span>
 
 <span class="sd">    MDFlatButton:</span>
-<span class="sd">        text: &quot;ALERT DIALOG&quot;</span>
-<span class="sd">        pos_hint: {&#39;center_x&#39;: .5, &#39;center_y&#39;: .5}</span>
-<span class="sd">        on_release: app.show_confirmation_dialog()</span>
+<span class="sd">        text: &quot;REPLACEMENT DIALOG&quot;</span>
+<span class="sd">        pos_hint: {&#39;center_x&#39;: .5, &#39;center_y&#39;: .3}</span>
+<span class="sd">        on_release: app.show_repl_dialog()</span>
+
+<span class="sd">    MDFlatButton:</span>
+<span class="sd">        text: &quot;TEXT DIALOG&quot;</span>
+<span class="sd">        pos_hint: {&#39;center_x&#39;: .5, &#39;center_y&#39;: .6}</span>
+<span class="sd">        on_release: app.show_text_dialog()</span>
 <span class="sd">&quot;&quot;&quot;</span>
             <span class="p">)</span>
 
-        <span class="k">def</span> <span class="nf">show_confirmation_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span> <span class="o">=</span> <span class="n">CustomDialog</span><span class="p">(</span>
-                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">content_cls</span><span class="o">=</span><span class="n">ReplacementContent</span><span class="p">(),</span> <span class="n">callback</span><span class="o">=</span><span class="nb">print</span>
-                <span class="p">)</span>
+        <span class="k">def</span> <span class="nf">show_repl_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span> <span class="o">=</span> <span class="n">CustomDialog</span><span class="p">(</span>
+                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">content_cls</span><span class="o">=</span><span class="n">ReplacementItemsContent</span><span class="p">(),</span> <span class="n">callback</span><span class="o">=</span><span class="nb">print</span>
+            <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">content_cls</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="p">{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="s2">&quot;aguento&quot;</span><span class="p">,</span> <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;aguentar&quot;</span><span class="p">},</span>
                 <span class="p">{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="s2">&quot;deixa&quot;</span><span class="p">,</span> <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;deixar&quot;</span><span class="p">},</span>
@@ -296,6 +351,17 @@
                 <span class="p">{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="s2">&quot;quedas d’água&quot;</span><span class="p">,</span> <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;quedo d’água&quot;</span><span class="p">},</span>
                 <span class="p">{</span><span class="s2">&quot;word&quot;</span><span class="p">:</span> <span class="s2">&quot;ansiosos&quot;</span><span class="p">,</span> <span class="s2">&quot;lemma&quot;</span><span class="p">:</span> <span class="s2">&quot;ansioso&quot;</span><span class="p">},</span>
             <span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">show_text_dialog</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="p">,</span> <span class="n">TextInputDialog</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">default_text</span> <span class="o">=</span> <span class="s2">&quot;second call to text_input_dialog&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span> <span class="o">=</span> <span class="n">TextInputDialog</span><span class="p">(</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;test&quot;</span><span class="p">,</span>
+                    <span class="n">default_text</span><span class="o">=</span><span class="s2">&quot;this is a test&quot;</span><span class="p">,</span>
+                    <span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span>
+                <span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
 
     <span class="n">_Example</span><span class="p">()</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>

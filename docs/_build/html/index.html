@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Welcome to ACG’s documentation! &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Welcome to ACG’s documentation! &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
 
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -51,7 +50,7 @@
 
 
 
-            <a href="#" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="#" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -104,7 +103,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">Anki Card Gen</a>
+          <a href="#">acg</a>
 
       </nav>
 
@@ -179,34 +178,58 @@
 <li class="toctree-l2"><a class="reference internal" href="screens/single_word.html">Single Word Screen</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a></li>
-<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">Main App</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="main.html#acg.main.AnkiCardGenApp">AnkiCardGenApp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#acg.main.MainMenu">MainMenu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="main.html#acg.main.main">main</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.AppBusyContext">AppBusyContext</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.CD">CD</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.COLOR2MEANING">COLOR2MEANING</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.app_busy">app_busy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.async_get_results">async_get_results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.async_wrapper">async_wrapper</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.close_and_callback">close_and_callback</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.compress_img">compress_img</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.compress_img_bytes">compress_img_bytes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.contains_newline">contains_newline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.dict_from_kindle_export">dict_from_kindle_export</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.get_file_manager">get_file_manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.get_username">get_username</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.is_duplicate">is_duplicate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.load_dicts_from_csv">load_dicts_from_csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.merge_or_last">merge_or_last</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.not_implemented_toast">not_implemented_toast</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.now_string">now_string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.pick_val">pick_val</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.pop_unchanged">pop_unchanged</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.remove_whitespace">remove_whitespace</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.run_in_thread">run_in_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.save_dict_to_csv">save_dict_to_csv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.set_screen">set_screen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.set_word_state">set_word_state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.smart_dict_merge">smart_dict_merge</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.smart_loader">smart_loader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.smart_saver">smart_saver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.split_on_condition">split_on_condition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.start_thread">start_thread</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.start_workers">start_workers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.timer">timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.update_word_state_dict">update_word_state_dict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.widget_by_id">widget_by_id</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.word_list_from_kindle">word_list_from_kindle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.word_list_from_kobo">word_list_from_kobo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#acg.utils.word_list_from_txt">word_list_from_txt</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="db.html">Database</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.CD">CD</a></li>
 <li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.Card">Card</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.MediaFile">MediaFile</a></li>
-</ul>
-<ul>
 <li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.Template">Template</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.add_missing_templates">add_missing_templates</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.export_cards">export_cards</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.get_card_by_id">get_card_by_id</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.get_template">get_template</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.get_template_names">get_template_names</a></li>
-</ul>
-<ul>
-<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.new_template">new_template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="db.html#acg.db.update_word_state_dict">update_word_state_dict</a></li>
 </ul>
 </li>
 </ul>

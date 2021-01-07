@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.main &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.main &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../_static/jquery.js"></script>
         <script src="../../_static/underscore.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">Anki Card Gen</a>
+          <a href="../../index.html">acg</a>
 
       </nav>
 
@@ -153,22 +152,19 @@
 
   <h1>Source code for acg.main</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Contains the Main App :class:`AnkiCardGenApp`.&quot;&quot;&quot;</span>
-<span class="n">__version__</span> <span class="o">=</span> <span class="s2">&quot;1.0.8&quot;</span>
+
 
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">pydoc</span>
 
 <span class="kn">import</span> <span class="nn">certifi</span>
-<span class="kn">import</span> <span class="nn">toolz</span>
 <span class="kn">from</span> <span class="nn">kivy</span> <span class="kn">import</span> <span class="n">platform</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">mainthread</span>
-<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">AliasProperty</span><span class="p">,</span>
     <span class="n">BooleanProperty</span><span class="p">,</span>
     <span class="n">ConfigParserProperty</span><span class="p">,</span>
+    <span class="n">DictProperty</span><span class="p">,</span>
     <span class="n">ObjectProperty</span><span class="p">,</span>
-    <span class="n">StringProperty</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.modalview</span> <span class="kn">import</span> <span class="n">ModalView</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
@@ -176,32 +172,44 @@
 <span class="kn">from</span> <span class="nn">kivymd.uix.spinner</span> <span class="kn">import</span> <span class="n">MDSpinner</span>
 <span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
 
-<span class="kn">from</span> <span class="nn">custom_widgets.main_menu</span> <span class="kn">import</span> <span class="n">MainMenu</span>
-<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">add_missing_templates</span><span class="p">,</span> <span class="n">get_template</span>
-<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">ANKI_DIR</span><span class="p">,</span> <span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="n">ROOT_DATA_DIR</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">CONFIG_PATH</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">screens</span>
+<span class="kn">from</span> <span class="nn">.custom_widgets.main_menu</span> <span class="kn">import</span> <span class="n">MainMenu</span>
+<span class="kn">from</span> <span class="nn">.paths</span> <span class="kn">import</span> <span class="n">ANKI_DIR</span><span class="p">,</span> <span class="n">ROOT_DATA_DIR</span>
+<span class="kn">from</span> <span class="nn">.templates</span> <span class="kn">import</span> <span class="n">template_cookbook</span>
 
 <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SSL_CERT_FILE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">certifi</span><span class="o">.</span><span class="n">where</span><span class="p">()</span>
-
-<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;main_menu.kv&quot;</span><span class="p">))</span>
-<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;fixes.kv&quot;</span><span class="p">))</span>
 
 
 <div class="viewcode-block" id="AnkiCardGenApp"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp">[docs]</a><span class="k">class</span> <span class="nc">AnkiCardGenApp</span><span class="p">(</span><span class="n">MDApp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Main App.&quot;&quot;&quot;</span>
 
     <span class="c1"># Data</span>
-    <span class="n">current_template_name</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">(</span><span class="s2">&quot;Portuguese Vocab&quot;</span><span class="p">)</span>
-    <span class="n">template</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
+    <span class="n">template</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">force_dispatch</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="c1"># Config</span>
-    <span class="n">apkg_export_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;apkg_export_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">,)</span>
+    <span class="n">apkg_export_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span>
+        <span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;Paths&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;apkg_export_dir&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;app&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
     <span class="n">import_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;import_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">kobo_import_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;kobo_import_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
     <span class="n">anki_template_dir</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span>
         <span class="s2">&quot;vocab_card&quot;</span><span class="p">,</span> <span class="s2">&quot;Paths&quot;</span><span class="p">,</span> <span class="s2">&quot;anki_template_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span>
     <span class="p">)</span>
     <span class="n">primary_palette</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;Red&quot;</span><span class="p">,</span> <span class="s2">&quot;Theme&quot;</span><span class="p">,</span> <span class="s2">&quot;primary_palette&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
     <span class="n">accent_palette</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;Amber&quot;</span><span class="p">,</span> <span class="s2">&quot;Theme&quot;</span><span class="p">,</span> <span class="s2">&quot;accent_palette&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
     <span class="n">theme_style</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;Light&quot;</span><span class="p">,</span> <span class="s2">&quot;Theme&quot;</span><span class="p">,</span> <span class="s2">&quot;theme_style&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">source_language</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;Template&quot;</span><span class="p">,</span> <span class="s2">&quot;source_language&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">target_language</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span><span class="s2">&quot;pt&quot;</span><span class="p">,</span> <span class="s2">&quot;Template&quot;</span><span class="p">,</span> <span class="s2">&quot;target_language&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span><span class="p">)</span>
+    <span class="n">current_template_name</span> <span class="o">=</span> <span class="n">ConfigParserProperty</span><span class="p">(</span>
+        <span class="s2">&quot;Portuguese Vocabulary (en)&quot;</span><span class="p">,</span> <span class="s2">&quot;Template&quot;</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;app&quot;</span>
+    <span class="p">)</span>
+    <span class="c1"># TODO: fix bug where default value has to be a valid recipe</span>
+    <span class="n">templates</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span><span class="n">getter</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="n">template_cookbook</span><span class="o">.</span><span class="n">get_recipe_names</span><span class="p">())</span>
+
+    <span class="n">word_state_dict</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
 
     <span class="n">busy</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">busy_modal</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
@@ -211,6 +219,11 @@
 <div class="viewcode-block" id="AnkiCardGenApp.get_anki_template_dir"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_anki_template_dir">[docs]</a>    <span class="k">def</span> <span class="nf">get_anki_template_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return absolute path where html-, css- and js-files for anki-card is located.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ANKI_DIR</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">anki_template_dir</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="AnkiCardGenApp.get_application_config"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_application_config">[docs]</a>    <span class="k">def</span> <span class="nf">get_application_config</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Return default path for the config.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">CONFIG_PATH</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.build_config"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.build_config">[docs]</a>    <span class="k">def</span> <span class="nf">build_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
         <span class="sd">&quot;&quot;&quot;If no config-file exists, sets the default.&quot;&quot;&quot;</span>
@@ -234,7 +247,6 @@
 
 <div class="viewcode-block" id="AnkiCardGenApp.build"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.build">[docs]</a>    <span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up App and return :class:`custom_widgets.MainMenu` as root widget.&quot;&quot;&quot;</span>
-        <span class="n">add_missing_templates</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bind_theme_cls_and_config</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span> <span class="o">=</span> <span class="n">MDFileManager</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">apkg_export_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">apkg_export_dir</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
@@ -242,11 +254,16 @@
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">import_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">import_dir</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">ROOT_DATA_DIR</span><span class="p">)</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">MainMenu</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="n">MainMenu</span><span class="p">(</span>
+            <span class="n">screen_dicts</span><span class="o">=</span><span class="n">screens</span><span class="o">.</span><span class="n">screen_dicts</span><span class="p">,</span> <span class="n">screen_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">screens</span><span class="o">.</span><span class="n">SCREEN_DIR</span><span class="p">)</span></div>
+        <span class="p">)</span>
 
+    <span class="nd">@db_session</span>
 <div class="viewcode-block" id="AnkiCardGenApp.get_current_template_db"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_current_template_db">[docs]</a>    <span class="k">def</span> <span class="nf">get_current_template_db</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return data-base object for :attr:`current_template_name`.&quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="n">get_template</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_template_name</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">db</span><span class="o">.</span><span class="n">Template</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_template_name</span><span class="p">)</span> <span class="ow">or</span> <span class="n">db</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">current_template_name</span></div>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="AnkiCardGenApp.get_word_states"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.get_word_states">[docs]</a>    <span class="k">def</span> <span class="nf">get_word_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return dict of word-states for current template from data-base.&quot;&quot;&quot;</span>
@@ -255,24 +272,19 @@
                 <span class="n">card</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">card</span><span class="o">.</span><span class="n">state</span> <span class="k">for</span> <span class="n">card</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span><span class="o">.</span><span class="n">cards</span></div>
             <span class="p">}</span>
 
-    <span class="n">word_state_dict</span> <span class="o">=</span> <span class="n">AliasProperty</span><span class="p">(</span>
-        <span class="n">getter</span><span class="o">=</span><span class="n">get_word_states</span><span class="p">,</span> <span class="n">setter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bind</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;current_template_name&quot;</span><span class="p">]</span>
-    <span class="p">)</span>
-
-<div class="viewcode-block" id="AnkiCardGenApp.setup_template"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.setup_template">[docs]</a>    <span class="k">def</span> <span class="nf">setup_template</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Initialize :class:`templates.Template` and adds it to the single_word screen.&quot;&quot;&quot;</span>
-        <span class="n">template_cls_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span><span class="o">.</span><span class="n">cls_name</span>
-        <span class="n">template_cls</span> <span class="o">=</span> <span class="n">pydoc</span><span class="o">.</span><span class="n">locate</span><span class="p">(</span><span class="n">template_cls_name</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="n">template_cls</span><span class="p">()</span></div>
+<div class="viewcode-block" id="AnkiCardGenApp.new_template_instance"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.new_template_instance">[docs]</a>    <span class="k">def</span> <span class="nf">new_template_instance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return new instance of current template class.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">template_cookbook</span><span class="o">.</span><span class="n">cook</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">current_template_name</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.on_current_template_name"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.on_current_template_name">[docs]</a>    <span class="k">def</span> <span class="nf">on_current_template_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up new template if :attr:`current_template_name` changes.&quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_template</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">new_template_instance</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">word_state_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_word_states</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.on_start"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.on_start">[docs]</a>    <span class="k">def</span> <span class="nf">on_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Set up template on start of app.&quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">AnkiCardGenApp</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">on_start</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_template</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">on_start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_current_template_name</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">request_permissions</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="AnkiCardGenApp.on_pause"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.on_pause">[docs]</a>    <span class="k">def</span> <span class="nf">on_pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>  <span class="c1"># pylint: disable=no-self-use</span>
@@ -284,7 +296,9 @@
         <span class="sd">&quot;&quot;&quot;Set up :attr:`busy_modal` if necessary. Then open or close it depending on state of :attr:`busy`.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span> <span class="o">=</span> <span class="n">ModalView</span><span class="p">(</span>
-                <span class="n">auto_dismiss</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+                <span class="n">auto_dismiss</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span>
+                <span class="n">opacity</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">spinner</span> <span class="o">=</span> <span class="n">MDSpinner</span><span class="p">(</span><span class="n">active</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">size_hint</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span><span class="o">.</span><span class="n">add_widget</span><span class="p">(</span><span class="n">spinner</span><span class="p">)</span>
@@ -294,25 +308,13 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">busy_modal</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="AnkiCardGenApp.open_file_manager"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.open_file_manager">[docs]</a>    <span class="k">def</span> <span class="nf">open_file_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span> <span class="n">ext</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">close_after</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Open file manager at :attr:`path` and calls :attr:`select_path` with path of selected file.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">close_after</span><span class="p">:</span>
-            <span class="n">callback</span> <span class="o">=</span> <span class="n">toolz</span><span class="o">.</span><span class="n">functoolz</span><span class="o">.</span><span class="n">juxt</span><span class="p">(</span>
-                <span class="n">callback</span><span class="p">,</span> <span class="k">lambda</span> <span class="o">*</span><span class="n">_</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-            <span class="p">)</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-        <span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span> <span class="ow">or</span> <span class="p">[</span><span class="s2">&quot;*&quot;</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">ext</span> <span class="o">=</span> <span class="n">ext</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">select_path</span> <span class="o">=</span> <span class="n">callback</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">file_manager</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
-
     <span class="nd">@staticmethod</span>
 <div class="viewcode-block" id="AnkiCardGenApp.request_permissions"><a class="viewcode-back" href="../../main.html#acg.main.AnkiCardGenApp.request_permissions">[docs]</a>    <span class="k">def</span> <span class="nf">request_permissions</span><span class="p">():</span>
         <span class="sd">&quot;&quot;&quot;Request storage permissions on android.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;android&quot;</span><span class="p">:</span>
             <span class="kn">from</span> <span class="nn">android.permissions</span> <span class="kn">import</span> <span class="p">(</span>  <span class="c1"># pylint: disable=import-outside-toplevel</span>
-                <span class="n">request_permissions</span><span class="p">,</span>
                 <span class="n">Permission</span><span class="p">,</span>
+                <span class="n">request_permissions</span><span class="p">,</span>
             <span class="p">)</span>
 
             <span class="n">request_permissions</span><span class="p">(</span>

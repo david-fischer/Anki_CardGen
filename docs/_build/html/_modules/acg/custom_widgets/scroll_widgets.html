@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.custom_widgets.scroll_widgets &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.custom_widgets.scroll_widgets &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Anki Card Gen</a>
+          <a href="../../../index.html">acg</a>
 
       </nav>
 
@@ -157,13 +156,12 @@
 
 <span class="sd">:class:`ScrollList` and :class:`LeftStatusIndicatorListItem`.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
+
 <span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
 
 <span class="kn">import</span> <span class="nn">toolz</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
 <span class="kn">from</span> <span class="nn">kivy.factory</span> <span class="kn">import</span> <span class="n">Factory</span>
-<span class="kn">from</span> <span class="nn">kivy.lang</span> <span class="kn">import</span> <span class="n">Builder</span>
 <span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="p">(</span>
     <span class="n">BooleanProperty</span><span class="p">,</span>
     <span class="n">ListProperty</span><span class="p">,</span>
@@ -177,69 +175,62 @@
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
 <span class="kn">from</span> <span class="nn">kivymd.uix.list</span> <span class="kn">import</span> <span class="n">ILeftBody</span><span class="p">,</span> <span class="n">MDList</span><span class="p">,</span> <span class="n">OneLineAvatarListItem</span>
 
-<span class="kn">from</span> <span class="nn">custom_widgets.behaviors</span> <span class="kn">import</span> <span class="p">(</span>
-    <span class="n">CallbackBehavior</span><span class="p">,</span>
-    <span class="n">ChildrenFromDataBehavior</span><span class="p">,</span>
-    <span class="n">MultiStateBehavior</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span> <span class="nn">paths</span> <span class="kn">import</span> <span class="n">CUSTOM_WIDGET_DIR</span>
-
-<span class="n">Builder</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CUSTOM_WIDGET_DIR</span><span class="p">,</span> <span class="s2">&quot;scroll_widgets.kv&quot;</span><span class="p">))</span>
+<span class="kn">from</span> <span class="nn">.behaviors</span> <span class="kn">import</span> <span class="n">CallbackBehavior</span><span class="p">,</span> <span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">MultiStateBehavior</span>
 
 
-<div class="viewcode-block" id="LeftStatusIndicator"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicator</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">,</span> <span class="n">ILeftBody</span><span class="p">,</span> <span class="n">AnchorLayout</span><span class="p">):</span>
+<div class="viewcode-block" id="LeftStatusIndicator"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicator">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicator</span><span class="p">(</span><span class="n">MultiStateBehavior</span><span class="p">,</span> <span class="n">ILeftBody</span><span class="p">,</span> <span class="n">AnchorLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Contains :class:`~kivy.uix.spinner.MDSpinner` and :class:`~kivy.uix.label.MDIcon`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LeftStatusIndicator.spinner_active"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.spinner_active">[docs]</a>    <span class="n">spinner_active</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="LeftStatusIndicator.spinner_active"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicator.spinner_active">[docs]</a>    <span class="n">spinner_active</span> <span class="o">=</span> <span class="n">BooleanProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LeftStatusIndicator.icon"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="LeftStatusIndicator.icon"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicator.icon">[docs]</a>    <span class="n">icon</span> <span class="o">=</span> <span class="n">StringProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.label.MDIcon`&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LeftStatusIndicator.icon_color"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon_color">[docs]</a>    <span class="n">icon_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="LeftStatusIndicator.icon_color"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicator.icon_color">[docs]</a>    <span class="n">icon_color</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` defaults to :attr:`main.AnkiCardGenApp.theme_cls.text_color`.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LeftStatusIndicator.current_state"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
+<div class="viewcode-block" id="LeftStatusIndicator.current_state"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicator.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
         <span class="s2">&quot;queued&quot;</span><span class="p">,</span>
         <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="s2">&quot;waiting&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">,</span> <span class="s2">&quot;done&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;exported&quot;</span><span class="p">],</span></div>
     <span class="p">)</span>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty` with options</span>
-<span class="sd">    ``[&quot;loading&quot;, &quot;queued&quot;, &quot;waiting&quot;, &quot;ready&quot;, &quot;done&quot;, &quot;error&quot;, &quot;exported&quot;]``.&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty` with options</span></div>
+<span class="sd">    ``[&quot;loading&quot;, &quot;queued&quot;, &quot;waiting&quot;, &quot;ready&quot;, &quot;done&quot;, &quot;error&quot;, &quot;exported&quot;]``.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="LeftStatusIndicatorListItem"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicatorListItem</span><span class="p">(</span><span class="n">CallbackBehavior</span><span class="p">,</span> <span class="n">OneLineAvatarListItem</span><span class="p">):</span>
+<div class="viewcode-block" id="LeftStatusIndicatorListItem"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicatorListItem">[docs]</a><span class="k">class</span> <span class="nc">LeftStatusIndicatorListItem</span><span class="p">(</span><span class="n">CallbackBehavior</span><span class="p">,</span> <span class="n">OneLineAvatarListItem</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Contains :class:`LeftStatusIndicator` as left element.</span>
 
 <span class="sd">    Depending on :attr:`current_state`, either the spinner is active or an icon is shown.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="LeftStatusIndicatorListItem.current_state"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
+<div class="viewcode-block" id="LeftStatusIndicatorListItem.current_state"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.LeftStatusIndicatorListItem.current_state">[docs]</a>    <span class="n">current_state</span> <span class="o">=</span> <span class="n">OptionProperty</span><span class="p">(</span>
         <span class="s2">&quot;queued&quot;</span><span class="p">,</span>
         <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;loading&quot;</span><span class="p">,</span> <span class="s2">&quot;queued&quot;</span><span class="p">,</span> <span class="s2">&quot;waiting&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">,</span> <span class="s2">&quot;done&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">,</span> <span class="s2">&quot;exported&quot;</span><span class="p">],</span></div>
     <span class="p">)</span>
-    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty` with options</span>
-<span class="sd">    ``[&quot;loading&quot;, &quot;queued&quot;, &quot;waiting&quot;, &quot;ready&quot;, &quot;done&quot;, &quot;error&quot;, &quot;exported&quot;]``.&quot;&quot;&quot;</span></div>
+    <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.OptionProperty` with options</span></div>
+<span class="sd">    ``[&quot;loading&quot;, &quot;queued&quot;, &quot;waiting&quot;, &quot;ready&quot;, &quot;done&quot;, &quot;error&quot;, &quot;exported&quot;]``.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span>
+<div class="viewcode-block" id="ScrollList"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.ScrollList">[docs]</a><span class="k">class</span> <span class="nc">ScrollList</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Scrollable List whose items are constructed as instances of :attr:`item_type` from :attr:`item_dicts`.</span>
 
 <span class="sd">    Automatically updates upon change of :attr:`item_dicts`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ScrollList.data"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
+<div class="viewcode-block" id="ScrollList.data"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.ScrollList.data">[docs]</a>    <span class="n">data</span> <span class="o">=</span> <span class="n">ListProperty</span><span class="p">()</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.properties.ListProperty` containing the dictionaries from which the items are constructed.&quot;&quot;&quot;</span>
 
-<div class="viewcode-block" id="ScrollList.list"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollList.list">[docs]</a>    <span class="nb">list</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">MDList</span><span class="p">())</span></div>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ScrollList.list"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.ScrollList.list">[docs]</a>    <span class="nb">list</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">(</span><span class="n">MDList</span><span class="p">())</span></div>
+    <span class="sd">&quot;&quot;&quot;</span></div>
 <span class="sd">    :class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.MDList`.</span>
 <span class="sd">    Contains the items.</span>
-<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="ScrollBox"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollBox">[docs]</a><span class="k">class</span> <span class="nc">ScrollBox</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ScrollBox"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.ScrollBox">[docs]</a><span class="k">class</span> <span class="nc">ScrollBox</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.uix.scrollview.ScrollView` containing a :class:`~kivy.uix.boxlayout.BoxLayout`.</span>
 
@@ -247,7 +238,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="ScrollGrid"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.ScrollGrid">[docs]</a><span class="k">class</span> <span class="nc">ScrollGrid</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ScrollGrid"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.ScrollGrid">[docs]</a><span class="k">class</span> <span class="nc">ScrollGrid</span><span class="p">(</span><span class="n">ChildrenFromDataBehavior</span><span class="p">,</span> <span class="n">ScrollView</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :class:`~kivy.uix.scrollview.ScrollView` containing a :class:`~kivy.uix.gridlayout.GridLayout`.</span>
 
@@ -255,11 +246,11 @@
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="RecycleViewBox"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.RecycleViewBox">[docs]</a><span class="k">class</span> <span class="nc">RecycleViewBox</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RecycleViewBox"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.RecycleViewBox">[docs]</a><span class="k">class</span> <span class="nc">RecycleViewBox</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.uix.recycleview.RecycleView` object containing a ``RecycleViewBoxLayout``.&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="RecycleList"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.scroll_widgets.RecycleList">[docs]</a><span class="k">class</span> <span class="nc">RecycleList</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RecycleList"><a class="viewcode-back" href="../../../custom_widgets/scroll_widgets.html#acg.custom_widgets.dialogs.RecycleList">[docs]</a><span class="k">class</span> <span class="nc">RecycleList</span><span class="p">(</span><span class="n">RecycleView</span><span class="p">):</span></div>
     <span class="sd">&quot;&quot;&quot;:class:`~kivy.uix.recycleview.RecycleView` object containing a ``RecycleViewBoxLayout``.&quot;&quot;&quot;</span>
 
 
@@ -277,7 +268,8 @@
         <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="s2">&quot;queued&quot;</span><span class="p">:</span>
             <span class="n">sl</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">number</span><span class="p">][</span><span class="s2">&quot;current_state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;loading&quot;</span>
             <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span>
-                <span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="n">sl</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">number</span><span class="p">]</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="s2">&quot;current_state&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">),</span> <span class="mi">5</span><span class="p">,</span>
+                <span class="k">lambda</span> <span class="n">dt</span><span class="p">:</span> <span class="n">sl</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">number</span><span class="p">]</span><span class="o">.</span><span class="fm">__setitem__</span><span class="p">(</span><span class="s2">&quot;current_state&quot;</span><span class="p">,</span> <span class="s2">&quot;ready&quot;</span><span class="p">),</span>
+                <span class="mi">5</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">current_state</span> <span class="o">==</span> <span class="s2">&quot;ready&quot;</span><span class="p">:</span>
             <span class="n">sl</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">number</span><span class="p">][</span><span class="s2">&quot;current_state&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">choice</span><span class="p">([</span><span class="s2">&quot;done&quot;</span><span class="p">,</span> <span class="s2">&quot;error&quot;</span><span class="p">])</span>
@@ -299,7 +291,9 @@
             <span class="n">sl</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="p">{</span>
                     <span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;test_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                    <span class="s2">&quot;callbacks&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;on_press&quot;</span><span class="p">:</span> <span class="n">_schedule</span><span class="p">(</span><span class="n">sl</span><span class="p">),},</span>
+                    <span class="s2">&quot;callbacks&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;on_press&quot;</span><span class="p">:</span> <span class="n">_schedule</span><span class="p">(</span><span class="n">sl</span><span class="p">),</span>
+                    <span class="p">},</span>
                     <span class="s2">&quot;current_state&quot;</span><span class="p">:</span> <span class="s2">&quot;queued&quot;</span><span class="p">,</span>
                     <span class="s2">&quot;number&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
                 <span class="p">}</span>

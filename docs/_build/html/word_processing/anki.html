@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Generate Anki Cards &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Generate Anki Cards &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -85,46 +84,7 @@
 
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../word_processing.html">Word Processing</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Generate Anki Cards</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject">AnkiObject</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject.model">model</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject.deck">deck</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject.package">package</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject.fields">fields</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject.add_card">add_card</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.AnkiObject.write_apkg">write_apkg</a></li>
-</ul>
-</li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.generate_anki_card.HtmlLoader">HtmlLoader</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.HtmlLoader.path">path</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.HtmlLoader.replace_includes_with_content">replace_includes_with_content</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.HtmlLoader.set_of_fields">set_of_fields</a></li>
-</ul>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#acg.generate_anki_card.HtmlLoader.string">string</a></li>
-</ul>
-</li>
-</ul>
-<ul>
-<li class="toctree-l3"><a class="reference internal" href="#acg.generate_anki_card.model_from_html">model_from_html</a></li>
-</ul>
-</li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Generate Anki Cards</a></li>
 <li class="toctree-l2"><a class="reference internal" href="fields.html">Fields</a></li>
 <li class="toctree-l2"><a class="reference internal" href="parsers.html">Parsers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="templates.html">Templates</a></li>
@@ -150,7 +110,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -202,145 +162,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
 
-  <div class="section" id="module-acg.generate_anki_card">
-<span id="generate-anki-cards"></span><h1>Generate Anki Cards<a class="headerlink" href="#module-acg.generate_anki_card" title="Permalink to this headline">¶</a></h1>
-<p>Implements <a class="reference internal" href="#acg.generate_anki_card.AnkiObject" title="acg.generate_anki_card.AnkiObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">AnkiObject</span></code></a>.</p>
-<p>Relies heavily on <a class="reference external" href="https://github.com/kerrickstaley/genanki">genanki</a>.</p>
-<dl class="simple">
-<dt>Its purpose is to handle everything Anki-related:</dt><dd><ul class="simple">
-<li><p>construct card template from html-, css-, and js-files</p></li>
-<li><p>generating and adding cards</p></li>
-<li><p>saving apgk-file</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py class">
-<dt id="acg.generate_anki_card.AnkiObject">
-<em class="property">class </em><code class="sig-prename descclassname">acg.generate_anki_card.</code><code class="sig-name descname">AnkiObject</code><a class="reference internal" href="../_modules/acg/generate_anki_card.html#AnkiObject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.AnkiObject" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class containing all necessary objects from the <a class="reference external" href="https://github.com/kerrickstaley/genanki">genanki</a>-module.</p>
-<dl class="py attribute">
-<dt id="acg.generate_anki_card.AnkiObject.model">
-<code class="sig-name descname">model</code><a class="headerlink" href="#acg.generate_anki_card.AnkiObject.model" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">genanki.model</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="acg.generate_anki_card.AnkiObject.deck">
-<code class="sig-name descname">deck</code><a class="headerlink" href="#acg.generate_anki_card.AnkiObject.deck" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">genanki.deck</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="acg.generate_anki_card.AnkiObject.package">
-<code class="sig-name descname">package</code><a class="headerlink" href="#acg.generate_anki_card.AnkiObject.package" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="xref py py-class docutils literal notranslate"><span class="pre">genanki.package</span></code></p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="acg.generate_anki_card.AnkiObject.fields">
-<code class="sig-name descname">fields</code><a class="headerlink" href="#acg.generate_anki_card.AnkiObject.fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>List of field-names on anki-card.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.generate_anki_card.AnkiObject.add_card">
-<code class="sig-name descname">add_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">media_files</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/generate_anki_card.html#AnkiObject.add_card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.AnkiObject.add_card" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add card constructed from <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> to <a class="reference internal" href="#acg.generate_anki_card.AnkiObject.deck" title="acg.generate_anki_card.AnkiObject.deck"><code class="xref py py-attr docutils literal notranslate"><span class="pre">deck</span></code></a> and <code class="docutils literal notranslate"><span class="pre">media_files</span></code> to <code class="xref py py-attr docutils literal notranslate"><span class="pre">package.media_files</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>media_files</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em>]</em>) – Media files used on card.  (Default value = None)</p></li>
-<li><p><strong>**kwargs</strong> – In the form: <code class="docutils literal notranslate"><span class="pre">field_name=&quot;content&quot;</span></code>.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.generate_anki_card.AnkiObject.write_apkg">
-<code class="sig-name descname">write_apkg</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">out_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/generate_anki_card.html#AnkiObject.write_apkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.AnkiObject.write_apkg" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write current <a class="reference internal" href="#acg.generate_anki_card.AnkiObject.package" title="acg.generate_anki_card.AnkiObject.package"><code class="xref py py-attr docutils literal notranslate"><span class="pre">package</span></code></a> as apkg-file to <code class="docutils literal notranslate"><span class="pre">out_path</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>out_path</strong> – Path wherer .apkg-file is saved.</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt id="acg.generate_anki_card.HtmlLoader">
-<em class="property">class </em><code class="sig-prename descclassname">acg.generate_anki_card.</code><code class="sig-name descname">HtmlLoader</code><a class="reference internal" href="../_modules/acg/generate_anki_card.html#HtmlLoader"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.HtmlLoader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load and process html.</p>
-<dl class="py attribute">
-<dt id="acg.generate_anki_card.HtmlLoader.path">
-<code class="sig-name descname">path</code><a class="reference internal" href="../_modules/acg/generate_anki_card.html#HtmlLoader.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.HtmlLoader.path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Path to load html-file from.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.generate_anki_card.HtmlLoader.replace_includes_with_content">
-<code class="sig-name descname">replace_includes_with_content</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/generate_anki_card.html#HtmlLoader.replace_includes_with_content"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.HtmlLoader.replace_includes_with_content" title="Permalink to this definition">¶</a></dt>
-<dd><p>Insert content of js-source-files at appropriate places and return body.</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>Removes <code class="docutils literal notranslate"><span class="pre">src</span></code> attributes from &lt;script&gt;-tags and inserts the content of the files.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code>-tags with “defer”-attribute are moved to the bottom of the body.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&lt;script&gt;</span></code>-tags in the header are moved to the top of the body.</p></li>
-</ul>
-</div></blockquote>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Body of processed html-file.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="acg.generate_anki_card.HtmlLoader.set_of_fields">
-<code class="sig-name descname">set_of_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/generate_anki_card.html#HtmlLoader.set_of_fields"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.HtmlLoader.set_of_fields" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get names of fields (as recognized by Anki) in the content of the html-file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>Field names.</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.ponyorm.org/api_reference.html#Set" title="(in Pony ORM v0.7.9)">Set</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)">str</a>]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt id="acg.generate_anki_card.HtmlLoader.string">
-<code class="sig-name descname">string</code><a class="reference internal" href="../_modules/acg/generate_anki_card.html#HtmlLoader.string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.HtmlLoader.string" title="Permalink to this definition">¶</a></dt>
-<dd><p>Content of the file at <a class="reference internal" href="#acg.generate_anki_card.HtmlLoader.path" title="acg.generate_anki_card.HtmlLoader.path"><code class="xref py py-attr docutils literal notranslate"><span class="pre">path</span></code></a>.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py function">
-<dt id="acg.generate_anki_card.model_from_html">
-<code class="sig-prename descclassname">acg.generate_anki_card.</code><code class="sig-name descname">model_from_html</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">template_names</span></em>, <em class="sig-param"><span class="n">model_id</span></em>, <em class="sig-param"><span class="n">css_path</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/generate_anki_card.html#model_from_html"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.generate_anki_card.model_from_html" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct Model from html- and css-files.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> – Model name.</p></li>
-<li><p><strong>template_names</strong> – List of html-paths.</p></li>
-<li><p><strong>model_id</strong> – Unique id-string for the model.</p></li>
-<li><p><strong>css_path</strong> – Path of css-file.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>constructed <code class="docutils literal notranslate"><span class="pre">genanki.model</span></code></p>
-</dd>
-</dl>
-</dd></dl>
-
+  <div class="section" id="generate-anki-cards">
+<h1>Generate Anki Cards<a class="headerlink" href="#generate-anki-cards" title="Permalink to this headline">¶</a></h1>
 </div>
 
 

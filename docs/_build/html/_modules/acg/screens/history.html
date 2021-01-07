@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>acg.screens.history &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>acg.screens.history &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -50,7 +49,7 @@
 
 
 
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -103,7 +102,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../../index.html">Anki Card Gen</a>
+          <a href="../../../index.html">acg</a>
 
       </nav>
 
@@ -153,68 +152,101 @@
 
   <h1>Source code for acg.screens.history</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Implements :class:`HistoryMain`, the root widget of the history screen.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
 
-<span class="kn">from</span> <span class="nn">bidict</span> <span class="kn">import</span> <span class="n">bidict</span>
 <span class="kn">from</span> <span class="nn">kivy.clock</span> <span class="kn">import</span> <span class="n">Clock</span>
-<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">ObjectProperty</span>
+<span class="kn">from</span> <span class="nn">kivy.properties</span> <span class="kn">import</span> <span class="n">DictProperty</span><span class="p">,</span> <span class="n">ObjectProperty</span>
 <span class="kn">from</span> <span class="nn">kivy.uix.floatlayout</span> <span class="kn">import</span> <span class="n">FloatLayout</span>
 <span class="kn">from</span> <span class="nn">kivymd.app</span> <span class="kn">import</span> <span class="n">MDApp</span>
-<span class="kn">from</span> <span class="nn">kivymd.toast</span> <span class="kn">import</span> <span class="n">toast</span>
+<span class="kn">from</span> <span class="nn">kivymd.uix.menu</span> <span class="kn">import</span> <span class="n">MDDropdownMenu</span>
 <span class="kn">from</span> <span class="nn">pony.orm</span> <span class="kn">import</span> <span class="n">db_session</span>
 
-<span class="kn">from</span> <span class="nn">db</span> <span class="kn">import</span> <span class="n">export_cards</span>
+<span class="kn">from</span> <span class="nn">..custom_widgets.dialogs</span> <span class="kn">import</span> <span class="n">TextInputDialog</span>
+<span class="kn">from</span> <span class="nn">..exporter</span> <span class="kn">import</span> <span class="n">export_cookbook</span>
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">app_busy</span><span class="p">,</span> <span class="n">not_implemented_toast</span><span class="p">,</span> <span class="n">set_word_state</span><span class="p">,</span> <span class="n">widget_by_id</span>
 
 
 <div class="viewcode-block" id="HistoryRoot"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot">[docs]</a><span class="k">class</span> <span class="nc">HistoryRoot</span><span class="p">(</span><span class="n">FloatLayout</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Root widget of the history screen.&quot;&quot;&quot;</span>
 
-    <span class="n">action_button_data</span> <span class="o">=</span> <span class="n">bidict</span><span class="p">(</span>
-        <span class="p">{</span>
-            <span class="s2">&quot;new-box&quot;</span><span class="p">:</span> <span class="s2">&quot;export new cards&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;content-save-all&quot;</span><span class="p">:</span> <span class="s2">&quot;export all cards&quot;</span><span class="p">,</span>
-            <span class="s2">&quot;check-box-multiple-outline&quot;</span><span class="p">:</span> <span class="s2">&quot;select specific cards to export&quot;</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
+    <span class="n">speed_dial_buttons</span> <span class="o">=</span> <span class="n">DictProperty</span><span class="p">()</span>
     <span class="n">speed_dial</span> <span class="o">=</span> <span class="n">ObjectProperty</span><span class="p">()</span>
+    <span class="n">export_cookbook</span> <span class="o">=</span> <span class="n">export_cookbook</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">HistoryRoot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed_dial_buttons</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_cookbook</span><span class="o">.</span><span class="n">to_button_dict</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">Clock</span><span class="o">.</span><span class="n">schedule_once</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__post_init__</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">speed_dial</span><span class="o">.</span><span class="n">icon</span> <span class="o">=</span> <span class="s2">&quot;content-save&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span> <span class="o">=</span> <span class="n">MDDropdownMenu</span><span class="p">(</span>
+            <span class="n">caller</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="o">.</span><span class="n">history_list</span><span class="p">,</span>
+            <span class="n">position</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span>
+            <span class="n">width_mult</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">items</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;back to queue&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;delete&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s2">&quot;text&quot;</span><span class="p">:</span> <span class="s2">&quot;edit&quot;</span><span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span><span class="o">.</span><span class="n">on_release</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_dropdown_item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_input_dialog</span> <span class="o">=</span> <span class="n">TextInputDialog</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Edit Word:&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_input_dialog</span><span class="o">.</span><span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">text_input_dialog_callback</span>
+        <span class="c1"># self.dropdown_menu.bind(on_release=self.on_dropdown_item)</span>
 
-<div class="viewcode-block" id="HistoryRoot.export_cards"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.export_cards">[docs]</a>    <span class="k">def</span> <span class="nf">export_cards</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Depending on which button was pressed, exports one of the following.</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="HistoryRoot.filter"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+        <span class="n">not_implemented_toast</span><span class="p">()</span></div>
 
-<span class="sd">            * all cards</span>
-<span class="sd">            * all new cards (i.e. cards that have been generated but not exported)</span>
-<span class="sd">            * custom selection of cards (NOT YET IMPLEMENTED)</span>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="HistoryRoot.sort"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Placeholder-function.&quot;&quot;&quot;</span>
+        <span class="n">not_implemented_toast</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="HistoryRoot.click_on_item"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.click_on_item">[docs]</a>    <span class="k">def</span> <span class="nf">click_on_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open dropdown menu with ``item`` as caller.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span><span class="o">.</span><span class="n">caller</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">text</span><span class="p">)</span></div>
 
-<span class="sd">        TODO: IMPLEMENT</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">speed_dial</span><span class="o">.</span><span class="n">close_stack</span><span class="p">()</span>
-        <span class="n">option</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">action_button_data</span><span class="p">[</span><span class="n">button</span><span class="o">.</span><span class="n">icon</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">option</span> <span class="o">==</span> <span class="s2">&quot;export new cards&quot;</span><span class="p">:</span>
-            <span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;done&quot;</span><span class="p">]</span>
-        <span class="k">elif</span> <span class="n">option</span> <span class="o">==</span> <span class="s2">&quot;export all cards&quot;</span><span class="p">:</span>
-            <span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;done&quot;</span><span class="p">,</span> <span class="s2">&quot;exported&quot;</span><span class="p">]</span>
+<div class="viewcode-block" id="HistoryRoot.on_dropdown_item"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.on_dropdown_item">[docs]</a>    <span class="k">def</span> <span class="nf">on_dropdown_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Call option corresponding to clicked item.&quot;&quot;&quot;</span>
+        <span class="n">caller</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span><span class="o">.</span><span class="n">caller</span>
+        <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;delete&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_item</span><span class="p">(</span><span class="n">caller</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">item</span><span class="o">.</span><span class="n">text</span> <span class="o">==</span> <span class="s2">&quot;edit&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">edit_item</span><span class="p">(</span><span class="n">caller</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">toast</span><span class="p">(</span><span class="s2">&quot;NOT IMPLEMENTED YET.&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
-            <span class="k">return</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">move_back_to_queue</span><span class="p">(</span><span class="n">caller</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dropdown_menu</span><span class="o">.</span><span class="n">dismiss</span><span class="p">()</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="HistoryRoot.delete_item"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.delete_item">[docs]</a>    <span class="k">def</span> <span class="nf">delete_item</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Delete ``text`` from the current template in the data-base and from ``app.word_state_dict``.&quot;&quot;&quot;</span>
+        <span class="n">app</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span>
+        <span class="k">del</span> <span class="n">app</span><span class="o">.</span><span class="n">word_state_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
         <span class="k">with</span> <span class="n">db_session</span><span class="p">:</span>
-            <span class="n">app</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span>
-            <span class="n">current_template</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span>
-            <span class="n">cards</span> <span class="o">=</span> <span class="n">current_template</span><span class="o">.</span><span class="n">get_cards_by_selector</span><span class="p">(</span><span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">state</span> <span class="ow">in</span> <span class="n">states</span><span class="p">)</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">cards</span><span class="p">:</span>
-                <span class="n">toast</span><span class="p">(</span><span class="s2">&quot;Empty Selection. Could not export cards.&quot;</span><span class="p">)</span>
-                <span class="k">return</span> <span class="kc">False</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="p">))</span>
-            <span class="n">export_cards</span><span class="p">(</span><span class="n">cards</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">get_anki_template_dir</span><span class="p">())</span>
-        <span class="n">toast</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exported cards to </span><span class="si">{</span><span class="n">app</span><span class="o">.</span><span class="n">apkg_export_dir</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-        <span class="k">return</span> <span class="kc">True</span></div></div>
+            <span class="n">app</span><span class="o">.</span><span class="n">get_current_template_db</span><span class="p">()</span><span class="o">.</span><span class="n">get_card</span><span class="p">(</span><span class="n">item</span><span class="p">)</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span></div>
+
+    <span class="nd">@app_busy</span>
+<div class="viewcode-block" id="HistoryRoot.edit_item"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.edit_item">[docs]</a>    <span class="k">def</span> <span class="nf">edit_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Open :attr:`text_input_dialog` to edit the word.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_input_dialog</span><span class="o">.</span><span class="n">default_text</span> <span class="o">=</span> <span class="n">item</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">text_input_dialog</span><span class="o">.</span><span class="n">open</span><span class="p">()</span></div>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="HistoryRoot.move_back_to_queue"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.move_back_to_queue">[docs]</a>    <span class="k">def</span> <span class="nf">move_back_to_queue</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Move item back to queue.&quot;&quot;&quot;</span>
+        <span class="n">old_state</span> <span class="o">=</span> <span class="n">MDApp</span><span class="o">.</span><span class="n">get_running_app</span><span class="p">()</span><span class="o">.</span><span class="n">word_state_dict</span><span class="p">[</span><span class="n">item</span><span class="p">]</span>
+        <span class="n">new_state</span> <span class="o">=</span> <span class="s2">&quot;waiting&quot;</span> <span class="k">if</span> <span class="n">old_state</span> <span class="o">==</span> <span class="s2">&quot;error&quot;</span> <span class="k">else</span> <span class="s2">&quot;ready&quot;</span>
+        <span class="n">set_word_state</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">new_state</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HistoryRoot.text_input_dialog_callback"><a class="viewcode-back" href="../../../screens/history.html#acg.screens.history.HistoryRoot.text_input_dialog_callback">[docs]</a>    <span class="k">def</span> <span class="nf">text_input_dialog_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">button_txt</span><span class="p">,</span> <span class="n">text</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;If the ``OK``-button is pressed, delete old entry and add edited entry to queue.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">button_txt</span> <span class="o">==</span> <span class="s2">&quot;OK&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">delete_item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">text_input_dialog</span><span class="o">.</span><span class="n">default_text</span><span class="p">)</span>
+            <span class="n">widget_by_id</span><span class="p">(</span><span class="s2">&quot;queue&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">add_waiting</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

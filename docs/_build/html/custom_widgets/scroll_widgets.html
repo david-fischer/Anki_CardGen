@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Scroll Widgets &mdash; Anki Card Gen 1.0.8 documentation</title>
+  <title>Scroll Widgets &mdash; acg 1.0.11 documentation</title>
 
 
 
@@ -30,7 +30,6 @@
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
 
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -52,7 +51,7 @@
 
 
 
-            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> Anki Card Gen
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> acg
 
 
 
@@ -90,43 +89,49 @@
 <li class="toctree-l2"><a class="reference internal" href="dialogs.html">Dialogs</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main_menu.html">Main Menu</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Scroll Widgets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior">CallbackBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.callback_wrapper">callback_wrapper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.callbacks">callbacks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.on_callbacks">on_callbacks</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior">ChildrenFromDataBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.add_child">add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.after_add_child">after_add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.before_add_child">before_add_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_bindings">child_bindings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_class_name">child_class_name</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data">data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.on_data">on_data</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.remove_child">remove_child</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.root_for_children">root_for_children</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.update_num_children">update_num_children</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator">LeftStatusIndicator</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.current_state">current_state</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon">icon</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon_color">icon_color</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.spinner_active">spinner_active</a></li>
 </ul>
 </li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem">LeftStatusIndicatorListItem</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state">current_state</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior">MultiStateBehavior</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties">animated_properties</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state">current_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.on_current_state">on_current_state</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.state_dicts">state_dicts</a></li>
 </ul>
-<ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.RecycleList">RecycleList</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.RecycleViewBox">RecycleViewBox</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ScrollBox">ScrollBox</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ScrollGrid">ScrollGrid</a></li>
-</ul>
-<ul>
 <li class="toctree-l3"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ScrollList">ScrollList</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ScrollList.data">data</a></li>
-</ul>
-<ul>
 <li class="toctree-l4"><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ScrollList.list">list</a></li>
 </ul>
 </li>
@@ -154,7 +159,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
 
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Anki Card Gen</a>
+          <a href="../index.html">acg</a>
 
       </nav>
 
@@ -211,33 +216,148 @@
 <p>Implements Different classes to display elements in a scroll view.</p>
 <p><a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ScrollList" title="acg.custom_widgets.scroll_widgets.ScrollList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollList</span></code></a> and <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem" title="acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeftStatusIndicatorListItem</span></code></a>.</p>
 <dl class="py class">
+<dt id="acg.custom_widgets.scroll_widgets.CallbackBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">CallbackBehavior</code><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#CallbackBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.event.html#kivy.event.EventDispatcher" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.event.EventDispatcher</span></code></a></p>
+<p>Mixin Class to implement a number of callbacks.</p>
+<p>Useful e.g. in combination with <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a>.
+There, the content is generated dynamically from a dictionary such that this class can be used to bind multiple
+callbacks to different events of the widgets.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Callbacks are not unbound by <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.on_callbacks" title="acg.custom_widgets.scroll_widgets.CallbackBehavior.on_callbacks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_callbacks()</span></code></a>.
+Does this pose a problem?</p>
+</div>
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.CallbackBehavior.callback_wrapper">
+<code class="sig-name descname">callback_wrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">callback</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.callback_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call <code class="docutils literal notranslate"><span class="pre">callback</span></code> with first argument as <code class="docutils literal notranslate"><span class="pre">self</span></code> in new thread.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.CallbackBehavior.callbacks">
+<code class="sig-name descname">callbacks</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>callback_fn}.
+callback_fn(self) -&gt; Any</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code> of the form {“on_event”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.CallbackBehavior.on_callbacks">
+<code class="sig-name descname">on_callbacks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.CallbackBehavior.on_callbacks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binds the callbacks to the specified events on definition.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">ChildrenFromDataBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#ChildrenFromDataBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates widgets dynamically from <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data" title="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a> and adds them to <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.root_for_children" title="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.root_for_children"><code class="xref py py-attr docutils literal notranslate"><span class="pre">root_for_children</span></code></a>.</p>
+<p>Bindings can be applied and other functions executed by the definition of <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.before_add_child" title="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.before_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">before_add_child()</span></code></a> and
+<a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.after_add_child" title="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.after_add_child"><code class="xref py py-meth docutils literal notranslate"><span class="pre">after_add_child()</span></code></a>.</p>
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.add_child">
+<code class="sig-name descname">add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child_dict</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one child-widget.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.after_add_child">
+<code class="sig-name descname">after_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.after_add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do something after child is added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_widget</span></code>. Placeholder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.before_add_child">
+<code class="sig-name descname">before_add_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">child</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.before_add_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do something before child is added to <code class="xref py py-attr docutils literal notranslate"><span class="pre">parent_widget</span></code>. Placeholder.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_bindings">
+<code class="sig-name descname">child_bindings</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_bindings" title="Permalink to this definition">¶</a></dt>
+<dd><p>binding_fn}.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a> of the form {“on_event”</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_class_name">
+<code class="sig-name descname">child_class_name</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.child_class_name" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.StringProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">StringProperty</span></code></a> class name for children. Needs to be available via
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries from which the child-widgets are
+constructed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.on_data">
+<code class="sig-name descname">on_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.on_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update children on change of <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data" title="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.data"><code class="xref py py-attr docutils literal notranslate"><span class="pre">data</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.remove_child">
+<code class="sig-name descname">remove_child</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.remove_child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove one child-widget.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.root_for_children">
+<code class="sig-name descname">root_for_children</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.root_for_children" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> the widget, where the children should be added to
+Defaults to self.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.update_num_children">
+<code class="sig-name descname">update_num_children</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ChildrenFromDataBehavior.update_num_children" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add/remove children until correct number is reached.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicator">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">LeftStatusIndicator</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.MultiStateBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.ILeftBody" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.ILeftBody</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.anchorlayout.html#kivy.uix.anchorlayout.AnchorLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.anchorlayout.AnchorLayout</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.MultiStateBehavior" title="acg.custom_widgets.behaviors.MultiStateBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.MultiStateBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.ILeftBody" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.ILeftBody</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.anchorlayout.html#kivy.uix.anchorlayout.AnchorLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.anchorlayout.AnchorLayout</span></code></a></p>
 <p>Contains <code class="xref py py-class docutils literal notranslate"><span class="pre">MDSpinner</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">MDIcon</span></code>.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicator.current_state">
 <code class="sig-name descname">current_state</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicator.current_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.current_state" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.OptionProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> with options
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.OptionProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> with options
 <code class="docutils literal notranslate"><span class="pre">[&quot;loading&quot;,</span> <span class="pre">&quot;queued&quot;,</span> <span class="pre">&quot;waiting&quot;,</span> <span class="pre">&quot;ready&quot;,</span> <span class="pre">&quot;done&quot;,</span> <span class="pre">&quot;error&quot;,</span> <span class="pre">&quot;exported&quot;]</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon">
 <code class="sig-name descname">icon</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicator.icon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDIcon</span></code></p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDIcon</span></code></p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon_color">
 <code class="sig-name descname">icon_color</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicator.icon_color"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.icon_color" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> defaults to <code class="xref py py-attr docutils literal notranslate"><span class="pre">main.AnkiCardGenApp.theme_cls.text_color</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> defaults to <code class="xref py py-attr docutils literal notranslate"><span class="pre">main.AnkiCardGenApp.theme_cls.text_color</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicator.spinner_active">
 <code class="sig-name descname">spinner_active</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicator.spinner_active"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator.spinner_active" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDSpinner</span></code>.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDSpinner</span></code>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -245,14 +365,52 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">LeftStatusIndicatorListItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicatorListItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.CallbackBehavior</span></code>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineAvatarListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineAvatarListItem</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.CallbackBehavior" title="acg.custom_widgets.behaviors.CallbackBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.CallbackBehavior</span></code></a>, <a class="reference external" href="https://kivymd.readthedocs.io/en/0.104.1/components/list/index.html#kivymd.uix.list.OneLineAvatarListItem" title="(in KivyMD v0.104.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivymd.uix.list.OneLineAvatarListItem</span></code></a></p>
 <p>Contains <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicator" title="acg.custom_widgets.scroll_widgets.LeftStatusIndicator"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeftStatusIndicator</span></code></a> as left element.</p>
 <p>Depending on <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state" title="acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code></a>, either the spinner is active or an icon is shown.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state">
 <code class="sig-name descname">current_state</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#LeftStatusIndicatorListItem.current_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.LeftStatusIndicatorListItem.current_state" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.OptionProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> with options
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.OptionProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">OptionProperty</span></code></a> with options
 <code class="docutils literal notranslate"><span class="pre">[&quot;loading&quot;,</span> <span class="pre">&quot;queued&quot;,</span> <span class="pre">&quot;waiting&quot;,</span> <span class="pre">&quot;ready&quot;,</span> <span class="pre">&quot;done&quot;,</span> <span class="pre">&quot;error&quot;,</span> <span class="pre">&quot;exported&quot;]</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="acg.custom_widgets.scroll_widgets.MultiStateBehavior">
+<em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">MultiStateBehavior</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/behaviors.html#MultiStateBehavior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes properties of widget based on <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state" title="acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code></a> and the corresponding entry in <code class="xref py py-attr docutils literal notranslate"><span class="pre">state_dict</span></code>.</p>
+<p>The properties in <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties" title="acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties"><code class="xref py py-attr docutils literal notranslate"><span class="pre">animated_properties</span></code></a> change via animation.</p>
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties">
+<code class="sig-name descname">animated_properties</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the list of property-names that get changed via animation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state">
+<code class="sig-name descname">current_state</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.Property" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Property</span></code></a> current state of the widget.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="acg.custom_widgets.scroll_widgets.MultiStateBehavior.on_current_state">
+<code class="sig-name descname">on_current_state</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">_</span></em><span class="sig-paren">)</span><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.on_current_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change widgets properties based on new <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state" title="acg.custom_widgets.scroll_widgets.MultiStateBehavior.current_state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">current_state</span></code></a>.</p>
+<p>The properties whose names are in <a class="reference internal" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties" title="acg.custom_widgets.scroll_widgets.MultiStateBehavior.animated_properties"><code class="xref py py-attr docutils literal notranslate"><span class="pre">animated_properties</span></code></a> are changed via animation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="acg.custom_widgets.scroll_widgets.MultiStateBehavior.state_dicts">
+<code class="sig-name descname">state_dicts</code><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.MultiStateBehavior.state_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.DictProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictProperty</span></code></a>. E.g.,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">state_dicts</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">state_1</span> <span class="p">:</span> <span class="p">{</span><span class="s2">&quot;some_property&quot;</span><span class="p">:</span> <span class="n">some_value</span><span class="p">,</span> <span class="o">...</span><span class="p">},</span>
+        <span class="o">...</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -260,49 +418,49 @@
 <dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.RecycleList">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">RecycleList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#RecycleList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.RecycleList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.recycleview.RecycleView</span></code></a></p>
-<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a> object containing a <code class="docutils literal notranslate"><span class="pre">RecycleViewBoxLayout</span></code>.</p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.recycleview.RecycleView</span></code></a></p>
+<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a> object containing a <code class="docutils literal notranslate"><span class="pre">RecycleViewBoxLayout</span></code>.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.RecycleViewBox">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">RecycleViewBox</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#RecycleViewBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.RecycleViewBox" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.recycleview.RecycleView</span></code></a></p>
-<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a> object containing a <code class="docutils literal notranslate"><span class="pre">RecycleViewBoxLayout</span></code>.</p>
+<dd><p>Bases: <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.recycleview.RecycleView</span></code></a></p>
+<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.recycleview.html#kivy.uix.recycleview.RecycleView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecycleView</span></code></a> object containing a <code class="docutils literal notranslate"><span class="pre">RecycleViewBoxLayout</span></code>.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.ScrollBox">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">ScrollBox</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#ScrollBox"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ScrollBox" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ChildrenFromDataBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
-<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollView</span></code></a> containing a <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoxLayout</span></code></a>.</p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
+<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollView</span></code></a> containing a <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.boxlayout.html#kivy.uix.boxlayout.BoxLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoxLayout</span></code></a>.</p>
 <p>Children are constructed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">child_dict</span></code> and added to the BoxLayout.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.ScrollGrid">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">ScrollGrid</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#ScrollGrid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ScrollGrid" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ChildrenFromDataBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
-<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollView</span></code></a> containing a <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.gridlayout.html#kivy.uix.gridlayout.GridLayout" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridLayout</span></code></a>.</p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
+<p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ScrollView</span></code></a> containing a <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.gridlayout.html#kivy.uix.gridlayout.GridLayout" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">GridLayout</span></code></a>.</p>
 <p>Children are constructed from <code class="xref py py-attr docutils literal notranslate"><span class="pre">child_dict</span></code> and added to the BoxLayout.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt id="acg.custom_widgets.scroll_widgets.ScrollList">
 <em class="property">class </em><code class="sig-prename descclassname">acg.custom_widgets.scroll_widgets.</code><code class="sig-name descname">ScrollList</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#ScrollList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ScrollList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">custom_widgets.behaviors.ChildrenFromDataBehavior</span></code>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="behaviors.html#acg.custom_widgets.behaviors.ChildrenFromDataBehavior" title="acg.custom_widgets.behaviors.ChildrenFromDataBehavior"><code class="xref py py-class docutils literal notranslate"><span class="pre">acg.custom_widgets.behaviors.ChildrenFromDataBehavior</span></code></a>, <a class="reference external" href="https://kivy.org/doc/stable/api-kivy.uix.scrollview.html#kivy.uix.scrollview.ScrollView" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">kivy.uix.scrollview.ScrollView</span></code></a></p>
 <p>Scrollable List whose items are constructed as instances of <code class="xref py py-attr docutils literal notranslate"><span class="pre">item_type</span></code> from <code class="xref py py-attr docutils literal notranslate"><span class="pre">item_dicts</span></code>.</p>
 <p>Automatically updates upon change of <code class="xref py py-attr docutils literal notranslate"><span class="pre">item_dicts</span></code>.</p>
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.ScrollList.data">
 <code class="sig-name descname">data</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#ScrollList.data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ScrollList.data" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries from which the items are constructed.</p>
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ListProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListProperty</span></code></a> containing the dictionaries from which the items are constructed.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="acg.custom_widgets.scroll_widgets.ScrollList.list">
 <code class="sig-name descname">list</code><a class="reference internal" href="../_modules/acg/custom_widgets/scroll_widgets.html#ScrollList.list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#acg.custom_widgets.scroll_widgets.ScrollList.list" title="Permalink to this definition">¶</a></dt>
-<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v1.11.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDList</span></code>.
+<dd><p><a class="reference external" href="https://kivy.org/doc/stable/api-kivy.properties.html#kivy.properties.ObjectProperty" title="(in Kivy v2.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectProperty</span></code></a> set to <code class="xref py py-class docutils literal notranslate"><span class="pre">MDList</span></code>.
 Contains the items.</p>
 </dd></dl>
 
