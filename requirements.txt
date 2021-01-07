@@ -6,8 +6,8 @@ bidict
 certifi
 genanki
 googletrans
+https://github.com/kivymd/KivyMD/archive/master.zip
 Kivy
-kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip
 lxml
 pandas
 Pillow
