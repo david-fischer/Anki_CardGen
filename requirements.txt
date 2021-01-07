@@ -31,7 +31,7 @@ kivy-deps.angle
 kivy-deps.glew
 kivy-deps.sdl2
 kivy-garden
-kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip ; python_version
+kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip
 lxml
 multidict
 murmurhash
