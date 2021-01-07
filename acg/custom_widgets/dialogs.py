@@ -2,6 +2,7 @@
 
 from functools import partial
 
+from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.properties import (
@@ -32,10 +33,22 @@ class TextFieldContent(CustomContentBase, BoxLayout):
     """
 
     default_text = StringProperty("")
+    text_field = ObjectProperty()
+
+    def _focus(self, *_):
+        self.text_field.focus = 1
+
+    def focus(self):
+        """Focus text-input."""
+        Clock.schedule_once(self._focus)
+
+    def on_parent(self, *_):
+        """Call :meth:`focus`."""
+        self.focus()
 
     def get_result(self):
         """Return current entry of the text_field."""
-        return self.ids.text_field.text
+        return self.text_field.text
 
 
 class ItemsContent(ScrollList, CustomContentBase):
@@ -120,12 +133,13 @@ class CustomDialog(MDDialog):
         super().__init__(**kwargs)
         self.content_cls.bind(on_item_press=self.on_item_press)
 
-    def on_button_press(self, obj):
+    def on_button_press(self, obj, callback_txt=None):
         """Call :meth:`CustomDialog.callback`.
 
         The arguments are the text of the pressed button and the result of :attr:`content_cls`.``get_result``.
         """
-        self.callback(obj.text, self.content_cls.get_result())
+        callback_txt = callback_txt or obj.text
+        self.callback(callback_txt, self.content_cls.get_result())
         self.dismiss()
 
     def on_item_press(self, content, item):
@@ -153,6 +167,9 @@ class TextInputDialog(CustomDialog):
     def __init__(self, **kwargs):
         default_text = kwargs.pop("default_text") if "default_text" in kwargs else ""
         self.content_cls = TextFieldContent(default_text=default_text)
+        self.content_cls.text_field.bind(
+            on_text_validate=partial(self.on_button_press, callback_txt="OK")
+        )
         self.bind(
             default_text=self.content_cls.setter(  # pylint: disable=no-member
                 "default_text"
