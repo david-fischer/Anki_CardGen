@@ -27,7 +27,7 @@ jobs:
         architecture: x64
 
     - name: generate requirements.txt for pyinstaller
-      run: cd master; pip install poetry; poetry export -f requirements.txt --without-hashes
+      run: cd master; pip install poetry; poetry export -f requirements.txt --without-hashes >> requirements.txt
 
     - name: Package Application
       uses: JackMcKew/pyinstaller-action-linux@main
