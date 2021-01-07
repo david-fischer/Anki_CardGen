@@ -223,7 +223,7 @@ if __name__ == "__main__":
     for d in import_chain_cookbook.to_button_dict().values():
         print(d["callback"])
 
-    from acg.custom_widgets.custom_speed_dial import CustomSpeedDial
+    from .custom_widgets.custom_speed_dial import CustomSpeedDial
 
     c = CustomSpeedDial
 

@@ -24,10 +24,10 @@ from kivymd.app import MDApp
 from kivymd.toast import toast
 from pony.orm import db_session
 
+from . import ANKI_DIR
 from .design_patterns.callback_chain import CallNode
 from .design_patterns.factory import CookBook
-from .paths import ANKI_DIR
-from .utils import CD, now_string, smart_loader
+from .utils import CD, now_string
 
 export_cookbook = CookBook()
 
@@ -266,15 +266,3 @@ def export_cards(card_list, out_folder, anki_template_dir):
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
     ankiobject = AnkiObject(root_dir=ANKI_DIR)
-    ankiobject.add_card(
-        **smart_loader("../app_data/words/casa/casa_card.json")
-        # word="casa",
-        # audio="[sound:casa.mp3]",
-        # image='<img src="casa.jpg">',
-        # media_files=["../words/casa/casa.mp3", "../words/casa/casa.jpg"],
-    )
-    # ankiobject.write_apkg("output.apkg")
-    # with CD(ANKI_DIR):
-    #     string = HtmlLoader("test.html").replace_includes_with_content()
-    #     with open("test_out.html", "w") as file:
-    #         file.write(string)

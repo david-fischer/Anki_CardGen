@@ -6,6 +6,7 @@ from importlib import metadata
 import toml
 import toolz
 from appdirs import AppDirs
+from kivy.factory import Factory
 
 try:
     META = dict(metadata.metadata(__name__))
@@ -31,6 +32,8 @@ APP_DIR = pathlib.Path(dirs.user_data_dir)
 HOME = pathlib.Path.home()
 USER = HOME.stem
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
+ASSETS_DIR = BASE_PATH / "assets"
+ANKI_DIR = BASE_PATH / "anki-templates"
 
 os.makedirs(CONFIG_DIR, exist_ok=True)
 os.makedirs(APP_DIR, exist_ok=True)

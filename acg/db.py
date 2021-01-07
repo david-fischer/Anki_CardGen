@@ -144,8 +144,8 @@ db.generate_mapping(create_tables=True)
 
 # pylint: disable = W,C,R,I
 if __name__ == "__main__":
+    from . import ANKI_DIR
     from .exporter import export_cards
-    from .paths import ANKI_DIR
 
     with db_session:
         template = Template.get(name="Portuguese Vocab")
