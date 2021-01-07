@@ -42,8 +42,8 @@ jobs:
         ref: data # Branch name
 
 
-#    - name: debug
-#      run: ls master/acg/dist/linux
+    - name: debug
+      run: ls master; ls master/dist; ls master/linux; for x in master/dist/*; ls $x
 
     - name: zip
       run: cd master/dist/linux/AnkiCardGen; zip -r AnkiCardGen.zip AnkiCardGen; cd -
