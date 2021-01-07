@@ -43,7 +43,7 @@ jobs:
 
 
     - name: debug
-      run: ls master; ls master/dist; ls master/linux; for x in master/dist/*; ls $x
+      run: ls master; ls master/dist; ls master/linux; for x in master/dist/*;do ls $x; done
 
     - name: zip
       run: cd master/dist/linux/AnkiCardGen; zip -r AnkiCardGen.zip AnkiCardGen; cd -
