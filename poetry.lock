@@ -580,6 +580,7 @@ docs = ["sphinx", "sphinx-autoapi (==1.4.0)", "sphinx-rtd-theme", "sphinx-notfou
 [package.source]
 type = "url"
 url = "https://github.com/kivymd/KivyMD/archive/master.zip"
+
 [[package]]
 name = "lazy-object-proxy"
 version = "1.4.3"
@@ -1278,7 +1279,7 @@ regex = ">=2020.4.4"
 name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
@@ -1399,7 +1400,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "985b2b3b7857f14bc8ede7d2c5f1806f48149939ae64870bdab16883e8977c7c"
+content-hash = "00902e212f8ba60425aeb6baaefe2b04471918dbe4b7e2221a79ca7ff8f2476b"
 
 [metadata.files]
 aiodns = [
