@@ -88,6 +88,8 @@ This allows quick generation of high-quality, personalized cards.
 * [ ] use `__name__` as default for cookbook.register()
 * [ ] change deck names for exported apkg
 * [ ] add other spacy models (only important for pyinstaller)
+* [ ] update github action
+* [ ] generalize Dockerfile
 
 ## 🚧 Installation
 
