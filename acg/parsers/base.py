@@ -20,9 +20,8 @@ from aiohttp import ClientSession
 from bs4 import BeautifulSoup
 from utils import async_get_results
 
-from .design_patterns.factory import CookBook
-from .google_images_download import google_images_download
-from .utils import remove_whitespace
+from ..google_images_download import google_images_download
+from ..utils import remove_whitespace
 
 LANGUAGES = {"pt": "portuguese", "de": "german", "en": "english", "es": "spanish"}
 
@@ -54,8 +53,6 @@ LINGUEE_HEADERS = {
     # "Accept-Encoding": "gzip, deflate, br",
     "Accept-Language": "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7",
 }
-
-parser_cookbook = CookBook()
 
 
 class NoMatchError(Exception):
@@ -127,7 +124,6 @@ class Parser:
         return self.parse_response(resp)
 
 
-@parser_cookbook.register("rand_wiki")
 @attr.s(auto_attribs=True)
 class RandTopicWikiParser(Parser):
     """Get title, summary and a list of image-urls for given random topic."""
@@ -241,7 +237,6 @@ class AsyncParser:
         return asyncio.run(self(phrase))
 
 
-@parser_cookbook.register("async_reverso")
 @attr.s(auto_attribs=True)
 class AsyncReverso(AsyncParser):
     """Use Reverso to obtain: examples."""
@@ -267,7 +262,6 @@ class AsyncReverso(AsyncParser):
         }
 
 
-@parser_cookbook.register("async_linguee")
 @attr.s(auto_attribs=True)
 class AsyncLinguee(AsyncParser):
     """Get translation, word_type, gender, audio from Linguee."""
@@ -310,7 +304,6 @@ class AsyncLinguee(AsyncParser):
         }
 
 
-@parser_cookbook.register("async_dicio")
 @attr.s(auto_attribs=True)
 class AsyncDicio(AsyncParser):
     """Uses Dicio to obtain: explanations, synonyms, antonyms, examples, add_info_dict, conj_table_html."""
@@ -405,7 +398,6 @@ class AsyncDicio(AsyncParser):
         )
 
 
-@parser_cookbook.register("async_google_images")
 @attr.s(auto_attribs=True)
 class AsyncGoogleImages(AsyncParser):
     """Uses google_images_download to get img_urls."""
