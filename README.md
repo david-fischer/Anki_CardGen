@@ -7,12 +7,14 @@
 </br>
 <h1>AnkiCardGen</h1>
 </div>
-
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/tag/david-fischer/Anki_CardGen?label=version)]() [![android apk](https://github.com/david-fischer/Anki_CardGen/workflows/build%20android%20apk/badge.svg?branch=v1.0.11)]() [![windows](https://github.com/david-fischer/Anki_CardGen/workflows/build%20windows/badge.svg?branch=v1.0.11)]() [![linux](https://github.com/david-fischer/Anki_CardGen/workflows/build%20linux/badge.svg?branch=v1.0.11)]() [![Documentation Status](https://readthedocs.org/projects/anki-cardgen/badge/?version=latest)](https://anki-cardgen.readthedocs.io/en/latest/?badge=latest)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/tag/david-fischer/Anki_CardGen?label=version)]()
+[![windows](https://github.com/david-fischer/Anki_CardGen/workflows/build%20windows/badge.svg?branch=v1.0.11)]()
+[![linux](https://github.com/david-fischer/Anki_CardGen/workflows/build%20linux/badge.svg?branch=v1.0.11)]()
+[![Documentation Status](https://readthedocs.org/projects/anki-cardgen/badge/?version=latest)](https://anki-cardgen.readthedocs.io/en/latest/?badge=latest)
 
 Python [Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [KivyMD](https://github.com/kivymd/KivyMD). The project is not affiliated with Anki.
 
-> **:warning: This project is still under development, see [current state](https://github.com/david-fischer/Anki_CardGen#-current-state). If you would like to contribute have a look at the [documentation](https://anki-cardgen.readthedocs.io) and the [contribute](https://github.com/david-fischer/Anki_CardGen#-contribute) section.**
+> **:warning: Currently under heavy development.**​
 
 Currently supported languages:
 
@@ -76,50 +78,58 @@ This allows quick generation of high-quality, personalized cards.
 
 ## ⚡ Quick Start
 
-You can install the current version of the [Android-apk](https://github.com/david-fischer/Anki_CardGen/tree/data/android) and try it out. So far it is only tested on an S5 Neo.
+> **⚠️  Soon, there will be packaged applications (pyinstaller) for linux and windows.**
 
-Furthermore you can find the packaged application as zip-files for [linux](https://github.com/david-fischer/Anki_CardGen/raw/data/linux/AnkiCardGen.zip) and [windows](https://github.com/david-fischer/Anki_CardGen/raw/data/windows/AnkiCardGen.zip).
+## 🏗 To Do
 
-> **⚠️  The windows build has not been tested at all.**
-
-## 🏗 Current State
-
-* [x] Processing of single words
-* [x] Batch-import from .txt and **from kindle-notes**
-* [x] Queue-system for words that have not been processed
-* [x] Overview over processed words and option to export as .apkg
 * [ ] change of languages
-* [ ] spacy on mobile
+* [ ] save both lemma and word
+* [ ] filter words (word_state: not_wanted)
+* [ ] use `__name__` as default for cookbook.register()
+* [ ] change deck names for exported apkg
 
 ## 🚧 Installation
 
-* Setup new virtual environment with python 3.7, e.g. with conda
+### For use
+
+* Setup new virtual environment with python 3.9, e.g. with conda
 
 ```
-conda create -n "<environment_name>" python==3.7
+conda create -n "<environment_name>" python==3.9
 conda activate <environment_name>
-```
-
-* install application
-
-```
 pip install git+https://github.com/david-fischer/Anki_CardGen.git
 ```
 
-* Install [spacy](https://github.com/explosion/spaCy) model, e.g. for portuguese:
+### For Development
 
 ```
-python -m spacy download pt_core_news_sm
+conda create -n "<environment_name>" python==3.9
+pip install poetry
+git clone https://github.com/david-fischer/Anki_CardGen.git
+cd Anki_CardGen
+poetry install --no-root
+pre-commit install
 ```
 
-**NOTE:** This model is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version.
+You can now start the app **from the repo folder** with
 
+```
+python -m acg.main
+```
 
-## 🎯 Troubleshooting
+<!-- ``` -->
+<!-- python -m spacy download pt_core_news_sm -->
+<!-- ``` -->
 
-* python==3.7
+<!-- **NOTE:** This model is used to find the dictionary form of words (e.g. casas -> casa). It is optional and does not yet work on the mobile version. -->
+
+<!-- ## 🎯 Troubleshooting -->
 
 ## 🔧 Usage
+
+### Following Quickstart
+
+If you downloaded the packaged application, unzip the folder, make `AnkiCardGen` (or `AnkiCardGen.exe`) executable and start it by double-clicking it or by calling it from the terminal.
 
 ### Following Installation
 
@@ -128,19 +138,41 @@ After installation you should be able to start the app from the command line:
 acg
 ```
 
-### Following Quickstart
-
-If you downloaded the packaged application, unzip the folder, make `AnkiCardGen` (or `AnkiCardGen.exe`) executable and start it by double-click or from the terminal.
-
 ## 🚀 Contribute
 
-* So far, the project only supports Brasilian Portuguese, as it is the language I am currently learning.
-  Feel free to contribute e.g. by implementing crawlers for the necessary information for words in other languages as well.
-* Unfortunately, I had problems building SpaCy (more precisely its dependency blis) on arm. I therefore removed it from the dependencies in buildozer.spec and built the code to work around it if the package is not present.
+### Parsers:
 
-## ✍️ Authors
-- [David Fischer](https://github.com/david-fischer) - Author
+* make a new file in the acg/parsers folder
+
+* Inherit from parsers.base_parsers.AsyncParser
+* import in parsers/\__init__.py and register it
+* use it in template.py
 
 ## 🎉 Acknowledgements
 
-`acg/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
+* `acg/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
+  <!-- jinja-block deps
+  {{ "\n".join(dep_strings) }}
+  jinja-block deps-->
+  <!-- jinja-out deps start-->
+   * [appdirs](http://github.com/ActiveState/appdirs) - A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
+ * [titlecase](https://github.com/ppannuto/python-titlecase) - Python Port of John Gruber's titlecase.pl
+ * [attrs](https://www.attrs.org/) - Classes Without Boilerplate
+ * [beautifulsoup4](http://www.crummy.com/software/BeautifulSoup/bs4/) - Screen-scraping library
+ * [bidict](https://bidict.readthedocs.io) - The bidirectional mapping library for Python.
+ * [certifi](https://certifiio.readthedocs.io/en/latest/) - Python package for providing Mozilla's CA Bundle.
+ * [genanki](http://github.com/kerrickstaley/genanki) - Generate Anki decks programmatically
+ * [kivymd](https://github.com/kivymd/KivyMD) - Set of widgets for Kivy inspired by Google's Material Design
+ * [googletrans](https://github.com/ssut/py-googletrans) - Free Google Translate API for Python. Translates totally free of charge.
+ * [Kivy](http://kivy.org) - A software library for rapid development of hardware-accelerated multitouch applications.
+ * [lxml](https://lxml.de/) - Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.
+ * [pandas](https://pandas.pydata.org) - Powerful data structures for data analysis, time series, and statistics
+ * [Pillow](https://python-pillow.org) - Python Imaging Library (Fork)
+ * [pony](https://ponyorm.com) - Pony Object-Relational Mapper
+ * [requests](https://requests.readthedocs.io) - Python HTTP for Humans.
+ * [spacy](https://spacy.io) - Industrial-strength Natural Language Processing (NLP) in Python
+ * [toolz](https://github.com/pytoolz/toolz/) - List processing tools and functional utilities
+ * [Unidecode](UNKNOWN) - ASCII transliterations of Unicode text
+ * [aiohttp](https://github.com/aio-libs/aiohttp) - Async http client/server framework (asyncio)
+ * [toml](https://github.com/uiri/toml) - Python Library for Tom's Obvious, Minimal Language
+  <!-- jinja-out deps end-->
