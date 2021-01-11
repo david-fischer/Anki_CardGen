@@ -1,3 +1,4 @@
+import pathlib
 import platform
 import re
 
@@ -25,6 +26,14 @@ def get_deps(c):
         if " @ " in req:
             reqs[i] = req.split(" @ ")[-1]
     return ",".join(reqs)
+
+
+@task
+def save_deps(c):
+    a = c.run("poetry export -f requirements.txt --without-hashes", hide="out")
+    reqs = re.findall("^[^=<>~]+", a.stdout, flags=re.MULTILINE)
+    with open("requirements.txt", "w") as file:
+        file.write("\n".join(reqs))
 
 
 @task
@@ -75,7 +84,7 @@ def update_readme(c):
 
 @task
 def docker(c):
-    c.run("sudo docker build -t boulder . -f Dockerfile")
+    c.run("sudo docker build -t pyinstaller . -f Dockerfile")
 
 
 @task
@@ -85,4 +94,18 @@ def run_docker(c):
     )
     c.run(
         "sudo docker run --rm -d -v boulder_vol:/boulder-stats/ -t boulder:latest data schedule"
+    )
+
+
+@task
+def run_last_workflow(c):
+    git_output = c.run(
+        "git ls-files -z .github/workflows | xargs -0 ls  -t | head -n 1", hide="out"
+    )
+    wf_path = git_output.stdout.strip()
+    wf_file = pathlib.Path(wf_path).name
+    # c.run(f"git commit -m 'update: workflow' {wf_path}")
+    # c.run("git push origin master")
+    c.run(
+        f'gh api "/repos/:owner/:repo/actions/workflows/{wf_file}/dispatches" -F ref=":branch"'
     )
