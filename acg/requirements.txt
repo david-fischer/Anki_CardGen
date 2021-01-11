@@ -1,0 +1,16 @@
+attrs~=19.3.0
+beautifulsoup4~=4.9.1
+bidict~=0.20.0
+certifi~=2020.6.20
+genanki~=0.8.0
+git+https://github.com/kivymd/KivyMD.git
+googletrans~=3.0.0
+kivy~=1.11.1
+lxml
+pandas~=1.0.4
+pillow~=7.2.0
+pony~=0.7.13
+requests~=2.24.0
+spacy~=2.3.0
+toolz~=0.10.0
+unidecode~=1.1.1

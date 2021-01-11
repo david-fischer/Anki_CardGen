@@ -1,0 +1,10 @@
+diff -Naur thinc_old/neural/_custom_kernels.py thinc/neural/_custom_kernels.py
+--- thinc_old/neural/_custom_kernels.py	2020-06-10 02:42:23.408785247 +0200
++++ thinc-7.4.1/thinc/neural/_custom_kernels.py	2020-06-10 02:39:17.784355606 +0200
+@@ -1,5 +1,5 @@
+ from __future__ import unicode_literals
+-from numpy.testing import assert_allclose
++#from numpy.testing import assert_allclose
+ import re
+ from pathlib import Path
+ from collections import defaultdict
