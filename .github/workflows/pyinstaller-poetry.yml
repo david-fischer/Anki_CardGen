@@ -1,4 +1,4 @@
-name: build linux
+name: pyinstaller poetry
 
 on:
   push:
