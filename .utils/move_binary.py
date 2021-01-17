@@ -37,7 +37,9 @@ if not is_tag:
         # Latest commit - short hash (20f2448)
         middle = commit_hash
     filename_split = filename.split("-")
-    filename = "-".join([*filename_split[:2], middle, *filename_split[2:]])
+    print(filename_split)
+    filename = "-".join(filename_split[:2] + middle + filename_split[2:])
+    print(filename)
 
 # Set author info to the latest commit author
 author_name = subprocess.check_output(
