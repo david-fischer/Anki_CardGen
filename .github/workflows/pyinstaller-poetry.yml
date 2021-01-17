@@ -17,6 +17,18 @@ jobs:
     - name: test
       run: python --version
 
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+        architecture: x64
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        path: data
+        ref: data
+
     - name: Checkout
       uses: actions/checkout@v2
       with:
@@ -30,18 +42,11 @@ jobs:
         spec: pyinstaller.spec
         out_dir: dist/linux
 
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        path: data
-        ref: data # Branch name
-
-    - name: debug
-      run: ls master; ls master/dist; ls master/dist/linux;
+#    - name: debug
+#      run: ls master; ls master/dist; ls master/dist/linux;
 
     - name: zip
       run: cd master/dist/linux/AnkiCardGen; zip -r AnkiCardGen.zip AnkiCardGen; cd -
-
 
     - name: Push zipped app to data branch
       run: python master/.utils/move_binary.py "master/acg/dist/linux/AnkiCardGen.zip" master data linux
