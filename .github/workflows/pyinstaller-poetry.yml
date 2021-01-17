@@ -21,7 +21,7 @@ jobs:
         ref: master
 
     - name: Package Application
-      uses: david-fischer/pyinstaller_poetry@main
+      uses: david-fischer/pyinstaller_poetry@master
       with:
         path: master
         out_path: dist/linux
