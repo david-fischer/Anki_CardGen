@@ -38,6 +38,7 @@ jobs:
         path: master
         spec: pyinstaller.spec
         out_dir: dist/linux
+        pre_package_hook: "python -m spacy download pt"
 
 #    - name: debug
 #      run: ls master; ls master/dist; ls master/dist/linux;
@@ -46,4 +47,4 @@ jobs:
       run: cd master/dist/linux/AnkiCardGen; zip -r AnkiCardGen.zip AnkiCardGen; cd -
 
     - name: Push zipped app to data branch
-      run: python master/.utils/move_binary.py "master/acg/dist/linux/AnkiCardGen.zip" master data linux
+      run: python master/.utils/move_binary.py "master/dist/linux/AnkiCardGen.zip" master data linux
