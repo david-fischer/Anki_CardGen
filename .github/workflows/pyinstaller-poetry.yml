@@ -24,8 +24,8 @@ jobs:
       uses: david-fischer/pyinstaller_poetry@master
       with:
         path: master
-        out_path: dist/linux
         spec: pyinstaller.spec
+        out_dir: dist/linux
 
     - name: Checkout
       uses: actions/checkout@v2
