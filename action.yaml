@@ -1,0 +1,26 @@
+name: "PyInstaller Poetry"
+description: "Package python app as executable using poetry to install dependencies."
+inputs:
+  path:
+    description: "Directory containing pyproject.toml & .spec file."
+    required: False
+    default: .
+  spec:
+    description: "Specify a file path for .spec file"
+    required: False
+    default: "pyinstaller.spec"
+  out_dir:
+    description: "Output directory for installed app."
+    required: False
+    default: "dist/linux"
+outputs:
+  output:
+    description: "Pyinstaller Output"
+
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.path }}
+    - ${{ inputs.spec }}
+    - ${{ inputs.out_dir }}

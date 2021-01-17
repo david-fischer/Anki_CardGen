@@ -6,4 +6,4 @@ RUN poetry config virtualenvs.create false;\
     python -m spacy download pt
 COPY main.py pyinstaller.spec ./
 COPY acg ./acg
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["entrypoint_pyinstaller.sh"]
