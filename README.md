@@ -78,7 +78,8 @@ This allows quick generation of high-quality, personalized cards.
 
 ## ⚡ Quick Start
 
-> **⚠️  Soon, there will be packaged applications (pyinstaller) for linux and windows.**
+You can find the application packaged with PyInstaller for [Linux](https://github.com/david-fischer/Anki_CardGen/releases/latest/download/acg_pyinstaller_linux.zip)
+and soon also for windows.
 
 ## 🏗 To Do
 
