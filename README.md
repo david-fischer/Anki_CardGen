@@ -7,10 +7,7 @@
 </br>
 <h1>AnkiCardGen</h1>
 </div>
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/tag/david-fischer/Anki_CardGen?label=version)]()
-[![windows](https://github.com/david-fischer/Anki_CardGen/workflows/build%20windows/badge.svg?branch=v1.0.11)]()
-[![linux](https://github.com/david-fischer/Anki_CardGen/workflows/build%20linux/badge.svg?branch=v1.0.11)]()
-[![Documentation Status](https://readthedocs.org/projects/anki-cardgen/badge/?version=latest)](https://anki-cardgen.readthedocs.io/en/latest/?badge=latest)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) ![LICENSE: MIT](https://img.shields.io/github/license/david-fischer/Anki_CardGen)](https://github.com/david-fischer/Anki_CardGen/blob/master/LICENSE) [![Version](https://img.shields.io/github/v/tag/david-fischer/Anki_CardGen?label=version)]() [![Documentation Status](https://readthedocs.org/projects/anki-cardgen/badge/?version=latest)](https://anki-cardgen.readthedocs.io/en/latest/?badge=latest)
 
 Python [Kivy](https://kivy.org/) App for mobile and desktop for quick generation of personalized language flash cards for [Anki](https://apps.ankiweb.net/) containing: Image, audio, example, synonym - antonym, definition and more! The interface is built with the material-design-inspired [KivyMD](https://github.com/kivymd/KivyMD). The project is not affiliated with Anki.
 
@@ -78,8 +75,7 @@ This allows quick generation of high-quality, personalized cards.
 
 ## ⚡ Quick Start
 
-You can find the application packaged with PyInstaller for [Linux](https://github.com/david-fischer/Anki_CardGen/releases/latest/download/acg_pyinstaller_linux.zip)
-and soon also for windows.
+You can find the application packaged with PyInstaller for [Linux](https://github.com/david-fischer/Anki_CardGen/releases/latest/download/acg_pyinstaller_linux.zip) and soon also for Windows.
 
 ## 🏗 To Do
 
@@ -89,8 +85,8 @@ and soon also for windows.
 * [ ] use `__name__` as default for cookbook.register()
 * [ ] change deck names for exported apkg
 * [ ] add other spacy models (only important for pyinstaller)
-* [ ] update github action
-* [ ] generalize Dockerfile
+* [x] update github action
+* [x] generalize Dockerfile
 
 ## 🚧 Installation
 
@@ -155,11 +151,11 @@ acg
 ## 🎉 Acknowledgements
 
 * `acg/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
-  <!-- jinja-block deps
-  {{ "\n".join(dep_strings) }}
-  jinja-block deps-->
-  <!-- jinja-out deps start-->
-   * [appdirs](http://github.com/ActiveState/appdirs) - A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
+<!-- jinja-block deps
+{{ "\n".join(dep_strings) }}
+jinja-block deps-->
+<!-- jinja-out deps start-->
+ * [appdirs](http://github.com/ActiveState/appdirs) - A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
  * [titlecase](https://github.com/ppannuto/python-titlecase) - Python Port of John Gruber's titlecase.pl
  * [attrs](https://www.attrs.org/) - Classes Without Boilerplate
  * [beautifulsoup4](http://www.crummy.com/software/BeautifulSoup/bs4/) - Screen-scraping library
@@ -179,4 +175,4 @@ acg
  * [Unidecode](UNKNOWN) - ASCII transliterations of Unicode text
  * [aiohttp](https://github.com/aio-libs/aiohttp) - Async http client/server framework (asyncio)
  * [toml](https://github.com/uiri/toml) - Python Library for Tom's Obvious, Minimal Language
-  <!-- jinja-out deps end-->
+<!-- jinja-out deps end-->
