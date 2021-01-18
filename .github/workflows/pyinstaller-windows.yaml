@@ -1,11 +1,11 @@
 name: build windows
 
 on:
-  push:
-    tags:
-      - '*'
-  pull_request:
-    branches: [ master ]
+#  push:
+#    tags:
+#      - '*'
+#  pull_request:
+#    branches: [ master ]
   workflow_dispatch:
 
 jobs:
