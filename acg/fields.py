@@ -156,7 +156,11 @@ class Field:
                 for key, value in self.kv_bidict.items()
             }
         else:
-            content = {self.field_name: self.template.data[self.field_name]}
+            content = (
+                {self.field_name: self.template.data[self.field_name]}
+                if self.field_name in self.template.data
+                else {}
+            )
         return self.post_process(content)
 
 

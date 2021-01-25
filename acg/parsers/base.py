@@ -267,7 +267,7 @@ class AsyncLinguee(AsyncParser):
     """Get translation, word_type, gender, audio from Linguee."""
 
     base_url: str = "https://linguee-api.herokuapp.com/api"
-    lang_dict = {"pt": "Brazilian Portuguese"}
+    lang_dict = {"pt": "Brazilian Portuguese", "en": "American English"}
     audio_base_url = "https://www.linguee.de/mp3/%s.mp3"
 
     def request_params(self):
@@ -290,7 +290,11 @@ class AsyncLinguee(AsyncParser):
         ]
         audio_url = self.audio_base_url % audio_ids[0] if audio_ids else ""
         word_type = match["word_type"]["pos"] if match["word_type"] else ""
-        gender = match["word_type"]["gender"][0] if word_type == "noun" else ""
+        gender = (
+            match["word_type"]["gender"][0]
+            if word_type == "noun" and "gender" in match["word_type"]
+            else ""
+        )
         translations = [
             entry["text"]
             for match in response["exact_matches"]

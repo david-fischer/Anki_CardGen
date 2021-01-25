@@ -297,6 +297,90 @@ class VocabTemplate(Template):
             )
 
 
+@template_cookbook.register(
+    "English Vocabulary",
+    name="English Vocabulary",
+    from_lang="en",
+    to_lang="de",
+)
+class VocabTemplateTwo(Template):
+    """Template to generate vocabulary cards for brazilian portuguese."""
+
+    from_lang = None
+    to_lang = None
+
+    def __init__(self, from_lang, to_lang, **kwargs):
+        self.from_lang = from_lang
+        self.to_lang = to_lang
+
+        super().__init__(
+            sort_field="word",
+            parser_names=[
+                "async_linguee",
+                "english_parser",
+                "async_reverso",
+                "async_google_images",
+            ],
+            parser_kwargs={"from_lang": from_lang, "to_lang": to_lang},
+            **kwargs,
+        )
+        self.fields = [
+            TextInputField(
+                field_name="word", callback=self.manual_search, template=self
+            ),
+            TextInputField(
+                field_name="image_search_keywords",
+                callback=partial(
+                    self.update_from_single_parser, parser_key="async_google_images"
+                ),
+                template=self,
+            ),
+            ImgField(field_name="image", file_type="jpg", template=self),
+            CheckChipOptionsField(
+                field_name="translation", heading="Translations", template=self
+            ),
+            TransChipOptionsField(
+                src_field="synonym",
+                heading="Synonyms",
+                target_field="synonym_trans",
+                template=self,
+            ),
+            TransChipOptionsField(
+                src_field="antonym",
+                heading="Antonyms",
+                target_field="antonym_trans",
+                template=self,
+            ),
+            DualLongTextField(
+                src_field="explanation",
+                heading="Explanations",
+                target_field="explanation_trans",
+                template=self,
+            ),
+            DualLongTextField(
+                src_field="example",
+                heading="Examples",
+                target_field="example_trans",
+                template=self,
+            ),
+            MediaField(field_name="audio", file_type="mp3", template=self),
+            Field(field_name="additional_info", template=self),
+            Field(field_name="conjugation_table", template=self),
+        ]
+        self.add_field_widgets()
+
+    def translate(self, string):
+        """Translate string from :attr:`from_lang` to :attr:`to_lang`."""
+        return translator.translate(string, src=self.from_lang, dest=self.to_lang).text
+
+    def post_process(self):
+        """Tag :attr:`search_term` in ``"explanation"`` and ``"example"`` fields."""
+        for field in ["explanation", "example"]:
+            self.content[field] = tag_word_in_sentence(
+                self.content[field], self.search_term
+            )
+
+
 Builder.load_string(
     """
 <Template>:
