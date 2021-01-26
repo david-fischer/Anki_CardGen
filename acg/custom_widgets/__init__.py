@@ -5,6 +5,8 @@ from kivy.lang import Builder
 
 from .custom_speed_dial import CustomSpeedDial
 from .dialogs import (
+    CheckChipContent,
+    CheckChipDialog,
     CustomContentBase,
     CustomDialog,
     ReplacementDialog,
@@ -18,7 +20,7 @@ from .scroll_widgets import (
     ScrollBox,
     ScrollGrid,
 )
-from .selection_widgets import LongPressImage, TransCard
+from .selection_widgets import CheckChipContainer, LongPressImage, TransCard
 
 # selection_widgets
 from .settings import PathSection, SectionBase, SettingsWidget, ThemeSection
@@ -32,6 +34,8 @@ Factory.register("ScrollGrid", ScrollGrid)
 Factory.register("RecycleViewBox", RecycleViewBox)
 Factory.register("LeftStatusIndicatorListItem", LeftStatusIndicatorListItem)
 # dialogs
+Factory.register("CheckChipContent", CheckChipContent)
+Factory.register("CheckChipDialog", CheckChipDialog)
 Factory.register("TextInputDialog", TextInputDialog)
 Factory.register("CustomContentBase", CustomContentBase)
 Factory.register("CustomDialog", CustomDialog)

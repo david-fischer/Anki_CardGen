@@ -17,6 +17,7 @@ from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 
 from .scroll_widgets import ScrollList
+from .selection_widgets import CheckChipContainer
 
 
 class CustomContentBase:
@@ -24,6 +25,20 @@ class CustomContentBase:
 
     def get_result(self):
         """Placeholder-function."""
+
+
+# TODO: Add scroll feature
+class CheckChipContent(CustomContentBase, CheckChipContainer):
+    """CheckChip container."""
+
+    def select_all(self):
+        """Select all chips."""
+        for child in self.children:
+            child.current_state = True
+
+    def get_result(self):
+        """Return text of all selected chips."""
+        return self.get_checked("text")
 
 
 class TextFieldContent(CustomContentBase, BoxLayout):
@@ -126,12 +141,13 @@ class CustomDialog(MDDialog):
         ]
         for button in self.buttons:
             button.bind(on_press=self.on_button_press)
-        if kwargs.get("content_cls_name"):
-            kwargs.setdefault(
-                "content_cls", Factory.get(kwargs.get("content_cls_name"))()
-            )
+        if not self.content_cls or kwargs.get("content_cls"):
+            content_cls_name = kwargs.get("content_cls_name") or self.content_cls_name
+            kwargs.setdefault("content_cls", Factory.get(content_cls_name)())
+            print(kwargs["content_cls"])
         super().__init__(**kwargs)
-        self.content_cls.bind(on_item_press=self.on_item_press)
+        if "on_item_press" in self.content_cls.properties():
+            self.content_cls.bind(on_item_press=self.on_item_press)
 
     def on_button_press(self, obj, callback_txt=None):
         """Call :meth:`CustomDialog.callback`.
@@ -178,6 +194,19 @@ class TextInputDialog(CustomDialog):
         super().__init__(**kwargs)
 
 
+class CheckChipDialog(CustomDialog):
+    """Dialog to choose a number of items using CheckChips."""
+
+    content_cls_name = StringProperty("CheckChipContent")
+    default_select_all = BooleanProperty(False)
+
+    def open(self):
+        """Open dialog and select all chips if :attr:`default_select_all` is ``True``."""
+        super().open()
+        if self.default_select_all:
+            self.content_cls.select_all()
+
+
 # pylint: disable = W,C,R,I,E
 if __name__ == "__main__":
 
@@ -191,13 +220,18 @@ FloatLayout:
 
     MDFlatButton:
         text: "REPLACEMENT DIALOG"
-        pos_hint: {'center_x': .5, 'center_y': .3}
+        pos_hint: {'center_x': .5, 'center_y': .4}
         on_release: app.show_repl_dialog()
 
     MDFlatButton:
         text: "TEXT DIALOG"
         pos_hint: {'center_x': .5, 'center_y': .6}
         on_release: app.show_text_dialog()
+
+    MDFlatButton:
+        text: "CHIP DIALOG"
+        pos_hint: {'center_x': .5, 'center_y': .8}
+        on_release: app.show_chip_dialog()
 """
             )
 
@@ -226,6 +260,23 @@ FloatLayout:
                     default_text="this is a test",
                     callback=print,
                 )
+            self.dialog.open()
+
+        def show_chip_dialog(self):
+            self.dialog = CheckChipDialog(
+                callback=print,
+                default_select_all=True,
+            )
+            self.dialog.content_cls.data = [
+                {"text": "aguento"},
+                {"text": "deixa"},
+                {"text": "caminhada"},
+                {"text": "pedras"},
+                {"text": "almoçamos"},
+                {"text": "limpinho"},
+                {"text": "quedas d’água"},
+                {"text": "ansiosos"},
+            ] * 10
             self.dialog.open()
 
     _Example().run()
