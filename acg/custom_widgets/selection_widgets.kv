@@ -32,7 +32,7 @@
         size_hint: None, 1
         text_size: None,None
 
-<MyCheckChip>:
+<CheckChip>:
     icon: ""
     size_hint: None,  None
     height: "26dp"
@@ -66,7 +66,7 @@
             texture_size: 100,100
             color: root.text_color
 
-<MyCheckCard>:
+<CheckCard>:
     padding: 15,15
     size_hint: 1,None
     border_radio: 20
@@ -85,7 +85,7 @@
         color: root.text_color
 
 
-<MyCheckChipContainer>:
+<CheckChipContainer>:
     orientation: "lr-tb"
     padding: 10,10
     spacing: 10,10
@@ -99,7 +99,7 @@
             rectangle: self.x, self.y+self.spacing[1]/2, self.width, self.height
 
 
-<MyCheckImageTile>:
+<CheckImageTile>:
     box_color: 0,0,0,0
     canvas:
         Color:
@@ -177,7 +177,7 @@
 
 <ImageCarousel>:
     child_class_name: "LongPressImage"
-    modal_data_cls_name: "MyCheckImageTile"
+    modal_data_cls_name: "CheckImageTile"
     modal_layout_name: "ScrollGrid"
 
 <RecycleCarousel>:
@@ -222,5 +222,5 @@
     dynamic_height: False
     viewclass: "LongPressImage"
     modal_layout_name: "ScrollGrid"
-    modal_data_cls_name: "MyCheckImageTile"
+    modal_data_cls_name: "CheckImageTile"
     default_modal_size_hint: 1,1

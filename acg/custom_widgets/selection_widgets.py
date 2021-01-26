@@ -80,7 +80,7 @@ class CheckContainer(ChildrenFromDataBehavior):
         ]
 
 
-class MyCheckCard(ThemableColorChangeBehavior, MDCard):
+class CheckCard(ThemableColorChangeBehavior, MDCard):
     """Selectable :~kivymd.uix.card.MDCard`. Select by click. Changes color on selection."""
 
     text = StringProperty("test " * 15)
@@ -93,11 +93,7 @@ class MyCheckCard(ThemableColorChangeBehavior, MDCard):
         )
 
 
-class MyTransCard(TranslationOnCheckBehavior, MyCheckCard):
-    """Selectable :class:`~kivymd.uix.card.MDCard`. Select by click. Changes color and displayed text on click."""
-
-
-class MyCheckChip(
+class CheckChip(
     CircularRippleBehavior,
     ButtonBehavior,
     ThemableColorChangeBehavior,
@@ -118,18 +114,18 @@ class MyCheckChip(
         )
 
 
-class MyTransChip(TranslationOnCheckBehavior, MyCheckChip):
+class TransChip(TranslationOnCheckBehavior, CheckChip):
     """Selectable Chip. Select by click. Change color and text on selection."""
 
 
-class MyCheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
-    r"""Container for :class:`MyCheckChip`\ s. Use :attr:`child_dict` to populate."""
+class CheckChipContainer(CheckContainer, ThemableBehavior, StackLayout):
+    r"""Container for :class:`CheckChip`\ s. Use :attr:`child_dict` to populate."""
 
-    child_class_name = "MyCheckChip"
+    child_class_name = "CheckChip"
     draw_box = BooleanProperty(False)
 
 
-class MyCheckImageTile(CheckBehavior, SmartTile):
+class CheckImageTile(CheckBehavior, SmartTile):
     """
     Selectable :class:`~kivymd.uix.imagelist.SmartTile`.
 

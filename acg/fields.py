@@ -270,20 +270,20 @@ class OptionsField(Field):
 class CheckChipOptionsField(OptionsField):
     r"""Pick multiple options using :class:`custom_widgets.selection_widgets.CheckChip`\ s."""
 
-    widget_kv: str = "MyCheckChipContainer"
+    widget_kv: str = "CheckChipContainer"
 
 
 @attr.s(auto_attribs=True)
 class TransChipOptionsField(TranslationMixin, OptionsField):
     r"""
-    Pick a single options using :class:`custom_widgets.selection_widgets.MyTransChip`\ s.
+    Pick a single options using :class:`custom_widgets.selection_widgets.TransChip`\ s.
 
     Inheritance from :class:`TranslationMixin` guarantees that translations are available.
     """
 
     widget_kv: str = """
-MyCheckChipContainer
-    child_class_name: "MyTransChip"
+CheckChipContainer
+    child_class_name: "TransChip"
     check_one: True"""
 
 
