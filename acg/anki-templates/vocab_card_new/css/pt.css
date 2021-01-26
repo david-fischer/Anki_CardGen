@@ -15,7 +15,8 @@
   cursor: pointer;
   border: none;
   outline: none;
-  background: none;
+  background-color: white;
+  color: black
   font-size: inherit;
   font-weight: inherit; }
 
@@ -65,7 +66,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  /*background-color: rgba(0, 0, 0, 0.5);*/
   pointer-events: none; }
 
 #overlay.active {
@@ -105,7 +106,7 @@ tr:nth-of-type(odd) {
 
 th {
   background: #333;
-  color: white;
+  /*color: white;*/
   font-weight: bold; }
 
 td, th {
@@ -117,7 +118,6 @@ card {
   font-family: Georgia, "PT Serif", "Times New Roman", serif;
   font-size: 20px;
   text-align: center;
-  color: #073642;
   background: #eee8d5; }
 
 blockquote {
@@ -150,7 +150,8 @@ img {
   font-family: Georgia, "PT Serif", "Times New Roman", serif;
   font-size: 30px;
   background: inherit;
-  color: #002b36; }
+  /*color: #002b36; */
+  }
 
   blockquote .word {
     font-size: 20px;
@@ -163,17 +164,20 @@ img {
   white-space: nowrap; }
 
 .synonym {
-  color: #859a01; }
+  /*color: #859a01; */
+  }
 
 .antonym {
-  color: #cb4b16; }
+  /*color: #cb4b16; */
+  }
 
 .explanation {
-  color: #073642; }
+  /*color: #073642; */
+  }
 
 .example {
   font-family: Georgia, "PT Serif", "Times New Roman", serif;
-  color: #073642;
+  /*color: #073642;*/
   text-align: left; }
 
 /*# sourceMappingURL=word.css.map */
