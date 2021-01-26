@@ -19,21 +19,20 @@ import time  # Importing the time library to check the time of code execution
 version = (3, 0)
 cur_version = sys.version_info
 if cur_version >= version:  # If the Current Version of Python is 3.0 or above
-    import urllib.request
-    from urllib.request import Request, urlopen
-    from urllib.request import URLError, HTTPError
-    from urllib.parse import quote
     import http.client
-    from http.client import IncompleteRead, BadStatusLine
+    import urllib.request
+    from http.client import BadStatusLine, IncompleteRead
+    from urllib.parse import quote
+    from urllib.request import HTTPError, Request, URLError, urlopen
 
     http.client._MAXHEADERS = 1000
 else:  # If the Current Version of Python is 2.x
-    import urllib2
-    from urllib2 import Request, urlopen
-    from urllib2 import URLError, HTTPError
     from urllib import quote
+
     import httplib
-    from httplib import IncompleteRead, BadStatusLine
+    import urllib2
+    from httplib import BadStatusLine, IncompleteRead
+    from urllib2 import HTTPError, Request, URLError, urlopen
 
     httplib._MAXHEADERS = 1000
 
