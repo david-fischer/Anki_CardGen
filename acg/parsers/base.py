@@ -296,7 +296,10 @@ class AsyncLinguee(AsyncParser):
             else ""
         )
         translations = [
-            entry["text"].replace("sichAkk", "sich").replace("etw.Akk", "etw.").replace("jdn.Akk", "jdn.")
+            entry["text"]
+            .replace("sichAkk", "sich")
+            .replace("etw.Akk", "etw.")
+            .replace("jdn.Akk", "jdn.")
             for match in response["exact_matches"]
             for entry in match["translations"]
         ]
