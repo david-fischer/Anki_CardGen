@@ -67,10 +67,6 @@ a = Analysis(
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=None)
 
-# trees = [
-#     Tree(folder, prefix=folder)
-#     for folder in ["screens", "custom_widgets", "assets", "anki-templates"]
-# ]
 
 exe = EXE(
     pyz,
