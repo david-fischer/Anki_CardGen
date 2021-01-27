@@ -131,13 +131,16 @@
         id: left_icon
         pos_hint: {"center_y":0.5,"x":0}
         icon: "" if not carousel.index else "chevron-left"
-        on_press: carousel.load_previous()
+        on_press:
+            if carousel.index: carousel.index-=1
 
     MDIconButton:
         id: right_icon
         pos_hint: {"center_y":0.5,"right":1}
         icon: "" if carousel.index is None else "chevron-right" if carousel.index < len(carousel.slides) -1 else ""
-        on_press: carousel.load_next()
+        on_press:
+            if carousel.index < len(carousel.slides)-1: carousel.index+=1
+
 
 
 <TransCard>:
