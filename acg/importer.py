@@ -224,7 +224,8 @@ node_dict = {
         "info": {"icon": "file-document-outline", "text": "Import from txt"},
     },
     "text_input": {
-        "nodes": ["TextInput", lambda x: x.split(",")] + replace_lemmas_nodes,
+        "nodes": ["TextInput", lambda x: [w.strip() for w in x.split(",")]]
+        + replace_lemmas_nodes,
         "info": {"icon": "cursor-text", "text": "Import from Text Input"},
     },
 }
