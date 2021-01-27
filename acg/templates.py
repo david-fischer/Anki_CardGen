@@ -379,6 +379,12 @@ class VocabTemplateTwo(Template):
             self.content[field] = tag_word_in_sentence(
                 self.content[field], self.search_term
             )
+        if self.content["translation"]:
+            i = self.data["translation"].index(
+                self.content["translation"].split(",")[0]
+            )
+            if self.data["gender_per_translation"][i] == "verb":
+                self.content["word"] = "(to) " + self.content["word"]
 
 
 Builder.load_string(
