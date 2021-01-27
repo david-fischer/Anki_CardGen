@@ -296,7 +296,12 @@ class AsyncLinguee(AsyncParser):
             else ""
         )
         translations = [
-            entry["text"]
+            entry["text"].replace("sichAkk", "sich").replace("etw.Akk", "etw.").replace("jdn.Akk", "jdn.")
+            for match in response["exact_matches"]
+            for entry in match["translations"]
+        ]
+        gender_per_translation = [
+            match["word_type"]["pos"]
             for match in response["exact_matches"]
             for entry in match["translations"]
         ]
@@ -305,6 +310,7 @@ class AsyncLinguee(AsyncParser):
             "word_type": word_type,
             "gender": gender,
             "audio": audio_url,
+            "gender_per_translation": gender_per_translation,
         }
 
 
