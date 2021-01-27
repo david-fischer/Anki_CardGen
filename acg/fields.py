@@ -245,7 +245,7 @@ class OptionsField(Field):
             content = {
                 field: ", ".join(
                     [
-                        getattr(widget, kv_attr)
+                        getattr(widget, kv_attr) or ""
                         for widget in self.widget.get_checked()
                         if widget
                     ]
