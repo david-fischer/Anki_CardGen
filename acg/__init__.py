@@ -33,7 +33,7 @@ HOME = pathlib.Path.home()
 USER = HOME.stem
 BASE_PATH = pathlib.Path(__file__).parent.absolute()
 ASSETS_DIR = BASE_PATH / "assets"
-ANKI_DIR = BASE_PATH / "anki-templates"
+ANKI_DIR = BASE_PATH / "exporter"
 
 os.makedirs(CONFIG_DIR, exist_ok=True)
 os.makedirs(APP_DIR, exist_ok=True)
