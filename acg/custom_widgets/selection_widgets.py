@@ -196,13 +196,24 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
         }
         self.on_data()
 
+    def update_num_children(self):
+        """Add/remove children until correct number is reached."""
+        diff = len(self.data) - len(self.root_for_children.children) + 1
+        for _ in range(abs(diff)):
+            if diff > 0:
+                self.add_child()
+            else:
+                self.remove_child()
+
     def on_data(self, *_):
         """Override :meth:`behaviors.ChildrenFromDataBehavior.on_data` with correct list of children.
 
         The children are in ``carousel.slides`` as opposed to ``carousel.children``.
         """
-        self.update_num_children()
-        for i, child_dict in enumerate(self.data):
+        if self.child_class_name:
+            self.update_num_children()
+            self.carousel.index = 1
+        for i, child_dict in enumerate(self.data, start=1):
             for key, val in child_dict.items():
                 setattr(self.carousel.slides[i], key, val)
 
@@ -238,8 +249,10 @@ class MyCarousel(FloatLayout, ChildrenFromDataBehavior):
             self.modal.dismiss()
 
         data_dicts = [
+            {"size_hint": size_hint, "on_press": partial(set_carousel_index, 0)}
+        ] + [
             {**dict, "size_hint": size_hint, "on_press": partial(set_carousel_index, i)}
-            for i, dict in enumerate(self.data)
+            for i, dict in enumerate(self.data, start=1)
         ]
         recycle_view_cls = Factory.get(self.modal_layout_name)
         recycle_view = recycle_view_cls()

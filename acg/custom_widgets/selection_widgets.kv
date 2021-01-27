@@ -130,7 +130,7 @@
     MDIconButton:
         id: left_icon
         pos_hint: {"center_y":0.5,"x":0}
-        icon: "" if not carousel.index else "chevron-left"
+        icon: "" if not carousel.index else "cancel" if carousel.index == 1 else "chevron-left"
         on_press:
             if carousel.index: carousel.index-=1
 
