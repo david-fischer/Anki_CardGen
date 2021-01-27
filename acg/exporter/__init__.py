@@ -1,5 +1,5 @@
 from ..design_patterns.factory import CookBook
-from .exporter import APKGExporter, is_in_history, is_new
+from .exporter import APKGExporter, export_cards, is_in_history, is_new
 
 export_cookbook = CookBook()
 
