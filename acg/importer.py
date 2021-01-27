@@ -126,6 +126,20 @@ class DialogNode(CallNode):
         self.dialog.open()
 
 
+# TODO: Default yes vs default no
+@node_cookbook.register("CheckChipDialog")
+@attr.s(auto_attribs=True)
+class CheckChipDialogNode(DialogNode):
+    """Open dialog to filter selection with CheckChips."""
+
+    dialog_cls_name: str = "CheckChipDialog"
+    title: str = "Select items:"
+
+    def get_dialog_data(self, elements):  # pylint: disable=arguments-differ
+        """Return data to construct CheckChips from."""
+        return [{"text": text} for text in elements]
+
+
 @node_cookbook.register("ReplacementDialog")
 @attr.s(auto_attribs=True)
 class ReplacementDialogNode(DialogNode):
