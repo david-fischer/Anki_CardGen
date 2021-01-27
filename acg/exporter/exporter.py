@@ -20,16 +20,11 @@ import attr
 import bs4
 import genanki
 import toolz
+from design_patterns.callback_chain import CallNode
 from kivymd.app import MDApp
 from kivymd.toast import toast
 from pony.orm import db_session
-
-from . import ANKI_DIR
-from .design_patterns.callback_chain import CallNode
-from .design_patterns.factory import CookBook
-from .utils import CD, now_string
-
-export_cookbook = CookBook()
+from utils import CD, now_string
 
 
 @attr.s
@@ -205,21 +200,6 @@ def is_in_history(card):
     return card.state in {"done", "exported"}
 
 
-@export_cookbook.register(
-    "import_select",
-    selector=lambda c: False,
-    info={"icon": "check-box-multiple-outline", "text": "select cards to export"},
-)
-@export_cookbook.register(
-    "import_all",
-    selector=is_in_history,
-    info={"icon": "content-save-all", "text": "export all cards"},
-)
-@export_cookbook.register(
-    "import_new",
-    selector=is_new,
-    info={"icon": "new-box", "text": "export new cards"},
-)
 @attr.s(auto_attribs=True)
 class APKGExporter(CallNode):
     """Exports cards to .apkg-format."""
@@ -227,7 +207,7 @@ class APKGExporter(CallNode):
     selector: Callable = None
 
     @db_session
-    def process(self, *args, **kwargs):
+    def process(self):
         """Main-function."""
         app = MDApp.get_running_app()
         current_template = app.get_current_template_db()
@@ -264,5 +244,5 @@ def export_cards(card_list, out_folder, anki_template_dir):
 
 
 # pylint: disable = W,C,R,I
-if __name__ == "__main__":
-    ankiobject = AnkiObject(root_dir=ANKI_DIR)
+# if __name__ == "__main__":
+# ankiobject = AnkiObject(root_dir=ANKI_DIR)
