@@ -221,7 +221,8 @@ class APKGExporter(CallNode):
 
 def export_cards(card_list, out_folder, anki_template_dir):
     """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
-    anki_obj = AnkiObject(root_dir=anki_template_dir)
+    anki_config = MDApp.get_running_app().config["Anki"]
+    anki_obj = AnkiObject(root_dir=anki_template_dir, **anki_config)
     if not card_list:
         print("Empty list.")
         return False

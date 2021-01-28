@@ -44,6 +44,9 @@ class AnkiCardGenApp(MDApp):
     anki_template_dir = ConfigParserProperty(
         "vocab_card", "Paths", "anki_template_dir", "app"
     )
+    anki_deck_name = ConfigParserProperty(
+        "Portuguese::Vocab", "Anki", "deck_name", "app"
+    )
     primary_palette = ConfigParserProperty("Red", "Theme", "primary_palette", "app")
     accent_palette = ConfigParserProperty("Amber", "Theme", "accent_palette", "app")
     theme_style = ConfigParserProperty("Light", "Theme", "theme_style", "app")
