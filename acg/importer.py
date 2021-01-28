@@ -10,7 +10,6 @@ from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
 
-from . import HOME
 from .custom_widgets.dialogs import CustomDialog
 from .design_patterns.callback_chain import CallChain, CallNode, PrinterNode
 from .design_patterns.factory import CookBook
@@ -51,22 +50,18 @@ import_chain_cookbook = CookBook()
 node_cookbook.register("Printer")(PrinterNode)
 
 
-@node_cookbook.register(
-    # "FileManager", dir=str((HOME / "Nextcloud" / "Book-Annotations").absolute())
-    "FileManager",
-    dir=MDApp.get_running_app().config["Paths"]["kobo_import_dir"],
-)
 @attr.s(auto_attribs=True)
 class FileManagerNode(CallNode):
     """Opens file_manager and calls next node with selected file."""
 
-    dir: str = str((HOME / "Nextcloud" / "Book-Annotations").absolute())
+    config_key: str = "kobo_import_dir"
     ext: list = [".txt", ".annot", ".html"]
 
     def receive(self):  # pylint: disable=arguments-differ
         """Open file_manager with :meth:`send` as callback."""
+        path = MDApp.get_running_app().config["Paths"][self.config_key]
         with get_file_manager(ext=self.ext, callback=self.send) as file_manager:
-            file_manager.show(path=self.dir)
+            file_manager.show(path=path)
 
 
 def clean_words(words: list):
@@ -214,15 +209,24 @@ replace_lemmas_nodes = [clean_words, "Lemmatizer", "ReplacementDialog"]
 
 node_dict = {
     "kobo": {
-        "nodes": ["FileManager", word_list_from_kobo] + replace_lemmas_nodes,
+        "nodes": [
+            FileManagerNode(config_key="kobo_import_dir"),
+            word_list_from_kobo,
+        ]
+        + replace_lemmas_nodes,
         "info": {"icon": "book-open-outline", "text": "Import from Kobo"},
     },
     "kindle": {
-        "nodes": ["FileManager", word_list_from_kindle] + replace_lemmas_nodes,
+        "nodes": [
+            FileManagerNode(config_key="import_dir"),
+            word_list_from_kindle,
+        ]
+        + replace_lemmas_nodes,
         "info": {"icon": "book-open-variant", "text": "Import from kindle"},
     },
     "txt": {
-        "nodes": ["FileManager", word_list_from_txt] + replace_lemmas_nodes,
+        "nodes": [FileManagerNode(config_key="import_dir"), word_list_from_txt]
+        + replace_lemmas_nodes,
         "info": {"icon": "file-document-outline", "text": "Import from txt"},
     },
     "text_input": {
