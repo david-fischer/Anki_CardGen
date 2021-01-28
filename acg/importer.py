@@ -52,7 +52,9 @@ node_cookbook.register("Printer")(PrinterNode)
 
 
 @node_cookbook.register(
-    "FileManager", dir=str((HOME / "Nextcloud" / "Book-Annotations").absolute())
+    # "FileManager", dir=str((HOME / "Nextcloud" / "Book-Annotations").absolute())
+    "FileManager",
+    dir=MDApp.get_running_app().config["Paths"]["kobo_import_dir"],
 )
 @attr.s(auto_attribs=True)
 class FileManagerNode(CallNode):
