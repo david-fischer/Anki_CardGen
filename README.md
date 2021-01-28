@@ -88,6 +88,8 @@ You can find the application packaged with PyInstaller for [Linux](https://githu
 * [ ] use `__name__` as default for cookbook.register()
 * [ ] change deck names for exported apkg
 * [ ] add other spacy models (only important for pyinstaller)
+* [ ] edit images
+* [ ] make target language part of template class (right now it is a config value)
 * [x] update github action
 * [x] generalize Dockerfile
 
