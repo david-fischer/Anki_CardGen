@@ -83,6 +83,8 @@ You can find the application packaged with PyInstaller for [Linux](https://githu
 * [ ] change of languages
 * [ ] save both lemma and word
 * [ ] filter words (word_state: not_wanted)
+* [ ] Choose Anki template by dropdown menu in settings
+* [ ] Dark mode for anki templates
 * [ ] use `__name__` as default for cookbook.register()
 * [ ] change deck names for exported apkg
 * [ ] add other spacy models (only important for pyinstaller)
