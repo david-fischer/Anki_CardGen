@@ -15,8 +15,6 @@
   cursor: pointer;
   border: none;
   outline: none;
-  background-color: white;
-  color: black
   font-size: inherit;
   font-weight: inherit; }
 
@@ -29,7 +27,6 @@
   border: 1px solid black;
   border-radius: 10px;
   z-index: 10;
-  background-color: white;
   width: 500px;
   max-width: 80%; }
 
@@ -51,7 +48,6 @@
   cursor: pointer;
   border: none;
   outline: none;
-  background: none;
   font-size: 1.25rem;
   font-weight: bold; }
 
