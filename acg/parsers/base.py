@@ -304,7 +304,7 @@ class AsyncLinguee(AsyncParser):
             for entry in match["translations"]
         ]
         gender_per_translation = [
-            match["word_type"]["pos"]
+            match["word_type"]["pos"] if "pos" in match["word_type"] else ""
             for match in response["exact_matches"]
             for entry in match["translations"]
         ]
