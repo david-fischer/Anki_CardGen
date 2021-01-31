@@ -375,11 +375,11 @@ def remove_whitespace(some_string):
 
 
 @contextmanager
-def timer():
+def timer(process):
     """Print execution time."""
     start = default_timer()
     yield lambda: print(default_timer() - start)
-    print(default_timer() - start)
+    print(f"{process} took {default_timer() - start}s.")
 
 
 async def async_wrapper(functions, *args):

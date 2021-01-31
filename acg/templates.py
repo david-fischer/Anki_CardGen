@@ -14,7 +14,6 @@ from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.toast import toast
 from pony.orm import commit, db_session
-from utils import async_get_results
 
 from .custom_widgets.selection_widgets import SeparatorWithHeading
 from .db import db
@@ -31,7 +30,7 @@ from .fields import (
 )
 from .language_processing import tag_word_in_sentence
 from .parsers import AsyncParser, NoMatchError, Parser, parser_cookbook
-from .utils import app_busy, smart_dict_merge
+from .utils import app_busy, async_get_results, smart_dict_merge, timer
 
 template_cookbook = CookBook()
 translator = Translator()
@@ -117,7 +116,8 @@ class Template(BoxLayout):
     def update_fields(self):
         """Update all fields."""
         for field in self.fields:
-            field.update()
+            with timer(field.__class__):
+                field.update()
 
     def add_field_widgets(self):
         """For all :class:`fields.Field` with a widget, add it to the :class:`Template` itself."""
