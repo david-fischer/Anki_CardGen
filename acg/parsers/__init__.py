@@ -1,13 +1,13 @@
 from ..design_patterns.factory import CookBook
 from .base import (
     AsyncDicio,
-    AsyncGoogleImages,
     AsyncLinguee,
     AsyncParser,
     AsyncReverso,
     NoMatchError,
     Parser,
 )
+from .google_image_parser import AsyncGoogleImages
 from .new_parsers import EnglishParser
 
 parser_cookbook = CookBook()

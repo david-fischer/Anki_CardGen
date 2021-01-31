@@ -15,12 +15,10 @@ from urllib.parse import quote
 import attr
 import pandas as pd
 import requests
-import unidecode
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
 from utils import async_get_results
 
-from ..google_images_download import google_images_download
 from ..utils import remove_whitespace
 
 LANGUAGES = {"pt": "portuguese", "de": "german", "en": "english", "es": "spanish"}
@@ -229,8 +227,11 @@ class AsyncParser:
     async def __call__(self, phrase):
         """Return results asynchronously."""
         self.phrase = phrase
+        print(f"started {self.__class__.__name__}")
         response = await self.request()
-        return self.parse_response(response)
+        response = self.parse_response(response)
+        print(f"finished {self.__class__.__name__}")
+        return response
 
     def result_dict(self, phrase):
         """Return results synchronously."""
@@ -411,32 +412,6 @@ class AsyncDicio(AsyncParser):
         )
 
 
-@attr.s(auto_attribs=True)
-class AsyncGoogleImages(AsyncParser):
-    """Uses google_images_download to get img_urls."""
-
-    limit: int = 15
-    gid: google_images_download.googleimagesdownload = None
-
-    def __attrs_post_init__(self):
-        self.gid = google_images_download.googleimagesdownload()
-
-    async def __call__(self, phrase=None):
-        """Return dictionary of the form ``{"image":[url0,url1,...]}}``."""
-        if phrase is not None:
-            self.phrase = unidecode.unidecode(phrase)
-        arguments = {
-            "keywords": self.phrase,
-            "limit": self.limit,
-            "format": "jpg",
-            "language": LANGUAGES[self.from_lang].capitalize(),
-            "no_download": True,
-            "print_urls": False,
-        }
-        paths = self.gid.download(arguments)[0][self.phrase]
-        return {"image": paths}
-
-
 def linguee_did_you_mean(search_term):
     """Extract suggested corrections if the original search is not successful."""
     # TODO: generalize to different languages
@@ -466,7 +441,6 @@ if __name__ == "__main__":
     ap = AsyncReverso(from_lang="pt", to_lang="de")
     al = AsyncLinguee(from_lang="pt", to_lang="de")
     ad = AsyncDicio()
-    ag = AsyncGoogleImages(from_lang="pt")
-    async_parsers = [ad, al, ap, ag]
+    async_parsers = [ad, al, ap]
 
     pprint(async_get_results(async_parsers, PHRASE))
