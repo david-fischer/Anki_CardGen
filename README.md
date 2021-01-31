@@ -155,7 +155,6 @@ acg
 
 ## 🎉 Acknowledgements
 
-* `acg/google-images-download` is basically https://github.com/Joeclinton1/google-images-download with minor fixes
 <!-- jinja-block deps
 {{ "\n".join(dep_strings) }}
 jinja-block deps-->
