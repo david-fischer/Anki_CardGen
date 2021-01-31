@@ -311,6 +311,14 @@ class MediaField(Field):
     file_type = attr.ib(default="mp3")
     """File-type of media-file."""
 
+    @db_session
+    def content_exists(self):
+        """Check if content is already saved in db."""
+        media = self.template.current_card_db().get_media(self.field_name)
+        if not media:
+            return False
+        return bool(media.content)
+
     @staticmethod
     def get_media_file(url):
         """Download file using :meth:`requests.get`."""
@@ -332,20 +340,21 @@ class MediaField(Field):
             field_val = f"{name}.{ext} (don't know how to embed)."
         return f"{name}.{ext}", field_val
 
+    @db_session
     def save_media_file(self, media_file):
         """Save media_file to the data-base."""
-        with db_session:
-            current_card = self.template.current_card_db()
-            media_file_db = current_card.get_media(self.field_name)
-            if media_file_db:
-                media_file_db.update(
-                    content=media_file, field_key=self.field_name, type=self.file_type
-                )
-            else:
-                current_card.add_media(
-                    content=media_file, field_key=self.field_name, type=self.file_type
-                )
+        current_card = self.template.current_card_db()
+        media_file_db = current_card.get_media(self.field_name)
+        if media_file_db:
+            media_file_db.update(
+                content=media_file, field_key=self.field_name, type=self.file_type
+            )
+        else:
+            current_card.add_media(
+                content=media_file, field_key=self.field_name, type=self.file_type
+            )
 
+    @db_session
     def pre_process(self):
         """Obtain url, download and save file."""
         url = (
@@ -354,9 +363,10 @@ class MediaField(Field):
             else None
         )
         if url and isinstance(url, str):
-            media_file = self.get_media_file(url)
-            if media_file:
-                self.save_media_file(media_file=media_file)
+            if not self.content_exists():
+                media_file = self.get_media_file(url)
+                if media_file:
+                    self.save_media_file(media_file=media_file)
 
     def post_process(self, content):
         """Return strings for the fields of the anki-card."""
