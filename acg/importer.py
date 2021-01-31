@@ -9,6 +9,7 @@ from kivy.factory import Factory
 from kivy.lang import Builder
 from kivymd.app import MDApp
 from kivymd.uix.filemanager import MDFileManager
+from pony.orm import db_session
 
 from .custom_widgets.dialogs import CustomDialog
 from .design_patterns.callback_chain import CallChain, CallNode, PrinterNode
@@ -205,7 +206,17 @@ def word_list_from_kobo(path):
     return words
 
 
-replace_lemmas_nodes = [clean_words, "Lemmatizer", "ReplacementDialog"]
+@db_session
+def add_waiting(words, template=None):
+    """Add word in ``"waiting"`` state, waiting to be queued."""
+    template = template or MDApp.get_running_app().get_current_template_db()
+    for word in words:
+        if not template.get_card(word):
+            template.add_card(word)
+            MDApp.get_running_app().word_state_dict[word] = "waiting"
+
+
+replace_lemmas_nodes = [clean_words, "Lemmatizer", "ReplacementDialog", add_waiting]
 
 node_dict = {
     "kobo": {

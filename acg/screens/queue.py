@@ -7,7 +7,6 @@ from kivy.clock import Clock
 from kivy.properties import DictProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
-from pony.orm import db_session
 
 from ..importer import import_chain_cookbook
 from ..parsers import NoMatchError
@@ -41,8 +40,6 @@ class QueuedRoot(FloatLayout):
 
     def __init__(self, **kwargs):
         self.speed_dial_buttons = import_chain_cookbook.to_button_dict()
-        for button_dict in self.speed_dial_buttons.values():
-            button_dict["callback"].append(self.queue_words)
         super().__init__(**kwargs)
         self._init_queue()
 
@@ -92,18 +89,9 @@ class QueuedRoot(FloatLayout):
             else:
                 self.stale.remove(word)
 
-    @staticmethod
-    @db_session
-    def add_waiting(word, template=None):
-        """Add word in ``"waiting"`` state, waiting to be queued."""
-        template = template or MDApp.get_running_app().get_current_template_db()
-        if not template.get_card(word):
-            template.add_card(word)
-            MDApp.get_running_app().word_state_dict[word] = "waiting"
-
     def queue_word(self, word):
         """Queue word for downloading."""
-        if not self.is_queued(word) and not self.is_duplicate(word):
+        if not self.is_queued(word):
             MDApp.get_running_app().word_state_dict[word] = "queued"
             self.queue.put(word)
         if word in self.stale:
