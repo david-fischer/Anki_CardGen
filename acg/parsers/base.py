@@ -17,9 +17,8 @@ import pandas as pd
 import requests
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
-from utils import async_get_results
 
-from ..utils import remove_whitespace
+from ..utils import async_get_results, remove_whitespace
 
 LANGUAGES = {"pt": "portuguese", "de": "german", "en": "english", "es": "spanish"}
 
