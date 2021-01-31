@@ -17,7 +17,6 @@ import pandas as pd
 import requests
 from aiohttp import ClientSession
 from bs4 import BeautifulSoup
-from utils import async_get_results
 
 from ..utils import remove_whitespace
 
@@ -436,6 +435,8 @@ def get_random_wiki_topic(category):
 
 
 if __name__ == "__main__":
+    from ..utils import async_get_results
+
     TEST_WORD = ""
     PHRASE = "cão"
     ap = AsyncReverso(from_lang="pt", to_lang="de")
