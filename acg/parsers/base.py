@@ -211,7 +211,9 @@ class AsyncParser:
                 url, params=params, headers=self.headers
             ) as response:
                 if response.status != 200:
-                    raise NoMatchError
+                    raise NoMatchError(
+                        f"Parser: {self.__class__}, phrase: {self.phrase}"
+                    )
                 if "html" in response.content_type:
                     return await response.text()
                 if "json" in response.content_type:
