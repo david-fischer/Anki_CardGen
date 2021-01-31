@@ -103,8 +103,8 @@ class QueuedRoot(FloatLayout):
 
     def queue_word(self, word):
         """Queue word for downloading."""
-        MDApp.get_running_app().word_state_dict[word] = "queued"
-        if not self.is_queued(word):
+        if not self.is_queued(word) and not self.is_duplicate(word):
+            MDApp.get_running_app().word_state_dict[word] = "queued"
             self.queue.put(word)
         if word in self.stale:
             self.stale.remove(word)
