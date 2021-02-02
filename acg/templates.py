@@ -194,9 +194,9 @@ class Template(BoxLayout):
             self.set_data_from_parsers()
             self.update_fields()
             self.save_base_data_to_db()
-        except NoMatchError:
+        except NoMatchError as error:
             current_card.state = "error"
-            toast(f"Could not obtain data for {search_term}.")
+            toast(f"{error.site} was not successful.", duration=7)
             if make_suggestion:
                 # choose suggestion dialog here.
                 pass
