@@ -1,23 +1,30 @@
+import pathlib
+from functools import partial
+
+from ..importer import CheckChipDialogNode
+
+EXPORTER_DIR = pathlib.Path(__file__).parent.absolute()
+from ..design_patterns.callback_chain import CallChain
 from ..design_patterns.factory import CookBook
-from .exporter import APKGExporter, export_cards, is_in_history, is_new
+from .exporter import export_cards, get_cards
 
 export_cookbook = CookBook()
 
 export_cookbook.register(
     "export_select",
-    selector=lambda c: False,
+    nodes=[get_cards, CheckChipDialogNode(), export_cards],
     info={"icon": "check-box-multiple-outline", "text": "select cards to export"},
-)(APKGExporter)
+)(CallChain)
 export_cookbook.register(
     "export_all",
-    selector=is_in_history,
+    nodes=[partial(get_cards, state={"done", "exported"}), export_cards],
     info={"icon": "content-save-all", "text": "export all cards"},
-)(APKGExporter)
+)(CallChain)
 export_cookbook.register(
     "export_new",
-    selector=is_new,
+    nodes=[partial(get_cards, state={"done"}), export_cards],
     info={"icon": "new-box", "text": "export new cards"},
-)(APKGExporter)
+)(CallChain)
 
 anki_templates = {
     "davids_template": "vocab_card",

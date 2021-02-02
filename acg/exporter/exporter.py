@@ -10,21 +10,19 @@ Its purpose is to handle everything Anki-related:
 """
 
 
-import os
+import pathlib
 import re
-import shutil
 from datetime import datetime
-from typing import Callable
 
 import attr
 import bs4
 import genanki
-import toolz
-from design_patterns.callback_chain import CallNode
 from kivymd.app import MDApp
 from kivymd.toast import toast
 from pony.orm import db_session
-from utils import CD, now_string
+
+from ..utils import CD, cd_temp_dir, now_string, set_word_state
+from . import EXPORTER_DIR
 
 
 @attr.s
@@ -141,7 +139,7 @@ class AnkiObject:  # pylint: disable=too-many-instance-attributes
     templates = attr.ib(default=["meaning-pt", "pt-meaning"])
     deck_name = attr.ib(default="Portuguese::Vocab")
     css_path = attr.ib(default="css/pt.css")
-    root_dir = attr.ib(default=".")
+    root_dir = attr.ib(default=EXPORTER_DIR)
     id = attr.ib(default=12345)
 
     def __attrs_post_init__(self):
@@ -190,58 +188,55 @@ class AnkiObject:  # pylint: disable=too-many-instance-attributes
         self.package.write_to_file(out_path)
 
 
-def is_new(card):
-    """Return True if state is done."""
-    return card.state == "done"
+def get_cards(state=None):
+    """Get words from word_state_dict filtered, possibly filtered by state."""
+    return {
+        key
+        for key, val in MDApp.get_running_app().word_state_dict.items()
+        if not state or val in state
+    }
 
 
-def is_in_history(card):
-    """Return True if state state is done/exported."""
-    return card.state in {"done", "exported"}
+@db_session
+def export_cards(card_names):
+    """Export cards to <template_name>_<time-stamp>.apkg file in apgk_export_dir."""
+    if not card_names:
+        toast("Empty selection.", duration=5)
+        return
+    config = MDApp.get_running_app().config
+    template_dir = config["Paths"]["anki_template_dir"]
+    anki_config = config["Anki"]
+    anki_obj = AnkiObject(root_dir=template_dir, **anki_config)
+    template_name = config["Template"]["name"]
+    out_file = f'{template_name.replace(" ","_")}_{now_string()}.apkg'
+    out_folder = config["Paths"]["apkg_export_dir"]
+    out_path = pathlib.Path(out_folder) / out_file
+    toast(f"Exporting cards to {out_folder}...", duration=5)
+    card_list = [
+        card
+        for card in MDApp.get_running_app().get_current_template_db().get_cards()
+        if card.name in card_names
+    ]
+    write_apkg(anki_obj, card_list, out_path)
+    set_cards_exported(card_list)
 
 
-@attr.s(auto_attribs=True)
-class APKGExporter(CallNode):
-    """Exports cards to .apkg-format."""
-
-    selector: Callable = None
-
-    @db_session
-    def process(self):
-        """Main-function."""
-        app = MDApp.get_running_app()
-        current_template = app.get_current_template_db()
-        cards = current_template.get_cards_by_selector(self.selector)
-        if cards:
-            export_cards(cards, app.apkg_export_dir, app.get_anki_template_dir())
-            toast(f"Exported cards to {app.apkg_export_dir}.", duration=5)
-        else:
-            toast("Empty selection.", duration=5)
+def write_apkg(anki_obj, card_list, out_path):
+    """Write apkg to ``out_path``."""
+    with cd_temp_dir():
+        for card in card_list:
+            card.write_media_files_to_folder()
+            anki_obj.add_card(**card.fields)
+        anki_obj.write_apkg(out_path)
 
 
-def export_cards(card_list, out_folder, anki_template_dir):
-    """Export cards to <template_name>_<time-stamp>.apkg file in out_folder."""
-    anki_config = MDApp.get_running_app().config["Anki"]
-    anki_obj = AnkiObject(root_dir=anki_template_dir, **anki_config)
-    if not card_list:
-        print("Empty list.")
-        return False
-    folder_name = os.path.join(out_folder, f"temp_{now_string()}")
-    os.makedirs(folder_name, exist_ok=True)
-    for card in card_list:
-        card.write_media_files_to_folder(folder_name)
-        content_dict = card.fields
-        anki_obj.add_card(**content_dict)
-    with CD(folder_name):
-        file_name = f'{toolz.first(card_list).template.name.replace(" ", "_")}_{now_string()}.apkg'
-        anki_obj.write_apkg(file_name)
-    os.rename(os.path.join(folder_name, file_name), os.path.join(out_folder, file_name))
+def set_cards_exported(card_list):
+    """Set state to ``"exported"``."""
     now = datetime.now()
     for card in card_list:
         card.state = "exported"
         card.dt_exported = now
-    shutil.rmtree(folder_name)
-    return True
+        set_word_state(word=card.name, state="exported")
 
 
 # pylint: disable = W,C,R,I

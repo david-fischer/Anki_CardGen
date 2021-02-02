@@ -3,7 +3,6 @@ The app uses :mod:`pony` to manage a sqlite-database. The database is structured
 
 .. image:: ../docs/ponyorm_diagram.png
 """
-import os
 from datetime import datetime
 
 import toolz
@@ -52,9 +51,11 @@ class Template(db.Entity):
         return toolz.first(cards_by_name) if cards_by_name else None
 
     @db_session
-    def get_cards_by_selector(self, selector):
+    def get_cards(self, selector=None):
         """Get cards by selector."""
-        return select(c for c in self.cards if selector(c))
+        if selector is not None:
+            return select(c for c in self.cards if selector(c))
+        return select(c for c in self.cards)
 
     @db_session
     def add_card(self, name):
@@ -108,7 +109,7 @@ class Card(db.Entity):
         return media_file
 
     @db_session
-    def write_media_files_to_folder(self, folder):
+    def write_media_files_to_folder(self, folder="."):
         """Write media-files in :attr:`media_files` to folder with name `folder`."""
         media_files = select(m for m in self.media_files)
         for m_file in media_files:
@@ -150,6 +151,6 @@ if __name__ == "__main__":
     with db_session:
         template = Template.get(name="Portuguese Vocab")
         cards = select(c for c in template.cards if c.state == ("done" or "exported"))
-        export_cards(
-            cards, "/home/david/Schreibtisch/", os.path.join(ANKI_DIR, "vocab_card")
-        )
+        # export_cards(
+        #     cards, "/home/david/Schreibtisch/", os.path.join(ANKI_DIR, "vocab_card")
+        # )

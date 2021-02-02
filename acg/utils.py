@@ -7,6 +7,7 @@ import os
 import pickle
 import pwd
 import re
+import tempfile
 import threading
 from contextlib import ContextDecorator, contextmanager
 from datetime import datetime
@@ -39,6 +40,19 @@ class CD:
 
     def __exit__(self, etype, value, traceback):
         os.chdir(self.saved_path)
+
+
+@contextmanager
+def cd_temp_dir():
+    """Context manager to cd into a temporary dir.
+
+    Gets cleaned up on exit.
+    """
+    with tempfile.TemporaryDirectory() as tempdirname:
+        print(f"cd into tmp dir: {tempdirname}")
+        with CD(tempdirname):
+            yield
+        print(f"cleaned up {tempdirname}.")
 
 
 def save_dict_to_csv(some_dict, out_path):
