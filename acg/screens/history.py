@@ -9,7 +9,7 @@ from pony.orm import db_session
 
 from ..custom_widgets.dialogs import TextInputDialog
 from ..exporter import export_cookbook
-from ..utils import app_busy, not_implemented_toast, set_word_state, widget_by_id
+from ..utils import app_busy, not_implemented_toast, set_word_state
 
 
 class HistoryRoot(FloatLayout):
@@ -55,7 +55,6 @@ class HistoryRoot(FloatLayout):
         """Open dropdown menu with ``item`` as caller."""
         self.dropdown_menu.caller = item
         self.dropdown_menu.open()
-        print(item.text)
 
     def on_dropdown_item(self, item, *_):
         """Call option corresponding to clicked item."""
@@ -93,4 +92,4 @@ class HistoryRoot(FloatLayout):
         """If the ``OK``-button is pressed, delete old entry and add edited entry to queue."""
         if button_txt == "OK":
             self.delete_item(self.text_input_dialog.default_text)
-            widget_by_id("queue").add_waiting(text)
+            set_word_state(text, "waiting")

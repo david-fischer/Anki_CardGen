@@ -7,10 +7,18 @@ from kivy.clock import Clock
 from kivy.properties import DictProperty, ObjectProperty
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.app import MDApp
+from pony.orm import db_session
 
+from ..custom_widgets.custom_dropdown import open_dropdown_menu
 from ..importer import import_chain_cookbook
 from ..parsers import NoMatchError
-from ..utils import not_implemented_toast, set_screen, start_workers, widget_by_id
+from ..utils import (
+    not_implemented_toast,
+    set_screen,
+    set_word_state,
+    start_workers,
+    widget_by_id,
+)
 
 
 class CheckableQueue(Queue):
@@ -137,6 +145,23 @@ class QueuedRoot(FloatLayout):
             self.generate_card(item.text)
         elif item.current_state == "waiting":
             self.queue_word(item.text)
+
+    def special_click_on_item(self, item):
+        """Open dropdown menu with delete- and hide-option."""
+        open_dropdown_menu(item, delete=self.delete_item, hide=self.hide_item)
+
+    @staticmethod
+    def hide_item(item):
+        """Set state to ``"hidden"``, so the word does not appear in queue or history."""
+        set_word_state(item.text, "hidden")
+
+    @db_session
+    @staticmethod
+    def delete_item(item):
+        """Remove word from db and app.word_state_dict."""
+        app = MDApp.get_running_app()
+        app.get_current_template_db().get_card(name=item.text).delete()
+        del app.word_state_dict[item.text]
 
     @staticmethod
     def sort(*_):
