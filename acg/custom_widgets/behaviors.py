@@ -88,6 +88,30 @@ class LongPressBehavior(ButtonBehavior):
         """Implement in sub class. Placeholder."""
 
 
+class RightClickBehavior(Widget):
+    """Mixin class that provides ``on_special_click`` event. Currently this is triggered by right-click."""
+
+    # TODO: extend to long-press for mobile
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.register_event_type("on_special_click")
+
+    def on_touch_down(self, touch):
+        """Dispatch ``"on_special_click"``-event if right-click is detected on widget.
+
+        Otherwise call normal touch event.
+        """
+        if touch.button == "right":
+            if self.collide_point(*touch.pos):
+                self.dispatch("on_special_click")
+                return True
+            return False
+        return super().on_touch_down(touch)
+
+    def on_special_click(self, *_):
+        """Placeholder-function."""
+
+
 class MultiStateBehavior(Widget):
     """
     Changes properties of widget based on :attr:`current_state` and the corresponding entry in :attr:`state_dict`.
