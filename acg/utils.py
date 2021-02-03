@@ -325,7 +325,9 @@ def update_word_state_dict(word, state):
 @db_session
 def set_word_state(word, state):
     """Set state in the data-base entry of the card of the current template."""
-    MDApp.get_running_app().get_current_template_db().get_card(word).state = state
+    template_db = MDApp.get_running_app().get_current_template_db()
+    card = template_db.get_card(word) or template_db.add_card(word)
+    card.state = state
 
 
 def not_implemented_toast(*_):
