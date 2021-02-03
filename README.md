@@ -158,12 +158,13 @@ acg
 * import in parsers/\__init__.py and register it
 * use it in template.py
 
-## 🎉 Acknowledgements
+## 📦 Dependencies
 
 <!-- jinja-block deps
 {{ "\n".join(dep_strings) }}
 jinja-block deps-->
 <!-- jinja-out deps start-->
+
  * [appdirs](http://github.com/ActiveState/appdirs) - A small Python module for determining appropriate platform-specific dirs, e.g. a "user data dir".
  * [titlecase](https://github.com/ppannuto/python-titlecase) - Python Port of John Gruber's titlecase.pl
  * [attrs](https://www.attrs.org/) - Classes Without Boilerplate
