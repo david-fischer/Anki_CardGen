@@ -21,7 +21,12 @@ from kivy.uix.scrollview import ScrollView
 from kivymd.app import MDApp
 from kivymd.uix.list import ILeftBody, MDList, OneLineAvatarListItem
 
-from .behaviors import CallbackBehavior, ChildrenFromDataBehavior, MultiStateBehavior
+from .behaviors import (
+    CallbackBehavior,
+    ChildrenFromDataBehavior,
+    MultiStateBehavior,
+    RightClickBehavior,
+)
 
 
 class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
@@ -31,7 +36,9 @@ class LeftStatusIndicator(MultiStateBehavior, ILeftBody, AnchorLayout):
     """:class:`~kivy.properties.ObjectProperty` set to :class:`~kivy.uix.spinner.MDSpinner`."""
 
 
-class LeftStatusIndicatorListItem(CallbackBehavior, OneLineAvatarListItem):
+class LeftStatusIndicatorListItem(
+    CallbackBehavior, RightClickBehavior, OneLineAvatarListItem
+):
     """
     Contains :class:`LeftStatusIndicator` as left element.
 
