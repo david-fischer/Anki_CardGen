@@ -17,8 +17,12 @@ Python [Kivy](https://kivy.org/) App for desktop for quick generation of persona
 Currently supported languages:
 
 * **Brazilian Portuguese**
+* **English**
+
+Some settings have to be applied via the config.ini (located in linux under ~/.config/acg/version/config.ini)
 
 ### Screenshots
+
 <!-- jinja-block screenshots
 $ for file in img_files
 $ if loop.index ==4
