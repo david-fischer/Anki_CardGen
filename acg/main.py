@@ -4,7 +4,7 @@
 import os
 
 import certifi
-from kivy import platform
+from kivy import Config, platform
 from kivy.clock import mainthread
 from kivy.properties import (
     AliasProperty,
@@ -64,6 +64,7 @@ class AnkiCardGenApp(MDApp):
     busy_modal = ObjectProperty(None)
 
     file_manager = ObjectProperty(None)
+    dropdown_menu = ObjectProperty(None)
 
     def get_anki_template_dir(self):
         """Return absolute path where html-, css- and js-files for anki-card is located."""
@@ -98,6 +99,7 @@ class AnkiCardGenApp(MDApp):
         """Set up App and return :class:`custom_widgets.MainMenu` as root widget."""
         self.bind_theme_cls_and_config()
         self.file_manager = MDFileManager()
+        Config.set("input", "mouse", "mouse,disable_multitouch")
         os.makedirs(self.apkg_export_dir, exist_ok=True)
         return MainMenu(
             screen_dicts=screens.screen_dicts,
