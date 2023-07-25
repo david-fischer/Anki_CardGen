@@ -17,7 +17,7 @@ titlecase = "^1.1.1"
 attrs = "^20.3.0"
 beautifulsoup4 = "^4.9.3"
 bidict = "^0.21.2"
-certifi = "^2020.12.5"
+certifi = "^2023.7.22"
 genanki = "^0.10.1"
 kivymd = {url = "https://github.com/kivymd/KivyMD/archive/master.zip"}
 googletrans = "^4.0.0rc1"
